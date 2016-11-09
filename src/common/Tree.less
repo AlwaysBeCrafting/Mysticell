@@ -13,6 +13,9 @@
 	font-size: @tree-text-size;
 	line-height: @tree-text-size;
 	
+	user-select: none;
+	cursor: pointer;
+	
 	ul {
 		flex-basis: 0;
 		overflow-y: hidden;
@@ -32,6 +35,7 @@
 			&:hover { background: @color-divider; }
 			
 			label {
+				cursor: pointer;
 				padding: 12px 0;
 				flex-grow: 1;
 			}
