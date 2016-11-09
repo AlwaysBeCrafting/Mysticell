@@ -15,7 +15,6 @@ class Dropdown extends React.Component {
 	
 	render() {
 		let selectedItem = this.state.selectedItem;
-		let onChange = this.props.onChange;
 		let className = this.state.active ? 'dropdown active' : 'dropdown';
 		
 		return (
