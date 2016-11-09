@@ -5,7 +5,7 @@ import Dropdown from '../common/Dropdown';
 import Fields from './Fields';
 import Playmat from './Playmat';
 
-// import './Editor.css';
+import './index.less';
 
 
 

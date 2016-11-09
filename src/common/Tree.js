@@ -1,5 +1,7 @@
 import React from 'react';
 
+import './Tree.less';
+
 
 
 const Tree = props => {

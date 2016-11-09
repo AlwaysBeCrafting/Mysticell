@@ -1,5 +1,7 @@
 import React from 'react';
 
+import './CardArea.less';
+
 
 
 const CardArea = ( props ) => {

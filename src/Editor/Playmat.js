@@ -3,6 +3,8 @@ import React from 'react';
 import CardArea from './CardArea';
 import SheetArea from './SheetArea';
 
+import './Playmat.less';
+
 
 
 const Playmat = ( props ) => {

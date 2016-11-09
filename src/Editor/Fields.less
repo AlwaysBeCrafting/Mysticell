@@ -1,0 +1,26 @@
+@import '../common/Color';
+
+
+
+#fields {
+	display: flex;
+	flex-basis: 400px;
+	flex-flow: column nowrap;
+	align-content: flex-start;
+	
+	background: #fafafa;
+	border-right: solid 1px @color-divider;
+	
+	padding: 8px 0;
+	overflow-y: auto;
+	
+	font-size: 13px;
+	
+	label ~ * {
+		visibility: hidden;
+	}
+	
+	a:hover label ~ * {
+		visibility: visible;
+	}
+}

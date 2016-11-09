@@ -2,6 +2,9 @@ import React from 'react';
 
 import Tree from '../common/Tree';
 
+import './Fields.less';
+import nodesImg from './ic_nodes.svg';
+
 
 
 const Fields = props => {
@@ -13,7 +16,7 @@ const Fields = props => {
 				value: field._id,
 				children: field.children
 			}) }
-			makeControls={ (item) => <img className="nodes" src="images/ic_nodes.png" /> }
+			makeControls={ (item) => <img className="nodes" src={nodesImg} /> }
 		/>
 	</div>
 };
