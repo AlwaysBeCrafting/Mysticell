@@ -1,7 +1,5 @@
 import React from 'react';
 
-import Dropdown from '../common/Dropdown';
-
 import Fields from './Fields';
 import Playmat from './Playmat';
 
@@ -21,15 +19,9 @@ class Editor extends React.Component {
 		let doc = this.props.docs[ this.state.docIndex ];
 		return (
 			<main id="editor">
-				<menu type="toolbar">
-					<Dropdown
-						onChange={ (item) => { this.setDoc( item.value ) } }
-						items={ this.props.docs.map( doc => { return { text: doc.title, value: doc._id }; } )}
-					/>
-				</menu>
 				<div id="document-area">
 					<Fields fields={ doc.fields }/>
-					<Playmat cards={ doc.cards } sheets={ doc.sheets } />
+					<Playmat doc={ doc } docs={ this.props.docs } setDoc={ this.setDoc.bind( this ) } />
 				</div>
 			</main>
 		);
