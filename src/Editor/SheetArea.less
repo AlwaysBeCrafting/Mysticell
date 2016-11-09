@@ -19,54 +19,51 @@
 #sheet-area {
 	display: flex;
 	flex-flow: column nowrap;
-	flex-grow: 1;
-	overflow: scroll;
+	overflow: auto;
 	
 	padding: 8px 0;
 	
-	transition: height 200ms ease;
-}
-
-.sheet {
-	box-shadow: 0 2px 4px @color-shadow;
-	width: @sheet-width; height: @sheet-height;
-	flex-basis: @sheet-height;
-	flex-grow: 0; flex-shrink: 0;
-	
-	margin: 8px;
-	padding: @sheet-vertical-padding 0;
-	
-	background: white;
-	
-	line-height: @sheet-cell-size;
-	
-	display: flex;
-	flex-flow: column nowrap;
-	align-content: stretch;
-	
-	
-	header {
-		padding: 0 @sheet-horizontal-padding;
-		font-weight: bold;
-		flex-basis: 0;
-		flex-grow: 1;
-	}
-	
-	.row {
-		padding: 0 @sheet-horizontal-padding;
+	.sheet {
+		box-shadow: 0 2px 4px @color-shadow;
+		width: @sheet-width; height: @sheet-height;
+		flex-basis: @sheet-height;
+		flex-grow: 0; flex-shrink: 0;
+		
+		margin: 8px;
+		padding: @sheet-vertical-padding 0;
+		
+		background: white;
+		
+		line-height: @sheet-cell-size;
+		
 		display: flex;
-		flex-flow: row nowrap;
+		flex-flow: column nowrap;
 		align-content: stretch;
 		
-		flex-basis: 0;
-		flex-grow: 1;
-	}
-
-	.cell {
-		flex-basis: 0;
-		flex-grow: 1;
-		flex-shrink: 1;
 		
-		outline: solid thin @color-lightBlue100;
+		header {
+			padding: 0 @sheet-horizontal-padding;
+			font-weight: bold;
+			flex-basis: 0;
+			flex-grow: 1;
+		}
+		
+		.row {
+			padding: 0 @sheet-horizontal-padding;
+			display: flex;
+			flex-flow: row nowrap;
+			align-content: stretch;
+			
+			flex-basis: 0;
+			flex-grow: 1;
+		}
+
+		.cell {
+			flex-basis: 0;
+			flex-grow: 1;
+			flex-shrink: 1;
+			
+			outline: solid thin @color-lightBlue100;
+		}
 	}
 }
