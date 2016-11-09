@@ -1,0 +1,65 @@
+@import '../common/Fonts';
+
+@import '../common/Color';
+@import '../common/Dimen';
+
+
+
+@appBackground: #f5f5f5;
+@appText: rgba(0,0,0,0.87);
+
+@appbarBackground: #3f51b5;
+@appbarText: #ffffff;
+
+
+
+body {
+	background: @appBackground;
+	color: @appText;
+	height: 100vh;
+	flex-flow: column nowrap;
+}
+
+#appbar {
+	color: @appbarText;
+	z-index: 200;
+	flex-basis: @dimen-toolbar-size;
+	flex-grow: 0; flex-shrink: 0;
+	
+	box-shadow: 0 2px 4px @color-shadow;
+	
+	padding: 0 @dimen-keyline-padding;
+	line-height: @dimen-toolbar-size;
+	background: @appbarBackground;
+	
+	font-family: serif;
+	font-weight: bold;
+	font-size: 22px;
+}
+
+#root {
+	flex-grow: 1;
+	display: flex;
+	flex-flow: column;
+}
+
+#editor {
+	flex-grow: 1;
+	display: flex;
+	flex-flow: column nowrap;
+	
+	menu[type="toolbar"] {
+		z-index: 100;
+		flex-basis: @dimen-toolbar-size;
+		flex-shrink: 0;
+		
+		background: #fafafa;
+		border-bottom: solid thin @color-divider;
+	}
+	
+	#document-area {
+		display: flex;
+		flex-grow: 1;
+		flex-flow: row nowrap;
+	}
+}

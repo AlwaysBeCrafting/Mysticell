@@ -1,0 +1,62 @@
+@import './Color';
+@import './Dimen';
+
+
+
+@tree-text-size: 16px;
+
+
+
+.tree {
+	display: flex;
+	flex-shrink: 0;
+	font-size: @tree-text-size;
+	line-height: @tree-text-size;
+	
+	ul {
+		flex-basis: 0;
+		overflow-y: hidden;
+		
+		padding-left: @dimen-keyline-padding;
+	}
+
+	li {
+		display: flex;
+		flex-flow: column nowrap;
+		
+		a {
+			padding: 0 16px 0 40px;
+			display: flex;
+			align-items: center;
+			
+			&:hover { background: @color-divider; }
+			
+			label {
+				padding: 12px 0;
+				flex-grow: 1;
+			}
+		}
+		
+		&.parent > a {
+			padding-left: 8px;
+			
+			&::before {
+				font-family: 'Material Icons';
+				font-size: 24px;
+				color: @color-icon-active;
+				content: 'arrow_drop_down';
+				
+				transform: rotate( -90deg );
+				transition: transform 200ms ease;
+			}
+		}
+		
+		&.expanded > ul {
+			flex-basis: auto;
+		}
+		
+		&.parent.expanded > a::before {
+			transform: none;
+		}
+	}
+}

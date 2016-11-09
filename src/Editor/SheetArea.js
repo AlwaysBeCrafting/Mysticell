@@ -1,5 +1,7 @@
 import React from 'react';
 
+import './SheetArea.less';
+
 
 
 const SheetArea = ( props ) => {

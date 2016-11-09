@@ -1,0 +1,23 @@
+* {
+	padding: 0; margin: 0;
+	box-sizing: border-box;
+}
+
+article, aside, body, div, footer, header, hgroup, nav, section {
+	display: flex;
+	flex-flow: column nowrap;
+}
+
+ul, ol {
+	display: flex;
+	flex-flow: column nowrap;
+	list-style: none;
+	padding-left: 0;
+}
+
+menu[type="toolbar"] {
+	display: flex;
+	flex-flow: row nowrap;
+	
+	list-style: none;
+}
