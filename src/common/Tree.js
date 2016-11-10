@@ -12,9 +12,9 @@ const Tree = props => {
 				.map( child => <TreeItem
 					item={ child }
 					key={ child.value }
+					buttons={ child.buttons }
 					mapItem={ props.mapItem }
-					makeControls={ props.makeControls } />
-				)
+				/> )
 			}
 		</ul>
 	);
@@ -38,7 +38,11 @@ class TreeItem extends React.Component {
 		return <li className={ className }>
 			<a onClick={ () => this.toggleExpanded() }>
 				<label>{ item.text }</label>
-				{ this.props.makeControls && this.props.makeControls( item ) }
+				{ this.props.buttons.map( button => <img
+					src={ button.img }
+					onClick={ button.onClick }
+					alt={ button.alt }
+				/> ) }
 			</a>
 			{ hasChildren && (
 				<ul>
@@ -47,8 +51,8 @@ class TreeItem extends React.Component {
 						.map( child => <TreeItem
 							item={ child }
 							key={ child.value }
-							mapItem={ this.props.mapItem }
-							makeControls={ this.props.makeControls } />
+							buttons={ child.buttons }
+							mapItem={ this.props.mapItem } />
 						)
 					}
 				</ul>

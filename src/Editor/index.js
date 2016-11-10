@@ -21,30 +21,27 @@ class Editor extends React.Component {
 		let doc = this.props.docs[ this.state.docIndex ];
 		
 		let modeView = '';
-		if ( this.state.formulaPath == null ) {
+		if ( this.state.formulaPath ) {
+			modeView = <FormulaEditor
+				onCloseClick={ () => this.setState( { ...this.state, formulaPath: null } ) }
+			/>
+		} else {
 			modeView = <Playmat
 				doc={ doc }
 				docs={ this.props.docs }
 				setDoc={ this.setDoc.bind( this ) }
 			/>
-		
-		} else {
-			modeView = <FormulaEditor
-				onCloseClick={ () => this.setState( { ...this.state, mode: "Playmat" } ) }
-			/>
 		}
 		
-		return (
-			<main id="editor">
-				<div id="document-area">
-					<Fields
-						fields={ doc.fields }
-						onNodesClick={ () => this.setState( { ...this.state, mode: "FormulaEditor" } ) }
-					/>
-					{ modeView }
-				</div>
-			</main>
-		);
+		return <main id="editor">
+			<div id="document-area">
+				<Fields
+					fields={ doc.fields }
+					onFormulaClick={ ( path ) => this.setState( { ...this.state, formulaPath: path } ) }
+				/>
+				{ modeView }
+			</div>
+		</main>
 	}
 	
 	setDoc( id ) {

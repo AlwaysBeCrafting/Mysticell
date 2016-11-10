@@ -14,14 +14,11 @@ const Fields = props => {
 			mapItem={ field => ({
 				text: field.name,
 				value: field._id,
-				children: field.children
+				children: field.children,
+				buttons: [
+					{ img: nodesImg, onClick: props.onFormulaClick }
+				]
 			}) }
-			makeControls={ (item) => <img
-				className="nodes"
-				src={ nodesImg }
-				alt="Edit nodes"
-				onClick={ props.onNodesClick }
-			/> }
 		/>
 	</div>
 };
