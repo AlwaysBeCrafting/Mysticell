@@ -20,6 +20,7 @@ const Fields = props => {
 				className="nodes"
 				src={ nodesImg }
 				alt="Edit nodes"
+				onClick={ props.onNodesClick }
 			/> }
 		/>
 	</div>
