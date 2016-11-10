@@ -1,5 +1,7 @@
 import React from 'react';
 
+import './NodeEditor.less';
+
 
 
 const NodeEditor = ( props ) => {
