@@ -11,7 +11,7 @@ import './index.less';
 const NodeArea = ( props ) => {
 	return <div id="node-area">
 		<Toolbar>
-			<a className="icon" onClick={ props.onCloseClick }>arrow_back</a>
+			<a className="icon" onClick={ props.onCloseClick }>close</a>
 		</Toolbar>
 		<NodeEditor />
 	</div>
