@@ -5,19 +5,18 @@ import './Tree.less';
 
 
 const Tree = props => {
-	return (
-		<ul className="tree">
-			{ props.items
-				.map( props.mapItem )
-				.map( child => <TreeItem
-					item={ child }
-					key={ child.value }
-					buttons={ child.buttons }
-					mapItem={ props.mapItem }
-				/> )
-			}
-		</ul>
-	);
+	return <ul className="tree">
+		{ props.items
+			.map( props.mapItem )
+			.map( child => <TreeItem
+				item={ child }
+				parentPath={ [] }
+				key={ child.value }
+				buttons={ child.buttons }
+				mapItem={ props.mapItem }
+			/> )
+		}
+	</ul>
 }
 
 class TreeItem extends React.Component {
@@ -28,6 +27,7 @@ class TreeItem extends React.Component {
 	
 	render() {
 		let item = this.props.item;
+		let path = this.props.parentPath.concat( [item.text] );
 		let hasChildren = item.children && ( item.children.length > 0 );
 		
 		let className = [
@@ -40,23 +40,21 @@ class TreeItem extends React.Component {
 				<label>{ item.text }</label>
 				{ this.props.buttons.map( button => <img
 					src={ button.img }
-					onClick={ button.onClick }
+					onClick={ () => button.onClick( path ) }
 					alt={ button.alt }
 				/> ) }
 			</a>
-			{ hasChildren && (
-				<ul>
-					{ item.children
-						.map( this.props.mapItem )
-						.map( child => <TreeItem
-							item={ child }
-							key={ child.value }
-							buttons={ child.buttons }
-							mapItem={ this.props.mapItem } />
-						)
-					}
-				</ul>
-			) }
+			{ hasChildren && <ul> {
+				item.children
+					.map( this.props.mapItem )
+					.map( child => <TreeItem
+						item={ child }
+						parentPath={ path }
+						key={ child.value }
+						buttons={ child.buttons }
+						mapItem={ this.props.mapItem }
+					/> )
+			} </ul> }
 		</li>
 	}
 	

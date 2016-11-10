@@ -9,6 +9,7 @@ import './index.less';
 
 
 const FormulaEditor = ( props ) => {
+	console.log( props.path );
 	return <div id="node-area">
 		<Toolbar>
 			<a className="icon" onClick={ props.onCloseClick }>close</a>

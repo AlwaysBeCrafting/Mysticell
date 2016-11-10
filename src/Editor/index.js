@@ -23,6 +23,7 @@ class Editor extends React.Component {
 		let modeView = '';
 		if ( this.state.formulaPath ) {
 			modeView = <FormulaEditor
+				path={ this.state.formulaPath }
 				onCloseClick={ () => this.setState( { ...this.state, formulaPath: null } ) }
 			/>
 		} else {
