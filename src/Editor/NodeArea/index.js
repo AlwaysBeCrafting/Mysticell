@@ -1,5 +1,7 @@
 import React from 'react';
 
+import Toolbar from '../../common/Toolbar';
+
 import NodeEditor from './NodeEditor';
 
 import './index.less';
@@ -8,9 +10,9 @@ import './index.less';
 
 const NodeArea = ( props ) => {
 	return <div id="node-area">
-		<menu type="toolbar">
-			<li><a>arrow_back</a></li>
-		</menu>
+		<Toolbar>
+			<a className="icon">arrow_back</a>
+		</Toolbar>
 		<NodeEditor />
 	</div>
 };

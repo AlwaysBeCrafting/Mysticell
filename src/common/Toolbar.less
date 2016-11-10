@@ -1,0 +1,14 @@
+@import './Color';
+@import './Dimen';
+
+menu[type="toolbar"] {
+	z-index: 100;
+	flex-basis: @dimen-toolbar-size;
+	flex-shrink: 0;
+	
+	align-items: center;
+	
+	border-bottom: solid thin @color-divider;
+	background: #fafafa;
+	color: @color-icon-active;
+}
