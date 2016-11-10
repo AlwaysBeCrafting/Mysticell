@@ -13,7 +13,7 @@ class Editor extends React.Component {
 		super();
 		this.state = {
 			docIndex: 0,
-			mode: "FormulaEditor"
+			formulaPath: null
 		};
 	}
 	
@@ -21,20 +21,17 @@ class Editor extends React.Component {
 		let doc = this.props.docs[ this.state.docIndex ];
 		
 		let modeView = '';
-		switch ( this.state.mode ) {
-			default:
-			case "Playmat":
-				modeView = <Playmat
-					doc={ doc }
-					docs={ this.props.docs }
-					setDoc={ this.setDoc.bind( this ) }
-				/>
-				break;
-			case "FormulaEditor":
-				modeView = <FormulaEditor
-					onCloseClick={ () => this.setState( { ...this.state, mode: "Playmat" } ) }
-				/>
-				break;
+		if ( this.state.formulaPath == null ) {
+			modeView = <Playmat
+				doc={ doc }
+				docs={ this.props.docs }
+				setDoc={ this.setDoc.bind( this ) }
+			/>
+		
+		} else {
+			modeView = <FormulaEditor
+				onCloseClick={ () => this.setState( { ...this.state, mode: "Playmat" } ) }
+			/>
 		}
 		
 		return (
