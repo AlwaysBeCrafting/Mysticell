@@ -16,7 +16,11 @@ const Fields = props => {
 				value: field._id,
 				children: field.children
 			}) }
-			makeControls={ (item) => <img className="nodes" src={nodesImg} alt="Edit nodes" /> }
+			makeControls={ (item) => <img
+				className="nodes"
+				src={ nodesImg }
+				alt="Edit nodes"
+			/> }
 		/>
 	</div>
 };

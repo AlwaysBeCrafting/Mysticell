@@ -24,17 +24,26 @@ class Editor extends React.Component {
 		switch ( this.state.mode ) {
 			default:
 			case "Playmat":
-				modeView = <Playmat doc={ doc } docs={ this.props.docs } setDoc={ this.setDoc.bind( this ) } />
+				modeView = <Playmat
+					doc={ doc }
+					docs={ this.props.docs }
+					setDoc={ this.setDoc.bind( this ) }
+				/>
 				break;
 			case "NodeArea":
-				modeView = <NodeArea />
+				modeView = <NodeArea
+					onCloseClick={ () => this.setState( { ...this.state, mode: "Playmat" } ) }
+				/>
 				break;
 		}
 		
 		return (
 			<main id="editor">
 				<div id="document-area">
-					<Fields fields={ doc.fields }/>
+					<Fields
+						fields={ doc.fields }
+						onNodesClick={ () => this.setState( { ...this.state, mode: "NodeArea" } ) }
+					/>
 					{ modeView }
 				</div>
 			</main>
