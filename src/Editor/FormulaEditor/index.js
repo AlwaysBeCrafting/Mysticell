@@ -2,21 +2,21 @@ import React from 'react';
 
 import Toolbar from '../../common/Toolbar';
 
-import NodeEditor from './NodeEditor';
+import NodeArea from './NodeArea';
 
 import './index.less';
 
 
 
-const NodeArea = ( props ) => {
+const FormulaEditor = ( props ) => {
 	return <div id="node-area">
 		<Toolbar>
 			<a className="icon" onClick={ props.onCloseClick }>close</a>
 		</Toolbar>
-		<NodeEditor />
+		<NodeArea />
 	</div>
 };
 
 
 
-export default NodeArea;
+export default FormulaEditor;

@@ -2,7 +2,7 @@ import React from 'react';
 
 import Fields from './Fields';
 import Playmat from './Playmat';
-import NodeArea from './NodeArea';
+import FormulaEditor from './FormulaEditor';
 
 import './index.less';
 
@@ -13,7 +13,7 @@ class Editor extends React.Component {
 		super();
 		this.state = {
 			docIndex: 0,
-			mode: "NodeArea"
+			mode: "FormulaEditor"
 		};
 	}
 	
@@ -30,8 +30,8 @@ class Editor extends React.Component {
 					setDoc={ this.setDoc.bind( this ) }
 				/>
 				break;
-			case "NodeArea":
-				modeView = <NodeArea
+			case "FormulaEditor":
+				modeView = <FormulaEditor
 					onCloseClick={ () => this.setState( { ...this.state, mode: "Playmat" } ) }
 				/>
 				break;
@@ -42,7 +42,7 @@ class Editor extends React.Component {
 				<div id="document-area">
 					<Fields
 						fields={ doc.fields }
-						onNodesClick={ () => this.setState( { ...this.state, mode: "NodeArea" } ) }
+						onNodesClick={ () => this.setState( { ...this.state, mode: "FormulaEditor" } ) }
 					/>
 					{ modeView }
 				</div>
