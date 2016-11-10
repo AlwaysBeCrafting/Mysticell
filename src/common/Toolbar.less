@@ -2,8 +2,8 @@
 @import './Dimen';
 
 menu[type="toolbar"] {
-	z-index: 100;
 	flex-basis: @dimen-toolbar-size;
+	flex-grow: 0;
 	flex-shrink: 0;
 	
 	align-items: center;
@@ -12,9 +12,19 @@ menu[type="toolbar"] {
 	background: #fafafa;
 	color: @color-icon-active;
 	
-	padding: @dimen-keyline-padding / 2;
+	padding: 0 @dimen-keyline-padding / 2;
+	
+	> * {
+		padding: @dimen-keyline-padding / 2;
+	}
 	
 	> a {
-		padding: @dimen-keyline-padding / 2;
+		cursor: pointer;
+		user-select: none;
+	}
+	
+	.title {
+		font-weight: 600;
+		font-size: 20px;
 	}
 }
