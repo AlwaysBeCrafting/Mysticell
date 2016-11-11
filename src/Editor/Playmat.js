@@ -1,7 +1,5 @@
 import React from 'react';
 
-import Dropdown from '../common/Dropdown';
-
 import CardArea from './CardArea';
 import SheetArea from './SheetArea';
 
@@ -10,12 +8,7 @@ import './Playmat.less';
 
 
 const Playmat = props => <div id="playmat">
-	<menu type="toolbar">
-		<Dropdown
-			onChange={ item => props.setDoc( item.value ) }
-			items={ props.docs.map( doc => ( { text: doc.title, value: doc._id } )) }
-		/>
-	</menu>
+	<menu type="toolbar" />
 	<div id="display-area">
 		<CardArea cards={ props.doc.cards } />
 		<SheetArea sheets={ props.doc.sheets } />

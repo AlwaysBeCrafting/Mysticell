@@ -27,11 +27,7 @@ class Editor extends React.Component {
 				setPath={ path => this.setState( { ...this.state, formulaPath: path } ) }
 			/>
 		} else {
-			modeView = <Playmat
-				doc={ doc }
-				docs={ this.props.docs }
-				setDoc={ this.setDoc.bind( this ) }
-			/>
+			modeView = <Playmat doc={ doc } />
 		}
 		
 		return <main id="editor">
