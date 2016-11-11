@@ -28,8 +28,22 @@ menu[type="toolbar"] {
 		padding: @dimen-keyline-padding / 2;
 	}
 	
-	.path a {
+	.path {
 		font-size: 18px;
-		padding: 0 8px;
+		color: @color-text-primary;
+		
+		a {
+			padding-right: 8px;
+			
+			&::before {
+				content: '/';
+				padding-right: 8px;
+				color: @color-text-disabled;
+			}
+		}
+		
+		a:last-child {
+			color: @color-primary;
+		}
 	}
 }
