@@ -38,7 +38,10 @@ class TreeItem extends React.Component {
 				<label>{ item.text }</label>
 				{ this.props.buttons.map( button => <img
 					src={ button.img }
-					onClick={ () => button.onClick( path ) }
+					onClick={ event => {
+						button.onClick( path );
+						event.stopPropagation();
+					}}
 					alt={ button.alt }
 				/> ) }
 			</a>
