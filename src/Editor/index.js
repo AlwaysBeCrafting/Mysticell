@@ -13,7 +13,7 @@ class Editor extends React.Component {
 		super();
 		this.state = {
 			docIndex: 0,
-			formulaPath: null
+			formulaPath: []
 		};
 	}
 	
@@ -21,7 +21,7 @@ class Editor extends React.Component {
 		let doc = this.props.docs[ this.state.docIndex ];
 		
 		let modeView = '';
-		if ( this.state.formulaPath ) {
+		if ( this.state.formulaPath.length ) {
 			modeView = <FormulaEditor
 				path={ this.state.formulaPath }
 				setPath={ path => this.setState( { ...this.state, formulaPath: path } ) }
