@@ -24,7 +24,7 @@ class Editor extends React.Component {
 		if ( this.state.formulaPath ) {
 			modeView = <FormulaEditor
 				path={ this.state.formulaPath }
-				onCloseClick={ () => this.setState( { ...this.state, formulaPath: null } ) }
+				setPath={ path => this.setState( { ...this.state, formulaPath: path } ) }
 			/>
 		} else {
 			modeView = <Playmat
@@ -38,7 +38,7 @@ class Editor extends React.Component {
 			<div id="document-area">
 				<Fields
 					fields={ doc.fields }
-					onFormulaClick={ ( path ) => this.setState( { ...this.state, formulaPath: path } ) }
+					setPath={ path => this.setState( { ...this.state, formulaPath: path } ) }
 				/>
 				{ modeView }
 			</div>
@@ -47,7 +47,7 @@ class Editor extends React.Component {
 	
 	setDoc( id ) {
 		this.setState( {
-			docIndex: this.props.docs.findIndex( (i) => i._id === id )
+			docIndex: this.props.docs.findIndex( i => i._id === id )
 		} );
 	}
 }

@@ -11,9 +11,9 @@ import './index.less';
 const FormulaEditor = props => {
 	return <div id="node-area">
 		<Toolbar>
-			<a className="icon" onClick={ props.onCloseClick }>close</a>
+			<a className="icon" onClick={ () => props.changePath( null ) }>close</a>
 			<label className="path">{ props.path.map( entry => <span key={ entry }>
-				/<a>{ entry }</a>
+				/<a onClick={ () => props.changePath( '' ) }>{ entry }</a>
 			</span> ) }</label>
 		</Toolbar>
 		<NodeArea />

@@ -16,7 +16,7 @@ const Fields = props => {
 				value: field._id,
 				children: field.children,
 				buttons: [
-					{ img: nodesImg, onClick: props.onFormulaClick }
+					{ img: nodesImg, onClick: props.setPath }
 				]
 			}) }
 		/>
