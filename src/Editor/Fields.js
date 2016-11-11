@@ -3,7 +3,7 @@ import React from 'react';
 import Tree from '../common/Tree';
 
 import './Fields.less';
-import nodesImg from './ic_nodes.svg';
+import nodesImg from './ic_formula.svg';
 
 
 
