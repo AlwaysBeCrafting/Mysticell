@@ -4,9 +4,7 @@ import './NodeArea.less';
 
 
 
-const NodeArea = ( props ) => {
-	return <div id="node-editor" />
-};
+const NodeArea = props => <div id="node-editor" />
 
 
 

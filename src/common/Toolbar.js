@@ -4,9 +4,7 @@ import './Toolbar.less'
 
 
 
-const Toolbar = ( props ) => {
-	return <menu type="toolbar">{ props.children }</menu>
-};
+const Toolbar = props => <menu type="toolbar">{ props.children }</menu>
 
 
 

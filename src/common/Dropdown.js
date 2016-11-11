@@ -17,33 +17,31 @@ class Dropdown extends React.Component {
 		let selectedItem = this.state.selectedItem;
 		let className = this.state.active ? 'dropdown active' : 'dropdown';
 		
-		return (
-			<div
-				data-value={ selectedItem.value }
-				className={ className }
-				onClick={ this.handleClick.bind( this ) }
-				onBlur={ this.handleBlur.bind( this ) }
-				tabIndex={ 0 }>
-				
-				<label>{ selectedItem.text }</label>
-					<ol>
-						{ this.props.items.map( item => <li
-							data-value={ item.value }
-							key={ item.value }
-							onClick={ () => this.handleSelectItem( item ) }>
-							
-							{ item.text }
-						</li> ) }
-					</ol>
-					<div className="hidden-child">
-						{ this.props.items.map( item => <span
-							key={ item.value }>
-							
-							{ item.text }
-						</span> ) }
-					</div>
-			</div>
-		);
+		return <div
+			data-value={ selectedItem.value }
+			className={ className }
+			onClick={ this.handleClick.bind( this ) }
+			onBlur={ this.handleBlur.bind( this ) }
+			tabIndex={ 0 }>
+			
+			<label>{ selectedItem.text }</label>
+				<ol>
+					{ this.props.items.map( item => <li
+						data-value={ item.value }
+						key={ item.value }
+						onClick={ () => this.handleSelectItem( item ) }>
+						
+						{ item.text }
+					</li> ) }
+				</ol>
+				<div className="hidden-child">
+					{ this.props.items.map( item => <span
+						key={ item.value }>
+						
+						{ item.text }
+					</span> ) }
+				</div>
+		</div>
 	}
 	
 	componentDidMount() {
@@ -61,9 +59,7 @@ class Dropdown extends React.Component {
 	handleSelectItem( item ) {
 		this.setState(
 			oldState => ( { ...oldState, selectedItem: item } ),
-	 		() => {
-				this.props.onChange && this.props.onChange( item );
-			} );
+	 		() => { this.props.onChange && this.props.onChange( item ) } );
 	}
 };
 

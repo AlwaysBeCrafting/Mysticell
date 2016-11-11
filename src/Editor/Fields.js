@@ -7,21 +7,19 @@ import nodesImg from './ic_formula.svg';
 
 
 
-const Fields = props => {
-	return <div id="fields">
-		<Tree
-			items={ props.fields }
-			mapItem={ field => ({
-				text: field.name,
-				value: field._id,
-				children: field.children,
-				buttons: [
-					{ img: nodesImg, onClick: props.setPath }
-				]
-			}) }
-		/>
-	</div>
-};
+const Fields = props => <div id="fields">
+	<Tree
+		items={ props.fields }
+		mapItem={ field => ({
+			text: field.name,
+			value: field._id,
+			children: field.children,
+			buttons: [
+				{ img: nodesImg, onClick: props.setPath }
+			]
+		}) }
+	/>
+</div>
 
 
 

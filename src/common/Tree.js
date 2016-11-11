@@ -4,20 +4,18 @@ import './Tree.less';
 
 
 
-const Tree = props => {
-	return <ul className="tree">
-		{ props.items
-			.map( props.mapItem )
-			.map( child => <TreeItem
-				item={ child }
-				parentPath={ [] }
-				key={ child.value }
-				buttons={ child.buttons }
-				mapItem={ props.mapItem }
-			/> )
-		}
-	</ul>
-}
+const Tree = props => <ul className="tree">
+	{ props.items
+		.map( props.mapItem )
+		.map( child => <TreeItem
+			item={ child }
+			parentPath={ [] }
+			key={ child.value }
+			buttons={ child.buttons }
+			mapItem={ props.mapItem }
+		/> )
+	}
+</ul>
 
 class TreeItem extends React.Component {
 	constructor() {
@@ -59,9 +57,7 @@ class TreeItem extends React.Component {
 	}
 	
 	toggleExpanded() {
-		this.setState( oldState => {
-			return { ...oldState, expanded: !oldState.expanded };
-		} );
+		this.setState( oldState => ( { ...oldState, expanded: !oldState.expanded } ));
 	}
 }
 
