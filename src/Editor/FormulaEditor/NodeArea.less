@@ -1,0 +1,18 @@
+@import '../../common/Color';
+
+
+
+@grid-size: 40px;
+@grid-line-color: rgba( 48, 79, 254, 0.12 );
+
+
+#node-editor {
+	flex-grow: 1;
+	
+	background-size: @grid-size @grid-size;
+	background-image:
+		linear-gradient(        @grid-line-color 1px, transparent 1px ),
+		linear-gradient( 90deg, @grid-line-color 1px, transparent 1px );
+		
+	background-position: center;
+}

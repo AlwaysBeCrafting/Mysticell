@@ -1,0 +1,35 @@
+@import './Color';
+@import './Dimen';
+
+menu[type="toolbar"] {
+	flex-basis: @dimen-toolbar-size;
+	flex-grow: 0;
+	flex-shrink: 0;
+	
+	align-items: center;
+	
+	border-bottom: solid thin @color-divider;
+	background: #fafafa;
+	color: @color-icon-active;
+	
+	padding: 0 @dimen-keyline-padding / 2;
+	
+	> a {
+		cursor: pointer;
+		user-select: none;
+	}
+	
+	.title {
+		font-weight: 600;
+		font-size: 20px;
+	}
+	
+	> :not( .dropdown ) {
+		padding: @dimen-keyline-padding / 2;
+	}
+	
+	.path a {
+		font-size: 18px;
+		padding: 0 8px;
+	}
+}

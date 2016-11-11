@@ -3,7 +3,7 @@ import React from 'react';
 import Tree from '../common/Tree';
 
 import './Fields.less';
-import nodesImg from './ic_nodes.svg';
+import nodesImg from './ic_formula.svg';
 
 
 
@@ -14,9 +14,11 @@ const Fields = props => {
 			mapItem={ field => ({
 				text: field.name,
 				value: field._id,
-				children: field.children
+				children: field.children,
+				buttons: [
+					{ img: nodesImg, onClick: props.setPath }
+				]
 			}) }
-			makeControls={ (item) => <img className="nodes" src={nodesImg} alt="Edit nodes" /> }
 		/>
 	</div>
 };
