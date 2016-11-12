@@ -11,12 +11,14 @@ import './index.less';
 const FormulaEditor = props => <div id="node-area">
 	<Toolbar>
 		<a className="icon" onClick={ () => props.setPath( [] ) }>close</a>
-		<label className="path">
+		<label className="expanding path">
 			{ props.path.map( (entry,i) => <a
 				key={ entry }
 				onClick={ () => props.setPath( props.path.slice( 0, i + 1 )) }
 			>{ entry }</a> ) }
 		</label>
+		<a className="icon">undo</a>
+		<a className="icon">redo</a>
 	</Toolbar>
 	<NodeArea />
 </div>
