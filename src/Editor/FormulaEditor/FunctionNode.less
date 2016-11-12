@@ -12,7 +12,10 @@
 	border-radius: 4px;
 	box-shadow: 0 4px 4px @color-shadow;
 	
-	> header, > div {
+	user-select: none;
+	cursor: grab;
+	
+	header, .input, .output {
 		flex-basis: 40px;
 		min-width: 160px;
 		
@@ -27,13 +30,15 @@
 		display: flex;
 		align-items: center;
 		
-		font-size: 12px;
+		font-size: 13px;
+		font-weight: 600;
 		color: @color-text-secondary;
 	}
 	
 	.output {
 		flex-flow: row-reverse nowrap;
 		position: relative;
+		font-size: 13px;
 		
 		.pin { right: -7px; }
 	}
@@ -41,6 +46,7 @@
 	.input {
 		flex-flow: row nowrap;
 		position: relative;
+		font-size: 13px;
 		
 		.pin { left: -7px; }
 	}
