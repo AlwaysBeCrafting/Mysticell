@@ -7,7 +7,16 @@ import './NodeArea.less';
 
 
 const NodeArea = props => <div id="node-editor">
-	<FunctionNode />
+	<FunctionNode
+		name="Add"
+		inputs={ [
+			{ name: 'A' },
+			{ name: 'B' }
+		] }
+		outputs={ [
+			{ name: 'Sum'}
+		] }
+	/>
 </div>
 
 

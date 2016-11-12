@@ -6,12 +6,15 @@ import './FunctionNode.less';
 
 const FunctionNode = props => <div className="function-node">
 	<header>
-		<label>Add</label>
+		<label>{ props.name }</label>
 		{ /* Optional button elements */ }
 	</header>
-	<div className="output"><span className="pin" /><label>Sum</label></div>
-	<div className="input"><span className="pin" /><label>A</label></div>
-	<div className="input"><span className="pin" /><label>B</label></div>
+	{ ( props.outputs || [] ).map( output => <div className="output" key={ output.name }>
+		<span className="pin" /><label>{ output.name }</label>
+	</div>) }
+	{ ( props.inputs || [] ).map( input => <div className="input" key={ input.name }>
+		<span className="pin" /><label>{ input.name }</label>
+	</div>) }
 </div>
 
 
