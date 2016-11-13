@@ -8,9 +8,9 @@ import './index.less';
 
 
 
-export default ({ docs, docIndex, path }) => <main id="editor">
+export default ({ doc, path }) => <main id="editor">
 	<div id="document-area">
-		<Fields fields={ docs[docIndex||0].fields } />
-		{ path.length ? <FormulaEditor /> : <Playmat /> }
+		<Fields fields={ doc.fields } />
+		{ path.length ? <FormulaEditor doc={ doc }/> : <Playmat doc={ doc } /> }
 	</div>
 </main>

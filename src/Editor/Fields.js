@@ -13,10 +13,13 @@ export default ({ fields, setPath }) => <div id="fields">
 		mapItem={ field => ({
 			text: field.name,
 			value: field._id,
-			children: field.children,
 			buttons: [
 				{ img: nodesImg, onClick: setPath }
-			]
+			],
+			children: field.children,
+			expanded: true,
+			expand: () => {},
+			collapse: () => {},
 		}) }
 	/>
 </div>
