@@ -6,7 +6,7 @@ import './NodeArea.less';
 
 
 
-const NodeArea = props => <div id="node-editor">
+export default ({ nodes }) => <div id="node-editor">
 	<FunctionNode
 		name="Add"
 		inputs={ [
@@ -18,7 +18,3 @@ const NodeArea = props => <div id="node-editor">
 		] }
 	/>
 </div>
-
-
-
-export default NodeArea;

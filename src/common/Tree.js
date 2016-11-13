@@ -4,66 +4,44 @@ import './Tree.less';
 
 
 
-const Tree = props => <ul className="tree">
-	{ props.items
-		.map( props.mapItem )
-		.map( child => <TreeItem
-			item={ child }
-			parentPath={ [] }
-			key={ child.value }
-			buttons={ child.buttons }
-			mapItem={ props.mapItem }
-		/> )
-	}
-</ul>
+export default ({ items, mapItem }) => <ul className="tree"> {
+	items.map( mapItem )
+		.map( item => <TreeItem item={ item } key={ item.value } /> )
+} </ul>
 
-class TreeItem extends React.Component {
-	constructor() {
-		super();
-		this.state = { expanded: false };
-	}
+const TreeItem = ({ item: {
+	text,
+	value,
+	buttons,
+	parentPath,
+	children,
+	expanded,
+	expand,
+	collapse,
+	mapItem }}) => {
+			
+	let path = parentPath.concat( [text] );
+	let hasChildren = children && ( children.length > 0 );
 	
-	render() {
-		let item = this.props.item;
-		let path = this.props.parentPath.concat( [item.text] );
-		let hasChildren = item.children && ( item.children.length > 0 );
-		
-		let className = [
-			( hasChildren ? 'parent' : '' ),
-			( this.state.expanded ? 'expanded' : '' )
-		].join( ' ' );
-		
-		return <li className={ className }>
-			<a onClick={ () => this.toggleExpanded() }>
-				<label>{ item.text }</label>
-				{ this.props.buttons.map( button => <img
-					src={ button.img }
-					onClick={ event => {
-						button.onClick( path );
-						event.stopPropagation();
-					}}
-					alt={ button.alt }
-				/> ) }
-			</a>
-			{ hasChildren && <ul> {
-				item.children
-					.map( this.props.mapItem )
-					.map( child => <TreeItem
-						item={ child }
-						parentPath={ path }
-						key={ child.value }
-						buttons={ child.buttons }
-						mapItem={ this.props.mapItem }
-					/> )
-			} </ul> }
-		</li>
-	}
+	let className = [
+		( hasChildren ? 'parent' : '' ),
+		( expanded ? 'expanded' : '' )
+	].join( ' ' );
 	
-	toggleExpanded() {
-		this.setState( oldState => ( { ...oldState, expanded: !oldState.expanded } ));
-	}
-}
-
-
-
-export default Tree;
+	return <li className={ className } onClick={ () => expanded ? collapse( path ) : expand( path ) }>
+		<label>{ text }</label>
+		{ buttons.map( ({ src, alt, onClick }) => <img
+			src={ src }
+			alt={ alt }
+			onClick={ event => {
+				onClick( path );
+				event.stopPropagation();
+			}}
+		/> ) }
+		{ hasChildren && <ul> {
+			children
+				.map( mapItem )
+				.map( item => <TreeItem item={ item } key={ item.value } /> )
+		} </ul> }
+	</li>
+};

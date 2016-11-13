@@ -7,14 +7,10 @@ import './Playmat.less';
 
 
 
-const Playmat = props => <div id="playmat">
+export default ({ doc }) => <div id="playmat">
 	<menu type="toolbar" />
 	<div id="display-area">
-		<CardArea cards={ props.doc.cards } />
-		<SheetArea sheets={ props.doc.sheets } />
+		<CardArea cards={ doc.cards } />
+		<SheetArea sheets={ doc.sheets } />
 	</div>
 </div>
-
-
-
-export default Playmat;
