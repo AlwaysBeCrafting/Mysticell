@@ -6,3 +6,11 @@ export const expandField = id => ({ type: EXPAND_FIELD, id: id });
 
 export const COLLAPSE_FIELD = 'COLLAPSE_FIELD';
 export const collapseField = id => ({ COLLAPSE_FIELD, id: id });
+
+
+
+export default {
+	SET_PATH, setPath,
+	EXPAND_FIELD, expandField,
+	COLLAPSE_FIELD, collapseField
+};
