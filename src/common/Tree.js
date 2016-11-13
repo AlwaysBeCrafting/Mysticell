@@ -33,7 +33,7 @@ const TreeItem = ({ item: {
 	].join( ' ' );
 	
 	return <li className={ className } onClick={ () => expanded ? collapse( path ) : expand( path ) }>
-		<label>{ text }</label>
+		<a><label>{ text }</label>
 		{ buttons.map( ({ src, alt, onClick }, i) => <img
 			src={ src }
 			alt={ alt }
@@ -42,7 +42,7 @@ const TreeItem = ({ item: {
 				event.stopPropagation();
 			}}
 			key={ i }
-		/> ) }
+		/> ) }</a>
 		{ hasChildren && <ul> {
 			children
 				.map( mapItem )
