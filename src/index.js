@@ -5,6 +5,6 @@ import Editor from './Editor';
 fetch( 'http://localhost:8081/documents' )
 	.then( res => res.json() )
 	.then( docs => ReactDOM.render(
-		<Editor docs={docs} />,
+		<Editor docs={ docs } path={ [] } />,
 		document.getElementById( 'root' )
 	));
