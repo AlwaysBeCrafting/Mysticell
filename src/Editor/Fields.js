@@ -14,7 +14,7 @@ export default ({ fields, setPath }) => <div id="fields">
 			text: field.name,
 			value: field._id,
 			buttons: [
-				{ img: nodesImg, onClick: setPath }
+				{ src: nodesImg, onClick: setPath }
 			],
 			children: field.children,
 			expanded: true,
