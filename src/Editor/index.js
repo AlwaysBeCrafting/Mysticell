@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import Fields from './Fields';
 import Playmat from './Playmat';
@@ -8,9 +9,13 @@ import './index.less';
 
 
 
-export default ({ doc, path }) => <main id="editor">
+const Editor = ( { path } ) => <main id="editor">
 	<div id="document-area">
-		<Fields fields={ doc.fields } />
-		{ path.length ? <FormulaEditor doc={ doc }/> : <Playmat doc={ doc } /> }
+		<Fields />
+		{ path.length ? <FormulaEditor /> : <Playmat /> }
 	</div>
 </main>
+
+export default connect(
+	( { path } ) => ( { path } )
+)( Editor );
