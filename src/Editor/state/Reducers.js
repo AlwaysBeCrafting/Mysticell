@@ -92,7 +92,7 @@ const doc = ( state = EXAMPLE_DOC, action ) => state;
 const expandedFields = ( state = {}, action ) => {
 	switch ( action.type ) {
 		case Actions.EXPAND_FIELD:
-			return { ...state, [action.id]: undefined }
+			return { ...state, [action.id]: true };
 		
 		case Actions.COLLAPSE_FIELD:
 			const newState = { ...state };
@@ -102,6 +102,7 @@ const expandedFields = ( state = {}, action ) => {
 		default: return state;
 	}
 };
+
 const ui = combineReducers( {
 	expandedFields
 } );
