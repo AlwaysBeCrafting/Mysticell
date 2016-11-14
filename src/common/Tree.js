@@ -19,7 +19,7 @@ const TreeItem = ({
 className={ ( children.length && 'parent' ) + ' ' + ( expanded && 'expanded' ) }
 onClick={ () => expanded ? onCollapse( path ) : onExpand( path ) }>
 	{ path[path.length-1] }
-	{ children.length && <ul> {
+	{ !!children.length && <ul> {
 		children.map(( item ) => <TreeItem
 			item={ item }
 			onExpand={ onExpand }
