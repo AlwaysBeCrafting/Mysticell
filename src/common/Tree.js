@@ -16,7 +16,7 @@ const TreeItem = ({
 	onExpand,
 	onCollapse,
 }) => <li
-className={ ( children.length && 'parent' ) + ' ' + ( expanded && 'expanded' ) }
+className={ ( children.length ? 'parent' : '' ) + ' ' + ( expanded ? 'expanded' : '' ) }
 onClick={ () => expanded ? onCollapse( path ) : onExpand( path ) }>
 	{ path[path.length-1] }
 	{ !!children.length && <ul> {
