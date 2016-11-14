@@ -24,8 +24,8 @@ const mapStateToProps = state => ( {
 } );
 
 const mapDispatchToProps = dispatch => ( {
-	onExpand: () => {},
-	onCollapse: () => {},
+	onExpandItem: () => {},
+	onCollapseItem: () => {},
 } );
 
 
