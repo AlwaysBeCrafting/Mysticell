@@ -5,7 +5,7 @@ export const EXPAND_FIELD = 'EXPAND_FIELD';
 export const expandField = id => ({ type: EXPAND_FIELD, id: id });
 
 export const COLLAPSE_FIELD = 'COLLAPSE_FIELD';
-export const collapseField = id => ({ COLLAPSE_FIELD, id: id });
+export const collapseField = id => ({ type: COLLAPSE_FIELD, id: id });
 
 
 
