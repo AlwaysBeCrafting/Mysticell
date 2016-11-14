@@ -17,7 +17,10 @@ const TreeItem = ({
 	onCollapse,
 }) => <li
 className={ ( children.length ? 'parent' : '' ) + ' ' + ( expanded ? 'expanded' : '' ) }
-onClick={ () => expanded ? onCollapse( path ) : onExpand( path ) }>
+onClick={ ev => {
+	expanded ? onCollapse( id ) : onExpand( id );
+	ev.stopPropagation();
+}}>
 	<a>
 		<label>{ path[path.length-1] }</label>
 	</a>
