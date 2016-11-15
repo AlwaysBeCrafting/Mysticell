@@ -22,11 +22,12 @@ const mapFieldsToTreeItems = ( fields, expandedFields = [], path = [] ) => field
 	
 const mapStateToProps = state => ( {
 	items: mapFieldsToTreeItems( state.doc.fields, state.ui.expandedFields ),
+	onCreateButtons: () => {},
 } );
 
 const mapDispatchToProps = dispatch => ( {
-	onExpandItem: id => dispatch( Actions.expandField( id )),
-	onCollapseItem: id => dispatch( Actions.collapseField( id )),
+	onExpandItem: item => dispatch( Actions.expandField( item.id )),
+	onCollapseItem: item => dispatch( Actions.collapseField( item.id )),
 } );
 
 
