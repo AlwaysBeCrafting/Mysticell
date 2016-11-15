@@ -4,14 +4,8 @@ import './SheetArea.less';
 
 
 
-const SheetArea = props => <ul id="sheet-area"> {
-	props.sheets.map( sheet => <Sheet sheet={ sheet } key={ sheet._id } /> )
+export default ({ sheets }) => <ul id="sheet-area"> {
+	sheets.map( ({ title, _id }) => <li className="sheet" id="sheet-{ _id }" key={ _id }>
+		<header>{ title }</header>
+	</li> )
 } </ul>
-
-const Sheet = props => <li className="sheet" id="sheet-{props._id}">
-	<header>{props.sheet.title}</header>
-</li>
-
-
-
-export default SheetArea;

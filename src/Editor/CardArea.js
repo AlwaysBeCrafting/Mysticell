@@ -4,14 +4,8 @@ import './CardArea.less';
 
 
 
-const CardArea = props => <ul id="card-area"> {
-	props.cards.map( card => <Card card={ card } key={ card._id } /> )
+export default ({ cards }) => <ul id="card-area"> {
+	cards.map( ({ title, _id }) => <li className="card" id="card-{ card._id }" key={ _id }>
+		<header>{ title }</header>
+	</li> )
 } </ul>
-
-const Card = props => <li className="card" id="card-{props._id}">
-	<header>{ props.card.title }</header>
-</li>
-
-
-
-export default CardArea;
