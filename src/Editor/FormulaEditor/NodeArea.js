@@ -6,7 +6,7 @@ import './NodeArea.less';
 
 
 
-export default ({ nodes }) => <div id="node-editor">
+export default ({ nodes }) => <div id="node-area">
 	<FunctionNode
 		name="Add"
 		inputs={ [
