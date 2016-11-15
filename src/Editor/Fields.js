@@ -1,9 +1,12 @@
-import Actions from './state/Actions';
+import React from 'react'
 import { connect } from 'react-redux';
 
+import Actions from './state/Actions';
 import Tree from '../common/Tree';
 
 import './Fields.less';
+
+import ic_formula from './ic_formula.svg';
 
 
 
@@ -22,7 +25,7 @@ const mapFieldsToTreeItems = ( fields, expandedFields = [], path = [] ) => field
 	
 const mapStateToProps = state => ( {
 	items: mapFieldsToTreeItems( state.doc.fields, state.ui.expandedFields ),
-	onCreateButtons: () => {},
+	onCreateButtons: item => <img src={ ic_formula } alt="formula" />,
 } );
 
 const mapDispatchToProps = dispatch => ( {
