@@ -22,14 +22,14 @@ const mapFieldsToTreeItems = ( fields, expandedFields = [], path = [] ) => field
 		expanded: !!expandedFields[_id]
 	} )
 );
-	
+
 const mapStateToProps = state => ( {
 	items: mapFieldsToTreeItems( state.doc.fields, state.ui.expandedFields ),
 } );
 
 const mapDispatchToProps = dispatch => ( {
-	onExpandItem:    item => dispatch( Actions.expandField(   item.id   )),
-	onCollapseItem:  item => dispatch( Actions.collapseField( item.id   )),
+	onExpandItem:    item => dispatch( Actions.expandField(   item.id )),
+	onCollapseItem:  item => dispatch( Actions.collapseField( item.id )),
 	onCreateButtons: item => <img
 		src={ ic_formula }
 		alt="formula"

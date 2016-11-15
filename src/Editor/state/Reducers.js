@@ -81,7 +81,10 @@ const EXAMPLE_DOC = {
 
 //------------------------------------------------------------------------------
 
-const path = ( state = [], action ) => ( action === Actions.SET_PATH ? action.path : state );
+const path = ( state = [], action ) => {
+	if ( action.type === Actions.SET_PATH ) return action.path;
+	else return state;
+}
 
 //------------------------------------------------------------------------------
 
