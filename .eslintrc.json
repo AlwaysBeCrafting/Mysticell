@@ -1,6 +1,19 @@
 {
     "parser": "babel-eslint",
     "rules": {
+            "array-bracket-spacing": [
+                    2,
+                    "always",
+                    { "objectsInArrays": true }
+            ],
+            "arrow-parens": [
+                    2,
+                    "as-needed"
+            ],
+            "key-spacing": [
+                    2,
+                    { "align": "value" }
+            ],
         "linebreak-style": [
             1,
             "unix"
@@ -11,25 +24,35 @@
         ],
         "no-tabs":[0],
         "no-unused-vars": [
-          2,
+          1,
           {
             "args": "none"
           }
         ],
         "one-var": [
-          2,
-          "always"
+          1,
+          "never"
         ],
         "max-len": [1, 150],
+        "no-multi-spaces": [0],
+        "no-multiple-empty-lines": [
+                2,
+                { "max": 3, "maxEOF": 0 }
+        ],
         "no-use-before-define" :[
           0
         ],
         "no-param-reassign" : [
           0
         ],
+        "no-trailing-spaces": [
+                2,
+                { "skipBlankLines": true }
+        ],
         "indent": [
           "warn",
-          "tab"
+          "tab",
+          { "SwitchCase": 1 }
         ],
         "new-cap": [
           "error",
@@ -39,7 +62,7 @@
           "error", {
             "allowAfterThis": true,
             "allowAfterSuper": true,
-            "allow": ["_value"]
+            "allow": ["_id"]
           }
         ],
         "no-plusplus": [0],
@@ -55,8 +78,23 @@
         ],
         "no-labels": [0],
         "no-loop-func": [0],
+        "react/jsx-closing-bracket-location": [
+                2,
+                "after-props"
+        ],
+        "react/jsx-curly-spacing": [
+                1, "always", { "spacing": { "objectLiterals": "never" }}
+        ],
         "react/jsx-filename-extension": [
           1, { "extensions": [".js", ".jsx"] }
+        ],
+        "react/jsx-indent": [
+                2,
+                "tab"
+        ],
+        "react/jsx-indent-props": [
+                2,
+                "tab"
         ],
         "react/jsx-no-bind": [0, {
           "ignoreRefs": true,
@@ -68,6 +106,22 @@
           ],
           "skipShapeProps": true
         }],
+        "react/prop-types": [0],
+        
+        "space-in-parens": [
+                0,
+                "always",
+                { "exceptions": ["()", "empty"] }
+        ],
+        "spaced-comment": [
+                2,
+                "always",
+                { "exceptions": [ "=", "-" ] }
+        ],
+        "template-curly-spacing": [
+                2,
+                "always"
+        ],
 
         "import/imports-first" : [
           0
