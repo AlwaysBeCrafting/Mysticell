@@ -1,6 +1,7 @@
 * {
 	padding: 0; margin: 0;
 	box-sizing: border-box;
+	outline: none;
 }
 
 article, aside, body, div, footer, header, hgroup, nav, section {
@@ -20,4 +21,10 @@ menu[type="toolbar"] {
 	flex-flow: row nowrap;
 	
 	list-style: none;
+}
+
+button {
+	-webkit-appearance: none;
+	border: none;
+	background: none;
 }
