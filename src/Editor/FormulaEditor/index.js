@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { setPath } from '../state/Actions';
+import setPath from '../state/setPath';
 import Toolbar from '../../common/Toolbar';
 import NodeArea from './NodeArea';
 

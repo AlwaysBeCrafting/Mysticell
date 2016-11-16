@@ -1,5 +1,5 @@
 import { createStore } from 'redux';
-import editorReducer from './Reducers';
+import editorReducer from './reducers';
 
 
 
