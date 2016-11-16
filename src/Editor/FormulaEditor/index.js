@@ -14,7 +14,7 @@ const NodeEditor = ({ onPathClick, path }) => <div id="node-editor">
 		<button className="icon" onClick={ () => onPathClick( [] ) }>close</button>
 		<nav className="expanding path">{
 			path.map( (entry, i) => <a
-				href={ `/${ path.join( '/' ) }` }
+				tabIndex="0"
 				key={ entry }
 				onClick={ () => onPathClick( path.slice( 0, i + 1 )) }>
 				
