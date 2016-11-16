@@ -1,0 +1,113 @@
+{
+    "parser": "babel-eslint",
+    "rules": {
+        "linebreak-style": [
+            1,
+            "unix"
+        ],
+        "semi": [
+            2,
+            "always"
+        ],
+        "no-tabs":[0],
+        "no-unused-vars": [
+          2,
+          {
+            "args": "none"
+          }
+        ],
+        "one-var": [
+          2,
+          "always"
+        ],
+        "max-len": [1, 150],
+        "no-use-before-define" :[
+          0
+        ],
+        "no-param-reassign" : [
+          0
+        ],
+        "indent": [
+          "warn",
+          "tab"
+        ],
+        "new-cap": [
+          "error",
+          { "capIsNewExceptions": ["StyleSheetPropType"] }
+        ],
+        "no-underscore-dangle": [
+          "error", {
+            "allowAfterThis": true,
+            "allowAfterSuper": true,
+            "allow": ["_value"]
+          }
+        ],
+        "no-plusplus": [0],
+        "no-bitwise": [0],
+        "no-nested-ternary": [0],
+        "no-confusing-arrow": [0],
+        "consistent-return": [0],
+        "no-console" : [0],
+        "no-restricted-syntax": [
+          2,
+          "ForInStatement",
+          "WithStatement"
+        ],
+        "no-labels": [0],
+        "no-loop-func": [0],
+        "react/jsx-filename-extension": [
+          1, { "extensions": [".js", ".jsx"] }
+        ],
+        "react/jsx-no-bind": [0, {
+          "ignoreRefs": true,
+          "allowArrowFunctions": true,
+          "allowBind": true
+        }],
+        "react/no-unused-prop-types": [2, {
+          "customValidators": [
+          ],
+          "skipShapeProps": true
+        }],
+
+        "import/imports-first" : [
+          0
+        ],
+        "import/no-extraneous-dependencies" : [
+          0,
+          {"devDependencies": true}
+        ],
+        "generator-star-spacing": [0]
+    },
+    "settings": {
+      "import/core-modules": [ "dismissKeyboard" ],
+      "import/resolver":{
+        "node":{
+          "extensions": [
+            ".js"
+          ]
+        }
+      }
+    },
+    "plugins": [
+        "react"
+    ],
+    "extends": [
+        "eslint:recommended",
+        "plugin:react/recommended",
+        "airbnb"
+    ],
+    "env": {
+        "es6": true,
+        "browser": true
+    },
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "globals": {
+      "requestAnimationFrame": true,
+      "setTimeout": true,
+      "navigator": true,
+      "document": true,
+      "VRFrameData": true
+    }
+}
