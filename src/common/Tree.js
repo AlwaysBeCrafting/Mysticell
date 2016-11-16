@@ -20,7 +20,7 @@ const TreeItem = ({
 }) => <li
 	className={ `${ children.length ? 'parent' : '' } ${ expanded ? 'expanded' : '' }` }>
 	<a
-		href={ `/${ path.join( '/' ) }` }
+		tabIndex="0"
 		onClick={ ev => {
 			ev.stopPropagation();
 			return expanded ? onCollapse( item ) : onExpand( item );
