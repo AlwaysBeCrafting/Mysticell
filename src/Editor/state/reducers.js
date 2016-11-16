@@ -18,7 +18,13 @@ const reduceDoc = ( state = exampleDoc, action ) => state;
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
-const reduceExpandedFields = ( state = {}, action ) => reduceExpandField( reduceCollapseField( state, action ), action );
+const reduceExpandedFields = ( state = {}, action ) => [
+	reduceExpandField,
+	reduceCollapseField,
+].reduce(
+	( prevState, reduce ) => reduce( prevState, action ),
+	state,
+);
 
 //------------------------------------------------------------------------------
 
