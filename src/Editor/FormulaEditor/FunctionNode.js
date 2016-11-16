@@ -4,11 +4,8 @@ import './FunctionNode.less';
 
 
 
-export default ({ name, inputs, outputs, children }) => <div className="function-node">
-	<header>
-		<h1>{ name }</h1>
-		{ children }
-	</header>
+export default ({ name, inputs, outputs }) => <div className="function-node">
+	<header>{ name }</header>
 	{ ( outputs || [] ).map( output => <div className="output" key={ output.name }>
 		<span className="pin" />
 		{ output.name }

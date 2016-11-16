@@ -18,14 +18,17 @@ const TreeItem = ({
 	onExpand        = () => {},
 	onCollapse      = () => {},
 }) => <li
-	className={ `${ children.length ? 'parent' : '' } ${ expanded ? 'expanded' : '' }` }>
+	className={ [
+		children.length ? 'parent' : '',
+		expanded ? 'expanded' : '',
+	].join( ' ' ) }>
 	<a
 		tabIndex="0"
 		onClick={ ev => {
 			ev.stopPropagation();
 			return expanded ? onCollapse( item ) : onExpand( item );
 		} }>
-		{ path[path.length - 1] }
+		<span className="text">{ path[path.length - 1] }</span>
 		{ onCreateButtons( item ) }
 	</a>
 	{ !!children.length && <ul> {

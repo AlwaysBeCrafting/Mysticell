@@ -33,24 +33,22 @@
 		flex-flow: column nowrap;
 		flex-shrink: 0;
 		
-		label ~ * {
+		button {
 			visibility: hidden;
 		}
 		
-		a:hover label ~ * {
+		a:hover button {
 			visibility: visible;
 		}
 		
 		a {
-			padding: 0 16px 0 40px;
+			padding: 12px 16px 12px 40px;
 			display: flex;
 			align-items: center;
 			
 			&:hover { background: @color-divider; }
 			
-			label {
-				cursor: pointer;
-				padding: 12px 0;
+			.text {
 				flex-grow: 1;
 			}
 		}
