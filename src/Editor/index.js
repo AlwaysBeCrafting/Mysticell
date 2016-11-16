@@ -9,13 +9,13 @@ import './index.less';
 
 
 
-const Editor = ( { path } ) => <main id="editor">
+const Editor = ({ path }) => <main id="editor">
 	<div id="document-area">
 		<Fields />
 		{ path.length ? <FormulaEditor /> : <Playmat /> }
 	</div>
-</main>
+</main>;
 
 export default connect(
-	( { path } ) => ( { path } )
+	({ path }) => ({ path }),
 )( Editor );

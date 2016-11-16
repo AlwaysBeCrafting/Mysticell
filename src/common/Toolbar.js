@@ -1,7 +1,7 @@
 import React from 'react';
 
-import './Toolbar.less'
+import './Toolbar.less';
 
 
 
-export default ({ children }) => <menu type="toolbar">{ children }</menu>
+export default ({ children }) => <menu type="toolbar">{ children }</menu>;

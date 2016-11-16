@@ -1,29 +1,30 @@
 import React from 'react';
-import Actions from '../state/Actions';
 import { connect } from 'react-redux';
 
+import { setPath } from '../state/Actions';
 import Toolbar from '../../common/Toolbar';
-
 import NodeArea from './NodeArea';
 
 import './index.less';
 
 
 
-const NodeEditor = ({ setPath, path }) => <div id="node-editor">
+const NodeEditor = ({ onPathClick, path }) => <div id="node-editor">
 	<Toolbar>
-		<a className="icon" onClick={ () => setPath( [] ) }>close</a>
-		<label className="expanding path"> {
-			path.map( (entry,i) => <a
+		<button className="icon" onClick={ () => onPathClick( [] ) }>close</button>
+		<nav className="expanding path">{
+			path.map( (entry, i) => <a
+				href={ `/${ path.join( '/' ) }` }
 				key={ entry }
-				onClick={ () => setPath( path.slice( 0, i + 1 )) }
-			>{ entry }</a> )
-		} </label>
+				onClick={ () => onPathClick( path.slice( 0, i + 1 )) }>
+				
+				{ entry }</a> )
+		}</nav>
 		<a className="icon">undo</a>
 		<a className="icon">redo</a>
 	</Toolbar>
 	<NodeArea />
-</div>
+</div>;
 
 
 
@@ -32,7 +33,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-	setPath: path => dispatch( Actions.setPath( path )),
+	onPathClick: path => dispatch( setPath( path )),
 });
 
 export default connect(

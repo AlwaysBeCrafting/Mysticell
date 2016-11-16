@@ -4,24 +4,26 @@ import './Dropdown.less';
 
 
 
-export default ({ items, selection, open, onOpen, onClose, onSelect }) => <div
-	data-value={ selection.value }
+export default ({ items, selection, open, onOpen, onClose, onSelect }) => <button
 	className={ open ? 'open dropdown' : 'dropdown' }
+	data-value={ selection.value }
 	onClick={ open ? onClose : onOpen }
 	onBlur={ onClose }
 	tabIndex="0">
 	
-	<label>{ selection.text }</label>
-		<ol>{
-			items.map( item => <li
-				data-value={ item.value }
-				key={ item.value }
+	<span className="value">{ selection.text }</span>
+	<ol>{
+		items.map( item => <li
+			data-value={ item.value }
+			key={ item.value }>
+			<a
+				tabIndex="0"
 				onClick={ () => onSelect( item ) }>
-				
 				{ item.text }
-			</li> )
-		}</ol>
-		<div className="hidden-child">{
-			items.map( ({ text, value }) => <span key={ value }>{ text }</span> )
-		}</div>
-</div>
+			</a>
+		</li> )
+	}</ol>
+	<div className="hidden-child">{
+		items.map( ({ text, value }) => <span key={ value }>{ text }</span> )
+	}</div>
+</button>;

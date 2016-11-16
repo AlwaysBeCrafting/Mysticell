@@ -11,10 +11,9 @@ export default ({ nodes }) => <div id="node-area">
 		name="Add"
 		inputs={ [
 			{ name: 'A' },
-			{ name: 'B' }
+			{ name: 'B' },
 		] }
 		outputs={ [
-			{ name: 'Sum'}
-		] }
-	/>
-</div>
+			{ name: 'Sum' },
+		] } />
+</div>;

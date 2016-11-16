@@ -1,9 +1,10 @@
 import { combineReducers } from 'redux';
 
-import Actions from './Actions';
+import { SET_PATH, EXPAND_FIELD, COLLAPSE_FIELD } from './Actions';
 
 //==============================================================================
 
+/* eslint-disable */
 const EXAMPLE_DOC = {
 	_id: 0,
 	title: 'Open Legend Character Template',
@@ -78,13 +79,14 @@ const EXAMPLE_DOC = {
 		] },
 	]
 };
+/* eslint-enable */
 
 //------------------------------------------------------------------------------
 
 const path = ( state = [], action ) => {
-	if ( action.type === Actions.SET_PATH ) return action.path;
-	else return state;
-}
+	if ( action.type === SET_PATH ) return action.path;
+	return state;
+};
 
 //------------------------------------------------------------------------------
 
@@ -94,20 +96,18 @@ const doc = ( state = EXAMPLE_DOC, action ) => state;
 
 const expandedFields = ( state = {}, action ) => {
 	switch ( action.type ) {
-		case Actions.EXPAND_FIELD:
+		case EXPAND_FIELD:
 			return { ...state, [action.id]: true };
-		
-		case Actions.COLLAPSE_FIELD:
-			const newState = { ...state };
-			delete newState[action.id];
-			return newState;
+			
+		case COLLAPSE_FIELD:
+			return { ...state, [action.id]: undefined };
 			
 		default: return state;
 	}
 };
 
 const ui = combineReducers( {
-	expandedFields
+	expandedFields,
 } );
 
 //------------------------------------------------------------------------------
