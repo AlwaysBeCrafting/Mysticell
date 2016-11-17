@@ -30,8 +30,7 @@ class NodeEditor extends React.PureComponent {
 				<a className="icon">undo</a>
 				<a className="icon">redo</a>
 			</Toolbar>
-			<NodeArea
-				property="value" />
+			<NodeArea />
 		</div>;
 	}
 }

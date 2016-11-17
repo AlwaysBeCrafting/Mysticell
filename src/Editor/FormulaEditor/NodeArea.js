@@ -9,8 +9,7 @@ import './NodeArea.less';
 //==============================================================================
 
 const dropTarget = {
-	drop: ( props, monitor, component ) => {
-	},
+	drop:  ( props, monitor, component ) => {},
 	hover: ( props, monitor, component ) => {},
 };
 
