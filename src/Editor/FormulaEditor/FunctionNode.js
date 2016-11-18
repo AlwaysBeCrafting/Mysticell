@@ -32,27 +32,23 @@ class FunctionNode extends React.PureComponent {
 			node: { label, fxn },
 		} = this.props;
 		
-		const { inputs, outputs } = Fxn[fxn];
+		const { inputs, output } = Fxn[fxn];
 		
 		return connectDragSource(
 			<div className="function-node">
 				<header>{ isDragging ? 'dragging' : label }</header>
 				
-				{ ( outputs || [] ).map( output => (
-					
-					<div className="output" key={ output.name }>
-						<span className="pin" />
-						{ output.name }
-					</div>
-					
-				)) }
+				{ output && <div className="output" key={ output.name }>
+					<span className="pin" />
+					{ output }
+				</div> }
+				
 				{ ( inputs || [] ).map( input => (
 					
-					<div className="input" key={ input.name }>
+					<div className="input" key={ input }>
 						<span className="pin" />
-						{ input.name }
+						{ input }
 					</div>
-					
 				)) }
 			</div>,
 		);
