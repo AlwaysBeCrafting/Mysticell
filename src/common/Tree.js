@@ -6,6 +6,7 @@ import './Tree.less';
 
 export default ({ items, onCreateButtons, onExpandItem, onCollapseItem }) => <ul className="tree"> {
 	items.map( item => <TreeItem
+		key={ item.id }
 		item={ item }
 		onCreateButtons={ onCreateButtons }
 		onExpand={ onExpandItem }
@@ -33,6 +34,7 @@ const TreeItem = ({
 	</a>
 	{ !!children.length && <ul> {
 		children.map( childItem => <TreeItem
+			key={ childItem.id }
 			item={ childItem }
 			onCreateButtons={ onCreateButtons }
 			onExpand={ onExpand }
