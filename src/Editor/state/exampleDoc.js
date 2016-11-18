@@ -4,8 +4,16 @@ export default {
 	sheets: [ { title: 'Sheet 1', _id: 1, cells: [] } ],
 	cards:  [ { title: 'Card 1', _id: 2, cells: [] } ],
 	fields: [ {
-		name:     'Stats',
-		_id:      3,
+		name:    'Stats',
+		_id:     3,
+		formula: {
+			resultNode: {
+				label:      'Output',
+				fxn:        'outputFxn',
+				inputNodes: [],
+			},
+			nodes: [],
+		},
 		children: [ {
 			name:     'Attributes',
 			_id:      4,
