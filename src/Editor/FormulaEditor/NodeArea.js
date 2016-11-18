@@ -17,27 +17,20 @@ const dropTarget = {
 
 const collect = ( connect, monitor ) => ({
 	connectDropTarget: connect.dropTarget(),
-	isOver:            monitor.isOver(),
 });
 
 //------------------------------------------------------------------------------
 
 class NodeArea extends React.PureComponent {
 	render() {
-		// const { nodes, isOver } = this.props;
-		const { connectDropTarget } = this.props;
+		const { formula: { nodes }, connectDropTarget } = this.props;
 		
 		return connectDropTarget(
 			<div id="node-area">
-				<FunctionNode
-					name="Add"
-					inputs={ [
-						{ name: 'A' },
-						{ name: 'B' },
-					] }
-					outputs={ [
-						{ name: 'Sum' },
-					] } />
+				{ nodes.map( node => <FunctionNode
+					key={ node._id }
+					node={ node } />,
+				)},
 			</div>,
 		);
 	}

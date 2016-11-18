@@ -2,6 +2,7 @@ import React from 'react';
 import { DragSource as dragSource } from 'react-dnd';
 
 import Types from './itemTypes';
+import Fxn from '../state/fxn';
 
 import './FunctionNode.less';
 
@@ -25,12 +26,21 @@ const collect = ( connect, monitor ) => ( {
 
 class FunctionNode extends React.PureComponent {
 	render() {
-		const { name, inputs, outputs }         = this.props;
-		const { connectDragSource, isDragging } = this.props;
+		console.log( this.props.node );
+		
+		const {
+			connectDragSource,
+			isDragging,
+			node: { label, fxn },
+		} = this.props;
+		
+		console.log( Fxn );
+		
+		const { inputs, outputs } = Fxn[fxn];
 		
 		return connectDragSource(
 			<div className="function-node">
-				<header>{ isDragging ? 'dragging' : name }</header>
+				<header>{ isDragging ? 'dragging' : label }</header>
 				
 				{ ( outputs || [] ).map( output => (
 					

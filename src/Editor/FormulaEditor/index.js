@@ -11,11 +11,18 @@ import NodeArea from './NodeArea';
 import './index.less';
 
 
+const fieldAtPath = ( rootField, path ) => path.reduce(
+	( field, childName ) => field.children.find( child => child.name === childName ),
+	rootField,
+);
+	
+
 
 class FormulaEditor extends React.PureComponent {
 	render() {
-		const { onPathClick, path } = this.props;
-			
+		const { onPathClick, path, rootField } = this.props;
+		const field = fieldAtPath( rootField, path );
+		
 		return <div id="node-editor">
 			<Toolbar>
 				<button className="icon" onClick={ () => onPathClick( [] ) }>close</button>
@@ -30,7 +37,7 @@ class FormulaEditor extends React.PureComponent {
 				<a className="icon">undo</a>
 				<a className="icon">redo</a>
 			</Toolbar>
-			<NodeArea />
+			<NodeArea formula={ field.formula } />
 		</div>;
 	}
 }
@@ -38,8 +45,13 @@ class FormulaEditor extends React.PureComponent {
 
 
 const ConnectedNodeEditor = connect(
-	state => ({ path: state.path }),
-	dispatch => ({ onPathClick: path => dispatch( setPath( path )) }),
+	state => ({
+		path:      state.path,
+		rootField: { children: state.doc.fields },
+	}),
+	dispatch => ({
+		onPathClick: path => dispatch( setPath( path )),
+	}),
 )( FormulaEditor );
 
 

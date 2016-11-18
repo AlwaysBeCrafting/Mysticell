@@ -9,10 +9,20 @@ export default {
 		formula: {
 			resultNode: {
 				label:      'Output',
-				fxn:        'outputFxn',
-				inputNodes: [],
+				fxn:        'OUTPUT',
+				inputNodes: [ 501 ],
+				position:   [ 0, 0 ],
+				_id:        500,
 			},
-			nodes: [],
+			nodes: [
+				{
+					label:      'Add',
+					fxn:        'ADD',
+					inputNodes: [],
+					position:   [ -300, 0 ],
+					_id:        501,
+				},
+			],
 		},
 		children: [ {
 			name:     'Attributes',
