@@ -26,15 +26,11 @@ const collect = ( connect, monitor ) => ( {
 
 class FunctionNode extends React.PureComponent {
 	render() {
-		console.log( this.props.node );
-		
 		const {
 			connectDragSource,
 			isDragging,
 			node: { label, fxn },
 		} = this.props;
-		
-		console.log( Fxn );
 		
 		const { inputs, outputs } = Fxn[fxn];
 		
