@@ -23,14 +23,15 @@ const collect = ( connect, monitor ) => ({
 
 class NodeArea extends React.PureComponent {
 	render() {
-		const { formula: { nodes }, connectDropTarget } = this.props;
+		const { formula, connectDropTarget } = this.props;
+		const { nodes } = formula || { nodes: [] };
 		
 		return connectDropTarget(
 			<div id="node-area">
 				{ nodes.map( node => <FunctionNode
 					key={ node._id }
 					node={ node } />,
-				)},
+				)}
 			</div>,
 		);
 	}
