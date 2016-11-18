@@ -146,7 +146,10 @@
           "extensions": [
             ".js"
           ]
-        }
+	  	},
+		"webpack": {
+			"config": "config/webpack.config.dev.js"
+		}
       }
     },
     "plugins": [

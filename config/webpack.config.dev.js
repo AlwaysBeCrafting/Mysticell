@@ -1,3 +1,4 @@
+const path = require( 'path' );
 const autoprefixer = require('autoprefixer');
 const webpack = require('webpack');
 const findCacheDir = require('find-cache-dir');
@@ -31,6 +32,9 @@ module.exports = {
 		alias:      {
 			'react-native': 'react-native-web',
 		},
+		root: [
+			path.resolve( __dirname, '../src' ),
+		],
 	},
 	
 	module: {
