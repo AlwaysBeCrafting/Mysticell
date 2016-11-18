@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import expandField   from './state/expandField';
-import collapseField from './state/collapseField';
-import setPath       from './state/setPath';
+import expandField   from '../../state/expandField';
+import collapseField from '../../state/collapseField';
+import setPath       from '../../state/setPath';
 
 import Tree from '../common/Tree';
 

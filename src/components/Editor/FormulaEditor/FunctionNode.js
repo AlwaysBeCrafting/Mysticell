@@ -2,7 +2,7 @@ import React from 'react';
 import { DragSource as dragSource } from 'react-dnd';
 
 import Types from './itemTypes';
-import Fxn from '../state/fxn';
+import Fxn from '../../../state/fxn';
 
 import './FunctionNode.less';
 

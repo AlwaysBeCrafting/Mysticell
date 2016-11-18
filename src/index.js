@@ -2,9 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
-import Editor from './Editor';
+import Editor from './components/Editor';
 
-import store from './Editor/state';
+import store from './state';
 
 
 

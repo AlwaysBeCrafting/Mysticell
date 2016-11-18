@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContext } from 'react-dnd';
 
-import setPath from '../state/setPath';
+import setPath from '../../../state/setPath';
 import Toolbar from '../../common/Toolbar';
 import NodeArea from './NodeArea';
 
