@@ -4,8 +4,23 @@ export default {
 	sheets: [ { title: 'Sheet 1', _id: 1, cells: [] } ],
 	cards:  [ { title: 'Card 1', _id: 2, cells: [] } ],
 	fields: [ {
-		name:     'Stats',
-		_id:      3,
+		name:    'Stats',
+		_id:     3,
+		formula: {
+			resultNode: {
+				inputNodes: [ 501 ],
+				position:   [ 0, 0 ],
+			},
+			nodes: [
+				{
+					label:      'Add',
+					fxn:        'ADD',
+					inputNodes: [],
+					position:   [ -300, 0 ],
+					_id:        501,
+				},
+			],
+		},
 		children: [ {
 			name:     'Attributes',
 			_id:      4,
