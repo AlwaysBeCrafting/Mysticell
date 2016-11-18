@@ -8,11 +8,8 @@ export default {
 		_id:     3,
 		formula: {
 			resultNode: {
-				label:      'Output',
-				fxn:        'OUTPUT',
 				inputNodes: [ 501 ],
 				position:   [ 0, 0 ],
-				_id:        500,
 			},
 			nodes: [
 				{
