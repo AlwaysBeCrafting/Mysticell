@@ -12,7 +12,7 @@ import './index.less';
 
 
 
-class NodeEditor extends React.PureComponent {
+class FormulaEditor extends React.PureComponent {
 	render() {
 		const { onPathClick, path } = this.props;
 			
@@ -40,7 +40,7 @@ class NodeEditor extends React.PureComponent {
 const ConnectedNodeEditor = connect(
 	state => ({ path: state.path }),
 	dispatch => ({ onPathClick: path => dispatch( setPath( path )) }),
-)( NodeEditor );
+)( FormulaEditor );
 
 
 
