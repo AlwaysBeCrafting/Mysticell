@@ -9,7 +9,7 @@ import './NodeArea.less';
 //==============================================================================
 
 const dropTarget = {
-	drop:  ( props, monitor, component ) => {},
+	drop:  ( props, monitor, component ) => monitor.getDifferenceFromInitialOffset(),
 	hover: ( props, monitor, component ) => {},
 };
 

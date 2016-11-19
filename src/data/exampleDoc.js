@@ -7,16 +7,13 @@ export default {
 		name:    'Stats',
 		_id:     3,
 		formula: {
-			resultNode: {
-				inputNodes: [ 501 ],
-				position:   [ 0, 0 ],
-			},
-			nodes: [
+			resultNode: 501,
+			nodes:      [
 				{
 					label:      'Add',
 					fxn:        'ADD',
 					inputNodes: [],
-					position:   [ -300, 0 ],
+					position:   { x: 0, y: 0 },
 					_id:        501,
 				},
 			],

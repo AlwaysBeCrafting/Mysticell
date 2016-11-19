@@ -10,10 +10,15 @@ import './FunctionNode.less';
 //==============================================================================
 
 const cardSource = {
-	beginDrag: props => ({
-		_id: 0,
-	}),
-	endDrag: ( props, monitor, component ) => 'endDrag',
+	beginDrag: ({ node }) => node,
+	endDrag:   ({ node }, monitor, component ) => {
+		const { x: dx, y: dy } = monitor.getDropResult();
+		const { x, y } = node.position || { x: 0, y: 0 };
+		node.position = {
+			x: x + dx,
+			y: y + dy,
+		};
+	},
 };
 
 //------------------------------------------------------------------------------
@@ -30,7 +35,7 @@ class FunctionNode extends React.PureComponent {
 		const {
 			connectDragSource,
 			isDragging,
-			node: { label, fxn },
+			node: { label, fxn, position },
 		} = this.props;
 		
 		const { inputs, output } = Fxn[fxn];
@@ -38,8 +43,10 @@ class FunctionNode extends React.PureComponent {
 		const className = [ 'function-node' ];
 		if ( isDragging ) className.push( 'dragging' );
 		
+		const { x: left, y: top } = position || { x: 0, y: 0 };
+		
 		return connectDragSource(
-			<div className={ className.join( ' ' ) }>
+			<div className={ className.join( ' ' ) } style={{ left, top }}>
 				<header>{ label }</header>
 				
 				{ output && <div className="output" key={ output.name }>
