@@ -35,9 +35,12 @@ class FunctionNode extends React.PureComponent {
 		
 		const { inputs, output } = Fxn[fxn];
 		
+		const className = [ 'function-node' ];
+		if ( isDragging ) className.push( 'dragging' );
+		
 		return connectDragSource(
-			<div className="function-node">
-				<header>{ isDragging ? 'dragging' : label }</header>
+			<div className={ className.join( ' ' ) }>
+				<header>{ label }</header>
 				
 				{ output && <div className="output" key={ output.name }>
 					<span className="pin" />
