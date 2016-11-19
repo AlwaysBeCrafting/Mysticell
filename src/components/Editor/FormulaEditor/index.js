@@ -13,6 +13,7 @@ import NodeArea from './NodeArea';
 import './index.less';
 
 
+
 const fieldAtPath = ( rootField, path ) => path.reduce(
 	( field, childName ) => field.children.find( child => child.name === childName ),
 	rootField,
