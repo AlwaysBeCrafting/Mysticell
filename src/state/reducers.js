@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-import exampleDoc from './exampleDoc';
+import exampleDoc from 'data/exampleDoc';
 
 import { reducer as reduceSetPath       } from './setPath';
 import { reducer as reduceExpandField   } from './expandField';
