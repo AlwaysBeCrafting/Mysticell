@@ -1,8 +1,9 @@
 import React from 'react';
 import { DragSource as dragSource } from 'react-dnd';
 
+import Fxn from 'data/fxn';
+
 import Types from './itemTypes';
-import Fxn from '../state/fxn';
 
 import './FunctionNode.less';
 

@@ -4,11 +4,14 @@ import { connect } from 'react-redux';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContext } from 'react-dnd';
 
-import setPath from '../state/setPath';
-import Toolbar from '../../common/Toolbar';
+import setPath from 'state/setPath';
+
+import Toolbar from 'components/common/Toolbar';
+
 import NodeArea from './NodeArea';
 
 import './index.less';
+
 
 
 const fieldAtPath = ( rootField, path ) => path.reduce(
