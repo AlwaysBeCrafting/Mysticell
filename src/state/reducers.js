@@ -1,6 +1,8 @@
 import { combineReducers } from 'redux';
 
 import exampleDoc from 'data/exampleDoc.json';
+import importDoc from 'data/importDoc';
+
 
 import { reducer as reduceSetPath       } from './setPath';
 import { reducer as reduceExpandField   } from './expandField';
@@ -13,7 +15,7 @@ const reducePath = ( state = [], action ) => reduceSetPath( state, action );
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
-const reduceDoc = ( state = exampleDoc, action ) => state;
+const reduceDoc = ( state = importDoc( exampleDoc ), action ) => state;
 
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------

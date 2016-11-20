@@ -1,7 +1,9 @@
+const mapChildrenToIds = ( children = [] ) => children.map( child => child._id );
+
 const mapItems = ( items = [] ) => items.reduce(
 	( acc, item ) => ({
 		...acc,
-		[item._id]: { ...item, children: ( item.children || [] ).map( child => child._id ) },
+		[item._id]: { ...item, children: mapChildrenToIds( item.children ) },
 		...mapItems( item.children ),
 	}),
 	{/* Start empty */},
@@ -9,7 +11,8 @@ const mapItems = ( items = [] ) => items.reduce(
 
 export default doc => ({
 	...doc,
-	cards:  mapItems( doc.cards  ),
-	sheets: mapItems( doc.sheets ),
-	fields: mapItems( doc.fields ),
+	cardsById:  mapItems( doc.cards  ),
+	sheetsById: mapItems( doc.sheets ),
+	fieldsById: mapItems( doc.fields ),
+	rootFields: doc.fields.map( field => field._id ),
 });

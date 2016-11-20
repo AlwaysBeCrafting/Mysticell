@@ -13,21 +13,23 @@ import icFormula from './ic_formula.svg';
 
 
 
-const mapFieldsToTreeItems = ( fields, expandedFields = [], path = [] ) => fields.map(
-	( { _id, name, children } ) => ( {
-		id:       _id,
-		path:     [ ...path, name ],
-		children: mapFieldsToTreeItems(
-			children,
-			expandedFields,
-			[ ...path, name ],
-		),
-		expanded: !!expandedFields[_id],
-	} ),
-);
+const mapFieldIdsToTreeItems = ( ids, fields, expandedFields = [], path = [] ) =>
+	ids.map( id => fields[id] )
+		.map(({ _id, name, children }) => ( {
+			id:       _id,
+			path:     [ ...path, name ],
+			children: mapFieldIdsToTreeItems(
+				children,
+				fields,
+				expandedFields,
+				[ ...path, name ],
+			),
+			expanded: !!expandedFields[_id],
+		} ),
+	); // */
 
 const mapStateToProps = state => ( {
-	items: mapFieldsToTreeItems( state.doc.fields, state.ui.expandedFields ),
+	items: mapFieldIdsToTreeItems( state.doc.rootFields, state.doc.fieldsById, state.ui.expandedFields ),
 } );
 
 const mapDispatchToProps = dispatch => ( {
