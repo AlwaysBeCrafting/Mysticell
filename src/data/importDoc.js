@@ -11,8 +11,8 @@ const mapItems = ( items = [] ) => items.reduce(
 
 export default doc => ({
 	...doc,
-	cardsById:  mapItems( doc.cards  ),
-	sheetsById: mapItems( doc.sheets ),
-	fieldsById: mapItems( doc.fields ),
+	cards:      mapItems( doc.cards  ),
+	sheets:     mapItems( doc.sheets ),
+	fields:     mapItems( doc.fields ),
 	rootFields: doc.fields.map( field => field._id ),
 });

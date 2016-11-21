@@ -26,10 +26,10 @@ const mapFieldIdsToTreeItems = ( ids, fields, expandedFields = [], path = [] ) =
 			),
 			expanded: !!expandedFields[_id],
 		} ),
-	); // */
+	);
 
 const mapStateToProps = state => ( {
-	items: mapFieldIdsToTreeItems( state.doc.rootFields, state.doc.fieldsById, state.ui.expandedFields ),
+	items: mapFieldIdsToTreeItems( state.doc.rootFields, state.doc.fields, state.ui.expandedFields ),
 } );
 
 const mapDispatchToProps = dispatch => ( {
