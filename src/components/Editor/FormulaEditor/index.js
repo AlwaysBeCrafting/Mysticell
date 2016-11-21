@@ -14,17 +14,19 @@ import './index.less';
 
 
 
-const fieldAtPath = ( rootField, path ) => path.reduce(
-	( field, childName ) => field.children.find( child => child.name === childName ),
+const fieldAtPath = ( path, rootField, fields ) => path.reduce(
+	( field, childName ) => field.children
+		.map( id => fields[id] )
+		.find( child => child.name === childName ),
 	rootField,
 );
-	
+
 
 
 class FormulaEditor extends React.PureComponent {
 	render() {
-		const { onPathClick, path, rootField } = this.props;
-		const field = fieldAtPath( rootField, path );
+		const { path, rootField, fields, onPathClick } = this.props;
+		const field = fieldAtPath( path, rootField, fields );
 		
 		return <div id="node-editor">
 			<Toolbar>
@@ -50,7 +52,8 @@ class FormulaEditor extends React.PureComponent {
 const ConnectedNodeEditor = connect(
 	state => ({
 		path:      state.path,
-		rootField: { children: state.doc.fields },
+		rootField: { children: state.doc.rootFields },
+		fields:    state.doc.fields,
 	}),
 	dispatch => ({
 		onPathClick: path => dispatch( setPath( path )),
