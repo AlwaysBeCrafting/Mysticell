@@ -9,12 +9,30 @@ const mapItems = ( items = [] ) => items.reduce(
 	{/* Start empty */},
 );
 
-export default doc => ({
-	...doc,
-	cards:         mapItems( doc.cards  ),
-	sheets:        mapItems( doc.sheets ),
-	fields:        mapItems( doc.fields ),
-	rootFields:    doc.fields.map( field => field._id ),
-	visibleCards:  doc.cards.map(  card  => card._id  ),
-	visibleSheets: doc.sheets.map( sheet => sheet._id ),
-});
+export default doc => {
+	const cards  = mapItems( doc.cards );
+	const sheets = mapItems( doc.sheets );
+	const fields = mapItems( doc.fields );
+	const nodes = fields.reduce(
+		( acc, field ) => {
+			field.nodes.each( node => { acc[node._id] = node; });
+			return acc;
+		},
+		{/* Start empty */},
+	);
+	
+	const rootFields = doc.fields.map( field => field._id );
+	const visibleCards = doc.cards.map( card => card._id );
+	const visibleSheets = doc.sheets.map( sheet => sheet._id );
+	
+	return {
+		...doc,
+		cards,
+		sheets,
+		fields,
+		nodes,
+		rootFields,
+		visibleCards,
+		visibleSheets,
+	};
+};

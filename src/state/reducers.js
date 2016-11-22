@@ -4,6 +4,9 @@ import exampleDoc from 'data/exampleDoc.json';
 import importDoc from 'data/importDoc';
 
 
+import { reducer as reduceMoveNode } from './moveNode';
+
+
 import { reducer as reduceSetPath       } from './setPath';
 import { reducer as reduceExpandField   } from './expandField';
 import { reducer as reduceCollapseField } from './collapseField';
@@ -15,7 +18,19 @@ const reducePath = ( state = [], action ) => reduceSetPath( state, action );
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
-const reduceDoc = ( state = importDoc( exampleDoc ), action ) => state;
+const reduceNodes = ( state = {}, action ) => [
+	reduceMoveNode,
+].reduce(
+	( acc, reduce ) => reduce( acc, action ),
+	state,
+);
+
+//------------------------------------------------------------------------------
+
+const reduceDoc = ( state = importDoc( exampleDoc ), action ) => ({
+	...state,
+	nodes: reduceNodes( state.nodes, action ),
+});
 
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
@@ -24,7 +39,7 @@ const reduceExpandedFields = ( state = {}, action ) => [
 	reduceExpandField,
 	reduceCollapseField,
 ].reduce(
-	( prevState, reduce ) => reduce( prevState, action ),
+	( acc, reduce ) => reduce( acc, action ),
 	state,
 );
 
