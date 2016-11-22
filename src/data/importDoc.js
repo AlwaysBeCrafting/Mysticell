@@ -13,9 +13,13 @@ export default doc => {
 	const cards  = mapItems( doc.cards );
 	const sheets = mapItems( doc.sheets );
 	const fields = mapItems( doc.fields );
-	const nodes = fields.reduce(
-		( acc, field ) => {
-			field.nodes.each( node => { acc[node._id] = node; });
+	
+	const nodes = Object.keys( fields ).reduce(
+		( acc, id ) => {
+			(( fields[id].formula || {} ).nodes || [] ).forEach( node => {
+				console.log( 'read node', node._id );
+				acc[node._id] = node;
+			});
 			return acc;
 		},
 		{/* Start empty */},

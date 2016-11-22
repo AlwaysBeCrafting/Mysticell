@@ -1,5 +1,8 @@
 import React from 'react';
+import { connect as reduxConnect } from 'react-redux';
 import { DragSource as dragSource } from 'react-dnd';
+
+import moveNode from 'state/moveNode';
 
 import Fxn from 'data/fxn';
 
@@ -10,21 +13,19 @@ import './FunctionNode.less';
 //==============================================================================
 
 const cardSource = {
-	beginDrag: ({ node }) => node,
-	endDrag:   ({ node }, monitor, component ) => {
+	beginDrag: ({ id, nodes }) => nodes[id],
+	endDrag:   ({ id, nodes, onMove }, monitor, component ) => {
 		const { x: dx, y: dy } = monitor.getDropResult();
-		const { x, y } = node.position || { x: 0, y: 0 };
-		node.position = {
-			x: x + dx,
-			y: y + dy,
-		};
+		const { x, y } = nodes[id].position || { x: 0, y: 0 };
+		
+		onMove( id, { x: x + dx, y: y + dy });
 	},
 };
 
 //------------------------------------------------------------------------------
 
-const collect = ( connect, monitor ) => ( {
-	connectDragSource: connect.dragSource(),
+const collect = ( connectDnd, monitor ) => ( {
+	connectDragSource: connectDnd.dragSource(),
 	isDragging:        monitor.isDragging(),
 } );
 
@@ -35,9 +36,11 @@ class FunctionNode extends React.PureComponent {
 		const {
 			connectDragSource,
 			isDragging,
-			node: { label, fxn, position },
+			id,
+			nodes,
 		} = this.props;
 		
+		const { label, fxn, position } = nodes[id];
 		const { inputs, output } = Fxn[fxn];
 		
 		const className = [ 'function-node' ];
@@ -68,8 +71,19 @@ class FunctionNode extends React.PureComponent {
 
 //------------------------------------------------------------------------------
 
-export default dragSource(
+const DraggableFunctionNode = dragSource(
 	Types.FORMULA_NODE,
 	cardSource,
 	collect,
 )( FunctionNode );
+
+//------------------------------------------------------------------------------
+
+export default reduxConnect(
+	state => ({
+		nodes: state.doc.nodes,
+	}),
+	dispatch => ({
+		onMove: ( id, position ) => dispatch( moveNode( id, position )),
+	}),
+)( DraggableFunctionNode );
