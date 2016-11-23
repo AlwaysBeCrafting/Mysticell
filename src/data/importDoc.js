@@ -17,7 +17,6 @@ export default doc => {
 	const nodes = Object.keys( fields ).reduce(
 		( acc, id ) => {
 			(( fields[id].formula || {} ).nodes || [] ).forEach( node => {
-				console.log( 'read node', node._id );
 				acc[node._id] = node;
 			});
 			return acc;
