@@ -7,6 +7,7 @@ import { DragDropContext } from 'react-dnd';
 import setPath from 'state/setPath';
 
 import Toolbar from 'components/common/Toolbar';
+import FAB from 'components/common/FAB';
 
 import NodeArea from './NodeArea';
 
@@ -43,6 +44,7 @@ class FormulaEditor extends React.PureComponent {
 				<a className="icon">redo</a>
 			</Toolbar>
 			<NodeArea formula={ field.formula } />
+			<FAB icon="add" />
 		</div>;
 	}
 }
