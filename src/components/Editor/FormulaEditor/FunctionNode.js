@@ -15,10 +15,12 @@ import './FunctionNode.less';
 const cardSource = {
 	beginDrag: ({ id, nodes }) => nodes[id],
 	endDrag:   ({ id, nodes, onMove }, monitor, component ) => {
-		const { x: dx, y: dy } = monitor.getDropResult();
-		const { x, y } = nodes[id].position || { x: 0, y: 0 };
-		
-		onMove( id, { x: x + dx, y: y + dy });
+		if ( monitor.didDrop() ) {
+			const { x: dx, y: dy } = monitor.getDropResult();
+			const { x, y } = nodes[id].position || { x: 0, y: 0 };
+			
+			onMove( id, { x: x + dx, y: y + dy });
+		}
 	},
 };
 
