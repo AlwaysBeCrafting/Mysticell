@@ -5,6 +5,7 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContext } from 'react-dnd';
 
 import setPath from 'state/setPath';
+import addNode from 'state/addNode';
 
 import Toolbar from 'components/common/Toolbar';
 import FAB from 'components/common/FAB';
@@ -26,7 +27,7 @@ const fieldAtPath = ( path, rootField, fields ) => path.reduce(
 
 class FormulaEditor extends React.PureComponent {
 	render() {
-		const { path, rootField, fields, onPathClick } = this.props;
+		const { path, rootField, fields, onPathClick, onCreateNode } = this.props;
 		const field = fieldAtPath( path, rootField, fields );
 		
 		return <div id="node-editor">
@@ -44,7 +45,7 @@ class FormulaEditor extends React.PureComponent {
 				<a className="icon">redo</a>
 			</Toolbar>
 			<NodeArea formula={ field.formula } />
-			<FAB icon="add" />
+			<FAB icon="add" onClick={ () => onCreateNode( field._id ) } />
 		</div>;
 	}
 }
@@ -58,7 +59,8 @@ const ConnectedNodeEditor = connect(
 		fields:    state.doc.fields,
 	}),
 	dispatch => ({
-		onPathClick: path => dispatch( setPath( path )),
+		onPathClick:  path => dispatch( setPath( path )),
+		onCreateNode: fieldId => dispatch( addNode( fieldId, 'ADD' )),
 	}),
 )( FormulaEditor );
 
