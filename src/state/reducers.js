@@ -5,6 +5,7 @@ import importDoc from 'data/importDoc';
 
 
 import { reducer as reduceMoveNode } from './moveNode';
+import { reducer as reduceAddNode  } from './addNode';
 
 
 import { reducer as reduceSetPath       } from './setPath';
@@ -27,10 +28,17 @@ const reduceNodes = ( state = {}, action ) => [
 
 //------------------------------------------------------------------------------
 
-const reduceDoc = ( state = importDoc( exampleDoc ), action ) => ({
-	...state,
-	nodes: reduceNodes( state.nodes, action ),
-});
+const reduceDoc = ( state = importDoc( exampleDoc ), action ) => [
+	localState => ({
+		...localState,
+		nodes: reduceNodes( localState.nodes, action ),
+	}),
+	reduceAddNode,
+].reduce(
+	( acc, reduce ) => reduce( acc, action ),
+	state,
+);
+	
 
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
