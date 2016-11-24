@@ -1,22 +1,34 @@
-const mapChildrenToIds = ( children = [] ) => children.map( child => child._id );
-
-const mapItems = ( items = [] ) => items.reduce(
+const mapId = ( items = [] ) => items.reduce(
 	( acc, item ) => ({
 		...acc,
-		[item._id]: { ...item, children: mapChildrenToIds( item.children ) },
-		...mapItems( item.children ),
+		[item._id]: item,
 	}),
-	{/* Start empty */},
+	{},
+);
+
+const flatten = ( items = [] ) => items.reduce(
+	( acc, item ) => [
+		...acc,
+		item,
+		...flatten( item.children ),
+	],
+	[],
 );
 
 export default doc => {
-	const cards  = mapItems( doc.cards );
-	const sheets = mapItems( doc.sheets );
-	const fields = mapItems( doc.fields );
+	const fields = flatten( doc.fields );
+	const nodeMappedFields = fields.map( field => ({
+		...field,
+		formula: {
+			...field.formula,
+			nodes: mapId( field.formula && field.formula.nodes ),
+		},
+		children: field.children.map( child => child._id ),
+	}));
 	
-	const nodes = Object.keys( fields ).reduce(
-		( acc, id ) => {
-			(( fields[id].formula || {} ).nodes || [] ).forEach( node => {
+	const nodes = fields.reduce(
+		( acc, field ) => {
+			(( field.formula || {} ).nodes || [] ).forEach( node => {
 				acc[node._id] = node;
 			});
 			return acc;
@@ -30,9 +42,10 @@ export default doc => {
 	
 	return {
 		...doc,
-		cards,
-		sheets,
-		fields,
+		
+		cards:  mapId( doc.cards ),
+		sheets: mapId( doc.sheets ),
+		fields: mapId( nodeMappedFields ),
 		nodes,
 		rootFields,
 		visibleCards,

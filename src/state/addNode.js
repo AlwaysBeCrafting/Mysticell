@@ -18,7 +18,7 @@ export const reducer = ( state = { fields: {}, nodes: {} }, { fieldId, fxn, type
 				...fields[fieldId].formula,
 				nodes: [
 					...fields[fieldId].formula.nodes,
-					node,
+					node._id,
 				],
 			},
 		};
