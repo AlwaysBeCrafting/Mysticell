@@ -21,7 +21,7 @@ export default doc => {
 		...field,
 		formula: {
 			...field.formula,
-			nodes: mapId( field.formula && field.formula.nodes ),
+			nodes: ( field.formula ? field.formula.nodes : [] ).map( node => node._id ),
 		},
 		children: field.children.map( child => child._id ),
 	}));
