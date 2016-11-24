@@ -28,9 +28,9 @@ class NodeArea extends React.PureComponent {
 		
 		return connectDropTarget(
 			<div id="node-area">
-				{ nodes.map( ({ _id }) => <FunctionNode
-					key={ _id }
-					id={ _id } />,
+				{ nodes.map( id => <FunctionNode
+					key={ id }
+					id={ id } />,
 				)}
 			</div>,
 		);
