@@ -3,6 +3,7 @@ import { DropTarget } from 'react-dnd';
 
 import FunctionNode from './FunctionNode';
 import Types from './itemTypes';
+import Wire from './Wire';
 
 import './NodeArea.less';
 
@@ -32,6 +33,7 @@ class NodeArea extends React.PureComponent {
 					key={ id }
 					id={ id } />,
 				)}
+				<Wire />
 			</div>,
 		);
 	}
