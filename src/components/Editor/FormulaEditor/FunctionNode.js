@@ -19,7 +19,12 @@ const cardSource = {
 			const { x: dx, y: dy } = monitor.getDropResult();
 			const { x, y } = nodes[id].position || { x: 0, y: 0 };
 			
-			onMove( id, { x: x + dx, y: y + dy });
+			const [ tx, ty ] = [
+				Math.round(( x + dx ) / 40 ) * 40,
+				Math.round(( y + dy ) / 40 ) * 40,
+			];
+			
+			onMove( id, { x: tx, y: ty });
 		}
 	},
 };
