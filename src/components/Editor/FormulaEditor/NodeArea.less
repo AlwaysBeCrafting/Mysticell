@@ -11,12 +11,14 @@
 	user-select: none;
 	
 	position: relative;
-	display: block;
+	overflow: scroll;
+	
+	background-attachment: local;
 	
 	background-size: @grid-size @grid-size;
 	background-image:
 		linear-gradient(        @grid-line-color 1px, transparent 1px ),
 		linear-gradient( 90deg, @grid-line-color 1px, transparent 1px );
 		
-	background-position: center;
+	background-position: top left;
 }
