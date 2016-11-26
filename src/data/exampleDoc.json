@@ -12,7 +12,7 @@
 				{
 					"label":      "Add",
 					"fxn":        "ADD",
-					"inputNodes": [],
+					"inputNodes": [null,null],
 					"position":   { "x": 0, "y": 0 },
 					"_id":        501
 				}

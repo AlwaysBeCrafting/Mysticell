@@ -7,7 +7,7 @@ export const reducer = ( state = { fields: {}, nodes: {} }, { fieldId, fxn, type
 		const node = {
 			fxn,
 			label:      'Add',
-			inputNodes: [],
+			inputNodes: [ null, null ],
 			position:   { x: 0, y: 0 },
 			_id:        Math.floor( Math.random() * 1000000 ),
 		};
