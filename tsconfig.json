@@ -1,0 +1,29 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es2015",
+        "jsx": "preserve",
+        "moduleResolution": "node",
+        "allowSyntheticDefaultImports": true,
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+
+        "allowUnreachableCode": false,
+        "forceConsistentCasingInFileNames": true,
+        "noFallthroughCasesInSwitch": true,
+        "noImplicitAny": true,
+        "noImplicitReturns": true,
+        "strictNullChecks": true,
+
+        "removeComments": true,
+        "sourceMap": true,
+        "baseUrl": "./src",
+        "rootDirs": [
+            ".",
+            "./src"
+        ]
+    },
+    "exclude": [
+        "node_modules"
+    ]
+}

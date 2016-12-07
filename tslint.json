@@ -1,0 +1,30 @@
+{
+    "extends": "tslint:latest",
+    "rules": {
+        "indent": [
+            true,
+            "tabs"
+        ],
+        "no-var-requires": false,
+        "interface-name": [
+            true,
+            "never-prefix"
+        ],
+        "object-literal-sort-keys": false,
+        "align": [
+            false
+        ],
+        "arrow-parens": false,
+        "comment-format": [
+            false
+        ],
+        "max-classes-per-file": [
+            false
+        ],
+        "quotemark": [
+            true,
+            "single",
+            "jsx-double"
+        ]
+    }
+}

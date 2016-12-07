@@ -1,0 +1,59 @@
+import * as  React from 'react';
+import { connect } from 'react-redux';
+
+import collapseField from 'state/collapseField';
+import expandField   from 'state/expandField';
+import setPath       from 'state/setPath';
+
+import Tree, { TreeItemData, TreeProps } from 'components/common/Tree';
+import Doc, {FieldMap} from 'data/doc';
+
+import './Fields.less';
+
+const icFormula = require<string>('./ic_formula.svg');
+
+function mapFieldIdsToTreeItems(ids: number[], fields: FieldMap, expandedFields: FieldMap,
+								path: string[] = []): TreeItemData[] {
+	return ids.map( id => fields[id])
+		.map( item => {
+			const { _id, name, children } = item;
+			return {
+				id:       _id,
+				path:     [ ...path, name ],
+				children: mapFieldIdsToTreeItems(
+					children,
+					fields,
+					expandedFields,
+					[ ...path, name ],
+				),
+				expanded: !!expandedFields[_id],
+			};
+		});
+}
+
+function mapStateToProps(state: { doc: Doc, ui: { expandedFields: any } }) {
+	return {
+		items: mapFieldIdsToTreeItems( state.doc.rootFields, state.doc.fields, state.ui.expandedFields ),
+	};
+}
+
+function mapDispatchToProps( dispatch: any ) {
+	return {
+		onExpandItem:    (item: any) => dispatch( expandField(   item.id )),
+		onCollapseItem:  (item: any) => dispatch( collapseField( item.id )),
+		onCreateButtons: (item: any) => <button
+			onClick={ ev => {
+				dispatch( setPath( item.path ));
+				ev.stopPropagation();
+				} }>
+			<img
+				src={ icFormula }
+				alt="formula" />
+		</button>,
+	};
+}
+
+export default connect<{}, {}, TreeProps>(
+	mapStateToProps,
+	mapDispatchToProps,
+)( Tree );
