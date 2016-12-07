@@ -1,6 +1,6 @@
 import { NodeMap } from 'data/doc';
 import { Position } from 'data/shared';
-import Action from './action';
+import Action, { MoveNodeAction } from './action';
 
 export const reducer = ( state: NodeMap, action: Action ) => {
 	if ( action.type === 'MOVE_NODE' && state[action.id] ) {
@@ -9,4 +9,4 @@ export const reducer = ( state: NodeMap, action: Action ) => {
 	return state;
 };
 
-export default ( id: number, position: Position ) => ({ type: 'MOVE_NODE', id, position });
+export default ( id: number, position: Position ): MoveNodeAction => ({ type: 'MOVE_NODE', id, position });

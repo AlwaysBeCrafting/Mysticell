@@ -1,4 +1,4 @@
-import Action from './action';
+import Action, { ExpandFieldAction } from './action';
 
 export const reducer = ( state = {}, action: Action ) => {
 	if ( action.type === 'EXPAND_FIELD' ) {
@@ -7,4 +7,4 @@ export const reducer = ( state = {}, action: Action ) => {
 	return state;
 };
 
-export default (id: number) => ({ type: 'EXPAND_FIELD', id });
+export default ( id: number ): ExpandFieldAction => ({ type: 'EXPAND_FIELD', id });

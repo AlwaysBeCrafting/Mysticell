@@ -1,6 +1,6 @@
 import { FieldMap, NodeMap } from 'data/doc';
 
-import Action from './action';
+import Action, { AddNodeAction } from './action';
 
 export const reducer = ( state: { fields: FieldMap, nodes: NodeMap }, action: Action ) => {
 	const { fields, nodes } = state;
@@ -34,4 +34,4 @@ export const reducer = ( state: { fields: FieldMap, nodes: NodeMap }, action: Ac
 	return state;
 };
 
-export default ( fieldId: number, fxn: string ) => ({ type: 'ADD_NODE', fieldId, fxn });
+export default ( fieldId: number, fxn: string ): AddNodeAction => ({ type: 'ADD_NODE', fieldId, fxn });
