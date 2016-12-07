@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { ConnectDropTarget, DropTarget, DropTargetMonitor, DropTargetSpec } from 'react-dnd';
 
-import {Formula} from 'data/doc';
-import {Position} from 'data/shared';
+import { Formula } from 'data/doc';
+import { Position } from 'data/shared';
 
 import FunctionNode from './FunctionNode';
 import Types from './itemTypes';

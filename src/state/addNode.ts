@@ -1,4 +1,4 @@
-import {FieldMap, NodeMap} from 'data/doc';
+import { FieldMap, NodeMap } from 'data/doc';
 
 import Action from './action';
 
@@ -19,7 +19,7 @@ export const reducer = ( state: { fields: FieldMap, nodes: NodeMap }, action: Ac
 			formula: {
 				...fields[action.fieldId].formula,
 				nodes: [
-					...(fields[action.fieldId].formula || { nodes: new Array<number>()}).nodes,
+					...( fields[action.fieldId].formula || { nodes: new Array<number>() }).nodes,
 					node._id,
 				],
 			},

@@ -1,6 +1,6 @@
-import Doc, {Card, Field, IdMapped, Node, NodeMap, Sheet} from './doc';
-import DocJSON, {NodeJSON} from './docJson';
-import {Id} from './shared';
+import Doc, { Card, Field, IdMapped, Node, NodeMap, Sheet } from './doc';
+import DocJSON, { NodeJSON } from './docJson';
+import { Id } from './shared';
 
 function mapId<T extends Id>(items: T[]): IdMapped<T> {
 	return items.reduce(( acc: IdMapped<T>, item ) => {

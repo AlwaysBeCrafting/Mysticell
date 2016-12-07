@@ -1,5 +1,5 @@
-import {NodeMap} from 'data/doc';
-import {Position} from 'data/shared';
+import { NodeMap } from 'data/doc';
+import { Position } from 'data/shared';
 import Action from './action';
 
 export const reducer = ( state: NodeMap, action: Action ) => {

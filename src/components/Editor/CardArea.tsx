@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { CardMap} from 'data/doc';
+import { CardMap } from 'data/doc';
 
 import './CardArea.less';
 

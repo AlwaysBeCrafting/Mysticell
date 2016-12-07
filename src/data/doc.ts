@@ -1,4 +1,4 @@
-import {Id, Position} from './shared';
+import { Id, Position } from './shared';
 
 export interface IdMapped<T extends Id> {
 	[id: number]: T;

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
-import {Field, FieldMap} from 'data/doc';
+import { Field, FieldMap } from 'data/doc';
 
 import addNode from 'state/addNode';
 import setPath from 'state/setPath';

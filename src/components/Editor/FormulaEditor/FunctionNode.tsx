@@ -4,9 +4,9 @@ import { connect as reduxConnect } from 'react-redux';
 
 import moveNode from 'state/moveNode';
 
-import {NodeMap} from 'data/doc';
+import { NodeMap } from 'data/doc';
 import Fxn from 'data/fxn';
-import {Position} from 'data/shared';
+import { Position } from 'data/shared';
 
 import Types from './itemTypes';
 

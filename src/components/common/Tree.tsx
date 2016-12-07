@@ -1,4 +1,4 @@
-import {Id} from 'data/shared';
+import { Id } from 'data/shared';
 import * as React from 'react';
 
 import './Tree.less';

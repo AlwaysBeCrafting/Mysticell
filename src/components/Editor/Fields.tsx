@@ -6,7 +6,7 @@ import expandField   from 'state/expandField';
 import setPath       from 'state/setPath';
 
 import Tree, { TreeItemData, TreeProps } from 'components/common/Tree';
-import Doc, {FieldMap} from 'data/doc';
+import Doc, { FieldMap }  from 'data/doc';
 
 import './Fields.less';
 
