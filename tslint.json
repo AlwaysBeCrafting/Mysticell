@@ -5,6 +5,7 @@
             true,
             "tabs"
         ],
+        "no-consecutive-blank-lines": [true, 3],
         "no-var-requires": false,
         "interface-name": [
             true,
