@@ -2,26 +2,28 @@ import Doc, { Card, Field, IdMap, Node, NodeMap, Sheet } from './doc';
 import DocJSON, { NodeJSON } from './docJson';
 import { Id } from './shared';
 
-function mapId<T extends Id>(items: T[]): IdMap<T> {
+
+
+const mapId = <T extends Id>( items: T[] ): IdMap<T> => {
 	return items.reduce(( acc: IdMap<T>, item ) => {
 		return {
 			...acc,
 			[item._id]: item,
 		};
-	}, {} as IdMap<T>);
-}
+	}, {} as IdMap<T> );
+};
 
-export function flatten<T extends { children: T[] }>( items: T[] ): T[] {
+export const flatten = <T extends { children: T[] }>( items: T[] ): T[] => {
 	return items.reduce(( acc, item ) => [
 		...acc,
 		item,
 		...flatten( item.children ),
 	], new Array<T>());
-}
+};
 
-export default (doc: DocJSON): Doc => {
+export default ( doc: DocJSON ): Doc => {
 	const fields = flatten( doc.fields );
-	const nodeMappedFields: Field[] = fields.map(field => ({
+	const nodeMappedFields: Field[] = fields.map( field => ({
 		...field,
 		formula: {
 			...field.formula,

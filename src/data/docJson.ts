@@ -1,15 +1,19 @@
 import { Id, Position } from './shared';
 
+export interface CellJSON extends Id {
+	field: number;
+	position: Position;
+	format: any;
+}
+
 export interface SheetJSON extends Id {
 	title: string;
-	// TODO: actual type
-	cells: any[];
+	cells: CellJSON[];
 }
 
 export interface CardJSON extends Id {
 	title: string;
-	// TODO: actual type
-	cells: any[];
+	cells: CellJSON[];
 }
 
 export interface NodeJSON extends Id {
