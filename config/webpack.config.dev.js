@@ -28,7 +28,7 @@ module.exports = {
 	},
 	resolve: {
 		fallback:   paths.nodePaths,
-		extensions: [ '.js', '.json', '.jsx', '' ],
+		extensions: [ '.js', '.json', '.jsx', '.ts', '.tsx', '' ],
 		alias:      {
 			'react-native': 'react-native-web',
 		},
@@ -40,21 +40,16 @@ module.exports = {
 	module: {
 		preLoaders: [
 			{
-				test:    /\.(js|jsx)$/,
-				loader:  'eslint',
+				test:    /\.(ts|tsx)$/,
+				loader:  'tslint-loader',
 				include: paths.appSrc,
 			},
 		],
 		loaders: [
 			{
-				test:    /\.(js|jsx)$/,
+				test:    /\.(ts|tsx)$/,
 				include: paths.appSrc,
-				loader:  'babel',
-				query:   {
-					cacheDirectory: findCacheDir({
-						name: 'react-scripts',
-					}),
-				},
+				loader:  `babel-loader?cacheDirectory=${findCacheDir({name: 'react-scripts'})}!ts-loader`,
 			},
 			{
 				test:   /\.less$/,
