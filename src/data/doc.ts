@@ -1,19 +1,23 @@
 import { Id, Position } from './shared';
 
-export interface IdMapped<T extends Id> {
+export interface IdMap<T extends Id> {
 	[id: number]: T;
+}
+
+export interface Cell extends Id {
+	field: number;
+	position: Position;
+	format: any;
 }
 
 export interface Sheet extends Id {
 	title: string;
-	// TODO: actual type
-	cells: any[];
+	cells: Cell[];
 }
 
 export interface Card extends Id {
 	title: string;
-	// TODO: actual type
-	cells: any[];
+	cells: Cell[];
 }
 
 export interface Node extends Id {
@@ -34,10 +38,10 @@ export interface Field extends Id {
 	children: number[];
 }
 
-export type SheetMap = IdMapped<Sheet>;
-export type CardMap  = IdMapped<Card>;
-export type FieldMap = IdMapped<Field>;
-export type NodeMap  = IdMapped<Node>;
+export type SheetMap = IdMap<Sheet>;
+export type CardMap  = IdMap<Card>;
+export type FieldMap = IdMap<Field>;
+export type NodeMap  = IdMap<Node>;
 
 export interface Doc extends Id {
 	title: string;

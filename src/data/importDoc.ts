@@ -1,14 +1,14 @@
-import Doc, { Card, Field, IdMapped, Node, NodeMap, Sheet } from './doc';
+import Doc, { Card, Field, IdMap, Node, NodeMap, Sheet } from './doc';
 import DocJSON, { NodeJSON } from './docJson';
 import { Id } from './shared';
 
-function mapId<T extends Id>(items: T[]): IdMapped<T> {
-	return items.reduce(( acc: IdMapped<T>, item ) => {
+function mapId<T extends Id>(items: T[]): IdMap<T> {
+	return items.reduce(( acc: IdMap<T>, item ) => {
 		return {
 			...acc,
 			[item._id]: item,
 		};
-	}, {} as IdMapped<T>);
+	}, {} as IdMap<T>);
 }
 
 export function flatten<T extends { children: T[] }>( items: T[] ): T[] {
