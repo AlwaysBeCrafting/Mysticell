@@ -1,12 +1,14 @@
-import { FieldMap, NodeMap } from 'data/doc';
+import Doc, { Field, FieldMap, Node, NodeMap } from 'data/doc';
 
 import Action, { AddNodeAction } from './action';
 
-export const reducer = ( state: { fields: FieldMap, nodes: NodeMap }, action: Action ) => {
-	const { fields, nodes } = state;
+export const reducer = ( state: Doc, action: Action ): Doc => {
+	if ( action.type === 'ADD_NODE' && state.fields.get( action.fieldId )) {
 
-	if ( action.type === 'ADD_NODE' && fields[action.fieldId] ) {
-		const node = {
+		const field = state.fields.get( action.fieldId );
+
+		if ( !field ) { return state; }
+		const node: Node = {
 			_id:        Math.floor( Math.random() * 1000000 ),
 			fxn: action.fxn,
 			inputNodes: [],
@@ -14,12 +16,13 @@ export const reducer = ( state: { fields: FieldMap, nodes: NodeMap }, action: Ac
 			position:   { x: 0, y: 0 },
 		};
 
-		const field = {
-			...fields[action.fieldId],
-			formula: {
-				...fields[action.fieldId].formula,
-				nodes: [
-					...( fields[action.fieldId].formula || { nodes: new Array<number>() }).nodes,
+		// TODO: This is gross, fix it. Don't show chat.
+		const fieldClone: Field = {
+			...field,
+			formula: {             // Oh god
+				...field.formula,
+				nodes: [           // Oh god why
+					...( field.formula || { nodes: new Array<number>() }).nodes,
 					node._id,
 				],
 			},
@@ -27,8 +30,8 @@ export const reducer = ( state: { fields: FieldMap, nodes: NodeMap }, action: Ac
 
 		return {
 			...state,
-			fields: { ...fields, [field._id]: field },
-			nodes:  { ...nodes, [node._id]: node },
+			fields: new Map( state.fields ).set( action.fieldId, fieldClone ),
+			nodes:  new Map( state.nodes  ).set( node._id,       node       ),
 		};
 	}
 	return state;

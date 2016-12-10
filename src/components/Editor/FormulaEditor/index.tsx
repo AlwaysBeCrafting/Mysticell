@@ -16,25 +16,33 @@ import NodeArea from './NodeArea';
 
 import './index.less';
 
+//==============================================================================
+
 export interface FormulaEditorProps extends React.Props<FormulaEditor> {
-	path?: string[];
-	rootField?: Field;
-	fields?: FieldMap;
-	onPathClick?: (pathSegment: string[]) => void;
-	onCreateNode?: (id: number) => void;
+	// Put public-accessible props here
+}
+
+//------------------------------------------------------------------------------
+
+interface WrappedFormulaEditorProps extends FormulaEditorProps {
+	path: string[];
+	rootField: Field;
+	fields: FieldMap;
+	onPathClick: ( pathSegment: string[] ) => void;
+	onCreateNode: ( id: number ) => void;
 }
 
 const fieldAtPath = ( path: string[], rootField: Field, fields: FieldMap ) => path.reduce(
 	( field, childName ) => field.children
-		.map( id => fields[id] )
+		.map( id => fields.get( id ) as Field ) // TODO: `as Field` here just masks an error, handle undefined better
 		.find( child => child.name === childName ) as Field,
 	rootField,
 );
 
-class FormulaEditor extends React.PureComponent<FormulaEditorProps, {}> {
+class FormulaEditor extends React.PureComponent<WrappedFormulaEditorProps, {}> {
 	public render() {
-		const fields = this.props.fields || {};
-		const rootField = this.props.rootField || {} as Field;
+		const fields = this.props.fields;
+		const rootField = this.props.rootField;
 		const path = this.props.path || [];
 		const onPathClick = this.props.onPathClick || (() => { /* Ignore click */ });
 		const onCreateNode = this.props.onCreateNode || (() => { /* Ignore node creation */ });
@@ -60,7 +68,7 @@ class FormulaEditor extends React.PureComponent<FormulaEditorProps, {}> {
 	}
 }
 
-const ConnectedNodeEditor = connect<{}, {}, FormulaEditorProps>(
+const ConnectedNodeEditor = connect<{}, {}, WrappedFormulaEditorProps>(
 	state => ({
 		path:      state.path,
 		rootField: { children: state.doc.rootFields },

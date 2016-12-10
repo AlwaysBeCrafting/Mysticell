@@ -1,24 +1,38 @@
+import * as JSON from './docJson';
 import { Id, Position } from './shared';
 
-export interface IdMap<T extends Id> {
-	[id: number]: T;
-}
+//==============================================================================
 
 export interface Cell extends Id {
 	field: number;
 	position: Position;
 	format: any;
 }
+const CellFromJSON = ( json: JSON.CellJSON ): Cell => json;
+
+//------------------------------------------------------------------------------
 
 export interface Sheet extends Id {
 	title: string;
 	cells: Cell[];
 }
+const SheetFromJSON = ( json: JSON.SheetJSON ): Sheet => ({
+	...json,
+	cells: json.cells.map( cell => CellFromJSON( cell )),
+});
+
+//------------------------------------------------------------------------------
 
 export interface Card extends Id {
 	title: string;
 	cells: Cell[];
 }
+const CardFromJSON = ( json: JSON.CardJSON ): Card => ({
+	...json,
+	cells: json.cells.map( cell => CellFromJSON( cell )),
+});
+
+//------------------------------------------------------------------------------
 
 export interface Node extends Id {
 	label: string;
@@ -26,22 +40,38 @@ export interface Node extends Id {
 	inputNodes: number[];
 	position: Position;
 }
+const NodeFromJSON = ( json: JSON.NodeJSON ): Node => json;
+
+//------------------------------------------------------------------------------
 
 export interface Formula {
 	resultNode: number;
 	nodes: number[];
 }
+const FormulaFromJSON = ( json?: JSON.FormulaJSON ): Formula => ({
+	...json,
+	nodes: ( json && json.nodes.map( node => node._id )) || [],
+});
+
+//------------------------------------------------------------------------------
 
 export interface Field extends Id {
 	name: string;
 	formula?: Formula;
 	children: number[];
 }
+const FieldFromJSON = ( json: JSON.FieldJSON ): Field => ({
+	...json,
+	formula: FormulaFromJSON( json.formula ),
+	children: json.children.map( child => child._id ),
+});
 
-export type SheetMap = IdMap<Sheet>;
-export type CardMap  = IdMap<Card>;
-export type FieldMap = IdMap<Field>;
-export type NodeMap  = IdMap<Node>;
+//------------------------------------------------------------------------------
+
+export type SheetMap = Map<number, Sheet>;
+export type CardMap  = Map<number, Card>;
+export type FieldMap = Map<number, Field>;
+export type NodeMap  = Map<number, Node>;
 
 export interface Doc extends Id {
 	title: string;
@@ -54,6 +84,51 @@ export interface Doc extends Id {
 	rootFields: number[];
 	visibleCards: number[];
 	visibleSheets: number[];
+
+	ui: DocUI;
+};
+
+export interface DocUI {
+	expandedFields: Set<number>;
 }
+
+export const DocFromJSON = ( json: JSON.DocJSON ): Doc => {
+	// This can't be done inline because it recurses into itself
+	const flattenFields = ( fields: JSON.FieldJSON[] ): JSON.FieldJSON[] => {
+		return fields.reduce(( acc, field ) => [
+			...acc,
+			field,
+			...flattenFields( field.children ),
+		], [] as JSON.FieldJSON[] );
+	};
+	const flatFields = flattenFields( json.fields );
+
+	// Nodes are children of formulas are children of fields, they need to be
+	// extracted to their own list for id-reference
+	const nodes = flatFields.reduce( ( acc, field ) => [
+		...acc,
+		...( field.formula && field.formula.nodes ) || [],
+	], [] as JSON.NodeJSON[] );
+
+	//
+	const mapId = <T extends Id>(values: T[]): Map<number, T> => {
+		return new Map( values.map(( value ): [number, T] => [value._id, value]));
+	};
+
+	return {
+		...json,
+
+		sheets: mapId( json.sheets.map( sheet => SheetFromJSON( sheet ))),
+		cards:  mapId( json.cards.map(  card  => CardFromJSON(  card  ))),
+		fields: mapId( flatFields.map(  field => FieldFromJSON( field ))),
+		nodes:  mapId( nodes.map(       node  => NodeFromJSON(  node  ))),
+
+		rootFields:    json.fields.map( field => field._id ),
+		visibleCards:  json.cards.map(  card  => card._id  ),
+		visibleSheets: json.sheets.map( sheet => sheet._id ),
+
+		ui: {} as DocUI,
+	};
+};
 
 export default Doc;

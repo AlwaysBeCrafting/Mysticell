@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { CardMap } from 'data/doc';
+import { Card, CardMap } from 'data/doc';
 
 import './CardArea.less';
 
@@ -9,11 +9,11 @@ export interface CardAreaProps {
 	cards: CardMap;
 }
 
-export default (props: CardAreaProps) => {
+export default ( props: CardAreaProps ) => {
 	const { cards, visibleCards } = props;
 	return (
 		<ul id="card-area"> {
-			visibleCards.map( id => cards[id] )
+			visibleCards.map( id => cards.get( id ) as Card )
 				.map( ({ title, _id }) => <li className="card" id="card-{ card._id }" key={ _id }>
 					<header>{ title }</header>
 				</li> )

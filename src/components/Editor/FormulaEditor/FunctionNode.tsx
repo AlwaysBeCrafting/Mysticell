@@ -4,7 +4,7 @@ import { connect as reduxConnect } from 'react-redux';
 
 import moveNode from 'state/moveNode';
 
-import { NodeMap } from 'data/doc';
+import { Node, NodeMap } from 'data/doc';
 import Fxn from 'data/fxn';
 import { Position } from 'data/shared';
 
@@ -12,30 +12,33 @@ import Types from './itemTypes';
 
 import './FunctionNode.less';
 
-export interface FunctionNodeProps extends React.Props<FunctionNode> {
-	id: number;
-	nodes?: NodeMap;
-	onMove?: (id: number, position: Position) => void;
-	isDragging?: boolean;
-	connectDragSource?: any;
-}
-
 //==============================================================================
 
-const cardSource: DragSourceSpec<FunctionNodeProps> = {
-	beginDrag: (props) => props.nodes ? props.nodes[props.id] : {},
-	endDrag:   (props, monitor, component ) => {
-		if (!monitor) {
-			return;
-		}
+export interface FunctionNodeProps extends React.Props<FunctionNode> {
+	id: number;
+}
 
+//------------------------------------------------------------------------------
+
+interface WrappedFunctionNodeProps extends FunctionNodeProps {
+	nodes: NodeMap;
+	onMove: (id: number, position: Position) => void;
+	isDragging: boolean;
+	connectDragSource: ( component: any ) => any;
+}
+
+//------------------------------------------------------------------------------
+
+const cardSource: DragSourceSpec<WrappedFunctionNodeProps> = {
+	beginDrag: ( props: WrappedFunctionNodeProps ): ( Node | {} ) => props.nodes.get( props.id ) || {},
+	endDrag:   ( props: WrappedFunctionNodeProps, monitor: DragSourceMonitor, component ) => {
 		if ( monitor.didDrop() ) {
 			if (!props.nodes || !props.onMove) {
 				return;
 			}
 
 			const { x: dx, y: dy } = monitor.getDropResult() as Position;
-			const { x, y } = props.nodes[props.id].position || { x: 0, y: 0 };
+			const { x, y } = ( props.nodes.get( props.id ) || { position: { x: 0, y: 0 }} ).position;
 
 			const [ tx, ty ] = [
 				Math.round(( x + dx ) / 40 ) * 40,
@@ -49,18 +52,17 @@ const cardSource: DragSourceSpec<FunctionNodeProps> = {
 
 //------------------------------------------------------------------------------
 
+// TODO: Replace list & id with direct Node reference, somehow
+
 @DragSource(Types.FORMULA_NODE, cardSource, (connect, monitor) => ({
 	connectDragSource: connect.dragSource(),
 	isDragging: monitor.isDragging(),
 }))
-class FunctionNode extends React.PureComponent<FunctionNodeProps, {}> {
+class FunctionNode extends React.PureComponent<WrappedFunctionNodeProps, {}> {
 	public render() {
 		const { connectDragSource, isDragging, id, nodes } = this.props;
-		if (!nodes) {
-			return;
-		}
 
-		const { label, fxn, position } = nodes[id];
+		const { label, fxn, position } = nodes.get( id ) as Node;
 		const { inputs, output } = Fxn[fxn];
 
 		const className = [ 'function-node' ];
