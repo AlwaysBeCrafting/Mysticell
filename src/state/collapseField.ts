@@ -1,8 +1,10 @@
 import Action, { CollapseFieldAction } from './action';
 
-export const reducer = ( state = {}, action: Action ) => {
+export const reducer = ( state: Set<number> = new Set(), action: Action ): Set<number> => {
 	if ( action.type === 'COLLAPSE_FIELD' ) {
-		return { ...state, [action.id]: undefined };
+		const stateClone = new Set( state );
+		stateClone.delete( action.id );
+		return stateClone;
 	}
 	return state;
 };

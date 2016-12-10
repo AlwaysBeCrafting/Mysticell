@@ -1,8 +1,10 @@
 import Action, { ExpandFieldAction } from './action';
 
-export const reducer = ( state = {}, action: Action ) => {
+export const reducer = ( state: Set<number> = new Set(), action: Action ): Set<number> => {
 	if ( action.type === 'EXPAND_FIELD' ) {
-		return { ...state, [action.id]: true };
+		const stateClone = new Set( state );
+		stateClone.add( action.id );
+		return stateClone;
 	}
 	return state;
 };

@@ -84,7 +84,13 @@ export interface Doc extends Id {
 	rootFields: number[];
 	visibleCards: number[];
 	visibleSheets: number[];
+
+	ui: DocUI;
 };
+
+export interface DocUI {
+	expandedFields: Set<number>;
+}
 
 export const DocFromJSON = ( json: JSON.DocJSON ): Doc => {
 	// This can't be done inline because it recurses into itself
@@ -120,6 +126,8 @@ export const DocFromJSON = ( json: JSON.DocJSON ): Doc => {
 		rootFields:    json.fields.map( field => field._id ),
 		visibleCards:  json.cards.map(  card  => card._id  ),
 		visibleSheets: json.sheets.map( sheet => sheet._id ),
+
+		ui: {} as DocUI,
 	};
 };
 

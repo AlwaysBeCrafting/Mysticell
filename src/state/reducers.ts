@@ -1,6 +1,6 @@
-import { combineReducers } from 'redux';
+import { combineReducers, Reducer } from 'redux';
 
-import Doc, { DocFromJSON, NodeMap } from 'data/doc';
+import Doc, { DocFromJSON, DocUI, NodeMap } from 'data/doc';
 import DocJSON from 'data/docJson';
 
 import Action from './action';
@@ -43,7 +43,7 @@ const reduceDoc = ( state = DocFromJSON( exampleDoc ), action: Action ) => [
 // ------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------
 
-const reduceExpandedFields = ( state = {}, action: Action ) => [
+const reduceExpandedFields = ( state: Set<number> = new Set(), action: Action ): Set<number> => [
 	reduceExpandField,
 	reduceCollapseField,
 ].reduce(
@@ -53,9 +53,9 @@ const reduceExpandedFields = ( state = {}, action: Action ) => [
 
 // ------------------------------------------------------------------------------
 
-const reduceUi = combineReducers( {
+const reduceUi: Reducer<DocUI> = combineReducers( {
 	expandedFields: reduceExpandedFields,
-} );
+} ) as Reducer<DocUI>;
 
 // ------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------
