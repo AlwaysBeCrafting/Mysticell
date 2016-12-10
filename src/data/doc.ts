@@ -8,7 +8,7 @@ export interface Cell extends Id {
 	position: Position;
 	format: any;
 }
-const CellFromJSON = ( json: JSON.CellJSON ): Cell => json;
+const cellFromJSON = ( json: JSON.CellJSON ): Cell => json;
 
 //------------------------------------------------------------------------------
 
@@ -16,9 +16,9 @@ export interface Sheet extends Id {
 	title: string;
 	cells: Cell[];
 }
-const SheetFromJSON = ( json: JSON.SheetJSON ): Sheet => ({
+const sheetFromJSON = ( json: JSON.SheetJSON ): Sheet => ({
 	...json,
-	cells: json.cells.map( cell => CellFromJSON( cell )),
+	cells: json.cells.map( cell => cellFromJSON( cell )),
 });
 
 //------------------------------------------------------------------------------
@@ -27,9 +27,9 @@ export interface Card extends Id {
 	title: string;
 	cells: Cell[];
 }
-const CardFromJSON = ( json: JSON.CardJSON ): Card => ({
+const cardFromJSON = ( json: JSON.CardJSON ): Card => ({
 	...json,
-	cells: json.cells.map( cell => CellFromJSON( cell )),
+	cells: json.cells.map( cell => cellFromJSON( cell )),
 });
 
 //------------------------------------------------------------------------------
@@ -40,7 +40,7 @@ export interface Node extends Id {
 	inputNodes: number[];
 	position: Position;
 }
-const NodeFromJSON = ( json: JSON.NodeJSON ): Node => json;
+const nodeFromJSON = ( json: JSON.NodeJSON ): Node => json;
 
 //------------------------------------------------------------------------------
 
@@ -48,7 +48,7 @@ export interface Formula {
 	resultNode: number;
 	nodes: number[];
 }
-const FormulaFromJSON = ( json?: JSON.FormulaJSON ): Formula => ({
+const formulaFromJSON = ( json?: JSON.FormulaJSON ): Formula => ({
 	...json,
 	nodes: ( json && json.nodes.map( node => node._id )) || [],
 });
@@ -60,9 +60,9 @@ export interface Field extends Id {
 	formula?: Formula;
 	children: number[];
 }
-const FieldFromJSON = ( json: JSON.FieldJSON ): Field => ({
+const fieldFromJSON = ( json: JSON.FieldJSON ): Field => ({
 	...json,
-	formula: FormulaFromJSON( json.formula ),
+	formula: formulaFromJSON( json.formula ),
 	children: json.children.map( child => child._id ),
 });
 
@@ -92,7 +92,7 @@ export interface DocUI {
 	expandedFields: Set<number>;
 }
 
-export const DocFromJSON = ( json: JSON.DocJSON ): Doc => {
+export const docFromJSON = ( json: JSON.DocJSON ): Doc => {
 	// This can't be done inline because it recurses into itself
 	const flattenFields = ( fields: JSON.FieldJSON[] ): JSON.FieldJSON[] => {
 		return fields.reduce(( acc, field ) => [
@@ -118,10 +118,10 @@ export const DocFromJSON = ( json: JSON.DocJSON ): Doc => {
 	return {
 		...json,
 
-		sheets: mapId( json.sheets.map( sheet => SheetFromJSON( sheet ))),
-		cards:  mapId( json.cards.map(  card  => CardFromJSON(  card  ))),
-		fields: mapId( flatFields.map(  field => FieldFromJSON( field ))),
-		nodes:  mapId( nodes.map(       node  => NodeFromJSON(  node  ))),
+		sheets: mapId( json.sheets.map( sheet => sheetFromJSON( sheet ))),
+		cards:  mapId( json.cards.map(  card  => cardFromJSON(  card  ))),
+		fields: mapId( flatFields.map(  field => fieldFromJSON( field ))),
+		nodes:  mapId( nodes.map(       node  => nodeFromJSON(  node  ))),
 
 		rootFields:    json.fields.map( field => field._id ),
 		visibleCards:  json.cards.map(  card  => card._id  ),

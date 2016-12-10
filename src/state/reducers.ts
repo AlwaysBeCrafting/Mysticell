@@ -1,6 +1,6 @@
 import { combineReducers, Reducer } from 'redux';
 
-import Doc, { DocFromJSON, DocUI, NodeMap } from 'data/doc';
+import Doc, { docFromJSON, DocUI, NodeMap } from 'data/doc';
 import DocJSON from 'data/docJson';
 
 import Action from './action';
@@ -29,7 +29,7 @@ const reduceNodes = ( state: NodeMap = new Map(), action: Action ) => [
 
 // ------------------------------------------------------------------------------
 
-const reduceDoc = ( state = DocFromJSON( exampleDoc ), action: Action ) => [
+const reduceDoc = ( state = docFromJSON( exampleDoc ), action: Action ) => [
 	(localState: any) => ({
 		...localState,
 		nodes: reduceNodes( localState.nodes, action ),
