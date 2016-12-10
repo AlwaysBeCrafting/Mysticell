@@ -1,14 +1,14 @@
 import { combineReducers } from 'redux';
 
+import Doc, { DocFromJSON, NodeMap } from 'data/doc';
 import DocJSON from 'data/docJson';
-import importDoc from 'data/importDoc';
 
 import Action from './action';
 
-import { reducer as reduceAddNode  } from './addNode';
+import { reducer as reduceAddNode       } from './addNode';
 import { reducer as reduceCollapseField } from './collapseField';
 import { reducer as reduceExpandField   } from './expandField';
-import { reducer as reduceMoveNode } from './moveNode';
+import { reducer as reduceMoveNode      } from './moveNode';
 import { reducer as reduceSetPath       } from './setPath';
 
 const exampleDoc = require<DocJSON>('data/exampleDoc.json');
@@ -20,7 +20,7 @@ const reducePath = ( state = [], action: Action ) => reduceSetPath( state, actio
 // ------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------
 
-const reduceNodes = ( state = {}, action: Action ) => [
+const reduceNodes = ( state: NodeMap = new Map(), action: Action ) => [
 	reduceMoveNode,
 ].reduce(
 	( acc, reduce ) => reduce( acc, action ),
@@ -29,7 +29,7 @@ const reduceNodes = ( state = {}, action: Action ) => [
 
 // ------------------------------------------------------------------------------
 
-const reduceDoc = ( state = importDoc( exampleDoc ), action: Action ) => [
+const reduceDoc = ( state = DocFromJSON( exampleDoc ), action: Action ) => [
 	(localState: any) => ({
 		...localState,
 		nodes: reduceNodes( localState.nodes, action ),

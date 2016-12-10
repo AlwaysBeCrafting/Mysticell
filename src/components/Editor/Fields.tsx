@@ -6,7 +6,7 @@ import expandField   from 'state/expandField';
 import setPath       from 'state/setPath';
 
 import Tree, { TreeItemData, TreeProps } from 'components/common/Tree';
-import Doc, { FieldMap }  from 'data/doc';
+import Doc, { Field, FieldMap }  from 'data/doc';
 
 import './Fields.less';
 
@@ -18,7 +18,7 @@ const mapFieldIdsToTreeItems = (
 	expandedFields: FieldMap,
 	path: string[] = [],
 ): TreeItemData[] => {
-	return ids.map( id => fields[id] )
+	return ids.map( id => fields.get( id ) as Field )
 		.map( item => {
 			const { _id, name, children } = item;
 			return {
@@ -30,7 +30,7 @@ const mapFieldIdsToTreeItems = (
 					expandedFields,
 					[ ...path, name ],
 				),
-				expanded: !!expandedFields[_id],
+				expanded: !!expandedFields.get( _id ),
 			};
 		});
 };

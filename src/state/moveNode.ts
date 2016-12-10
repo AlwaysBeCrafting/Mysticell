@@ -1,10 +1,13 @@
-import { NodeMap } from 'data/doc';
+import { Node, NodeMap } from 'data/doc';
 import { Position } from 'data/shared';
 import Action, { MoveNodeAction } from './action';
 
-export const reducer = ( state: NodeMap, action: Action ) => {
-	if ( action.type === 'MOVE_NODE' && state[action.id] ) {
-		return { ...state, [action.id]: { ...state[action.id], position: action.position } };
+export const reducer = ( state: NodeMap, action: Action ): NodeMap => {
+	if ( action.type === 'MOVE_NODE' && state.get( action.id )) {
+		const newNodes: NodeMap = new Map( state );
+		const movedNode: Node = { ...state.get( action.id ), position: action.position };
+		newNodes.set( action.id, movedNode );
+		return newNodes;
 	}
 	return state;
 };
