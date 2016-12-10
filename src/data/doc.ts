@@ -92,7 +92,7 @@ export interface DocUI {
 	expandedFields: Set<number>;
 }
 
-export const DocFromJSON = ( json: JSON.DocJSON ): Doc => {
+export const docFromJSON = ( json: JSON.DocJSON ): Doc => {
 	// This can't be done inline because it recurses into itself
 	const flattenFields = ( fields: JSON.FieldJSON[] ): JSON.FieldJSON[] => {
 		return fields.reduce(( acc, field ) => [

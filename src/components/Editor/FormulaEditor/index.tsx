@@ -41,12 +41,7 @@ const fieldAtPath = ( path: string[], rootField: Field, fields: FieldMap ) => pa
 
 class FormulaEditor extends React.PureComponent<WrappedFormulaEditorProps, {}> {
 	public render() {
-		const fields = this.props.fields;
-		const rootField = this.props.rootField;
-		const path = this.props.path || [];
-		const onPathClick = this.props.onPathClick || (() => { /* Ignore click */ });
-		const onCreateNode = this.props.onCreateNode || (() => { /* Ignore node creation */ });
-
+		const { fields, rootField, path, onPathClick, onCreateNode } = this.props;
 		const field = fieldAtPath( path, rootField, fields );
 
 		return <div id="node-editor">
@@ -68,7 +63,7 @@ class FormulaEditor extends React.PureComponent<WrappedFormulaEditorProps, {}> {
 	}
 }
 
-const ConnectedNodeEditor = connect<{}, {}, WrappedFormulaEditorProps>(
+const ConnectedNodeEditor = connect<{}, {}, FormulaEditorProps>(
 	state => ({
 		path:      state.path,
 		rootField: { children: state.doc.rootFields },

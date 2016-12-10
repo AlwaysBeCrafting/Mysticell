@@ -22,9 +22,9 @@ export interface FunctionNodeProps extends React.Props<FunctionNode> {
 
 interface WrappedFunctionNodeProps extends FunctionNodeProps {
 	nodes: NodeMap;
-	onMove: (id: number, position: Position) => void;
+	onMove?: ( id: number, position: Position ) => void;
 	isDragging: boolean;
-	connectDragSource: ( component: any ) => any;
+	connectDragSource: ( component: JSX.Element ) => JSX.Element;
 }
 
 //------------------------------------------------------------------------------
@@ -33,7 +33,7 @@ const cardSource: DragSourceSpec<WrappedFunctionNodeProps> = {
 	beginDrag: ( props: WrappedFunctionNodeProps ): ( Node | {} ) => props.nodes.get( props.id ) || {},
 	endDrag:   ( props: WrappedFunctionNodeProps, monitor: DragSourceMonitor, component ) => {
 		if ( monitor.didDrop() ) {
-			if (!props.nodes || !props.onMove) {
+			if (props.nodes.size === 0 || !props.onMove) {
 				return;
 			}
 
@@ -59,7 +59,7 @@ const cardSource: DragSourceSpec<WrappedFunctionNodeProps> = {
 	isDragging: monitor.isDragging(),
 }))
 class FunctionNode extends React.PureComponent<WrappedFunctionNodeProps, {}> {
-	public render() {
+	public render(): JSX.Element | null {
 		const { connectDragSource, isDragging, id, nodes } = this.props;
 
 		const { label, fxn, position } = nodes.get( id ) as Node;
