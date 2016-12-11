@@ -6,7 +6,9 @@ import HTML5Backend from 'react-dnd-html5-backend';
 
 import { Field, FieldMap } from 'data/doc';
 
+import Action  from 'state/action';
 import addNode from 'state/addNode';
+import {State} from 'state/reducers';
 import setPath from 'state/setPath';
 
 import FAB from 'components/common/FAB';
@@ -64,12 +66,12 @@ class FormulaEditor extends React.PureComponent<WrappedFormulaEditorProps, {}> {
 }
 
 const ConnectedNodeEditor = connect<{}, {}, FormulaEditorProps>(
-	state => ({
+	( state: State ): Partial<WrappedFormulaEditorProps> => ({
 		path:      state.path,
-		rootField: { children: state.doc.rootFields },
+		rootField: { children: state.doc.rootFields } as Field,
 		fields:    state.doc.fields,
 	}),
-	dispatch => ({
+	( dispatch: (action: Action) => void ): Partial<WrappedFormulaEditorProps> => ({
 		onPathClick:  (path: string[]) => dispatch( setPath( path )),
 		onCreateNode: (fieldId: number) => dispatch( addNode( fieldId, 'ADD' )),
 	}),

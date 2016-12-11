@@ -2,7 +2,7 @@ export interface Fxn {
 	name: string;
 	inputs: string[];
 	output: string;
-	exec: (...params: number[]) => number;
+	exec: (...params: Array<number | string>) => number | string;
 }
 
 export const ADD: Fxn = {

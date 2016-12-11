@@ -66,7 +66,7 @@ class TreeItem extends React.Component<TreeItemProps, {}> {
 					{ onCreateButtons( item ) }
 				</a>
 				{ !!children.length && <ul> {
-					children.map( (childItem: any) => <TreeItem
+					children.map( ( childItem ) => <TreeItem
 						key={ childItem.id }
 						item={ childItem }
 						onCreateButtons={ onCreateButtons }
