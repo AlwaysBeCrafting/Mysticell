@@ -2,13 +2,18 @@ import * as React from 'react';
 
 import './Dropdown.less';
 
+export interface DropdownItem {
+	value: any;
+	text: string;
+}
+
 export interface DropdownProps extends React.Props<Dropdown> {
-	items: any[];
-	selection: any;
+	items: DropdownItem[];
+	selection: DropdownItem;
 	open: boolean;
-	onOpen: (item: any) => void;
-	onClose: (item: any) => void;
-	onSelect: (item: any) => void;
+	onOpen: (item: React.MouseEvent<HTMLButtonElement>) => void;
+	onClose: (item: React.MouseEvent<HTMLButtonElement>) => void;
+	onSelect: (item: DropdownItem) => void;
 }
 
 export class Dropdown extends React.Component<DropdownProps, {}> {

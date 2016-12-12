@@ -4,7 +4,7 @@ import './FAB.less';
 
 export interface FABProps extends React.Props<FAB> {
 	icon: string;
-	onClick: (item: any) => void;
+	onClick: (item: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 export class FAB extends React.Component<FABProps, {}> {

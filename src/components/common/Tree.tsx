@@ -1,20 +1,21 @@
-import { Id } from 'data/shared';
 import * as React from 'react';
+
+import { Id } from 'data/shared';
 
 import './Tree.less';
 
 export interface TreeItemData {
-	id: any;
+	id: number;
 	path: string[];
 	children: TreeItemData[];
 	expanded: boolean;
 }
 
 export interface TreeProps extends React.Props<Tree> {
-	items: any[];
-	onCreateButtons?: (item?: any) => void;
-	onExpandItem?: (item?: any) => void;
-	onCollapseItem?: (item?: any) => void;
+	items: TreeItemData[];
+	onCreateButtons?: (item: TreeItemData) => void;
+	onExpandItem?: (item: TreeItemData) => void;
+	onCollapseItem?: (item: TreeItemData) => void;
 }
 
 export class Tree extends React.Component<TreeProps, {}> {
@@ -39,10 +40,10 @@ export class Tree extends React.Component<TreeProps, {}> {
 }
 
 interface TreeItemProps extends React.Props<TreeItem> {
-	item: any;
-	onCreateButtons: (item: any) => void;
-	onExpand: (item: any) => void;
-	onCollapse: (item: any) => void;
+	item: TreeItemData;
+	onCreateButtons: (item: TreeItemData) => void;
+	onExpand: (item: TreeItemData) => void;
+	onCollapse: (item: TreeItemData) => void;
 }
 
 class TreeItem extends React.Component<TreeItemProps, {}> {
@@ -65,7 +66,7 @@ class TreeItem extends React.Component<TreeItemProps, {}> {
 					{ onCreateButtons( item ) }
 				</a>
 				{ !!children.length && <ul> {
-					children.map( (childItem: any) => <TreeItem
+					children.map( ( childItem ) => <TreeItem
 						key={ childItem.id }
 						item={ childItem }
 						onCreateButtons={ onCreateButtons }

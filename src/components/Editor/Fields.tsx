@@ -1,6 +1,7 @@
 import * as  React from 'react';
 import { connect } from 'react-redux';
 
+import Action 		 from 'state/action';
 import collapseField from 'state/collapseField';
 import expandField   from 'state/expandField';
 import setPath       from 'state/setPath';
@@ -35,17 +36,17 @@ const mapFieldIdsToTreeItems = (
 		});
 };
 
-const mapStateToProps = ( state: { doc: Doc, ui: DocUI }) => {
+const mapStateToProps = ( state: { doc: Doc, ui: DocUI } ) => {
 	return {
 		items: mapFieldIdsToTreeItems( state.doc.rootFields, state.doc.fields, state.ui.expandedFields ),
 	};
 };
 
-const mapDispatchToProps = ( dispatch: any ) => {
+const mapDispatchToProps = ( dispatch: (action: Action) => void ): Partial<TreeProps> => {
 	return {
-		onExpandItem:    ( item: any ) => dispatch( expandField(   item.id )),
-		onCollapseItem:  ( item: any ) => dispatch( collapseField( item.id )),
-		onCreateButtons: ( item: any ) => <button
+		onExpandItem:    ( item ) => dispatch( expandField(   item.id )),
+		onCollapseItem:  ( item ) => dispatch( collapseField( item.id )),
+		onCreateButtons: ( item ) => <button
 			onClick={ ev => {
 				dispatch( setPath( item.path ));
 				ev.stopPropagation();

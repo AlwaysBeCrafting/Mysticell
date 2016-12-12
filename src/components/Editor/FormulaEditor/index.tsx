@@ -6,7 +6,9 @@ import HTML5Backend from 'react-dnd-html5-backend';
 
 import { Field, FieldMap } from 'data/doc';
 
+import Action  from 'state/action';
 import addNode from 'state/addNode';
+import {State} from 'state/reducers';
 import setPath from 'state/setPath';
 
 import FAB from 'components/common/FAB';
@@ -41,12 +43,7 @@ const fieldAtPath = ( path: string[], rootField: Field, fields: FieldMap ) => pa
 
 class FormulaEditor extends React.PureComponent<WrappedFormulaEditorProps, {}> {
 	public render() {
-		const fields = this.props.fields;
-		const rootField = this.props.rootField;
-		const path = this.props.path || [];
-		const onPathClick = this.props.onPathClick || (() => { /* Ignore click */ });
-		const onCreateNode = this.props.onCreateNode || (() => { /* Ignore node creation */ });
-
+		const { fields, rootField, path, onPathClick, onCreateNode } = this.props;
 		const field = fieldAtPath( path, rootField, fields );
 
 		return <div id="node-editor">
@@ -68,13 +65,13 @@ class FormulaEditor extends React.PureComponent<WrappedFormulaEditorProps, {}> {
 	}
 }
 
-const ConnectedNodeEditor = connect<{}, {}, WrappedFormulaEditorProps>(
-	state => ({
+const ConnectedNodeEditor = connect<{}, {}, FormulaEditorProps>(
+	( state: State ): Partial<WrappedFormulaEditorProps> => ({
 		path:      state.path,
-		rootField: { children: state.doc.rootFields },
+		rootField: { children: state.doc.rootFields } as Field,
 		fields:    state.doc.fields,
 	}),
-	dispatch => ({
+	( dispatch: (action: Action) => void ): Partial<WrappedFormulaEditorProps> => ({
 		onPathClick:  (path: string[]) => dispatch( setPath( path )),
 		onCreateNode: (fieldId: number) => dispatch( addNode( fieldId, 'ADD' )),
 	}),
