@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { DragSource, DragSourceMonitor, DragSourceSpec } from 'react-dnd';
-import { connect as reduxConnect } from 'react-redux';
+import { connect as ReduxConnect } from 'react-redux';
 
 import Action from 'state/action';
 import moveNode from 'state/moveNode';
@@ -51,6 +51,15 @@ const cardSource: DragSourceSpec<WrappedFunctionNodeProps> = {
 
 //------------------------------------------------------------------------------
 
+const mapStateToProps = ( state: State ): Partial<WrappedFunctionNodeProps> => ({
+	nodes: state.doc.nodes,
+});
+
+const mapDispatchToProps = ( dispatch: ( action: Action ) => void ): FunctionNodeDispatchers => ({
+	onMove: ( id, position ) => dispatch( moveNode( id, position )),
+});
+
+
 // TODO: Replace list & id with direct Node reference, somehow
 
 @DragSource(Types.FORMULA_NODE, cardSource, (connect, monitor) => ({
@@ -94,11 +103,4 @@ class FunctionNode extends React.PureComponent<WrappedFunctionNodeProps, {}> {
 
 //------------------------------------------------------------------------------
 
-export default reduxConnect<{}, {}, WrappedFunctionNodeProps>(
-	(state: State): Partial<WrappedFunctionNodeProps> => ({
-		nodes: state.doc.nodes,
-	}),
-	( dispatch: (action: Action) => void ): FunctionNodeDispatchers => ({
-		onMove: ( id, position ) => dispatch( moveNode( id, position )),
-	}),
-)( FunctionNode );
+export default ReduxConnect( mapStateToProps, mapDispatchToProps )( FunctionNode );
