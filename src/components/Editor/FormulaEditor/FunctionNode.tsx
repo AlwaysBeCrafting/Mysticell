@@ -21,7 +21,7 @@ export interface FunctionNodeProps extends React.Props<FunctionNode> {
 }
 
 export interface FunctionNodeDispatchers {
-	onMove?: ( id: number, position: Position ) => void;
+	onMove: ( id: number, position: Position ) => void;
 }
 
 //------------------------------------------------------------------------------
@@ -36,10 +36,6 @@ const cardSource: DragSourceSpec<WrappedFunctionNodeProps> = {
 	beginDrag: ( props: WrappedFunctionNodeProps ): ( Node | {} ) => props.nodes.get( props.id ) || {},
 	endDrag:   ( props: WrappedFunctionNodeProps, monitor: DragSourceMonitor, component ) => {
 		if ( monitor.didDrop() ) {
-			if (props.nodes.size === 0 || !props.onMove) {
-				return;
-			}
-
 			const { x: dx, y: dy } = monitor.getDropResult() as Position;
 			const { x, y } = ( props.nodes.get( props.id ) || { position: { x: 0, y: 0 }} ).position;
 
@@ -98,7 +94,7 @@ class FunctionNode extends React.PureComponent<WrappedFunctionNodeProps, {}> {
 
 //------------------------------------------------------------------------------
 
-export default reduxConnect<{}, {}, FunctionNodeProps>(
+export default reduxConnect<{}, {}, WrappedFunctionNodeProps>(
 	(state: State): Partial<WrappedFunctionNodeProps> => ({
 		nodes: state.doc.nodes,
 	}),
