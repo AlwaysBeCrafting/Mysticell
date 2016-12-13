@@ -11,11 +11,18 @@ import { reducer as reduceExpandField   } from './expandField';
 import { reducer as reduceMoveNode      } from './moveNode';
 import { reducer as reduceSetPath       } from './setPath';
 
+export interface State {
+	doc: Doc;
+	path: string[];
+	ui: DocUI;
+}
+
+
 const exampleDoc = require<DocJSON>('data/exampleDoc.json');
 
 // ==============================================================================
 
-const reducePath = ( state = [], action: Action ) => reduceSetPath( state, action );
+const reducePath = ( state: string[] = [], action: Action ) => reduceSetPath( state, action );
 
 // ------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------
@@ -60,7 +67,7 @@ const reduceUi: Reducer<DocUI> = combineReducers( {
 // ------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------
 
-export default combineReducers( {
+export default combineReducers<State>( {
 	doc:  reduceDoc,
 	path: reducePath,
 	ui:   reduceUi,
