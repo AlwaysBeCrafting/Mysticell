@@ -103,4 +103,4 @@ class FunctionNode extends React.PureComponent<WrappedFunctionNodeProps, {}> {
 
 //------------------------------------------------------------------------------
 
-export default ReduxConnect( mapStateToProps, mapDispatchToProps )( FunctionNode );
+export default ReduxConnect<{}, {}, FunctionNodeProps>( mapStateToProps, mapDispatchToProps )( FunctionNode );
