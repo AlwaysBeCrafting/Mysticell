@@ -110,7 +110,6 @@ export const docFromJSON = ( json: JSON.DocJSON ): Doc => {
 		...( field.formula && field.formula.nodes ) || [],
 	], [] as JSON.NodeJSON[] );
 
-	//
 	const mapId = <T extends Id>(values: T[]): Map<number, T> => {
 		return new Map( values.map(( value ): [number, T] => [value._id, value]));
 	};

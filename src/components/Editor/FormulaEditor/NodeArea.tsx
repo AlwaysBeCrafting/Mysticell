@@ -47,7 +47,8 @@ class NodeArea extends React.PureComponent<NodeAreaProps, {}> {
 					key={ id }
 					id={ id } />,
 				)}
-				<Wire />
+
+				{ nodes.map( id => <Wire start={{ x: 0, y: 0 }} end={{ x: 4 * 40, y: 8 * 40 }}/> )}
 			</div>,
 		);
 	}
