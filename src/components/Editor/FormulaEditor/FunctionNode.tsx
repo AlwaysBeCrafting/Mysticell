@@ -17,7 +17,7 @@ import './FunctionNode.less';
 //==============================================================================
 
 export interface FunctionNodeProps extends React.Props<FunctionNode> {
-	id: number;
+	node: Node;
 }
 
 export interface FunctionNodeDispatchers {
@@ -33,18 +33,18 @@ interface WrappedFunctionNodeProps extends FunctionNodeProps, FunctionNodeDispat
 }
 
 const cardSource: DragSourceSpec<WrappedFunctionNodeProps> = {
-	beginDrag: ( props: WrappedFunctionNodeProps ): ( Node | {} ) => props.nodes.get( props.id ) || {},
+	beginDrag: ( props: WrappedFunctionNodeProps ): Node => props.node,
 	endDrag:   ( props: WrappedFunctionNodeProps, monitor: DragSourceMonitor, component ) => {
 		if ( monitor.didDrop() ) {
 			const { x: dx, y: dy } = monitor.getDropResult() as Position;
-			const { x, y } = ( props.nodes.get( props.id ) || { position: { x: 0, y: 0 }} ).position;
+			const { x, y } = props.node.position;
 
 			const [ tx, ty ] = [
 				Math.round(( x + dx ) / 40 ) * 40,
 				Math.round(( y + dy ) / 40 ) * 40,
 			];
 
-			props.onMove( props.id, { x: tx, y: ty });
+			props.onMove( props.node._id, { x: tx, y: ty });
 		}
 	},
 };
@@ -68,9 +68,9 @@ const mapDispatchToProps = ( dispatch: ( action: Action ) => void ): FunctionNod
 }))
 class FunctionNode extends React.PureComponent<WrappedFunctionNodeProps, {}> {
 	public render(): JSX.Element | null {
-		const { connectDragSource, isDragging, id, nodes } = this.props;
+		const { connectDragSource, isDragging, node } = this.props;
 
-		const { label, fxn, position } = nodes.get( id ) as Node;
+		const { label, fxn, position } = node as Node;
 		const { inputs, output } = Fxn[fxn];
 
 		const className = [ 'function-node' ];
