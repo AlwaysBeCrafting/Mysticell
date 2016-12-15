@@ -12,9 +12,16 @@
 				{
 					"label":      "Add",
 					"fxn":        "ADD",
-					"inputNodes": [null,null],
-					"position":   { "x": 0, "y": 0 },
+					"inputNodes": [502,null],
+					"position":   { "x": 600, "y": 200 },
 					"id":        501
+				},
+				{
+					"label":      "Add",
+					"fxn":        "ADD",
+					"inputNodes": [null,null],
+					"position":   { "x": 200, "y": 200 },
+					"id":        502
 				}
 			]
 		},
