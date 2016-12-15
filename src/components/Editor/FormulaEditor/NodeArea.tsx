@@ -53,14 +53,23 @@ class NodeArea extends React.PureComponent<WrappedNodeAreaProps, {}> {
 			return null;
 		}
 
+		const formulaNodes = nodeIds.map(( id ) => nodes.get( id ) as Node );
+
 		return connectDropTarget(
 			<div id="node-area">
-				{ nodeIds.map( id => <FunctionNode
-					key={ id }
-					node={ nodes.get( id ) as Node } />,
+				{ formulaNodes.map( node => <FunctionNode
+					key={ node.id }
+					node={ node } />,
 				)}
 
-				{ nodeIds.map( id => <Wire start={{ x: 0, y: 0 }} end={{ x: 4 * 40, y: 8 * 40 }}/> )}
+				{ formulaNodes.map( node =>
+					node.inputNodes
+						.map( inputId => nodes.get( inputId ))
+						.map( inputNode => <Wire
+							start={{ x: 0, y: 0 }}
+							end={{ x: 4 * 40, y: 8 * 40 }}
+						/> ),
+				)}
 			</div>,
 		);
 	}
