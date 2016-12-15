@@ -14,7 +14,7 @@ export default ( props: CardAreaProps ) => {
 	return (
 		<ul id="card-area"> {
 			visibleCards.map( id => cards.get( id ) as Card )
-				.map( ({ title, _id }) => <li className="card" id="card-{ card._id }" key={ _id }>
+				.map( ({ title, id }) => <li className="card" id={ `card-${ id }` } key={ id }>
 					<header>{ title }</header>
 				</li> )
 		} </ul>

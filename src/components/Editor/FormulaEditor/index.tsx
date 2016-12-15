@@ -60,7 +60,7 @@ class FormulaEditor extends React.PureComponent<WrappedFormulaEditorProps, {}> {
 				<a className="icon">redo</a>
 			</Toolbar>
 			<NodeArea formula={ field.formula } />
-			<FAB icon="add" onClick={ () => onCreateNode( field._id ) } />
+			<FAB icon="add" onClick={ () => onCreateNode( field.id ) } />
 		</div>;
 	}
 }

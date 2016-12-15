@@ -44,7 +44,7 @@ const cardSource: DragSourceSpec<WrappedFunctionNodeProps> = {
 				Math.round(( y + dy ) / 40 ) * 40,
 			];
 
-			props.onMove( props.node._id, { x: tx, y: ty });
+			props.onMove( props.node.id, { x: tx, y: ty });
 		}
 	},
 };

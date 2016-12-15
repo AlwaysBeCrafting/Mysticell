@@ -21,9 +21,9 @@ const mapFieldIdsToTreeItems = (
 ): TreeItemData[] => {
 	return ids.map( id => fields.get( id ) as Field )
 		.map( item => {
-			const { _id, name, children } = item;
+			const { id, name, children } = item;
 			return {
-				id:       _id,
+				id,
 				path:     [ ...path, name ],
 				children: mapFieldIdsToTreeItems(
 					children,
@@ -31,7 +31,7 @@ const mapFieldIdsToTreeItems = (
 					expandedFields,
 					[ ...path, name ],
 				),
-				expanded: expandedFields.has( _id ),
+				expanded: expandedFields.has( id ),
 			};
 		});
 };

@@ -9,7 +9,7 @@ export const reducer = ( state: Doc, action: Action ): Doc => {
 
 		if ( !field ) { return state; }
 		const node: Node = {
-			_id:        Math.floor( Math.random() * 1000000 ),
+			id:        Math.floor( Math.random() * 1000000 ),
 			fxn: action.fxn,
 			inputNodes: [],
 			label:      'Add',
@@ -23,7 +23,7 @@ export const reducer = ( state: Doc, action: Action ): Doc => {
 				...field.formula,
 				nodes: [           // Oh god why
 					...( field.formula || { nodes: new Array<number>() }).nodes,
-					node._id,
+					node.id,
 				],
 			},
 		};
@@ -31,7 +31,7 @@ export const reducer = ( state: Doc, action: Action ): Doc => {
 		return {
 			...state,
 			fields: new Map( state.fields ).set( action.fieldId, fieldClone ),
-			nodes:  new Map( state.nodes  ).set( node._id,       node       ),
+			nodes:  new Map( state.nodes  ).set( node.id,       node       ),
 		};
 	}
 	return state;

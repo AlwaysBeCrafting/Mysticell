@@ -50,7 +50,7 @@ export interface Formula {
 }
 const formulaFromJSON = ( json?: JSON.FormulaJSON ): Formula => ({
 	...json,
-	nodes: ( json && json.nodes.map( node => node._id )) || [],
+	nodes: ( json && json.nodes.map( node => node.id )) || [],
 });
 
 //------------------------------------------------------------------------------
@@ -63,7 +63,7 @@ export interface Field extends Id {
 const fieldFromJSON = ( json: JSON.FieldJSON ): Field => ({
 	...json,
 	formula: formulaFromJSON( json.formula ),
-	children: json.children.map( child => child._id ),
+	children: json.children.map( child => child.id ),
 });
 
 //------------------------------------------------------------------------------
@@ -111,7 +111,7 @@ export const docFromJSON = ( json: JSON.DocJSON ): Doc => {
 	], [] as JSON.NodeJSON[] );
 
 	const mapId = <T extends Id>(values: T[]): Map<number, T> => {
-		return new Map( values.map(( value ): [number, T] => [value._id, value]));
+		return new Map( values.map(( value ): [number, T] => [value.id, value]));
 	};
 
 	return {
@@ -122,9 +122,9 @@ export const docFromJSON = ( json: JSON.DocJSON ): Doc => {
 		fields: mapId( flatFields.map(  field => fieldFromJSON( field ))),
 		nodes:  mapId( nodes.map(       node  => nodeFromJSON(  node  ))),
 
-		rootFields:    json.fields.map( field => field._id ),
-		visibleCards:  json.cards.map(  card  => card._id  ),
-		visibleSheets: json.sheets.map( sheet => sheet._id ),
+		rootFields:    json.fields.map( field => field.id ),
+		visibleCards:  json.cards.map(  card  => card.id  ),
+		visibleSheets: json.sheets.map( sheet => sheet.id ),
 
 		ui: {} as DocUI,
 	};

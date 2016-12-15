@@ -4,5 +4,5 @@ export interface Position {
 }
 
 export interface Id {
-	_id: number;
+	id: number;
 }
