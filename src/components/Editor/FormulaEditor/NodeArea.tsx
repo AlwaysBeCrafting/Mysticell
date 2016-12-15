@@ -64,11 +64,17 @@ class NodeArea extends React.PureComponent<WrappedNodeAreaProps, {}> {
 
 				{ formulaNodes.map( node =>
 					node.inputNodes
-						.map( inputId => nodes.get( inputId ))
+						.map( inputId => nodes.get( inputId ) as Node )
 						.filter( inputNode => inputNode )
-						.map( inputNode => <Wire
-							start={{ x: 0, y: 0 }}
-							end={{ x: 4 * 40, y: 8 * 40 }}
+						.map(( inputNode, index ) => <Wire
+							start={{
+								x: inputNode.position.x + 160,
+								y: inputNode.position.y +  60,
+							}}
+							end={{
+								x: node.position.x,
+								y: node.position.y + 100 + ( index * 40 ),
+							}}
 						/> ),
 				)}
 			</div>,

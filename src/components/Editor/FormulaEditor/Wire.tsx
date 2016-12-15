@@ -10,11 +10,16 @@ interface WireProps {
 }
 
 const Wire = ( props: WireProps ) => {
+	const { start, end } = props;
+
+	const flip = ( start.x < end.x ) !== ( start.y < end.y );
+
 	const style = {
-		left: props.start.x,
-		top: props.start.y,
-		right: `calc( 100% - ${ props.end.x }px )`,
-		bottom: `calc( 100% - ${ props.end.y }px )`,
+		left:                    Math.min( start.x, end.x ),
+		top:                     Math.min( start.y, end.y ),
+		right: `calc( 100% - ${  Math.max( start.x, end.x ) }px )`,
+		bottom: `calc( 100% - ${ Math.max( start.y, end.y ) }px )`,
+		transform: `scaleY( ${ flip ? -1 : 1 } )`,
 	};
 
 	return <div className="wire" style={ style }>
