@@ -1,5 +1,6 @@
 import * as JSON from './docJson';
-import { Id, Position } from './shared';
+import flatten from './flatten';
+import { Id, Parent, Position } from './shared';
 
 //==============================================================================
 
@@ -55,7 +56,7 @@ const formulaFromJSON = ( json?: JSON.FormulaJSON ): Formula => ({
 
 //------------------------------------------------------------------------------
 
-export interface Field extends Id {
+export interface Field extends Id, Parent<number> {
 	name: string;
 	formula?: Formula;
 	children: number[];
@@ -93,19 +94,11 @@ export interface DocUI {
 }
 
 export const docFromJSON = ( json: JSON.DocJSON ): Doc => {
-	// This can't be done inline because it recurses into itself
-	const flattenFields = ( fields: JSON.FieldJSON[] ): JSON.FieldJSON[] => {
-		return fields.reduce(( acc, field ) => [
-			...acc,
-			field,
-			...flattenFields( field.children ),
-		], [] as JSON.FieldJSON[] );
-	};
-	const flatFields = flattenFields( json.fields );
+	const flatFields = flatten( json.fields );
 
 	// Nodes are children of formulas are children of fields, they need to be
 	// extracted to their own list for id-reference
-	const nodes = flatFields.reduce( ( acc, field ) => [
+	const nodes = flatFields.reduce(( acc, field ) => [
 		...acc,
 		...( field.formula && field.formula.nodes ) || [],
 	], [] as JSON.NodeJSON[] );

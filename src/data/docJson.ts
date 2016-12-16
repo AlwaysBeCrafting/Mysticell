@@ -1,4 +1,4 @@
-import { Id, Position } from './shared';
+import { Id, Position, RecursiveParent } from './shared';
 
 export interface CellJSON extends Id {
 	field: number;
@@ -28,7 +28,7 @@ export interface FormulaJSON {
 	nodes: NodeJSON[];
 }
 
-export interface FieldJSON extends Id {
+export interface FieldJSON extends Id, RecursiveParent<FieldJSON> {
 	name: string;
 	formula?: FormulaJSON;
 	children: FieldJSON[];
