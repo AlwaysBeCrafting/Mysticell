@@ -4,7 +4,7 @@ import { connect as ReduxConnect } from 'react-redux';
 
 import Action from 'state/action';
 import moveNode from 'state/moveNode';
-import { State } from 'state/reducers';
+import { AppState } from 'state/reducers';
 
 import { Node, NodeMap } from 'data/doc';
 import Fxn from 'data/fxn';
@@ -51,7 +51,7 @@ const cardSource: DragSourceSpec<WrappedFunctionNodeProps> = {
 
 //------------------------------------------------------------------------------
 
-const mapStateToProps = ( state: State ): Partial<WrappedFunctionNodeProps> => ({
+const mapStateToProps = ( state: AppState ): Partial<WrappedFunctionNodeProps> => ({
 	nodes: state.doc.nodes,
 });
 

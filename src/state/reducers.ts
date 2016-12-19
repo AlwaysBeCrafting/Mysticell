@@ -11,7 +11,7 @@ import { reducer as reduceExpandField   } from './expandField';
 import { reducer as reduceMoveNode      } from './moveNode';
 import { reducer as reduceSetPath       } from './setPath';
 
-export interface State {
+export interface AppState {
 	doc: Doc;
 	path: string[];
 	ui: DocUI;
@@ -67,7 +67,7 @@ const reduceUi: Reducer<DocUI> = combineReducers( {
 // ------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------
 
-export default combineReducers<State>( {
+export default combineReducers<AppState>( {
 	doc:  reduceDoc,
 	path: reducePath,
 	ui:   reduceUi,

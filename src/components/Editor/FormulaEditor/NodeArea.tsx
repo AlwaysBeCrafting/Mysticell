@@ -4,7 +4,7 @@ import { connect as ReduxConnect } from 'react-redux';
 
 import { Formula, Node } from 'data/doc';
 import { Position } from 'data/shared';
-import { State } from 'state/reducers';
+import { AppState } from 'state/reducers';
 
 import FunctionNode from './FunctionNode';
 import Types from './itemTypes';
@@ -37,7 +37,7 @@ const dropTarget: DropTargetSpec<WrappedNodeAreaProps> = {
 
 //------------------------------------------------------------------------------
 
-const mapStateToProps = ( state: State ) => ({
+const mapStateToProps = ( state: AppState ) => ({
 	nodes: state.doc.nodes,
 });
 

@@ -8,7 +8,7 @@ import { Field, FieldMap } from 'data/doc';
 
 import Action  from 'state/action';
 import addNode from 'state/addNode';
-import {State} from 'state/reducers';
+import {AppState} from 'state/reducers';
 import setPath from 'state/setPath';
 
 import FAB from 'components/common/FAB';
@@ -66,7 +66,7 @@ class FormulaEditor extends React.PureComponent<WrappedFormulaEditorProps, {}> {
 }
 
 const ConnectedNodeEditor = connect<{}, {}, FormulaEditorProps>(
-	( state: State ): Partial<WrappedFormulaEditorProps> => ({
+	( state: AppState ): Partial<WrappedFormulaEditorProps> => ({
 		path:      state.path,
 		rootField: { children: state.doc.rootFields } as Field,
 		fields:    state.doc.fields,
