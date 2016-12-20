@@ -3,13 +3,13 @@ import { combineReducers, Reducer } from 'redux';
 import Doc, { docFromJSON, DocUI, NodeMap } from 'data/doc';
 import DocJSON from 'data/docJson';
 
-import Action from './action';
+import Action from 'state/action';
 
-import { reducer as reduceAddNode       } from './addNode';
-import { reducer as reduceCollapseField } from './collapseField';
-import { reducer as reduceExpandField   } from './expandField';
-import { reducer as reduceMoveNode      } from './moveNode';
-import { reducer as reduceSetPath       } from './setPath';
+import { reducer as reduceAddNode       } from 'state/addNode';
+import { reducer as reduceCollapseField } from 'state/collapseField';
+import { reducer as reduceExpandField   } from 'state/expandField';
+import { reducer as reduceMoveNode      } from 'state/moveNode';
+import { reducer as reduceSetPath       } from 'state/setPath';
 
 export interface AppState {
 	doc: Doc;
@@ -26,33 +26,40 @@ const reducePath = ( state: string[] = [], action: Action ) => reduceSetPath( st
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
-const reduceNodes = ( state: NodeMap = new Map(), action: Action ) => [
-	reduceMoveNode,
-].reduce(
+const nodeActionReducers = [ reduceMoveNode ];
+
+const reduceNodes = ( state: NodeMap = new Map(), action: Action ) => nodeActionReducers.reduce(
 	( acc, reduce ) => reduce( acc, action ),
 	state,
 );
 
 //------------------------------------------------------------------------------
 
-const reduceDoc = ( state = docFromJSON( exampleDoc ), action: Action ) => [
-	(localState: any) => ({
-		...localState,
-		nodes: reduceNodes( localState.nodes, action ),
-	}),
-	reduceAddNode,
-].reduce(
+const reduceSomethingElse = ( state: any, action: Action ) => ({
+	...state,
+	nodes: reduceNodes( state.nodes, action ),
+});
+
+const docActionReducers = [ reduceSomethingElse, reduceAddNode ];
+
+const reduceDoc = ( state = docFromJSON( exampleDoc ), action: Action ) => docActionReducers.reduce(
 	( acc, reduce: (acc: any, action: Action) => any ) => reduce( acc, action ),
 	state,
 );
 
+const reduceDoc2 = combineReducers({
+	nodes: reduceNodes,
+});
+
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
-const reduceExpandedFields = ( state: Set<number> = new Set(), action: Action ): Set<number> => [
+const expandedFieldActionReducers = [
 	reduceExpandField,
 	reduceCollapseField,
-].reduce(
+];
+
+const reduceExpandedFields = ( state: Set<number> = new Set(), action: Action ): Set<number> => expandedFieldActionReducers.reduce(
 	( acc, reduce ) => reduce( acc, action ),
 	state,
 );
