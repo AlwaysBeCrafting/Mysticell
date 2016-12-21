@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 
+import AppState from 'state';
 import Action from 'state/action';
-import { AppState } from 'state/reducers';
 
 import { collapseField } from 'state/reducers/expandedFields';
 import { expandField   } from 'state/reducers/expandedFields';

@@ -2,8 +2,8 @@ import * as React from 'react';
 import { DragSource, DragSourceMonitor, DragSourceSpec } from 'react-dnd';
 import { connect as ReduxConnect } from 'react-redux';
 
+import AppState from 'state';
 import Action from 'state/action';
-import { AppState } from 'state/reducers';
 import { moveNode } from 'state/reducers/nodes';
 
 import { Node, NodeMap } from 'data/doc';

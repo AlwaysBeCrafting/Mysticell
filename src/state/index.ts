@@ -1,4 +1,9 @@
-import { createStore } from 'redux';
-import editorReducer from './reducers';
+import Doc, { DocUI } from 'data/doc';
 
-export default createStore( editorReducer );
+interface AppState {
+	doc: Doc;
+	path: string[];
+	ui: DocUI;
+};
+
+export default AppState;

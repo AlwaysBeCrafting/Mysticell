@@ -6,8 +6,8 @@ import HTML5Backend from 'react-dnd-html5-backend';
 
 import { Field, FieldMap } from 'data/doc';
 
+import AppState from 'state';
 import Action  from 'state/action';
-import { AppState } from 'state/reducers';
 import { addNode } from 'state/reducers/nodes';
 import { setPath } from 'state/reducers/path';
 

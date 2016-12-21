@@ -4,7 +4,7 @@ import { connect as ReduxConnect } from 'react-redux';
 
 import { Formula, Node } from 'data/doc';
 import { Position } from 'data/shared';
-import { AppState } from 'state/reducers';
+import AppState from 'state';
 
 import FunctionNode from './FunctionNode';
 import Types from './itemTypes';
