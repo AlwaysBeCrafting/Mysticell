@@ -7,9 +7,9 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import { Field, FieldMap } from 'data/doc';
 
 import Action  from 'state/action';
-import addNode from 'state/addNode';
-import {AppState} from 'state/reducers';
-import setPath from 'state/setPath';
+import { AppState } from 'state/reducers';
+import { addNode } from 'state/reducers/nodes';
+import { setPath } from 'state/reducers/path';
 
 import FAB from 'components/common/FAB';
 import Toolbar from 'components/common/Toolbar';
@@ -73,7 +73,13 @@ const ConnectedNodeEditor = connect<{}, {}, FormulaEditorProps>(
 	}),
 	( dispatch: (action: Action) => void ): Partial<WrappedFormulaEditorProps> => ({
 		onPathClick:  (path: string[]) => dispatch( setPath( path )),
-		onCreateNode: (fieldId: number) => dispatch( addNode( fieldId, 'ADD' )),
+		onCreateNode: (fieldId: number) => dispatch(
+			addNode(
+				fieldId,
+				Math.floor( Math.random() * 1000000 ),
+				'ADD',
+			),
+		),
 	}),
 )( FormulaEditor );
 

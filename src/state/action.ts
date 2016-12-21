@@ -3,6 +3,7 @@ import { Position } from 'data/shared';
 export interface AddNodeAction {
 	type: 'ADD_NODE';
 	fieldId: number;
+	nodeId: number;
 	fxn: string;
 }
 

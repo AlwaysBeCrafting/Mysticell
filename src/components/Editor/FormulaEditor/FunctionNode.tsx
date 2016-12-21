@@ -3,8 +3,8 @@ import { DragSource, DragSourceMonitor, DragSourceSpec } from 'react-dnd';
 import { connect as ReduxConnect } from 'react-redux';
 
 import Action from 'state/action';
-import moveNode from 'state/moveNode';
 import { AppState } from 'state/reducers';
+import { moveNode } from 'state/reducers/nodes';
 
 import { Node, NodeMap } from 'data/doc';
 import Fxn from 'data/fxn';
