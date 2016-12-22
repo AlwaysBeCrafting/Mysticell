@@ -3,7 +3,7 @@ import Action, { CollapseFieldAction, ExpandFieldAction } from 'state/action';
 const reduceExpandField = ( expandedFields: Set<number> = new Set(), action: Action ): Set<number> => {
 	if ( action.type === 'EXPAND_FIELD' ) {
 		const stateClone = new Set( expandedFields );
-		stateClone.add( action.id );
+		stateClone.add( action.fieldId );
 		return stateClone;
 	}
 	return expandedFields;
@@ -12,15 +12,15 @@ const reduceExpandField = ( expandedFields: Set<number> = new Set(), action: Act
 const reduceCollapseField = ( expandedFields: Set<number> = new Set(), action: Action ): Set<number> => {
 	if ( action.type === 'COLLAPSE_FIELD' ) {
 		const stateClone = new Set( expandedFields );
-		stateClone.delete( action.id );
+		stateClone.delete( action.fieldId );
 		return stateClone;
 	}
 	return expandedFields;
 };
 
 
-export const expandField   = ( id: number ): ExpandFieldAction   => ({ type: 'EXPAND_FIELD',   id });
-export const collapseField = ( id: number ): CollapseFieldAction => ({ type: 'COLLAPSE_FIELD', id });
+export const expandField   = ( fieldId: number ): ExpandFieldAction   => ({ type: 'EXPAND_FIELD',   fieldId });
+export const collapseField = ( fieldId: number ): CollapseFieldAction => ({ type: 'COLLAPSE_FIELD', fieldId });
 
 const reducerList = [
 	reduceExpandField,

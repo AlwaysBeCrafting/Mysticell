@@ -9,12 +9,12 @@ export interface AddNodeAction {
 
 export interface CollapseFieldAction {
 	type: 'COLLAPSE_FIELD';
-	id: number;
+	fieldId: number;
 }
 
 export interface ExpandFieldAction {
 	type: 'EXPAND_FIELD';
-	id: number;
+	fieldId: number;
 }
 
 export interface MoveNodeAction {

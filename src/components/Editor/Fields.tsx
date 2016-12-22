@@ -9,7 +9,7 @@ import { expandField   } from 'state/reducers/expandedFields';
 import { setPath       } from 'state/reducers/path';
 
 import Tree, { TreeItemData, TreeProps } from 'components/common/Tree';
-import Doc, { DocUI, Field, FieldMap }  from 'data/doc';
+import Doc, { DocUi, Field, FieldMap }  from 'data/doc';
 
 import './Fields.less';
 

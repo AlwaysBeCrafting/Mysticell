@@ -75,21 +75,9 @@ export type FieldMap = Map<number, Field>;
 export type NodeMap  = Map<number, Node>;
 
 export interface Doc extends Id {
-	title: string;
-
-	sheets: SheetMap;
-	cards: CardMap;
-	fields: FieldMap;
-	nodes: NodeMap;
-
-	rootFields: number[];
-	visibleCards: number[];
-	visibleSheets: number[];
-
-	ui: DocUI;
 };
 
-export interface DocUI {
+export interface DocUi {
 	expandedFields: Set<number>;
 }
 
@@ -119,7 +107,7 @@ export const docFromJSON = ( json: JSON.DocJSON ): Doc => {
 		visibleCards:  json.cards.map(  card  => card.id  ),
 		visibleSheets: json.sheets.map( sheet => sheet.id ),
 
-		ui: {} as DocUI,
+		ui: {} as DocUi,
 	};
 };
 
