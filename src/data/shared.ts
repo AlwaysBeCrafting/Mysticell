@@ -10,5 +10,3 @@ export interface Id {
 export interface Parent<T> {
 	children: T[];
 }
-
-export interface RecursiveParent<T extends RecursiveParent<T>> extends Parent<T> {}

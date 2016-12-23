@@ -59,3 +59,4 @@ export default {
 	SQRT,
 	POWER,
 } as FxnLookup;
+
