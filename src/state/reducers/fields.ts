@@ -1,17 +1,14 @@
-import { Field, Formula } from 'data/doc';
 import Action, {
 	AddNodeAction,
 	CollapseFieldAction,
 	ExpandFieldAction,
 } from 'state/action';
 
-export default ( fields: Map<number, Field> = new Map(), action: Action ): Map<number, Field> => {
+import { FieldState } from 'state';
 
-	if (
-		action.type !== 'ADD_NODE'     &&
-		action.type !== 'EXPAND_FIELD' &&
-		action.type !== 'COLLAPSE_FIELD'
-	) {
+export default ( fields: Map<number, FieldState> = new Map(), action: Action ): Map<number, FieldState> => {
+
+	if ( action.type !== 'EXPAND_FIELD' && action.type !== 'COLLAPSE_FIELD' ) {
 		return fields;
 	}
 
@@ -20,21 +17,6 @@ export default ( fields: Map<number, Field> = new Map(), action: Action ): Map<n
 	if ( !field ) { return fields; };
 
 	switch ( action.type ) {
-
-		case 'ADD_NODE':
-			const formula: Formula = {
-				...field.formula,
-				nodes: [
-					...( field.formula || { nodes: new Array<number>() }).nodes,
-					action.nodeId,
-				],
-			};
-
-			return new Map( fields ).set( action.fieldId, {
-				...field,
-				formula,
-			} );
-
 
 		case 'EXPAND_FIELD':
 			return new Map( fields ).set(
@@ -62,9 +44,3 @@ export default ( fields: Map<number, Field> = new Map(), action: Action ): Map<n
 
 export const expandField   = ( fieldId: number ): ExpandFieldAction   => ({ type: 'EXPAND_FIELD',   fieldId });
 export const collapseField = ( fieldId: number ): CollapseFieldAction => ({ type: 'COLLAPSE_FIELD', fieldId });
-export const addNode = ( fieldId: number, nodeId: number, fxn: string ): AddNodeAction => ({
-	type: 'ADD_NODE',
-	fieldId,
-	nodeId,
-	fxn,
-});

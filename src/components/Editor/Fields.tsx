@@ -9,7 +9,7 @@ import { expandField   } from 'state/reducers/expandedFields';
 import { setPath       } from 'state/reducers/path';
 
 import Tree, { TreeItemData, TreeProps } from 'components/common/Tree';
-import Doc, { DocUi, Field, FieldMap }  from 'data/doc';
+import { FieldState } from 'state';
 
 import './Fields.less';
 
@@ -17,12 +17,12 @@ const icFormula = require<string>('./ic_formula.svg');
 
 const mapFieldIdsToTreeItems = (
 	ids: number[],
-	fields: Map<number, Field>,
+	fields: Map<number, FieldState>,
 	expandedFields: Set<number>,
 	path: string[] = [],
 ): TreeItemData[] => {
 	return ids
-		.map( id => fields.get( id ) as Field )
+		.map( id => fields.get( id ) as FieldState )
 		.map( item => {
 			const { id, name, children } = item;
 			return {
@@ -39,8 +39,8 @@ const mapFieldIdsToTreeItems = (
 		});
 };
 
-const mapStateToProps = ( state: AppState ) => ({
-	items: mapFieldIdsToTreeItems( state.doc.rootFields, state.doc.fields, state.ui.expandedFields ),
+const mapStateToProps = ( state: AppState ): TreeProps => ({
+	items: [], // TODO describe this better in common Tree component, re-implement here
 });
 
 const mapDispatchToProps = ( dispatch: (action: Action) => void ): Partial<TreeProps> => {

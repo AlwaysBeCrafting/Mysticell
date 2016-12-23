@@ -2,14 +2,27 @@ import { combineReducers } from 'redux';
 
 import AppState from 'state';
 
-import reduceDoc  from 'state/reducers/doc';
+import reduceCards from 'state/reducers/cards';
+import reduceCells from 'state/reducers/cells';
+import reduceFields from 'state/reducers/fields';
+import reduceFormulas from 'state/reducers/formulas';
+import reduceNodes from 'state/reducers/nodes';
 import reducePath from 'state/reducers/path';
-import reduceUi   from 'state/reducers/ui';
+import reduceSheets from 'state/reducers/sheets';
+import reduceTitle from 'state/reducers/title';
 
 //==============================================================================
 
 export default combineReducers<AppState>({
-	doc:  reduceDoc,
+	title: reduceTitle,
+
+	sheets: reduceSheets,
+	cards: reduceCards,
+	cells: reduceCells,
+
+	fields: reduceFields,
+	formulas: reduceFormulas,
+	nodes: reduceNodes,
+
 	path: reducePath,
-	ui:   reduceUi,
 });

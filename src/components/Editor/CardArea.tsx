@@ -1,19 +1,20 @@
 import * as React from 'react';
 
-import { Card, CardMap } from 'data/doc';
+import { CardState } from 'state';
 
 import './CardArea.less';
 
 export interface CardAreaProps {
-	visibleCards: number[];
-	cards: CardMap;
+	cards: Map<number, CardState>;
 }
 
 export default ( props: CardAreaProps ) => {
-	const { cards, visibleCards } = props;
+	const { cards } = props;
 	return (
 		<ul id="card-area"> {
-			visibleCards.map( id => cards.get( id ) as Card )
+			Array.from( cards )
+				.map(([ id, card ]) => card )
+				.filter( card => card.isVisible )
 				.map( ({ title, id }) => <li className="card" id={ `card-${ id }` } key={ id }>
 					<header>{ title }</header>
 				</li> )

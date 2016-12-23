@@ -1,3 +1,4 @@
+import AppState from 'state';
 import * as JSON from './docJson';
 import flatten from './flatten';
 import { Id, Parent, Position } from './shared';
@@ -74,14 +75,7 @@ export type CardMap  = Map<number, Card>;
 export type FieldMap = Map<number, Field>;
 export type NodeMap  = Map<number, Node>;
 
-export interface Doc extends Id {
-};
-
-export interface DocUi {
-	expandedFields: Set<number>;
-}
-
-export const docFromJSON = ( json: JSON.DocJSON ): Doc => {
+export const loadFromJSON = ( json: JSON.DocJSON ): AppState => {
 	const flatFields = flatten( json.fields );
 
 	// Nodes are children of formulas are children of fields, they need to be
@@ -95,20 +89,19 @@ export const docFromJSON = ( json: JSON.DocJSON ): Doc => {
 		return new Map( values.map(( value ): [number, T] => [value.id, value]));
 	};
 
+	// Return empty default object, will become an action reducer later
 	return {
-		...json,
+		title: 'Document Title',
+		sheets: new Map(),
+		cards: new Map(),
+		cells: new Map(),
 
-		sheets: mapId( json.sheets.map( sheet => sheetFromJSON( sheet ))),
-		cards:  mapId( json.cards.map(  card  => cardFromJSON(  card  ))),
-		fields: mapId( flatFields.map(  field => fieldFromJSON( field ))),
-		nodes:  mapId( nodes.map(       node  => nodeFromJSON(  node  ))),
+		fields: new Map(),
+		formulas: new Map(),
+		nodes: new Map(),
 
-		rootFields:    json.fields.map( field => field.id ),
-		visibleCards:  json.cards.map(  card  => card.id  ),
-		visibleSheets: json.sheets.map( sheet => sheet.id ),
-
-		ui: {} as DocUi,
+		path: [],
 	};
 };
 
-export default Doc;
+export default loadFromJSON;

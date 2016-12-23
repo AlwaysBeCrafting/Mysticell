@@ -19,7 +19,7 @@ export interface ExpandFieldAction {
 
 export interface MoveNodeAction {
 	type: 'MOVE_NODE';
-	id: number;
+	nodeId: number;
 	position: Position;
 }
 
@@ -28,7 +28,12 @@ export interface SetPathAction {
 	path: string[];
 }
 
+export interface SetTitleAction {
+	type: 'SET_TITLE';
+	title: string;
+}
+
 export type Action = AddNodeAction  | CollapseFieldAction | ExpandFieldAction |
-					MoveNodeAction | SetPathAction;
+					MoveNodeAction | SetPathAction | SetTitleAction;
 
 export default Action;
