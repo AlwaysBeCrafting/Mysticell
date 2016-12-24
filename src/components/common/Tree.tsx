@@ -1,21 +1,21 @@
 import * as React from 'react';
 
-import { Id } from 'data/shared';
-
 import './Tree.less';
 
-export interface TreeItemData {
+//==============================================================================
+
+export interface TreeItem {
 	id: number;
-	path: string[];
-	children: TreeItemData[];
+	name: string;
+	children: TreeItem[];
 	expanded: boolean;
 }
 
 export interface TreeProps extends React.Props<Tree> {
-	items: TreeItemData[];
-	onCreateButtons?: (item: TreeItemData) => void;
-	onExpandItem?: (item: TreeItemData) => void;
-	onCollapseItem?: (item: TreeItemData) => void;
+	items: TreeItem[];
+	onCreateButtons?: (item: TreeItem) => void;
+	onExpandItem?: (item: TreeItem) => void;
+	onCollapseItem?: (item: TreeItem) => void;
 }
 
 export class Tree extends React.Component<TreeProps, {}> {
@@ -28,7 +28,7 @@ export class Tree extends React.Component<TreeProps, {}> {
 		} = this.props;
 		return (
 			<ul className="tree"> {
-				items.map( item => <TreeItem
+				items.map( item => <TreeNode
 				key={ item.id }
 				item={ item }
 				onCreateButtons={ onCreateButtons }
@@ -39,17 +39,17 @@ export class Tree extends React.Component<TreeProps, {}> {
 	}
 }
 
-interface TreeItemProps extends React.Props<TreeItem> {
-	item: TreeItemData;
-	onCreateButtons: (item: TreeItemData) => void;
-	onExpand: (item: TreeItemData) => void;
-	onCollapse: (item: TreeItemData) => void;
+interface TreeNodeProps extends React.Props<TreeNode> {
+	item: TreeItem;
+	onCreateButtons: (item: TreeItem) => void;
+	onExpand: (item: TreeItem) => void;
+	onCollapse: (item: TreeItem) => void;
 }
 
-class TreeItem extends React.Component<TreeItemProps, {}> {
+class TreeNode extends React.Component<TreeNodeProps, {}> {
 	public render(): JSX.Element {
 		const { item, onCreateButtons, onExpand, onCollapse } = this.props;
-		const { id, path, children, expanded } = item;
+		const { id, name, children, expanded } = item;
 		return (
 			<li
 				className={ [
@@ -62,11 +62,11 @@ class TreeItem extends React.Component<TreeItemProps, {}> {
 						ev.stopPropagation();
 						return expanded ? onCollapse( item ) : onExpand( item );
 					} }>
-					<span className="text">{ path[path.length - 1] }</span>
+					<span className="text">{ name }</span>
 					{ onCreateButtons( item ) }
 				</a>
 				{ !!children.length && <ul> {
-					children.map( ( childItem ) => <TreeItem
+					children.map( ( childItem ) => <TreeNode
 						key={ childItem.id }
 						item={ childItem }
 						onCreateButtons={ onCreateButtons }
