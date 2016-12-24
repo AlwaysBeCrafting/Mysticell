@@ -38,6 +38,7 @@ const dropTarget: DropTargetSpec<WrappedNodeAreaProps> = {
 //------------------------------------------------------------------------------
 
 const mapStateToProps = ( state: AppState ) => ({
+	formulas: state.formulas,
 	nodes: state.nodes,
 });
 
