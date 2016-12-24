@@ -1,13 +1,15 @@
-import * as  React from 'react';
+import * as React from 'react';
 import { connect } from 'react-redux';
 
-import Action 		 from 'state/action';
-import collapseField from 'state/collapseField';
-import expandField   from 'state/expandField';
-import setPath       from 'state/setPath';
+import AppState from 'state';
+import Action from 'state/actions';
+
+import collapseField from 'state/actions/collapseField';
+import expandField from 'state/actions/expandField';
+import setPath from 'state/actions/setPath';
 
 import Tree, { TreeItemData, TreeProps } from 'components/common/Tree';
-import Doc, { DocUI, Field, FieldMap }  from 'data/doc';
+import { FieldState } from 'state';
 
 import './Fields.less';
 
@@ -15,11 +17,12 @@ const icFormula = require<string>('./ic_formula.svg');
 
 const mapFieldIdsToTreeItems = (
 	ids: number[],
-	fields: FieldMap,
+	fields: Map<number, FieldState>,
 	expandedFields: Set<number>,
 	path: string[] = [],
 ): TreeItemData[] => {
-	return ids.map( id => fields.get( id ) as Field )
+	return ids
+		.map( id => fields.get( id ) as FieldState )
 		.map( item => {
 			const { id, name, children } = item;
 			return {
@@ -36,11 +39,9 @@ const mapFieldIdsToTreeItems = (
 		});
 };
 
-const mapStateToProps = ( state: { doc: Doc, ui: DocUI } ) => {
-	return {
-		items: mapFieldIdsToTreeItems( state.doc.rootFields, state.doc.fields, state.ui.expandedFields ),
-	};
-};
+const mapStateToProps = ( state: AppState ): TreeProps => ({
+	items: [], // TODO describe this better in common Tree component, re-implement here
+});
 
 const mapDispatchToProps = ( dispatch: (action: Action) => void ): Partial<TreeProps> => {
 	return {

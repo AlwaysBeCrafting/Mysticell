@@ -1,73 +1,40 @@
-import { combineReducers, Reducer } from 'redux';
+import AppState from 'state';
+import Action from 'state/actions';
 
-import Doc, { docFromJSON, DocUI, NodeMap } from 'data/doc';
-import DocJSON from 'data/docJson';
-
-import Action from './action';
-
-import { reducer as reduceAddNode       } from './addNode';
-import { reducer as reduceCollapseField } from './collapseField';
-import { reducer as reduceExpandField   } from './expandField';
-import { reducer as reduceMoveNode      } from './moveNode';
-import { reducer as reduceSetPath       } from './setPath';
-
-export interface AppState {
-	doc: Doc;
-	path: string[];
-	ui: DocUI;
-}
-
-const exampleDoc = require<DocJSON>('data/exampleDoc.json');
+import { reducer as reduceAddNode } from 'state/actions/addNode';
+import { reducer as reduceCollapseField } from 'state/actions/collapseField';
+import { reducer as reduceExpandField } from 'state/actions/expandField';
+import { reducer as reduceLoadDocument } from 'state/actions/loadDocument';
+import { reducer as reduceMoveNode } from 'state/actions/moveNode';
+import { reducer as reduceSetPath } from 'state/actions/setPath';
+import { reducer as reduceSetTitle } from 'state/actions/setTitle';
 
 //==============================================================================
 
-const reducePath = ( state: string[] = [], action: Action ) => reduceSetPath( state, action );
+const defaultState = {
+	title: 'Document Title',
+	path: [],
 
-//------------------------------------------------------------------------------
-//------------------------------------------------------------------------------
+	fields: new Map(),
+	formulas: new Map(),
+	nodes: new Map(),
 
-const reduceNodes = ( state: NodeMap = new Map(), action: Action ) => [
-	reduceMoveNode,
-].reduce(
-	( acc, reduce ) => reduce( acc, action ),
-	state,
-);
+	sheets: new Map(),
+	cards: new Map(),
+	cells: new Map(),
+};
 
-//------------------------------------------------------------------------------
-
-const reduceDoc = ( state = docFromJSON( exampleDoc ), action: Action ) => [
-	(localState: any) => ({
-		...localState,
-		nodes: reduceNodes( localState.nodes, action ),
-	}),
+const reducers = [
 	reduceAddNode,
-].reduce(
-	( acc, reduce: (acc: any, action: Action) => any ) => reduce( acc, action ),
-	state,
-);
-
-//------------------------------------------------------------------------------
-//------------------------------------------------------------------------------
-
-const reduceExpandedFields = ( state: Set<number> = new Set(), action: Action ): Set<number> => [
-	reduceExpandField,
 	reduceCollapseField,
-].reduce(
-	( acc, reduce ) => reduce( acc, action ),
+	reduceExpandField,
+	reduceLoadDocument,
+	reduceMoveNode,
+	reduceSetPath,
+	reduceSetTitle,
+];
+
+export default ( state: AppState = defaultState, action: Action ): AppState => reducers.reduce(
+	( localState, reducer ) => reducer( localState, action ),
 	state,
 );
-
-//------------------------------------------------------------------------------
-
-const reduceUi: Reducer<DocUI> = combineReducers( {
-	expandedFields: reduceExpandedFields,
-} ) as Reducer<DocUI>;
-
-//------------------------------------------------------------------------------
-//------------------------------------------------------------------------------
-
-export default combineReducers<AppState>( {
-	doc:  reduceDoc,
-	path: reducePath,
-	ui:   reduceUi,
-} );

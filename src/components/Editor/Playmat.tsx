@@ -1,21 +1,25 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 
-import Doc from 'data/doc';
+import AppState from 'state';
 
 import CardArea from './CardArea';
 import SheetArea from './SheetArea';
 
 import './Playmat.less';
 
-const Playmat = (props: { doc: Doc }) => <div id="playmat">
+interface PlaymatProps {
+	app: AppState;
+}
+
+const Playmat = ( props: PlaymatProps ) => <div id="playmat">
 	<menu type="toolbar" />
 	<div id="display-area">
-		<CardArea cards={ props.doc.cards } visibleCards={ props.doc.visibleCards } />
-		<SheetArea sheets={ props.doc.sheets } visibleSheets={ props.doc.visibleSheets } />
+		<CardArea cards={ props.app.cards } />
+		<SheetArea sheets={ props.app.sheets } />
 	</div>
 </div>;
 
 export default connect(
-	({ doc }) => ({ doc }),
+	( app ) => ({ app }),
 )( Playmat );

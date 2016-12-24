@@ -1,12 +1,11 @@
 import * as React from 'react';
 import { DragSource, DragSourceMonitor, DragSourceSpec } from 'react-dnd';
-import { connect as ReduxConnect } from 'react-redux';
+import { connect as reduxConnect } from 'react-redux';
 
-import Action from 'state/action';
-import moveNode from 'state/moveNode';
-import { AppState } from 'state/reducers';
+import AppState, { NodeState } from 'state';
+import Action from 'state/actions';
+import moveNode from 'state/actions/moveNode';
 
-import { Node, NodeMap } from 'data/doc';
 import Fxn from 'data/fxn';
 import { Position } from 'data/shared';
 
@@ -17,7 +16,7 @@ import './FunctionNode.less';
 //==============================================================================
 
 export interface FunctionNodeProps extends React.Props<FunctionNode> {
-	node: Node;
+	node: NodeState;
 }
 
 export interface FunctionNodeDispatchers {
@@ -27,13 +26,13 @@ export interface FunctionNodeDispatchers {
 //------------------------------------------------------------------------------
 
 interface WrappedFunctionNodeProps extends FunctionNodeProps, FunctionNodeDispatchers {
-	nodes: NodeMap;
+	nodes: Map<number, NodeState>;
 	isDragging: boolean;
 	connectDragSource: <P> ( component: React.ReactElement<P> ) => React.ReactElement<P>;
 }
 
 const cardSource: DragSourceSpec<WrappedFunctionNodeProps> = {
-	beginDrag: ( props: WrappedFunctionNodeProps ): Node => props.node,
+	beginDrag: ( props: WrappedFunctionNodeProps ): NodeState => props.node,
 	endDrag:   ( props: WrappedFunctionNodeProps, monitor: DragSourceMonitor, component ) => {
 		if ( monitor.didDrop() ) {
 			const { x: dx, y: dy } = monitor.getDropResult() as Position;
@@ -52,7 +51,7 @@ const cardSource: DragSourceSpec<WrappedFunctionNodeProps> = {
 //------------------------------------------------------------------------------
 
 const mapStateToProps = ( state: AppState ): Partial<WrappedFunctionNodeProps> => ({
-	nodes: state.doc.nodes,
+	nodes: state.nodes,
 });
 
 const mapDispatchToProps = ( dispatch: ( action: Action ) => void ): FunctionNodeDispatchers => ({
@@ -70,7 +69,7 @@ class FunctionNode extends React.PureComponent<WrappedFunctionNodeProps, {}> {
 	public render(): JSX.Element | null {
 		const { connectDragSource, isDragging, node } = this.props;
 
-		const { label, fxn, position } = node as Node;
+		const { label, fxn, position } = node as NodeState;
 		const { inputs, output } = Fxn[fxn];
 
 		const className = [ 'function-node' ];
@@ -103,4 +102,4 @@ class FunctionNode extends React.PureComponent<WrappedFunctionNodeProps, {}> {
 
 //------------------------------------------------------------------------------
 
-export default ReduxConnect<{}, {}, FunctionNodeProps>( mapStateToProps, mapDispatchToProps )( FunctionNode );
+export default reduxConnect<{}, {}, FunctionNodeProps>( mapStateToProps, mapDispatchToProps )( FunctionNode );

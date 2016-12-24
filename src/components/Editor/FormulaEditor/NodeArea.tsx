@@ -1,10 +1,9 @@
 import * as React from 'react';
 import { ConnectDropTarget, DropTarget, DropTargetMonitor, DropTargetSpec } from 'react-dnd';
-import { connect as ReduxConnect } from 'react-redux';
+import { connect as reduxConnect } from 'react-redux';
 
-import { Formula, Node } from 'data/doc';
 import { Position } from 'data/shared';
-import { AppState } from 'state/reducers';
+import AppState, { FormulaState, NodeState } from 'state';
 
 import FunctionNode from './FunctionNode';
 import Types from './itemTypes';
@@ -15,12 +14,13 @@ import './NodeArea.less';
 //==============================================================================
 
 export interface NodeAreaProps extends React.Props<NodeArea> {
-	formula?: Formula;
+	fieldId: number;
 	connectDropTarget?: ConnectDropTarget;
 }
 
 interface WrappedNodeAreaProps extends NodeAreaProps {
-	nodes: Map<number, Node>;
+	nodes: Map<number, NodeState>;
+	formulas: Map<number, FormulaState>;
 }
 
 //------------------------------------------------------------------------------
@@ -38,7 +38,7 @@ const dropTarget: DropTargetSpec<WrappedNodeAreaProps> = {
 //------------------------------------------------------------------------------
 
 const mapStateToProps = ( state: AppState ) => ({
-	nodes: state.doc.nodes,
+	nodes: state.nodes,
 });
 
 @DropTarget(Types.FORMULA_NODE, dropTarget, ( connect, monitor ) => ({
@@ -46,14 +46,14 @@ const mapStateToProps = ( state: AppState ) => ({
 }))
 class NodeArea extends React.PureComponent<WrappedNodeAreaProps, {}> {
 	public render(): JSX.Element | null {
-		const { nodes, formula, connectDropTarget } = this.props;
-		const nodeIds = ( formula && formula.nodes ) || new Array<number>();
+		const { nodes, formulas, fieldId, connectDropTarget } = this.props;
+		const formula = ( formulas.get( fieldId ));
+		const formulaNodes = (( formula && formula.nodes ) || [] )
+			.map(( id ) => nodes.get( id ) as NodeState);
 
 		if (!connectDropTarget) {
 			return null;
 		}
-
-		const formulaNodes = nodeIds.map(( id ) => nodes.get( id ) as Node );
 
 		return connectDropTarget(
 			<div id="node-area">
@@ -64,7 +64,7 @@ class NodeArea extends React.PureComponent<WrappedNodeAreaProps, {}> {
 
 				{ formulaNodes.map( node =>
 					node.inputNodes
-						.map( inputId => nodes.get( inputId ) as Node )
+						.map( inputId => nodes.get( inputId ) as NodeState )
 						.filter( inputNode => inputNode )
 						.map(( inputNode, index ) => <Wire
 							start={{
@@ -84,4 +84,4 @@ class NodeArea extends React.PureComponent<WrappedNodeAreaProps, {}> {
 
 //------------------------------------------------------------------------------
 
-export default ReduxConnect<{}, {}, NodeAreaProps>( mapStateToProps )( NodeArea );
+export default reduxConnect<{}, {}, NodeAreaProps>( mapStateToProps )( NodeArea );

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { connect } from 'react-redux';
+import { connect as reduxConnect } from 'react-redux';
 
 import Fields from './Fields';
 import FormulaEditor from './FormulaEditor';
@@ -18,6 +18,6 @@ const Editor = (props: EditorProps) => <main id="editor">
 	</div>
 </main>;
 
-export default connect(
+export default reduxConnect(
 	({ path }) => ({ path }),
 )( Editor );

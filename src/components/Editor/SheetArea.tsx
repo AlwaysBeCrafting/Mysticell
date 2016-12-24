@@ -1,12 +1,18 @@
 import * as React from 'react';
 
-import { Sheet, SheetMap } from 'data/doc';
+import { SheetState } from 'state';
 
 import './SheetArea.less';
 
-export default (props: { sheets: SheetMap, visibleSheets: number[] }) => <ul id="sheet-area"> {
-	props.visibleSheets.map( (id: any) => props.sheets.get( id ) as Sheet )
-		.map( ({ title, id }) => <li className="sheet" id={ `sheet-${ id }` } key={ id }>
+interface SheetAreaProps {
+	sheets: Map<number, SheetState>;
+}
+
+export default ( props: SheetAreaProps ) => <ul id="sheet-area"> {
+	Array.from( props.sheets )
+		.map( ([ id, sheet ]) => sheet )
+		.filter( sheet => sheet.isVisible )
+		.map(({ title, id }) => <li className="sheet" id={ `sheet-${ id }` } key={ id }>
 			<header>{ title }</header>
 		</li> )
 } </ul>;

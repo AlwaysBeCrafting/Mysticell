@@ -1,45 +1,54 @@
-import { Id, Position, RecursiveParent } from './shared';
+import { Position } from 'data/shared';
 
-export interface CellJSON extends Id {
-	field: number;
-	position: Position;
-	format: any;
+export interface FieldJson {
+	id: number;
+	name: string;
+	formula?: FormulaJson;
+	children: FieldJson[];
 }
 
-export interface SheetJSON extends Id {
-	title: string;
-	cells: CellJSON[];
+export interface FormulaJson {
+	resultNode: number;
+	nodes: NodeJson[];
 }
 
-export interface CardJSON extends Id {
-	title: string;
-	cells: CellJSON[];
-}
-
-export interface NodeJSON extends Id {
+export interface NodeJson {
+	id: number;
 	label: string;
 	fxn: string;
 	inputNodes: number[];
 	position: Position;
 }
 
-export interface FormulaJSON {
-	resultNode: number;
-	nodes: NodeJSON[];
-}
+//------------------------------------------------------------------------------
 
-export interface FieldJSON extends Id, RecursiveParent<FieldJSON> {
-	name: string;
-	formula?: FormulaJSON;
-	children: FieldJSON[];
-}
-
-export interface DocJSON extends Id {
+export interface SheetJson {
+	id: number;
 	title: string;
-
-	sheets: SheetJSON[];
-	cards: CardJSON[];
-	fields: FieldJSON[];
+	cells: CellJson[];
 }
 
-export default DocJSON;
+export interface CardJson {
+	id: number;
+	title: string;
+	cells: CellJson[];
+}
+
+export interface CellJson {
+	id: number;
+	field: number;
+	start: Position;
+	end: Position;
+}
+
+//------------------------------------------------------------------------------
+
+interface DocJson {
+	id: number;
+	title: string;
+	sheets: SheetJson[];
+	cards: CardJson[];
+	fields: FieldJson[];
+}
+
+export default DocJson;
