@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { connect } from 'react-redux';
+import { connect as reduxConnect } from 'react-redux';
 
 import AppState from 'state';
 import Action from 'state/actions';
@@ -8,48 +8,45 @@ import collapseField from 'state/actions/collapseField';
 import expandField from 'state/actions/expandField';
 import setPath from 'state/actions/setPath';
 
-import Tree, { TreeItemData, TreeProps } from 'components/common/Tree';
+import Tree, { TreeItem, TreeProps } from 'components/common/Tree';
 import { FieldState } from 'state';
 
 import './Fields.less';
 
+//==============================================================================
+
 const icFormula = require<string>('./ic_formula.svg');
 
-const mapFieldIdsToTreeItems = (
+const inflateFieldsToTreeItems = (
 	ids: number[],
 	fields: Map<number, FieldState>,
-	expandedFields: Set<number>,
-	path: string[] = [],
-): TreeItemData[] => {
-	return ids
-		.map( id => fields.get( id ) as FieldState )
-		.map( item => {
-			const { id, name, children } = item;
-			return {
-				id,
-				path:     [ ...path, name ],
-				children: mapFieldIdsToTreeItems(
-					children,
-					fields,
-					expandedFields,
-					[ ...path, name ],
-				),
-				expanded: expandedFields.has( id ),
-			};
-		});
-};
+): TreeItem[] => ids
+	.map( id => fields.get( id ) as FieldState )
+	.map( field => ({
+			id: field.id,
+			name: field.name,
+			children: inflateFieldsToTreeItems(
+				field.children,
+				fields,
+			),
+			expanded: field.expanded,
+	}));
 
-const mapStateToProps = ( state: AppState ): TreeProps => ({
-	items: [], // TODO describe this better in common Tree component, re-implement here
+const mapStateToProps = ( state: AppState ): Partial<TreeProps> => ({
+	items: inflateFieldsToTreeItems(
+		Array.from( state.fields )
+			.map(([ id, field ]) => id ),
+		state.fields,
+	),
 });
 
-const mapDispatchToProps = ( dispatch: (action: Action) => void ): Partial<TreeProps> => {
+const mapDispatchToProps = ( dispatch: ( action: Action ) => void ): Partial<TreeProps> => {
 	return {
-		onExpandItem:    ( item ) => dispatch( expandField(   item.id )),
-		onCollapseItem:  ( item ) => dispatch( collapseField( item.id )),
-		onCreateButtons: ( item ) => <button
+		onExpandItem:    ( item: TreeItem ) => dispatch( expandField(   item.id )),
+		onCollapseItem:  ( item: TreeItem ) => dispatch( collapseField( item.id )),
+		onCreateButtons: ( item: TreeItem ) => <button
 			onClick={ ev => {
-				dispatch( setPath( item.path ));
+				dispatch( setPath( [] ));
 				ev.stopPropagation();
 				} }>
 			<img
@@ -59,7 +56,7 @@ const mapDispatchToProps = ( dispatch: (action: Action) => void ): Partial<TreeP
 	};
 };
 
-export default connect<{}, {}, TreeProps>(
+export default reduxConnect<{}, {}, TreeProps>(
 	mapStateToProps,
 	mapDispatchToProps,
 )( Tree );
