@@ -1,4 +1,3 @@
-import Doc from 'data/doc';
 import { Position } from 'data/shared';
 
 interface Id {

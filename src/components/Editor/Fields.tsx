@@ -2,11 +2,11 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 
 import AppState from 'state';
-import Action from 'state/action';
+import Action from 'state/actions';
 
-import { collapseField } from 'state/reducers/expandedFields';
-import { expandField   } from 'state/reducers/expandedFields';
-import { setPath       } from 'state/reducers/path';
+import collapseField from 'state/actions/collapseField';
+import expandField from 'state/actions/expandField';
+import setPath from 'state/actions/setPath';
 
 import Tree, { TreeItemData, TreeProps } from 'components/common/Tree';
 import { FieldState } from 'state';

@@ -1,28 +1,28 @@
-import { combineReducers } from 'redux';
-
 import AppState from 'state';
+import Action from 'state/actions';
 
-import reduceCards from 'state/reducers/cards';
-import reduceCells from 'state/reducers/cells';
-import reduceFields from 'state/reducers/fields';
-import reduceFormulas from 'state/reducers/formulas';
-import reduceNodes from 'state/reducers/nodes';
-import reducePath from 'state/reducers/path';
-import reduceSheets from 'state/reducers/sheets';
-import reduceTitle from 'state/reducers/title';
+import { reducer as reduceCollapseField } from 'state/actions/collapseField';
+import { reducer as reduceExpandField } from 'state/actions/expandField';
+
+import { reducer as reduceAddNode } from 'state/actions/addNode';
+
+import { reducer as reduceSetPath } from 'state/actions/setPath';
+import { reducer as reduceSetTitle } from 'state/actions/setTitle';
+
+import { reducer as reduceMoveNode } from 'state/actions/moveNode';
 
 //==============================================================================
 
-export default combineReducers<AppState>({
-	title: reduceTitle,
+const reducers = [
+	reduceCollapseField,
+	reduceExpandField,
+	reduceAddNode,
+	reduceSetPath,
+	reduceSetTitle,
+	reduceMoveNode,
+];
 
-	sheets: reduceSheets,
-	cards: reduceCards,
-	cells: reduceCells,
-
-	fields: reduceFields,
-	formulas: reduceFormulas,
-	nodes: reduceNodes,
-
-	path: reducePath,
-});
+export default ( state: AppState, action: Action ): AppState => reducers.reduce(
+	( localState, reducer ) => reducer( localState, action ),
+	state,
+);

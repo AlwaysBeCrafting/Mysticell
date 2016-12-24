@@ -7,9 +7,9 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import { Parent } from 'data/shared';
 
 import AppState, { FieldState } from 'state';
-import Action  from 'state/action';
-import { addNode } from 'state/reducers/nodes';
-import { setPath } from 'state/reducers/path';
+import Action  from 'state/actions';
+import addNode from 'state/actions/addNode';
+import setPath from 'state/actions/setPath';
 
 import FAB from 'components/common/FAB';
 import Toolbar from 'components/common/Toolbar';
@@ -83,7 +83,6 @@ const ConnectedNodeEditor = reduxConnect<{}, {}, FormulaEditorProps>(
 		onCreateNode: (fieldId: number) => dispatch(
 			addNode(
 				fieldId,
-				Math.floor( Math.random() * 1000000 ),
 				'ADD',
 			),
 		),
