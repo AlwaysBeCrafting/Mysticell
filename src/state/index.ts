@@ -6,8 +6,9 @@ interface Id {
 
 export interface CellState extends Id {
 	field: number;
-	position: Position;
-	format: any;
+	start: Position;
+	end: Position;
+	format?: any;
 }
 
 export interface SheetState extends Id {
