@@ -32,7 +32,7 @@ export const reducer = ( state: AppState, action: Action ): AppState => {
 		new Map(),
 	);
 
-	const loadedState = {
+	return {
 		title: docJson.title,
 		path: [],
 
@@ -100,8 +100,6 @@ export const reducer = ( state: AppState, action: Action ): AppState => {
 			})),
 		),
 	};
-
-	return loadedState;
 };
 
 //------------------------------------------------------------------------------
