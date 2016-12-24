@@ -13,6 +13,19 @@ import { reducer as reduceMoveNode } from 'state/actions/moveNode';
 
 //==============================================================================
 
+const defaultState = {
+	title: 'Document Title',
+	path: [],
+
+	fields: new Map(),
+	formulas: new Map(),
+	nodes: new Map(),
+
+	sheets: new Map(),
+	cards: new Map(),
+	cells: new Map(),
+};
+
 const reducers = [
 	reduceCollapseField,
 	reduceExpandField,
@@ -22,7 +35,7 @@ const reducers = [
 	reduceMoveNode,
 ];
 
-export default ( state: AppState, action: Action ): AppState => reducers.reduce(
+export default ( state: AppState = defaultState, action: Action ): AppState => reducers.reduce(
 	( localState, reducer ) => reducer( localState, action ),
 	state,
 );
