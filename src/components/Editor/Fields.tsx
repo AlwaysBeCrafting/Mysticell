@@ -6,7 +6,7 @@ import Action from 'state/actions';
 
 import collapseField from 'state/actions/collapseField';
 import expandField from 'state/actions/expandField';
-import setPath from 'state/actions/setPath';
+import setPathToFormula from 'state/actions/setPathToFormula';
 
 import Tree, { TreeItem, TreeProps } from 'components/common/Tree';
 import { FieldState } from 'state';
@@ -46,7 +46,7 @@ const mapDispatchToProps = ( dispatch: ( action: Action ) => void ): Partial<Tre
 		onCollapseItem:  ( item: TreeItem ) => dispatch( collapseField( item.id )),
 		onCreateButtons: ( item: TreeItem ) => <button
 			onClick={ ev => {
-				dispatch( setPath( [] ));
+				dispatch( setPathToFormula( item.id ));
 				ev.stopPropagation();
 				} }>
 			<img

@@ -7,6 +7,7 @@ import { reducer as reduceExpandField } from 'state/actions/expandField';
 import { reducer as reduceLoadDocument } from 'state/actions/loadDocument';
 import { reducer as reduceMoveNode } from 'state/actions/moveNode';
 import { reducer as reduceSetPath } from 'state/actions/setPath';
+import { reducer as reduceSetPathToFormula } from 'state/actions/setPathToFormula';
 import { reducer as reduceSetTitle } from 'state/actions/setTitle';
 
 //==============================================================================
@@ -31,6 +32,7 @@ const reducers = [
 	reduceLoadDocument,
 	reduceMoveNode,
 	reduceSetPath,
+	reduceSetPathToFormula,
 	reduceSetTitle,
 ];
 

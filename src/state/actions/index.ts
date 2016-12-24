@@ -6,6 +6,7 @@ import { ExpandFieldAction } from './expandField';
 import { LoadDocumentAction } from './loadDocument';
 import { MoveNodeAction } from './moveNode';
 import { SetPathAction } from './setPath';
+import { SetPathToFormulaAction } from './setPathToFormula';
 import { SetTitleAction } from './setTitle';
 
 export type Action =
@@ -15,6 +16,7 @@ export type Action =
 	LoadDocumentAction |
 	MoveNodeAction |
 	SetPathAction |
+	SetPathToFormulaAction |
 	SetTitleAction;
 
 export default Action;
