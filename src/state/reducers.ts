@@ -1,15 +1,13 @@
 import AppState from 'state';
 import Action from 'state/actions';
 
+import { reducer as reduceAddNode } from 'state/actions/addNode';
 import { reducer as reduceCollapseField } from 'state/actions/collapseField';
 import { reducer as reduceExpandField } from 'state/actions/expandField';
-
-import { reducer as reduceAddNode } from 'state/actions/addNode';
-
+import { reducer as reduceLoadDocument } from 'state/actions/loadDocument';
+import { reducer as reduceMoveNode } from 'state/actions/moveNode';
 import { reducer as reduceSetPath } from 'state/actions/setPath';
 import { reducer as reduceSetTitle } from 'state/actions/setTitle';
-
-import { reducer as reduceMoveNode } from 'state/actions/moveNode';
 
 //==============================================================================
 
@@ -27,12 +25,13 @@ const defaultState = {
 };
 
 const reducers = [
+	reduceAddNode,
 	reduceCollapseField,
 	reduceExpandField,
-	reduceAddNode,
+	reduceLoadDocument,
+	reduceMoveNode,
 	reduceSetPath,
 	reduceSetTitle,
-	reduceMoveNode,
 ];
 
 export default ( state: AppState = defaultState, action: Action ): AppState => reducers.reduce(
