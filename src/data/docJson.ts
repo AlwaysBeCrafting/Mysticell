@@ -1,18 +1,18 @@
 import Position from 'data/shared';
 
-interface FieldJson {
+export interface FieldJson {
 	id: number;
 	name: string;
 	formula?: FormulaJson;
 	children: FieldJson[];
 }
 
-interface FormulaJson {
+export interface FormulaJson {
 	resultNode: number;
 	nodes: NodeJson[];
 }
 
-interface NodeJson {
+export interface NodeJson {
 	id: number;
 	label: string;
 	fxn: string;
@@ -22,19 +22,19 @@ interface NodeJson {
 
 //------------------------------------------------------------------------------
 
-interface SheetJson {
+export interface SheetJson {
 	id: number;
 	title: string;
 	cells: CellJson[];
 }
 
-interface CardJson {
+export interface CardJson {
 	id: number;
 	title: string;
 	cells: CellJson[];
 }
 
-interface CellJson {
+export interface CellJson {
 	field: number;
 	start: Position;
 	end: Position;
