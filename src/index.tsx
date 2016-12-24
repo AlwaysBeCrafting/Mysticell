@@ -6,7 +6,18 @@ import { createStore } from 'redux';
 import Editor from 'components/Editor';
 import appReducer from 'state/reducers';
 
+import loadDocument from 'state/actions/loadDocument';
+
+import DocJson from 'data/docJson';
+
+//==============================================================================
+
+const store = createStore( appReducer );
+
 ReactDOM.render(
-	<Provider store={ createStore( appReducer ) }><Editor /></Provider>,
+	<Provider store={ store }><Editor /></Provider>,
 	document.getElementById( 'root' ),
 );
+
+const exampleDoc = require<DocJson>( 'data/exampleDoc.json' );
+store.dispatch( loadDocument( exampleDoc ));
