@@ -1,5 +1,6 @@
 import AppState, { FieldState } from 'state';
 import Action from 'state/actions';
+import { fieldPath } from 'state/fields';
 
 export interface SetPathToFormulaAction {
 	type: 'SET_PATH_TO_FORMULA';
@@ -9,26 +10,9 @@ export interface SetPathToFormulaAction {
 export const reducer = ( state: AppState, action: Action ): AppState => {
 	if ( action.type !== 'SET_PATH_TO_FORMULA' ) { return state; }
 
-	const fieldParent = ( id: number ): number | undefined => {
-		const parent = Array.from( state.fields )
-			.find( entry =>  !!entry[1].children
-				.find( childId => childId === id ),
-			);
-		return parent && parent[0];
-	};
-
-	const fieldPath = ( id: number ): string[] => {
-		const parent = fieldParent( id );
-		const field = state.fields.get( id );
-		return [
-			...(( parent && fieldPath( parent )) || [] ),
-			...(( field && [field.name] ) || [] ),
-		];
-	};
-
 	return {
 		...state,
-		path: fieldPath( action.fieldId ),
+		path: fieldPath( action.fieldId, state.fields ),
 	};
 };
 

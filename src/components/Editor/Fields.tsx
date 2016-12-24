@@ -3,6 +3,7 @@ import { connect as reduxConnect } from 'react-redux';
 
 import AppState from 'state';
 import Action from 'state/actions';
+import { fieldParent } from 'state/fields';
 
 import collapseField from 'state/actions/collapseField';
 import expandField from 'state/actions/expandField';
@@ -35,6 +36,7 @@ const inflateFieldsToTreeItems = (
 const mapStateToProps = ( state: AppState ): Partial<TreeProps> => ({
 	items: inflateFieldsToTreeItems(
 		Array.from( state.fields )
+			.filter(([ id, field ]) => !fieldParent( id, state.fields ))
 			.map(([ id, field ]) => id ),
 		state.fields,
 	),
