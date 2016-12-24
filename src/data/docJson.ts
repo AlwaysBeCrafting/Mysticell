@@ -35,6 +35,7 @@ export interface CardJson {
 }
 
 export interface CellJson {
+	id: number;
 	field: number;
 	start: Position;
 	end: Position;
