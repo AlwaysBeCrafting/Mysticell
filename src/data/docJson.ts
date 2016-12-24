@@ -1,4 +1,4 @@
-import Position from 'data/shared';
+import { Position } from 'data/shared';
 
 export interface FieldJson {
 	id: number;
