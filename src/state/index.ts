@@ -24,7 +24,6 @@ export interface CardState extends Id {
 
 export interface FieldState extends Id {
 	name: string;
-	formula?: number;
 	parent?: number;
 	children: number[];
 	expanded: boolean;
