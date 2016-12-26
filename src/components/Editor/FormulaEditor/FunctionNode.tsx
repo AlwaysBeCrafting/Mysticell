@@ -11,6 +11,8 @@ import { Position } from 'data/shared';
 
 import Types from './itemTypes';
 
+import { InputPin, OutputPin } from './NodePin';
+
 import './FunctionNode.less';
 
 //==============================================================================
@@ -72,14 +74,13 @@ const FunctionNode = ( { connectDragSource, isDragging, node }: WrappedFunctionN
 			<header>{ label }</header>
 
 			{ output && <div className="output" key={ output }>
-				<span className="pin" />
+				<InputPin />
 				{ output }
 			</div> }
 
 			{ ( inputs || [] ).map( input => (
-
 				<div className="input" key={ input }>
-					<span className="pin" />
+					<OutputPin />
 					{ input }
 				</div>
 			)) }
