@@ -13,12 +13,15 @@ import './NodeArea.less';
 
 //==============================================================================
 
-export interface NodeAreaProps extends React.Props<NodeArea> {
+export interface NodeAreaProps {
 	fieldId: number;
-	connectDropTarget?: ConnectDropTarget;
 }
 
-interface WrappedNodeAreaProps extends NodeAreaProps {
+interface DroppableNodeAreaProps extends NodeAreaProps {
+	connectDropTarget: ConnectDropTarget;
+}
+
+interface WrappedNodeAreaProps extends DroppableNodeAreaProps {
 	nodes: Map<number, NodeState>;
 	formulas: Map<number, FormulaState>;
 }
@@ -42,47 +45,44 @@ const mapStateToProps = ( state: AppState ) => ({
 	nodes: state.nodes,
 });
 
-@DropTarget(Types.FORMULA_NODE, dropTarget, ( connect, monitor ) => ({
-	connectDropTarget: connect.dropTarget(),
-}))
-class NodeArea extends React.PureComponent<WrappedNodeAreaProps, {}> {
-	public render(): JSX.Element | null {
-		const { nodes, formulas, fieldId, connectDropTarget } = this.props;
-		const formula = ( formulas.get( fieldId ));
-		const formulaNodes = (( formula && formula.nodes ) || [] )
-			.map(( id ) => nodes.get( id ) as NodeState);
+//------------------------------------------------------------------------------
 
-		if (!connectDropTarget) {
-			return null;
-		}
+const NodeArea = ( props: WrappedNodeAreaProps ) => {
+	const { nodes, formulas, fieldId, connectDropTarget } = props;
+	const formula = ( formulas.get( fieldId ));
+	const formulaNodes = (( formula && formula.nodes ) || [] )
+		.map(( id ) => nodes.get( id ) as NodeState );
 
-		return connectDropTarget(
-			<div id="node-area">
-				{ formulaNodes.map( node => <FunctionNode
-					key={ node.id }
-					node={ node } />,
-				)}
+	return connectDropTarget(
+		<div id="node-area">
+			{ formulaNodes.map( node => <FunctionNode
+				key={ node.id }
+				node={ node } />,
+			)}
 
-				{ formulaNodes.map( node =>
-					node.inputNodes
-						.map( inputId => nodes.get( inputId ) as NodeState )
-						.filter( inputNode => inputNode )
-						.map(( inputNode, index ) => <Wire
-							start={{
-								x: inputNode.position.x + 160,
-								y: inputNode.position.y +  60,
-							}}
-							end={{
-								x: node.position.x,
-								y: node.position.y + 100 + ( index * 40 ),
-							}}
-						/> ),
-				)}
-			</div>,
-		);
-	}
-}
+			{ formulaNodes.map( node =>
+				node.inputNodes
+					.map( inputId => nodes.get( inputId ) as NodeState )
+					.filter( inputNode => inputNode )
+					.map(( inputNode, index ) => <Wire
+						start={{
+							x: inputNode.position.x + 160,
+							y: inputNode.position.y +  60,
+						}}
+						end={{
+							x: node.position.x,
+							y: node.position.y + 100 + ( index * 40 ),
+						}}
+					/> ),
+			)}
+		</div>,
+	);
+};
 
 //------------------------------------------------------------------------------
 
-export default reduxConnect<{}, {}, NodeAreaProps>( mapStateToProps )( NodeArea );
+const DroppableNodeArea = DropTarget(Types.FORMULA_NODE, dropTarget, ( connect, monitor ) => ({
+	connectDropTarget: connect.dropTarget(),
+}))( NodeArea );
+
+export default reduxConnect<{}, {}, NodeAreaProps>( mapStateToProps )( DroppableNodeArea );

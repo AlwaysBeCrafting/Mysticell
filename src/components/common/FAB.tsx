@@ -2,19 +2,11 @@ import * as React from 'react';
 
 import './FAB.less';
 
-export interface FABProps extends React.Props<FAB> {
+export interface FabProps {
 	icon: string;
 	onClick: (item: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-export class FAB extends React.Component<FABProps, {}> {
-	public render(): JSX.Element {
-		return (
-			<button className="fab" onClick={ this.props.onClick }>
-				<span className="icon">{ this.props.icon }</span>
-			</button>
-		);
-	}
-}
-
-export default FAB;
+export default ( props: FabProps ) => <button className="fab" onClick={ props.onClick }>
+	<span className="icon">{ props.icon }</span>
+</button>;

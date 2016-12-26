@@ -20,7 +20,7 @@ import './index.less';
 
 //==============================================================================
 
-export interface FormulaEditorProps extends React.Props<FormulaEditor> {
+export interface FormulaEditorProps {
 	// Put public-accessible props here
 }
 
@@ -49,31 +49,31 @@ const fieldAtPath = ( path: string[], fields: Map<number, FieldState> ): FieldSt
 	);
 };
 
-class FormulaEditor extends React.PureComponent<WrappedFormulaEditorProps, {}> {
-	public render() {
-		const { fields, path, onPathClick, onCreateNode } = this.props;
-		const field = fieldAtPath( path, fields );
+const FormulaEditor = ( props: WrappedFormulaEditorProps ) => {
+	const { fields, path, onPathClick, onCreateNode } = props;
+	const field = fieldAtPath( path, fields );
 
-		return <div id="node-editor">
-			<Toolbar>
-				<button className="icon" onClick={ () => onPathClick( [] ) }>close</button>
-				<nav className="expanding path">{
-					path.map(( entry, i ) => <a
-						tabIndex={ 0 }
-						key={ entry }
-						onClick={ () => onPathClick( path.slice( 0, i + 1 )) }>
-						{ entry }</a> )
-				}</nav>
-				<a className="icon">undo</a>
-				<a className="icon">redo</a>
-			</Toolbar>
-			<NodeArea fieldId={ field.id } />
-			<FAB icon="add" onClick={ () => onCreateNode( field.id ) } />
-		</div>;
-	}
-}
+	return <div id="node-editor">
+		<Toolbar>
+			<button className="icon" onClick={ () => onPathClick( [] ) }>close</button>
+			<nav className="expanding path">{
+				path.map(( entry, i ) => <a
+					tabIndex={ 0 }
+					key={ entry }
+					onClick={ () => onPathClick( path.slice( 0, i + 1 )) }>
+					{ entry }</a> )
+			}</nav>
+			<a className="icon">undo</a>
+			<a className="icon">redo</a>
+		</Toolbar>
+		<NodeArea fieldId={ field.id } />
+		<FAB icon="add" onClick={ () => onCreateNode( field.id ) } />
+	</div>;
+};
 
-const ConnectedNodeEditor = reduxConnect<{}, {}, FormulaEditorProps>(
+const DragDropFormulaEditor = DragDropContext( HTML5Backend )( FormulaEditor );
+
+export default reduxConnect<{}, {}, FormulaEditorProps>(
 	( state: AppState ): Partial<WrappedFormulaEditorProps> => ({
 		path:      state.path,
 		fields:    state.fields,
@@ -87,6 +87,4 @@ const ConnectedNodeEditor = reduxConnect<{}, {}, FormulaEditorProps>(
 			),
 		),
 	}),
-)( FormulaEditor );
-
-export default DragDropContext( HTML5Backend )( ConnectedNodeEditor ) as React.ComponentClass<FormulaEditorProps>;
+)( DragDropFormulaEditor );

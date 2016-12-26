@@ -2,13 +2,7 @@ import * as React from 'react';
 
 import './Toolbar.less';
 
-export interface ToolbarProps extends React.Props<Toolbar> {
-}
+// TODO: w/ TS 2.1 this shouldn't be needed any more
+export interface ToolbarProps { children?: any; }
 
-export class Toolbar extends React.Component<ToolbarProps, {}> {
-	public render(): JSX.Element {
-		return <menu type="toolbar">{ this.props.children }</menu>;
-	}
-}
-
-export default Toolbar;
+export default ( props: ToolbarProps ) => <menu type="toolbar">{ props.children }</menu>;
