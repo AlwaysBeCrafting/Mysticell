@@ -1,7 +1,8 @@
 import * as React from 'react';
 
-import { DragSource, DragSourceMonitor, DragSourceSpec } from 'react-dnd';
-import { DropTarget, DropTargetMonitor, DropTargetSpec } from 'react-dnd';
+import { ConnectDragSource, ConnectDropTarget, DragSource, DropTarget } from 'react-dnd';
+import { DragSourceCollector, DragSourceConnector, DragSourceMonitor, DragSourceSpec } from 'react-dnd';
+import { DropTargetCollector, DropTargetConnector, DropTargetMonitor, DropTargetSpec } from 'react-dnd';
 
 import DndTypes from './dndTypes';
 
@@ -11,33 +12,74 @@ import './NodePin.less';
 
 interface InputPinProps {}
 
-const BareInputPin = ( props: InputPinProps ) => <span className="pin" />;
+interface ConnectedInputPinProps extends InputPinProps {
+	connectDropTarget: ConnectDropTarget;
+}
+
+//------------------------------------------------------------------------------
+
+const BareInputPin = ( props: ConnectedInputPinProps ) => props.connectDropTarget(
+	<span className="pin" />,
+);
+
+//------------------------------------------------------------------------------
 
 const inputPinTargetSpec: DropTargetSpec<InputPinProps> = {
-	drop: ( props, monitor, component ) => { /* Do nothing on drop; TODO: do something on drop */ },
-	hover: ( props, monitor, component ) => { /* Do nothing on hover */ },
+	drop: ( props, monitor, component ) => { /* No action */ },
 };
+
+const inputPinTargetCollector: DropTargetCollector = (
+	connect: DropTargetConnector,
+	monitor: DropTargetMonitor,
+) => ({
+	connectDropTarget: connect.dropTarget(),
+});
+
+//------------------------------------------------------------------------------
 
 export const InputPin = DropTarget(
 	DndTypes.OUTPUT_PIN,
 	inputPinTargetSpec,
-	( connect, monitor ) => ({ connectDropTarget: connect.dropTarget() }),
-)( BareInputPin ) as React.ComponentClass<OutputPinProps>;
+	inputPinTargetCollector,
+)( BareInputPin ) as React.ComponentClass<InputPinProps>;
 
 
+//------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
 interface OutputPinProps {}
 
-const BareOutputPin = ( props: OutputPinProps ) => <span className="pin" />;
+interface ConnectedOutputPinProps extends OutputPinProps {
+	connectDragSource: ConnectDragSource;
+	isDragging: boolean;
+}
 
-const outputPinSourceSpec: DragSourceSpec<OutputPinProps> = {
-	beginDrag: ( props: OutputPinProps ): {} => ({}),
-	endDrag:   ( props: OutputPinProps, monitor: DragSourceMonitor, component ) => {},
+//------------------------------------------------------------------------------
+
+const BareOutputPin = ( props: ConnectedOutputPinProps ) => props.connectDragSource(
+	<span className="pin" />,
+);
+
+//------------------------------------------------------------------------------
+
+const outputPinSourceSpec: DragSourceSpec<ConnectedOutputPinProps> = {
+	beginDrag: ( props: ConnectedOutputPinProps ) => {
+		return { id: 0 };
+	},
 };
+
+const outputPinSourceCollector: DragSourceCollector = (
+	connect: DragSourceConnector,
+	monitor: DragSourceMonitor,
+): OutputPinProps => ({
+	connectDragSource: connect.dragSource(),
+	isDragging: monitor.isDragging(),
+});
+
+//------------------------------------------------------------------------------
 
 export const OutputPin = DragSource(
 	DndTypes.OUTPUT_PIN,
 	outputPinSourceSpec,
-	( connect, monitor ) => ({ connectDragSource: connect.dragSource() }),
+	outputPinSourceCollector,
 )( BareOutputPin ) as React.ComponentClass<OutputPinProps>;
