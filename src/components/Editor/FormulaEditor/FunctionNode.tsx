@@ -9,7 +9,7 @@ import moveNode from 'state/actions/moveNode';
 import Fxn from 'data/fxn';
 import { Position } from 'data/shared';
 
-import Types from './itemTypes';
+import Types from './dndTypes';
 
 import { InputPin, OutputPin } from './NodePin';
 
@@ -33,7 +33,7 @@ interface WrappedFunctionNodeProps extends FunctionNodeProps, FunctionNodeDispat
 	connectDragSource: <P> ( component: React.ReactElement<P> ) => React.ReactElement<P>;
 }
 
-const cardSource: DragSourceSpec<WrappedFunctionNodeProps> = {
+const nodeSourceSpec: DragSourceSpec<WrappedFunctionNodeProps> = {
 	beginDrag: ( props: WrappedFunctionNodeProps ): NodeState => props.node,
 	endDrag:   ( props: WrappedFunctionNodeProps, monitor: DragSourceMonitor, component ) => {
 		if ( monitor.didDrop() ) {
@@ -90,7 +90,7 @@ const FunctionNode = ( { connectDragSource, isDragging, node }: WrappedFunctionN
 
 //------------------------------------------------------------------------------
 
-const DraggableFunctionNode = DragSource( Types.FORMULA_NODE, cardSource, (connect, monitor) => ({
+const DraggableFunctionNode = DragSource( Types.FORMULA_NODE, nodeSourceSpec, (connect, monitor) => ({
 	connectDragSource: connect.dragSource(),
 	isDragging: monitor.isDragging(),
 }))( FunctionNode );

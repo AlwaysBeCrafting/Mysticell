@@ -5,8 +5,8 @@ import { connect as reduxConnect } from 'react-redux';
 import { Position } from 'data/shared';
 import AppState, { FormulaState, NodeState } from 'state';
 
+import Types from './dndTypes';
 import FunctionNode from './FunctionNode';
-import Types from './itemTypes';
 import Wire from './Wire';
 
 import './NodeArea.less';
@@ -28,11 +28,9 @@ interface WrappedNodeAreaProps extends DroppableNodeAreaProps {
 
 //------------------------------------------------------------------------------
 
-const dropTarget: DropTargetSpec<WrappedNodeAreaProps> = {
+const nodeAreaTargetSpec: DropTargetSpec<WrappedNodeAreaProps> = {
 	drop:  ( props, monitor, component ) => {
-		if (!monitor) {
-			return undefined;
-		}
+		if ( !monitor ) { return undefined; }
 		return monitor.getDifferenceFromInitialOffset() as Position;
 	},
 	hover: ( props, monitor, component ) => { /* Do nothing on hover */ },
@@ -81,7 +79,7 @@ const NodeArea = ( props: WrappedNodeAreaProps ) => {
 
 //------------------------------------------------------------------------------
 
-const DroppableNodeArea = DropTarget(Types.FORMULA_NODE, dropTarget, ( connect, monitor ) => ({
+const DroppableNodeArea = DropTarget(Types.FORMULA_NODE, nodeAreaTargetSpec, ( connect, monitor ) => ({
 	connectDropTarget: connect.dropTarget(),
 }))( NodeArea );
 
