@@ -4,9 +4,12 @@ import { ConnectDragSource, ConnectDropTarget, DragSource, DropTarget } from 're
 import { DragSourceCollector, DragSourceConnector, DragSourceMonitor, DragSourceSpec } from 'react-dnd';
 import { DropTargetCollector, DropTargetConnector, DropTargetMonitor, DropTargetSpec } from 'react-dnd';
 
+import { connect as reduxConnect } from 'react-redux';
+
 import DndTypes from './dndTypes';
 
-import { NodeState } from 'state';
+import AppState, { NodeState } from 'state';
+import Action from 'state/actions';
 
 import './NodePin.less';
 
@@ -15,6 +18,10 @@ import './NodePin.less';
 interface InputPinProps {
 	node: NodeState;
 	index: number;
+}
+
+interface InputPinDispatchers {
+	dispatch: ( action: Action ) => void;
 }
 
 interface ConnectedInputPinProps extends InputPinProps {
@@ -33,21 +40,28 @@ const inputPinTargetSpec: DropTargetSpec<InputPinProps> = {
 	drop: ( props, monitor, component ) => { /* No action */ },
 };
 
-const inputPinTargetCollector: DropTargetCollector = (
-	connect: DropTargetConnector,
-	monitor: DropTargetMonitor,
-): Partial<ConnectedInputPinProps> => ({
+const inputPinTargetCollector: DropTargetCollector = ( connect, monitor ): Partial<ConnectedInputPinProps> => ({
 	connectDropTarget: connect.dropTarget(),
 });
 
 //------------------------------------------------------------------------------
 
-export const InputPin = DropTarget(
+const DroppableInputPin = DropTarget(
 	DndTypes.OUTPUT_PIN,
 	inputPinTargetSpec,
 	inputPinTargetCollector,
 )( BareInputPin ) as React.ComponentClass<InputPinProps>;
 
+//------------------------------------------------------------------------------
+
+const mapDispatchToInputProps = ( dispatch: ( action: Action ) => void ): InputPinDispatchers => ({
+	dispatch,
+});
+
+export const InputPin = reduxConnect<{}, {}, InputPinProps>(
+	_ => ({}),
+	mapDispatchToInputProps,
+)( DroppableInputPin );
 
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
@@ -75,10 +89,7 @@ const outputPinSourceSpec: DragSourceSpec<ConnectedOutputPinProps> = {
 	},
 };
 
-const outputPinSourceCollector: DragSourceCollector = (
-	connect: DragSourceConnector,
-	monitor: DragSourceMonitor,
-): Partial<ConnectedOutputPinProps> => ({
+const outputPinSourceCollector: DragSourceCollector = ( connect, monitor ): Partial<ConnectedOutputPinProps> => ({
 	connectDragSource: connect.dragSource(),
 	isDragging: monitor.isDragging(),
 });
