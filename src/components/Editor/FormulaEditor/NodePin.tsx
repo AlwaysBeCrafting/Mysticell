@@ -6,11 +6,16 @@ import { DropTargetCollector, DropTargetConnector, DropTargetMonitor, DropTarget
 
 import DndTypes from './dndTypes';
 
+import { NodeState } from 'state';
+
 import './NodePin.less';
 
 //==============================================================================
 
-interface InputPinProps {}
+interface InputPinProps {
+	node: NodeState;
+	index: number;
+}
 
 interface ConnectedInputPinProps extends InputPinProps {
 	connectDropTarget: ConnectDropTarget;
@@ -31,7 +36,7 @@ const inputPinTargetSpec: DropTargetSpec<InputPinProps> = {
 const inputPinTargetCollector: DropTargetCollector = (
 	connect: DropTargetConnector,
 	monitor: DropTargetMonitor,
-) => ({
+): Partial<ConnectedInputPinProps> => ({
 	connectDropTarget: connect.dropTarget(),
 });
 
@@ -47,7 +52,9 @@ export const InputPin = DropTarget(
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
-interface OutputPinProps {}
+interface OutputPinProps {
+	node: NodeState;
+}
 
 interface ConnectedOutputPinProps extends OutputPinProps {
 	connectDragSource: ConnectDragSource;
@@ -71,7 +78,7 @@ const outputPinSourceSpec: DragSourceSpec<ConnectedOutputPinProps> = {
 const outputPinSourceCollector: DragSourceCollector = (
 	connect: DragSourceConnector,
 	monitor: DragSourceMonitor,
-): OutputPinProps => ({
+): Partial<ConnectedOutputPinProps> => ({
 	connectDragSource: connect.dragSource(),
 	isDragging: monitor.isDragging(),
 });

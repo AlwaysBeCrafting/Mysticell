@@ -50,13 +50,16 @@ const FunctionNode = ({ connectDragSource, isDragging, node }: WrappedFunctionNo
 			<header>{ label }</header>
 
 			{ output && <div className="output" key={ output }>
-				<OutputPin />
+				<OutputPin
+					node={ node } />
 				{ output }
 			</div> }
 
-			{ ( inputs || [] ).map( input => (
+			{ ( inputs || [] ).map(( input, index ) => (
 				<div className="input" key={ input }>
-					<InputPin />
+					<InputPin
+						node={ node }
+						index={ index } />
 					{ input }
 				</div>
 			)) }
