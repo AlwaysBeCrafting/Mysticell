@@ -14,7 +14,7 @@ export const reducer = ( state: AppState, action: Action ): AppState => {
 	const { nodeTo, indexTo } = action;
 
 	const newInputNodes = [...nodeTo.inputNodes];
-	newInputNodes.splice( indexTo, 1 );
+	delete newInputNodes[indexTo];
 
 	const newNode = {
 		...nodeTo,
