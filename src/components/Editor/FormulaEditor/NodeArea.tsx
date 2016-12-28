@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ConnectDropTarget, DropTarget, DropTargetMonitor, DropTargetSpec } from 'react-dnd';
-import { connect as reduxConnect } from 'react-redux';
+import { connect as reduxConnect, Dispatch } from 'react-redux';
 
 import { Position } from 'data/shared';
 import AppState, { FormulaState, NodeState } from 'state';
@@ -50,11 +50,7 @@ const NodeArea = ( props: WrappedNodeAreaProps ) => {
 
 	return connectDropTarget(
 		<div id="node-area">
-			{ formulaNodes.map( node => <FunctionNode
-				key={ node.id }
-				node={ node } />,
-			)}
-
+			<svg id="wire-layer" viewBox="0 0 10000 10000" preserveAspectRatio="none">
 			{ formulaNodes.map( node =>
 				node.inputNodes
 					.map(( inputId, index ) => ({
@@ -72,6 +68,12 @@ const NodeArea = ( props: WrappedNodeAreaProps ) => {
 							y: node.position.y + 100 + ( pinSpec.index * 40 ),
 						}}
 					/> ),
+			)}
+			</svg>
+
+			{ formulaNodes.map( node => <FunctionNode
+				key={ node.id }
+				node={ node } />,
 			)}
 		</div>,
 	);
