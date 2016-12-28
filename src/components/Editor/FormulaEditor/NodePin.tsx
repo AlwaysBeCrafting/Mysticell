@@ -79,7 +79,8 @@ const outputPinSourceSpec: DragSourceSpec<ConnectedOutputPinProps> = {
 	},
 	endDrag: ( props, monitor: DragSourceMonitor ) => {
 		if ( !monitor.didDrop() ) { return; }
-		const inputNode = monitor.getDropResult();
+		const input = monitor.getDropResult() as { node: NodeState, index: number };
+		props.dispatch( connectNodes( props.node, input.node, input.index ));
 	},
 };
 
