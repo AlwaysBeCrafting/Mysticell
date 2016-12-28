@@ -62,7 +62,7 @@ export const reducer = ( state: AppState, action: Action ): AppState => {
 						id: nodeJson.id,
 						label: nodeJson.label,
 						fxn: nodeJson.fxn,
-						inputNodes: nodeJson.inputNodes,
+						inputNodes: nodeJson.inputNodes.filter( input => input !== null ),
 						position: nodeJson.position,
 					})),
 				],
