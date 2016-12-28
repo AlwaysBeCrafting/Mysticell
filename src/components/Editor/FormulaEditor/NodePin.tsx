@@ -11,6 +11,7 @@ import DndTypes from './dndTypes';
 import AppState, { NodeState } from 'state';
 import Action from 'state/actions';
 import connectNodes from 'state/actions/connectNodes';
+import disconnectNodes from 'state/actions/disconnectNodes';
 
 import './NodePin.less';
 
@@ -21,14 +22,24 @@ interface InputPinProps {
 	index: number;
 }
 
-interface ConnectedInputPinProps extends InputPinProps {
+interface InputPinDispatchers {
+	dispatch: ( action: Action ) => void;
+}
+
+interface ConnectedInputPinProps extends InputPinProps, InputPinDispatchers {
 	connectDropTarget: ConnectDropTarget;
 }
 
 //------------------------------------------------------------------------------
 
+const onInputPinClick = ( ev: React.MouseEvent<HTMLElement>, props: ConnectedInputPinProps ) => {
+	if ( !ev.shiftKey ) { return; }
+	props.dispatch( disconnectNodes( props.node, props.index ));
+	ev.preventDefault();
+};
+
 const BareInputPin = ( props: ConnectedInputPinProps ) => props.connectDropTarget(
-	<span className="pin" />,
+	<span className="pin" onClick={ ev => onInputPinClick( ev, props ) } />,
 );
 
 //------------------------------------------------------------------------------
@@ -43,11 +54,22 @@ const inputPinTargetCollector: DropTargetCollector = ( connect, monitor ): Parti
 
 //------------------------------------------------------------------------------
 
-export const InputPin = DropTarget(
+const DroppableInputPin = DropTarget(
 	DndTypes.OUTPUT_PIN,
 	inputPinTargetSpec,
 	inputPinTargetCollector,
 )( BareInputPin ) as React.ComponentClass<InputPinProps>;
+
+//------------------------------------------------------------------------------
+
+const mapDispatchToInputProps = ( dispatch: ( action: Action ) => void ): InputPinDispatchers => ({
+	dispatch,
+});
+
+export const InputPin = reduxConnect<{}, {}, InputPinProps>(
+	() => ({}),
+	mapDispatchToInputProps,
+)( DroppableInputPin );
 
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
