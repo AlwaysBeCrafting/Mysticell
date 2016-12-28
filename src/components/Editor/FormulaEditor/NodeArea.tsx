@@ -29,10 +29,7 @@ interface WrappedNodeAreaProps extends DroppableNodeAreaProps {
 //------------------------------------------------------------------------------
 
 const nodeAreaTargetSpec: DropTargetSpec<WrappedNodeAreaProps> = {
-	drop:  ( props, monitor, component ) => {
-		if ( !monitor ) { return undefined; }
-		return monitor.getDifferenceFromInitialOffset() as Position;
-	},
+	drop:  ( props, monitor, component ) => monitor && monitor.getDifferenceFromInitialOffset() as Position,
 	hover: ( props, monitor, component ) => { /* Do nothing on hover */ },
 };
 

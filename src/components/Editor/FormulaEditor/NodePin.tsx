@@ -10,6 +10,7 @@ import DndTypes from './dndTypes';
 
 import AppState, { NodeState } from 'state';
 import Action from 'state/actions';
+import connectNodes from 'state/actions/connectNodes';
 
 import './NodePin.less';
 
@@ -18,10 +19,6 @@ import './NodePin.less';
 interface InputPinProps {
 	node: NodeState;
 	index: number;
-}
-
-interface InputPinDispatchers {
-	dispatch: ( action: Action ) => void;
 }
 
 interface ConnectedInputPinProps extends InputPinProps {
@@ -36,8 +33,8 @@ const BareInputPin = ( props: ConnectedInputPinProps ) => props.connectDropTarge
 
 //------------------------------------------------------------------------------
 
-const inputPinTargetSpec: DropTargetSpec<InputPinProps> = {
-	drop: ( props, monitor, component ) => { /* No action */ },
+const inputPinTargetSpec: DropTargetSpec<ConnectedInputPinProps> = {
+	drop: ( props, monitor, component ) => ({ node: props.node, index: props.index}),
 };
 
 const inputPinTargetCollector: DropTargetCollector = ( connect, monitor ): Partial<ConnectedInputPinProps> => ({
@@ -46,22 +43,11 @@ const inputPinTargetCollector: DropTargetCollector = ( connect, monitor ): Parti
 
 //------------------------------------------------------------------------------
 
-const DroppableInputPin = DropTarget(
+export const InputPin = DropTarget(
 	DndTypes.OUTPUT_PIN,
 	inputPinTargetSpec,
 	inputPinTargetCollector,
 )( BareInputPin ) as React.ComponentClass<InputPinProps>;
-
-//------------------------------------------------------------------------------
-
-const mapDispatchToInputProps = ( dispatch: ( action: Action ) => void ): InputPinDispatchers => ({
-	dispatch,
-});
-
-export const InputPin = reduxConnect<{}, {}, InputPinProps>(
-	_ => ({}),
-	mapDispatchToInputProps,
-)( DroppableInputPin );
 
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
@@ -70,7 +56,11 @@ interface OutputPinProps {
 	node: NodeState;
 }
 
-interface ConnectedOutputPinProps extends OutputPinProps {
+interface OutputPinDispatchers {
+	dispatch: ( action: Action ) => void;
+}
+
+interface ConnectedOutputPinProps extends OutputPinProps, OutputPinDispatchers {
 	connectDragSource: ConnectDragSource;
 	isDragging: boolean;
 }
@@ -87,6 +77,10 @@ const outputPinSourceSpec: DragSourceSpec<ConnectedOutputPinProps> = {
 	beginDrag: ( props: ConnectedOutputPinProps ) => {
 		return { id: 0 };
 	},
+	endDrag: ( props, monitor: DragSourceMonitor ) => {
+		if ( !monitor.didDrop() ) { return; }
+		const inputNode = monitor.getDropResult();
+	},
 };
 
 const outputPinSourceCollector: DragSourceCollector = ( connect, monitor ): Partial<ConnectedOutputPinProps> => ({
@@ -96,8 +90,20 @@ const outputPinSourceCollector: DragSourceCollector = ( connect, monitor ): Part
 
 //------------------------------------------------------------------------------
 
-export const OutputPin = DragSource(
+const DraggableOutputPin = DragSource(
 	DndTypes.OUTPUT_PIN,
 	outputPinSourceSpec,
 	outputPinSourceCollector,
 )( BareOutputPin ) as React.ComponentClass<OutputPinProps>;
+
+
+//------------------------------------------------------------------------------
+
+const mapDispatchToOutputProps = ( dispatch: ( action: Action ) => void ): OutputPinDispatchers => ({
+	dispatch,
+});
+
+export const OutputPin = reduxConnect<{}, {}, OutputPinProps>(
+	_ => ({}),
+	mapDispatchToOutputProps,
+)( DraggableOutputPin );
