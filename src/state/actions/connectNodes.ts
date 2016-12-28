@@ -14,7 +14,7 @@ export const reducer = ( state: AppState, action: Action ): AppState => {
 
 	const { nodeFrom, nodeTo, toIndex } = action;
 
-	const newInputNodes = nodeTo.inputNodes;
+	const newInputNodes = [...nodeTo.inputNodes];
 	newInputNodes[toIndex] = nodeFrom.id;
 
 	const newNode = {
