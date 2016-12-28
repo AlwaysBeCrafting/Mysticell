@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { ConnectDropTarget, DropTarget, DropTargetMonitor, DropTargetSpec } from 'react-dnd';
-import { connect as reduxConnect } from 'react-redux';
+import { connect as reduxConnect, Dispatch } from 'react-redux';
 
 import { Position } from 'data/shared';
 import AppState, { FormulaState, NodeState } from 'state';
 
+import Types from './dndTypes';
 import FunctionNode from './FunctionNode';
-import Types from './itemTypes';
 import Wire from './Wire';
 
 import './NodeArea.less';
@@ -28,13 +28,8 @@ interface WrappedNodeAreaProps extends DroppableNodeAreaProps {
 
 //------------------------------------------------------------------------------
 
-const dropTarget: DropTargetSpec<WrappedNodeAreaProps> = {
-	drop:  ( props, monitor, component ) => {
-		if (!monitor) {
-			return undefined;
-		}
-		return monitor.getDifferenceFromInitialOffset() as Position;
-	},
+const nodeAreaTargetSpec: DropTargetSpec<WrappedNodeAreaProps> = {
+	drop:  ( props, monitor, component ) => monitor && monitor.getDifferenceFromInitialOffset() as Position,
 	hover: ( props, monitor, component ) => { /* Do nothing on hover */ },
 };
 
@@ -55,25 +50,30 @@ const NodeArea = ( props: WrappedNodeAreaProps ) => {
 
 	return connectDropTarget(
 		<div id="node-area">
-			{ formulaNodes.map( node => <FunctionNode
-				key={ node.id }
-				node={ node } />,
-			)}
-
+			<svg id="wire-layer" viewBox="0 0 10000 10000" preserveAspectRatio="none">
 			{ formulaNodes.map( node =>
 				node.inputNodes
-					.map( inputId => nodes.get( inputId ) as NodeState )
-					.filter( inputNode => inputNode )
-					.map(( inputNode, index ) => <Wire
+					.map(( inputId, index ) => ({
+						node: nodes.get( inputId ) as NodeState,
+						index,
+					}))
+					.filter( pinSpec => pinSpec.node )
+					.map( pinSpec => <Wire
 						start={{
-							x: inputNode.position.x + 160,
-							y: inputNode.position.y +  60,
+							x: pinSpec.node.position.x + 160,
+							y: pinSpec.node.position.y +  60,
 						}}
 						end={{
 							x: node.position.x,
-							y: node.position.y + 100 + ( index * 40 ),
+							y: node.position.y + 100 + ( pinSpec.index * 40 ),
 						}}
 					/> ),
+			)}
+			</svg>
+
+			{ formulaNodes.map( node => <FunctionNode
+				key={ node.id }
+				node={ node } />,
 			)}
 		</div>,
 	);
@@ -81,7 +81,7 @@ const NodeArea = ( props: WrappedNodeAreaProps ) => {
 
 //------------------------------------------------------------------------------
 
-const DroppableNodeArea = DropTarget(Types.FORMULA_NODE, dropTarget, ( connect, monitor ) => ({
+const DroppableNodeArea = DropTarget(Types.FORMULA_NODE, nodeAreaTargetSpec, ( connect, monitor ) => ({
 	connectDropTarget: connect.dropTarget(),
 }))( NodeArea );
 

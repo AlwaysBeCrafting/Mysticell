@@ -1,5 +1,8 @@
 import * as React from 'react';
-import { DragSource, DragSourceMonitor, DragSourceSpec } from 'react-dnd';
+
+import { ConnectDragSource, DragSource } from 'react-dnd';
+import { DragSourceCollector, DragSourceConnector, DragSourceMonitor, DragSourceSpec } from 'react-dnd';
+
 import { connect as reduxConnect } from 'react-redux';
 
 import AppState, { NodeState } from 'state';
@@ -9,7 +12,9 @@ import moveNode from 'state/actions/moveNode';
 import Fxn from 'data/fxn';
 import { Position } from 'data/shared';
 
-import Types from './itemTypes';
+import Types from './dndTypes';
+
+import { InputPin, OutputPin } from './NodePin';
 
 import './FunctionNode.less';
 
@@ -23,15 +28,48 @@ export interface FunctionNodeDispatchers {
 	onMove: ( id: number, position: Position ) => void;
 }
 
-//------------------------------------------------------------------------------
-
 interface WrappedFunctionNodeProps extends FunctionNodeProps, FunctionNodeDispatchers {
 	nodes: Map<number, NodeState>;
 	isDragging: boolean;
-	connectDragSource: <P> ( component: React.ReactElement<P> ) => React.ReactElement<P>;
+	connectDragSource: ConnectDragSource;
 }
 
-const cardSource: DragSourceSpec<WrappedFunctionNodeProps> = {
+//------------------------------------------------------------------------------
+
+const FunctionNode = ({ connectDragSource, isDragging, node }: WrappedFunctionNodeProps ) => {
+	const { label, fxn, position } = node;
+	const { inputs, output } = Fxn[fxn];
+
+	const className = [ 'function-node' ];
+	if ( isDragging ) { className.push( 'dragging' ); }
+
+	const { x: left, y: top } = position || { x: 0, y: 0 };
+
+	return connectDragSource(
+		<div className={ className.join( ' ' ) } style={{ left, top }}>
+			<header>{ label }</header>
+
+			{ output && <div className="output" key={ output }>
+				<OutputPin
+					node={ node } />
+				{ output }
+			</div> }
+
+			{ ( inputs || [] ).map(( input, index ) => (
+				<div className="input" key={ input }>
+					<InputPin
+						node={ node }
+						index={ index } />
+					{ input }
+				</div>
+			)) }
+		</div>,
+	);
+};
+
+//------------------------------------------------------------------------------
+
+const nodeSourceSpec: DragSourceSpec<WrappedFunctionNodeProps> = {
 	beginDrag: ( props: WrappedFunctionNodeProps ): NodeState => props.node,
 	endDrag:   ( props: WrappedFunctionNodeProps, monitor: DragSourceMonitor, component ) => {
 		if ( monitor.didDrop() ) {
@@ -48,6 +86,20 @@ const cardSource: DragSourceSpec<WrappedFunctionNodeProps> = {
 	},
 };
 
+const nodeSourceCollector: DragSourceCollector = (
+	connect: DragSourceConnector,
+	monitor: DragSourceMonitor,
+) => ({
+	connectDragSource: connect.dragSource(),
+	isDragging: monitor.isDragging(),
+});
+
+const DraggableFunctionNode = DragSource(
+	Types.FORMULA_NODE,
+	nodeSourceSpec,
+	nodeSourceCollector,
+)( FunctionNode );
+
 //------------------------------------------------------------------------------
 
 const mapStateToProps = ( state: AppState ): Partial<WrappedFunctionNodeProps> => ({
@@ -57,41 +109,5 @@ const mapStateToProps = ( state: AppState ): Partial<WrappedFunctionNodeProps> =
 const mapDispatchToProps = ( dispatch: ( action: Action ) => void ): FunctionNodeDispatchers => ({
 	onMove: ( id, position ) => dispatch( moveNode( id, position )),
 });
-
-const FunctionNode = ( { connectDragSource, isDragging, node }: WrappedFunctionNodeProps ) => {
-	const { label, fxn, position } = node;
-	const { inputs, output } = Fxn[fxn];
-
-	const className = [ 'function-node' ];
-	if ( isDragging ) { className.push( 'dragging' ); }
-
-	const { x: left, y: top } = position || { x: 0, y: 0 };
-
-	return connectDragSource(
-		<div className={ className.join( ' ' ) } style={{ left, top }}>
-			<header>{ label }</header>
-
-			{ output && <div className="output" key={ output }>
-				<span className="pin" />
-				{ output }
-			</div> }
-
-			{ ( inputs || [] ).map( input => (
-
-				<div className="input" key={ input }>
-					<span className="pin" />
-					{ input }
-				</div>
-			)) }
-		</div>,
-	);
-};
-
-//------------------------------------------------------------------------------
-
-const DraggableFunctionNode = DragSource( Types.FORMULA_NODE, cardSource, (connect, monitor) => ({
-	connectDragSource: connect.dragSource(),
-	isDragging: monitor.isDragging(),
-}))( FunctionNode );
 
 export default reduxConnect<{}, {}, FunctionNodeProps>( mapStateToProps, mapDispatchToProps )( DraggableFunctionNode );

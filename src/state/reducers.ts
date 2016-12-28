@@ -3,6 +3,8 @@ import Action from 'state/actions';
 
 import { reducer as reduceAddNode } from 'state/actions/addNode';
 import { reducer as reduceCollapseField } from 'state/actions/collapseField';
+import { reducer as reduceConnectNodes } from 'state/actions/connectNodes';
+import { reducer as reduceDisconnectNodes } from 'state/actions/disconnectNodes';
 import { reducer as reduceExpandField } from 'state/actions/expandField';
 import { reducer as reduceLoadDocument } from 'state/actions/loadDocument';
 import { reducer as reduceMoveNode } from 'state/actions/moveNode';
@@ -28,6 +30,8 @@ const defaultState = {
 const reducers = [
 	reduceAddNode,
 	reduceCollapseField,
+	reduceConnectNodes,
+	reduceDisconnectNodes,
 	reduceExpandField,
 	reduceLoadDocument,
 	reduceMoveNode,
