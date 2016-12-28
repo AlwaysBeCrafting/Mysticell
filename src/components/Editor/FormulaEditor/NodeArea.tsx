@@ -57,16 +57,19 @@ const NodeArea = ( props: WrappedNodeAreaProps ) => {
 
 			{ formulaNodes.map( node =>
 				node.inputNodes
-					.map( inputId => nodes.get( inputId ) as NodeState )
-					.filter( inputNode => inputNode )
-					.map(( inputNode, index ) => <Wire
+					.map(( inputId, index ) => ({
+						node: nodes.get( inputId ) as NodeState,
+						index,
+					}))
+					.filter( pinSpec => pinSpec.node )
+					.map( pinSpec => <Wire
 						start={{
-							x: inputNode.position.x + 160,
-							y: inputNode.position.y +  60,
+							x: pinSpec.node.position.x + 160,
+							y: pinSpec.node.position.y +  60,
 						}}
 						end={{
 							x: node.position.x,
-							y: node.position.y + 100 + ( index * 40 ),
+							y: node.position.y + 100 + ( pinSpec.index * 40 ),
 						}}
 					/> ),
 			)}
