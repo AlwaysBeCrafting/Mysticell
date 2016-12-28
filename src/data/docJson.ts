@@ -16,7 +16,7 @@ export interface NodeJson {
 	id: number;
 	label: string;
 	fxn: string;
-	inputNodes: number[];
+	inputNodes: Array<number|null>;
 	position: Position;
 }
 

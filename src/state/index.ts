@@ -38,7 +38,7 @@ export interface FormulaState extends Id {
 export interface NodeState extends Id {
 	label: string;
 	fxn: string;
-	inputNodes: number[];
+	inputNodes: Array<number|null>;
 	position: Position;
 }
 
