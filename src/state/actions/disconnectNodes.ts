@@ -27,7 +27,7 @@ export const reducer = ( state: AppState, action: Action ): AppState => {
 	};
 };
 
-export default ( nodeTo: NodeState, indexTo: number ) => ({
+export default ( nodeTo: NodeState, indexTo: number ): DisconnectNodesAction => ({
 	type: 'DISCONNECT_NODES',
 	nodeTo,
 	indexTo,
