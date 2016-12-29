@@ -20,19 +20,21 @@ import './index.less';
 
 //==============================================================================
 
-export interface FormulaEditorProps {
-	// Put public-accessible props here
+interface FormulaEditorState {
+	path: string[];
+	fields: Map<number, FieldState>;
 }
 
-//------------------------------------------------------------------------------
-
-interface WrappedFormulaEditorProps extends FormulaEditorProps {
-	path: string[];
-	rootField: Parent<number>;
-	fields: Map<number, FieldState>;
+interface FormulaEditorDispatcher {
 	onPathClick: ( pathSegment: string[] ) => void;
 	onCreateNode: ( id: number ) => void;
 }
+
+interface FormulaEditorProps extends
+	FormulaEditorState,
+	FormulaEditorDispatcher {}
+
+//------------------------------------------------------------------------------
 
 // TODO investigate how to reduce casting (lots of 'as FieldState' feels dirty)
 const fieldAtPath = ( path: string[], fields: Map<number, FieldState> ): FieldState => {
@@ -49,7 +51,7 @@ const fieldAtPath = ( path: string[], fields: Map<number, FieldState> ): FieldSt
 	);
 };
 
-const FormulaEditor = ( props: WrappedFormulaEditorProps ) => {
+const FormulaEditor = ( props: FormulaEditorProps ) => {
 	const { fields, path, onPathClick, onCreateNode } = props;
 	const field = fieldAtPath( path, fields );
 
@@ -73,12 +75,12 @@ const FormulaEditor = ( props: WrappedFormulaEditorProps ) => {
 
 const DragDropFormulaEditor = DragDropContext( HTML5Backend )( FormulaEditor );
 
-export default reduxConnect<{}, {}, FormulaEditorProps>(
-	( state: AppState ): Partial<WrappedFormulaEditorProps> => ({
+export default reduxConnect<{}, {}, {}>(
+	( state: AppState ): FormulaEditorState => ({
 		path:      state.path,
 		fields:    state.fields,
 	}),
-	( dispatch: (action: Action) => void ): Partial<WrappedFormulaEditorProps> => ({
+	( dispatch: (action: Action) => void ): FormulaEditorDispatcher => ({
 		onPathClick:  (path: string[]) => dispatch( setPath( path )),
 		onCreateNode: (fieldId: number) => dispatch(
 			addNode(

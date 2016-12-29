@@ -20,23 +20,32 @@ import './FunctionNode.less';
 
 //==============================================================================
 
-export interface FunctionNodeProps {
+interface FunctionNodeAttributes {
 	node: NodeState;
 }
 
-export interface FunctionNodeDispatchers {
-	onMove: ( id: number, position: Position ) => void;
+interface FunctionNodeDispatcher {
+	dispatch: ( action: Action ) => void;
 }
 
-interface WrappedFunctionNodeProps extends FunctionNodeProps, FunctionNodeDispatchers {
+interface FunctionNodeState {
 	nodes: Map<number, NodeState>;
+}
+
+interface FunctionNodeDragSource {
 	isDragging: boolean;
 	connectDragSource: ConnectDragSource;
 }
 
+interface FunctionNodeProps extends
+	FunctionNodeAttributes,
+	FunctionNodeDispatcher,
+	FunctionNodeState,
+	FunctionNodeDragSource {}
+
 //------------------------------------------------------------------------------
 
-const FunctionNode = ({ connectDragSource, isDragging, node }: WrappedFunctionNodeProps ) => {
+const FunctionNode = ({ connectDragSource, isDragging, node }: FunctionNodeProps ) => {
 	const { label, fxn, position } = node;
 	const { inputs, output } = Fxn[fxn];
 
@@ -69,9 +78,9 @@ const FunctionNode = ({ connectDragSource, isDragging, node }: WrappedFunctionNo
 
 //------------------------------------------------------------------------------
 
-const nodeSourceSpec: DragSourceSpec<WrappedFunctionNodeProps> = {
-	beginDrag: ( props: WrappedFunctionNodeProps ): NodeState => props.node,
-	endDrag:   ( props: WrappedFunctionNodeProps, monitor: DragSourceMonitor, component ) => {
+const nodeSourceSpec: DragSourceSpec<FunctionNodeDragSource> = {
+	beginDrag: ( props: FunctionNodeProps ): NodeState => props.node,
+	endDrag:   ( props: FunctionNodeProps, monitor: DragSourceMonitor, component ) => {
 		if ( monitor.didDrop() ) {
 			const { x: dx, y: dy } = monitor.getDropResult() as Position;
 			const { x, y } = props.node.position;
@@ -81,7 +90,7 @@ const nodeSourceSpec: DragSourceSpec<WrappedFunctionNodeProps> = {
 				Math.round(( y + dy ) / 40 ) * 40,
 			];
 
-			props.onMove( props.node.id, { x: tx, y: ty });
+			props.dispatch( moveNode( props.node.id, { x: tx, y: ty }));
 		}
 	},
 };
@@ -102,12 +111,15 @@ const DraggableFunctionNode = DragSource(
 
 //------------------------------------------------------------------------------
 
-const mapStateToProps = ( state: AppState ): Partial<WrappedFunctionNodeProps> => ({
+const mapStateToProps = ( state: AppState ): FunctionNodeState => ({
 	nodes: state.nodes,
 });
 
-const mapDispatchToProps = ( dispatch: ( action: Action ) => void ): FunctionNodeDispatchers => ({
-	onMove: ( id, position ) => dispatch( moveNode( id, position )),
+const mapDispatchToProps = ( dispatch: ( action: Action ) => void ): FunctionNodeDispatcher => ({
+	dispatch,
 });
 
-export default reduxConnect<{}, {}, FunctionNodeProps>( mapStateToProps, mapDispatchToProps )( DraggableFunctionNode );
+export default reduxConnect<{}, {}, FunctionNodeAttributes>(
+	mapStateToProps,
+	mapDispatchToProps,
+)( DraggableFunctionNode );

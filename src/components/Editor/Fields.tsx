@@ -33,7 +33,7 @@ const inflateFieldsToTreeItems = (
 			expanded: field.expanded,
 	}));
 
-const mapStateToProps = ( state: AppState ): Partial<TreeProps> => ({
+const mapStateToProps = ( state: AppState ): TreeProps => ({
 	items: inflateFieldsToTreeItems(
 		Array.from( state.fields )
 			.filter(([ id, field ]) => !fieldParent( id, state.fields ))
@@ -42,21 +42,19 @@ const mapStateToProps = ( state: AppState ): Partial<TreeProps> => ({
 	),
 });
 
-const mapDispatchToProps = ( dispatch: ( action: Action ) => void ): Partial<TreeProps> => {
-	return {
-		onExpandItem:    ( item: TreeItem ) => dispatch( expandField(   item.id )),
-		onCollapseItem:  ( item: TreeItem ) => dispatch( collapseField( item.id )),
-		onCreateButtons: ( item: TreeItem ) => <button
-			onClick={ ev => {
-				dispatch( setPathToFormula( item.id ));
-				ev.stopPropagation();
-				} }>
-			<img
-				src={ icFormula }
-				alt="formula" />
-		</button>,
-	};
-};
+const mapDispatchToProps = ( dispatch: ( action: Action ) => void ): Partial<TreeProps> => ({
+	onExpandItem:    ( item: TreeItem ) => dispatch( expandField(   item.id )),
+	onCollapseItem:  ( item: TreeItem ) => dispatch( collapseField( item.id )),
+	onCreateButtons: ( item: TreeItem ) => <button
+		onClick={ ev => {
+			dispatch( setPathToFormula( item.id ));
+			ev.stopPropagation();
+			} }>
+		<img
+			src={ icFormula }
+			alt="formula" />
+	</button>,
+});
 
 export default reduxConnect<{}, {}, TreeProps>(
 	mapStateToProps,

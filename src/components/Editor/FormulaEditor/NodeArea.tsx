@@ -13,22 +13,27 @@ import './NodeArea.less';
 
 //==============================================================================
 
-export interface NodeAreaProps {
+interface NodeAreaAttributes {
 	fieldId: number;
 }
 
-interface DroppableNodeAreaProps extends NodeAreaProps {
+interface NodeAreaDropTarget {
 	connectDropTarget: ConnectDropTarget;
 }
 
-interface WrappedNodeAreaProps extends DroppableNodeAreaProps {
+interface NodeAreaState {
 	nodes: Map<number, NodeState>;
 	formulas: Map<number, FormulaState>;
 }
 
+interface NodeAreaProps extends
+	NodeAreaAttributes,
+	NodeAreaDropTarget,
+	NodeAreaState {}
+
 //------------------------------------------------------------------------------
 
-const nodeAreaTargetSpec: DropTargetSpec<WrappedNodeAreaProps> = {
+const nodeAreaTargetSpec: DropTargetSpec<NodeAreaDropTarget> = {
 	drop:  ( props, monitor, component ) => monitor && monitor.getDifferenceFromInitialOffset() as Position,
 	hover: ( props, monitor, component ) => { /* Do nothing on hover */ },
 };
@@ -42,7 +47,7 @@ const mapStateToProps = ( state: AppState ) => ({
 
 //------------------------------------------------------------------------------
 
-const NodeArea = ( props: WrappedNodeAreaProps ) => {
+const NodeArea = ( props: NodeAreaProps ) => {
 	const { nodes, formulas, fieldId, connectDropTarget } = props;
 	const formula = ( formulas.get( fieldId ));
 	const formulaNodes = (( formula && formula.nodes ) || [] )
@@ -50,7 +55,7 @@ const NodeArea = ( props: WrappedNodeAreaProps ) => {
 
 	return connectDropTarget(
 		<div id="node-area">
-			<svg id="wire-layer" viewBox="0 0 10000 10000" preserveAspectRatio="none">
+			<svg id="wire-layer" preserveAspectRatio="none">
 			{ formulaNodes.map( node =>
 				node.inputNodes
 					.map(( inputId, index ) => ({
@@ -85,4 +90,4 @@ const DroppableNodeArea = DropTarget(Types.FORMULA_NODE, nodeAreaTargetSpec, ( c
 	connectDropTarget: connect.dropTarget(),
 }))( NodeArea );
 
-export default reduxConnect<{}, {}, NodeAreaProps>( mapStateToProps )( DroppableNodeArea );
+export default reduxConnect<{}, {}, NodeAreaAttributes>( mapStateToProps )( DroppableNodeArea );

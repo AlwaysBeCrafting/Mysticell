@@ -11,7 +11,7 @@ export interface EditorProps {
 	path: string[];
 }
 
-const Editor = (props: EditorProps) => <main id="editor">
+const Editor = ( props: EditorProps ) => <main id="editor">
 	<div id="document-area">
 		<Fields items = { [] } />
 		{ props.path.length ? <FormulaEditor /> : <Playmat /> }
