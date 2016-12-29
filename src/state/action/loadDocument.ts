@@ -1,5 +1,5 @@
 import AppState from 'state';
-import Action from 'state/actions';
+import Action from 'state/action';
 
 import DocJson, { FieldJson, FormulaJson, NodeJson } from 'data/docJson';
 

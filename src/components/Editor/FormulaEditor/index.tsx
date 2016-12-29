@@ -7,9 +7,9 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import { Parent } from 'data/shared';
 
 import AppState, { FieldState } from 'state';
-import Action  from 'state/actions';
-import addNode from 'state/actions/addNode';
-import setPath from 'state/actions/setPath';
+import Action  from 'state/action';
+import addNode from 'state/action/addNode';
+import setPath from 'state/action/setPath';
 
 import FAB from 'components/common/FAB';
 import Toolbar from 'components/common/Toolbar';

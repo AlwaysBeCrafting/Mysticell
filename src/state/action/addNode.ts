@@ -1,5 +1,5 @@
 import AppState, { NodeState } from 'state';
-import Action from 'state/actions';
+import Action from 'state/action';
 
 export interface AddNodeAction {
 	type: 'ADD_NODE';

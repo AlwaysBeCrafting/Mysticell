@@ -1,6 +1,6 @@
 import { Position } from 'data/shared';
 import AppState, { NodeState } from 'state';
-import Action from 'state/actions';
+import Action from 'state/action';
 
 export interface MoveNodeAction {
 	type: 'MOVE_NODE';

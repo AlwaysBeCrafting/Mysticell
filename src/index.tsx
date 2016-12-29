@@ -4,9 +4,9 @@ import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 
 import Editor from 'components/Editor';
-import appReducer from 'state/reducers';
+import appReducer from 'state/reducer';
 
-import loadDocument from 'state/actions/loadDocument';
+import loadDocument from 'state/action/loadDocument';
 
 import DocJson from 'data/docJson';
 

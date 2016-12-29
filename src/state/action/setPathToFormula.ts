@@ -1,6 +1,6 @@
 import AppState, { FieldState } from 'state';
-import Action from 'state/actions';
-import { fieldPath } from 'state/fields';
+import Action from 'state/action';
+import { fieldPath } from 'state/field';
 
 export interface SetPathToFormulaAction {
 	type: 'SET_PATH_TO_FORMULA';

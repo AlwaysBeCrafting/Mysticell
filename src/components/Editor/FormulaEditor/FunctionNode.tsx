@@ -6,8 +6,8 @@ import { DragSourceCollector, DragSourceConnector, DragSourceMonitor, DragSource
 import { connect as reduxConnect } from 'react-redux';
 
 import AppState, { NodeState } from 'state';
-import Action from 'state/actions';
-import moveNode from 'state/actions/moveNode';
+import Action from 'state/action';
+import moveNode from 'state/action/moveNode';
 
 import Fxn from 'data/fxn';
 import { Position } from 'data/shared';

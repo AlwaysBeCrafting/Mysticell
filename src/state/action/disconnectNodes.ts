@@ -1,6 +1,6 @@
 import AppState, { NodeState } from 'state';
 
-import Action from 'state/actions';
+import Action from 'state/action';
 
 export interface DisconnectNodesAction {
 	type: 'DISCONNECT_NODES';

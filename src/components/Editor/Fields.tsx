@@ -2,12 +2,12 @@ import * as React from 'react';
 import { connect as reduxConnect } from 'react-redux';
 
 import AppState from 'state';
-import Action from 'state/actions';
-import { fieldParent } from 'state/fields';
+import Action from 'state/action';
+import { fieldParent } from 'state/field';
 
-import collapseField from 'state/actions/collapseField';
-import expandField from 'state/actions/expandField';
-import setPathToFormula from 'state/actions/setPathToFormula';
+import collapseField from 'state/action/collapseField';
+import expandField from 'state/action/expandField';
+import setPathToFormula from 'state/action/setPathToFormula';
 
 import Tree, { TreeItem, TreeProps } from 'components/common/Tree';
 import { FieldState } from 'state';

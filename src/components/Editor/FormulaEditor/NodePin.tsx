@@ -9,9 +9,9 @@ import { connect as reduxConnect } from 'react-redux';
 import DndTypes from './dndTypes';
 
 import AppState, { NodeState } from 'state';
-import Action from 'state/actions';
-import connectNodes from 'state/actions/connectNodes';
-import disconnectNodes from 'state/actions/disconnectNodes';
+import Action from 'state/action';
+import connectNodes from 'state/action/connectNodes';
+import disconnectNodes from 'state/action/disconnectNodes';
 
 import './NodePin.less';
 
