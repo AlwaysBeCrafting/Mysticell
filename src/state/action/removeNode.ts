@@ -9,25 +9,29 @@ export interface RemoveNodeAction {
 export const reducer = ( state: AppState, action: Action ): AppState => {
 	if ( action.type !== 'REMOVE_NODE' ) { return state; }
 
-	const { nodeId } = action;
+	const disconnectedNodes = Array.from( state.nodes )
+		.filter(( [nodeId, node] ) => nodeId !== action.nodeId )
+		.map(( [nodeId, node] ) => ({
+				...node,
+				inputNodes: node.inputNodes.filter( inputId => inputId !== action.nodeId ),
+			}))
+		.reduce(
+			( acc, node ) => acc.set( node.id, node ),
+			new Map() );
 
-	const clonedNodes = new Map( state.nodes );
-	clonedNodes.delete( nodeId );
-
-	const clonedFormulas = new Map( state.formulas );
-	const nodeFormula = Array.from( state.formulas )
-		.find(( [formulaId, formula] ) => !!formula.nodes.find( nId => nId === nodeId ));
-	if ( nodeFormula ) {
-		const formula = { ...nodeFormula[1] };
-		formula.nodes = [...formula.nodes];
-		delete formula.nodes[formula.nodes.indexOf(nodeId)];
-		clonedFormulas.set( formula.id, formula );
-	}
+	const disconnectedFormulas = Array.from( state.formulas )
+		.map(( [formulaId, formula]) => ({
+			...formula,
+			nodes: formula.nodes.filter( nodeId => nodeId !== action.nodeId ),
+		}))
+		.reduce(
+			( acc, formula ) => acc.set( formula.id, formula ),
+			new Map() );
 
 	return {
 		...state,
-		nodes: clonedNodes,
-		formulas: clonedFormulas,
+		nodes: disconnectedNodes,
+		formulas: disconnectedFormulas,
 	};
 };
 
