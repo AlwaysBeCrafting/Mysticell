@@ -96,6 +96,7 @@ const nodeSourceSpec: DragSourceSpec<FunctionNodeDragSource> = {
 			];
 
 			props.dispatch( moveNode( props.node.id, { x: tx, y: ty }));
+			props.dispatch( selectNode( props.node.id ));
 		}
 	},
 };
