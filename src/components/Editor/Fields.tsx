@@ -77,7 +77,6 @@ const mergeProps = ( { fields }: StateProps, { dispatch }: DispatchProps ): Tree
 			( field: FieldState ) => () => dispatch( expandField( field.id )),
 			( field: FieldState ) => () => dispatch( collapseField( field.id )),
 			( field: FieldState ) => {
-				console.log( field );
 				dispatch( setPathToFormula( field.id ));
 			},
 		),
