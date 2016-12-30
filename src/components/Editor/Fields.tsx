@@ -21,42 +21,70 @@ const icFormula = require<string>('./ic_formula.svg');
 const inflateFieldsToTreeItems = (
 	ids: number[],
 	fields: Map<number, FieldState>,
+	onExpandField: ( field: FieldState ) => () => void,
+	onCollapseField: ( field: FieldState ) => () => void,
+	onClickField: ( field: FieldState ) => void,
 ): TreeItem[] => ids
 	.map( id => fields.get( id ) as FieldState )
 	.map( field => ({
 			id: field.id,
 			name: field.name,
+			isExpanded: field.expanded,
+
 			children: inflateFieldsToTreeItems(
 				field.children,
 				fields,
+				onExpandField,
+				onCollapseField,
+				onClickField,
 			),
-			expanded: field.expanded,
+
+			onExpand: onExpandField( field ),
+			onCollapse: onCollapseField( field ),
+			buttons: [<button
+					onClick={ ev => {
+						onClickField( field );
+						ev.stopPropagation();
+					} }>
+					<img
+					src={ icFormula }
+					alt="formula" />
+				</button>],
 	}));
 
-const mapStateToProps = ( state: AppState ): TreeProps => ({
-	items: inflateFieldsToTreeItems(
-		Array.from( state.fields )
-			.filter(([ id, field ]) => !fieldParent( id, state.fields ))
-			.map(([ id, field ]) => id ),
-		state.fields,
-	),
+interface StateProps {
+	fields: Map<number, FieldState>;
+}
+
+const mapStateToProps = ( { fields }: AppState ): StateProps => ({
+	fields,
 });
 
-const mapDispatchToProps = ( dispatch: ( action: Action ) => void ): Partial<TreeProps> => ({
-	onExpandItem:    ( item: TreeItem ) => dispatch( expandField(   item.id )),
-	onCollapseItem:  ( item: TreeItem ) => dispatch( collapseField( item.id )),
-	onCreateButtons: ( item: TreeItem ) => <button
-		onClick={ ev => {
-			dispatch( setPathToFormula( item.id ));
-			ev.stopPropagation();
-			} }>
-		<img
-			src={ icFormula }
-			alt="formula" />
-	</button>,
+interface DispatchProps {
+	dispatch: ( action: Action ) => void;
+}
+
+const mapDispatchToProps = ( dispatch: ( action: Action ) => void ): DispatchProps => ({
+	dispatch,
+});
+
+const mergeProps = ( { fields }: StateProps, { dispatch }: DispatchProps ): TreeProps => ({
+	items: inflateFieldsToTreeItems(
+			Array.from( fields )
+				.filter(([ id, field ]) => !fieldParent( id, fields ))
+				.map(([ id, field ]) => id ),
+			fields,
+			( field: FieldState ) => () => dispatch( expandField( field.id )),
+			( field: FieldState ) => () => dispatch( collapseField( field.id )),
+			( field: FieldState ) => {
+				console.log( field );
+				dispatch( setPathToFormula( field.id ));
+			},
+		),
 });
 
 export default reduxConnect<{}, {}, TreeProps>(
 	mapStateToProps,
 	mapDispatchToProps,
+	mergeProps,
 )( Tree );
