@@ -4,28 +4,20 @@ import Action from 'state/action';
 export interface AddNodeAction {
 	type: 'ADD_NODE';
 	fieldId: number;
-	fxn: string;
+	node: NodeState;
 }
 
 export const reducer = ( state: AppState, action: Action ): AppState => {
 	if ( action.type !== 'ADD_NODE' ) { return state; }
 
+	const { fieldId, node } = action;
+
 	const formula = state.formulas.get( action.fieldId );
 	if ( !formula ) { return state; }
 
-	const nodeId = Math.floor( Math.random() * 1000000 );
-
-	const node = {
-		id:         nodeId,
-		fxn:        action.fxn,
-		inputNodes: [],
-		label:      'Add',
-		position:   { x: 0, y: 0 },
-	};
-
 	const formulaClone = {
 		...formula,
-		nodes: [ ...formula.nodes, nodeId ],
+		nodes: [ ...formula.nodes, node.id ],
 	};
 
 	return {
@@ -37,8 +29,8 @@ export const reducer = ( state: AppState, action: Action ): AppState => {
 
 
 
-export default ( fieldId: number, fxn: string ): AddNodeAction => ({
+export default ( fieldId: number, node: NodeState ): AddNodeAction => ({
 	type: 'ADD_NODE',
 	fieldId,
-	fxn,
+	node,
 });
