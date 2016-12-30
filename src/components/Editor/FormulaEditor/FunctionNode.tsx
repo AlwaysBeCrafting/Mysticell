@@ -8,6 +8,7 @@ import { connect as reduxConnect } from 'react-redux';
 import AppState, { NodeState } from 'state';
 import Action from 'state/action';
 import moveNode from 'state/action/moveNode';
+import removeNode from 'state/action/removeNode';
 import selectNode from 'state/action/selectNode';
 
 import Fxn from 'data/fxn';
@@ -59,9 +60,13 @@ const FunctionNode = ( props: FunctionNodeProps ) => {
 
 	return props.connectDragSource(
 		<div
+			tabIndex={ 0 }
 			className={ className.join( ' ' ) }
 			style={{ left, top }}
-			onClick={ () => props.dispatch( selectNode( node.id )) }>
+			onClick={ () => props.dispatch( selectNode( node.id )) }
+			onKeyPress={ ev => {
+				if ( ev.key === 'Delete' ) { props.dispatch( removeNode( node.id )); }}
+			}>
 			<header>{ node.label }</header>
 
 			{ output && <div className="output" key={ output }>

@@ -8,6 +8,7 @@ import { reducer as reduceDisconnectNodes } from 'state/action/disconnectNodes';
 import { reducer as reduceExpandField } from 'state/action/expandField';
 import { reducer as reduceLoadDocument } from 'state/action/loadDocument';
 import { reducer as reduceMoveNode } from 'state/action/moveNode';
+import { reducer as reduceRemoveNode } from 'state/action/removeNode';
 import { reducer as reduceSelectNode } from 'state/action/selectNode';
 import { reducer as reduceSetPath } from 'state/action/setPath';
 import { reducer as reduceSetPathToFormula } from 'state/action/setPathToFormula';
@@ -37,6 +38,7 @@ const reducers = [
 	reduceExpandField,
 	reduceLoadDocument,
 	reduceMoveNode,
+	reduceRemoveNode,
 	reduceSelectNode,
 	reduceSetPath,
 	reduceSetPathToFormula,

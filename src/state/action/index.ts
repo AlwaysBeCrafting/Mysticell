@@ -7,6 +7,7 @@ import { DisconnectNodesAction } from './disconnectNodes';
 import { ExpandFieldAction } from './expandField';
 import { LoadDocumentAction } from './loadDocument';
 import { MoveNodeAction } from './moveNode';
+import { RemoveNodeAction } from './removeNode';
 import { SelectNodeAction } from './selectNode';
 import { SetPathAction } from './setPath';
 import { SetPathToFormulaAction } from './setPathToFormula';
@@ -20,6 +21,7 @@ export type Action =
 	ExpandFieldAction |
 	LoadDocumentAction |
 	MoveNodeAction |
+	RemoveNodeAction |
 	SelectNodeAction |
 	SetPathAction |
 	SetPathToFormulaAction |
