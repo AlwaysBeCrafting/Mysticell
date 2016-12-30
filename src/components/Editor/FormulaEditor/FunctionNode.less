@@ -3,6 +3,8 @@
 
 
 .function-node {
+	transition: 100ms linear box-shadow;
+
 	position: absolute;
 	
 	display: flex;
@@ -17,6 +19,16 @@
 	
 	&.dragging {
 		visibility: hidden;
+	}
+
+	&.selected {
+		box-shadow:
+			0 0 0 2px @color-primary,
+			0 8px 12px @color-shadow;
+		header {
+			color: @color-primary;
+		}
+		z-index: 100;
 	}
 	
 	header, .input, .output {

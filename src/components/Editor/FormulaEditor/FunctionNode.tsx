@@ -8,6 +8,8 @@ import { connect as reduxConnect } from 'react-redux';
 import AppState, { NodeState } from 'state';
 import Action from 'state/action';
 import moveNode from 'state/action/moveNode';
+import removeNode from 'state/action/removeNode';
+import selectNode from 'state/action/selectNode';
 
 import Fxn from 'data/fxn';
 import { Position } from 'data/shared';
@@ -24,12 +26,13 @@ interface FunctionNodeAttributes {
 	node: NodeState;
 }
 
-interface FunctionNodeDispatcher {
-	dispatch: ( action: Action ) => void;
-}
-
 interface FunctionNodeState {
 	nodes: Map<number, NodeState>;
+	isSelected: boolean;
+}
+
+interface FunctionNodeDispatcher {
+	dispatch: ( action: Action ) => void;
 }
 
 interface FunctionNodeDragSource {
@@ -45,22 +48,29 @@ interface FunctionNodeProps extends
 
 //------------------------------------------------------------------------------
 
-const FunctionNode = ({ connectDragSource, isDragging, node }: FunctionNodeProps ) => {
-	const { label, fxn, position } = node;
-	const { inputs, output } = Fxn[fxn];
+const FunctionNode = ( props: FunctionNodeProps ) => {
+	const { node } = props;
+	const { inputs, output } = Fxn[node.fxn];
 
-	const className = [ 'function-node' ];
-	if ( isDragging ) { className.push( 'dragging' ); }
+	const className = ['function-node'];
+	if ( props.isDragging ) { className.push( 'dragging' ); }
+	if ( props.isSelected ) { className.push( 'selected' ); }
 
-	const { x: left, y: top } = position || { x: 0, y: 0 };
+	const { x: left, y: top } = node.position || { x: 0, y: 0 };
 
-	return connectDragSource(
-		<div className={ className.join( ' ' ) } style={{ left, top }}>
-			<header>{ label }</header>
+	return props.connectDragSource(
+		<div
+			tabIndex={ 0 }
+			className={ className.join( ' ' ) }
+			style={{ left, top }}
+			onClick={ () => props.dispatch( selectNode( node.id )) }
+			onKeyPress={ ev => {
+				if ( ev.key === 'Delete' ) { props.dispatch( removeNode( node.id )); }}
+			}>
+			<header>{ node.label }</header>
 
 			{ output && <div className="output" key={ output }>
-				<OutputPin
-					node={ node } />
+				<OutputPin node={ node } />
 				{ output }
 			</div> }
 
@@ -91,6 +101,7 @@ const nodeSourceSpec: DragSourceSpec<FunctionNodeDragSource> = {
 			];
 
 			props.dispatch( moveNode( props.node.id, { x: tx, y: ty }));
+			props.dispatch( selectNode( props.node.id ));
 		}
 	},
 };
@@ -111,8 +122,9 @@ const DraggableFunctionNode = DragSource(
 
 //------------------------------------------------------------------------------
 
-const mapStateToProps = ( state: AppState ): FunctionNodeState => ({
+const mapStateToProps = ( state: AppState, props: FunctionNodeAttributes ): FunctionNodeState => ({
 	nodes: state.nodes,
+	isSelected: !!state.selectedNodes.find( id => id === props.node.id ),
 });
 
 const mapDispatchToProps = ( dispatch: ( action: Action ) => void ): FunctionNodeDispatcher => ({

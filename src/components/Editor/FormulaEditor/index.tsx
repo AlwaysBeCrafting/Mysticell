@@ -9,7 +9,10 @@ import { Parent } from 'data/shared';
 import AppState, { FieldState } from 'state';
 import Action  from 'state/action';
 import addNode from 'state/action/addNode';
+import selectNode from 'state/action/selectNode';
 import setPath from 'state/action/setPath';
+
+import { createNode } from 'state/generator';
 
 import FAB from 'components/common/FAB';
 import Toolbar from 'components/common/Toolbar';
@@ -26,8 +29,7 @@ interface FormulaEditorState {
 }
 
 interface FormulaEditorDispatcher {
-	onPathClick: ( pathSegment: string[] ) => void;
-	onCreateNode: ( id: number ) => void;
+	dispatch: ( action: Action ) => void;
 }
 
 interface FormulaEditorProps extends
@@ -52,41 +54,43 @@ const fieldAtPath = ( path: string[], fields: Map<number, FieldState> ): FieldSt
 };
 
 const FormulaEditor = ( props: FormulaEditorProps ) => {
-	const { fields, path, onPathClick, onCreateNode } = props;
+	const { fields, path, dispatch } = props;
 	const field = fieldAtPath( path, fields );
 
 	return <div id="node-editor">
 		<Toolbar>
-			<button className="icon" onClick={ () => onPathClick( [] ) }>close</button>
+			<button className="icon" onClick={ () => dispatch( setPath( [] )) }>close</button>
 			<nav className="expanding path">{
 				path.map(( entry, i ) => <a
 					tabIndex={ 0 }
 					key={ entry }
-					onClick={ () => onPathClick( path.slice( 0, i + 1 )) }>
+					onClick={ () => dispatch( setPath( path.slice( 0, i + 1 ))) }>
 					{ entry }</a> )
 			}</nav>
 			<a className="icon">undo</a>
 			<a className="icon">redo</a>
 		</Toolbar>
 		<NodeArea fieldId={ field.id } />
-		<FAB icon="add" onClick={ () => onCreateNode( field.id ) } />
+		<FAB icon="add" onClick={ () => {
+			const node = createNode( 'ADD' );
+			dispatch( addNode( field.id, node ));
+			dispatch( selectNode( node.id ));
+		}} />
 	</div>;
 };
 
 const DragDropFormulaEditor = DragDropContext( HTML5Backend )( FormulaEditor );
 
+const mapStateToProps = ( state: AppState ): FormulaEditorState => ({
+	path:      state.path,
+	fields:    state.fields,
+});
+
+const mapDispatchToProps = ( dispatch: (action: Action) => void ): FormulaEditorDispatcher => ({
+	dispatch,
+});
+
 export default reduxConnect<{}, {}, {}>(
-	( state: AppState ): FormulaEditorState => ({
-		path:      state.path,
-		fields:    state.fields,
-	}),
-	( dispatch: (action: Action) => void ): FormulaEditorDispatcher => ({
-		onPathClick:  (path: string[]) => dispatch( setPath( path )),
-		onCreateNode: (fieldId: number) => dispatch(
-			addNode(
-				fieldId,
-				'ADD',
-			),
-		),
-	}),
+	mapStateToProps,
+	mapDispatchToProps,
 )( DragDropFormulaEditor );

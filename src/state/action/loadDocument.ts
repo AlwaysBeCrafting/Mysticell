@@ -35,6 +35,7 @@ export const reducer = ( state: AppState, action: Action ): AppState => {
 	return {
 		title: docJson.title,
 		path: [],
+		selectedNodes: [],
 
 		fields: arrayToIdMap( flatFields
 			.map( fieldJson => ({

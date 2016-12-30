@@ -53,6 +53,8 @@ interface AppState {
 	formulas: Map<number, FormulaState>;
 	nodes: Map<number, NodeState>;
 
+	selectedNodes: number[];
+
 	path: string[];
 };
 
