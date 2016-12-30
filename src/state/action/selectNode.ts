@@ -15,7 +15,7 @@ export const reducer = ( state: AppState, action: Action ): AppState => {
 	};
 };
 
-export default ( nodeId: number, position: Position ): SelectNodeAction => ({
+export default ( nodeId: number ): SelectNodeAction => ({
 	type: 'SELECT_NODE',
 	nodeId,
 });

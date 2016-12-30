@@ -8,6 +8,7 @@ import { connect as reduxConnect } from 'react-redux';
 import AppState, { NodeState } from 'state';
 import Action from 'state/action';
 import moveNode from 'state/action/moveNode';
+import selectNode from 'state/action/selectNode';
 
 import Fxn from 'data/fxn';
 import { Position } from 'data/shared';
@@ -45,18 +46,20 @@ interface FunctionNodeProps extends
 
 //------------------------------------------------------------------------------
 
-const FunctionNode = ({ connectDragSource, isDragging, node }: FunctionNodeProps ) => {
-	const { label, fxn, position } = node;
-	const { inputs, output } = Fxn[fxn];
+const FunctionNode = ( props: FunctionNodeProps ) => {
+	const { node } = props;
+	const { inputs, output } = Fxn[node.fxn];
 
-	const className = [ 'function-node' ];
-	if ( isDragging ) { className.push( 'dragging' ); }
+	const className = `function-node ${ props.isDragging ? 'dragging' : '' }`;
 
-	const { x: left, y: top } = position || { x: 0, y: 0 };
+	const { x: left, y: top } = node.position || { x: 0, y: 0 };
 
-	return connectDragSource(
-		<div className={ className.join( ' ' ) } style={{ left, top }}>
-			<header>{ label }</header>
+	return props.connectDragSource(
+		<div
+			className={ className }
+			style={{ left, top }}
+			onClick={ () => props.dispatch( selectNode( node.id )) }>
+			<header>{ node.label }</header>
 
 			{ output && <div className="output" key={ output }>
 				<OutputPin
