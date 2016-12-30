@@ -8,6 +8,7 @@ import { reducer as reduceDisconnectNodes } from 'state/action/disconnectNodes';
 import { reducer as reduceExpandField } from 'state/action/expandField';
 import { reducer as reduceLoadDocument } from 'state/action/loadDocument';
 import { reducer as reduceMoveNode } from 'state/action/moveNode';
+import { reducer as reduceSelectNode } from 'state/action/selectNode';
 import { reducer as reduceSetPath } from 'state/action/setPath';
 import { reducer as reduceSetPathToFormula } from 'state/action/setPathToFormula';
 import { reducer as reduceSetTitle } from 'state/action/setTitle';
@@ -17,6 +18,7 @@ import { reducer as reduceSetTitle } from 'state/action/setTitle';
 const defaultState = {
 	title: 'Document Title',
 	path: [],
+	selectedNodes: [],
 
 	fields: new Map(),
 	formulas: new Map(),
@@ -35,6 +37,7 @@ const reducers = [
 	reduceExpandField,
 	reduceLoadDocument,
 	reduceMoveNode,
+	reduceSelectNode,
 	reduceSetPath,
 	reduceSetPathToFormula,
 	reduceSetTitle,
