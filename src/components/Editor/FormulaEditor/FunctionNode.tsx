@@ -25,12 +25,13 @@ interface FunctionNodeAttributes {
 	node: NodeState;
 }
 
-interface FunctionNodeDispatcher {
-	dispatch: ( action: Action ) => void;
-}
-
 interface FunctionNodeState {
 	nodes: Map<number, NodeState>;
+	isSelected: boolean;
+}
+
+interface FunctionNodeDispatcher {
+	dispatch: ( action: Action ) => void;
 }
 
 interface FunctionNodeDragSource {
@@ -50,20 +51,21 @@ const FunctionNode = ( props: FunctionNodeProps ) => {
 	const { node } = props;
 	const { inputs, output } = Fxn[node.fxn];
 
-	const className = `function-node ${ props.isDragging ? 'dragging' : '' }`;
+	const className = ['function-node'];
+	if ( props.isDragging ) { className.push( 'dragging' ); }
+	if ( props.isSelected ) { className.push( 'selected' ); }
 
 	const { x: left, y: top } = node.position || { x: 0, y: 0 };
 
 	return props.connectDragSource(
 		<div
-			className={ className }
+			className={ className.join( ' ' ) }
 			style={{ left, top }}
 			onClick={ () => props.dispatch( selectNode( node.id )) }>
 			<header>{ node.label }</header>
 
 			{ output && <div className="output" key={ output }>
-				<OutputPin
-					node={ node } />
+				<OutputPin node={ node } />
 				{ output }
 			</div> }
 
@@ -114,8 +116,9 @@ const DraggableFunctionNode = DragSource(
 
 //------------------------------------------------------------------------------
 
-const mapStateToProps = ( state: AppState ): FunctionNodeState => ({
+const mapStateToProps = ( state: AppState, props: FunctionNodeAttributes ): FunctionNodeState => ({
 	nodes: state.nodes,
+	isSelected: !!state.selectedNodes.find( id => id === props.node.id ),
 });
 
 const mapDispatchToProps = ( dispatch: ( action: Action ) => void ): FunctionNodeDispatcher => ({
