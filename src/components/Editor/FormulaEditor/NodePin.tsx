@@ -30,10 +30,10 @@ interface InputPinDropTarget {
 	connectDropTarget: ConnectDropTarget;
 }
 
-interface InputPinProps extends
-	InputPinAttributes,
-	InputPinDispatcher,
-	InputPinDropTarget {}
+type InputPinProps =
+	InputPinAttributes &
+	InputPinDispatcher &
+	InputPinDropTarget;
 
 //------------------------------------------------------------------------------
 
@@ -92,10 +92,10 @@ interface OutputPinDragSource {
 	isDragging: boolean;
 }
 
-interface OutputPinProps extends
-	OutputPinAttributes,
-	OutputPinDispatchers,
-	OutputPinDragSource {}
+type OutputPinProps =
+	OutputPinAttributes &
+	OutputPinDispatchers &
+	OutputPinDragSource;
 
 //------------------------------------------------------------------------------
 

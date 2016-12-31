@@ -26,10 +26,7 @@ interface NodeAreaState {
 	formulas: Map<number, FormulaState>;
 }
 
-interface NodeAreaProps extends
-	NodeAreaAttributes,
-	NodeAreaDropTarget,
-	NodeAreaState {}
+type NodeAreaProps = NodeAreaAttributes & NodeAreaDropTarget & NodeAreaState;
 
 //------------------------------------------------------------------------------
 

@@ -32,9 +32,7 @@ interface FormulaEditorDispatcher {
 	dispatch: ( action: Action ) => void;
 }
 
-interface FormulaEditorProps extends
-	FormulaEditorState,
-	FormulaEditorDispatcher {}
+type FormulaEditorProps = FormulaEditorState & FormulaEditorDispatcher;
 
 //------------------------------------------------------------------------------
 

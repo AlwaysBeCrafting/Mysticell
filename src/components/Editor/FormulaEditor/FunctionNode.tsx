@@ -40,11 +40,11 @@ interface FunctionNodeDragSource {
 	connectDragSource: ConnectDragSource;
 }
 
-interface FunctionNodeProps extends
-	FunctionNodeAttributes,
-	FunctionNodeDispatcher,
-	FunctionNodeState,
-	FunctionNodeDragSource {}
+type FunctionNodeProps =
+	FunctionNodeAttributes &
+	FunctionNodeDispatcher &
+	FunctionNodeState &
+	FunctionNodeDragSource;
 
 //------------------------------------------------------------------------------
 
