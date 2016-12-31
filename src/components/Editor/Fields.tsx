@@ -42,6 +42,7 @@ const inflateFieldsToTreeItems = (
 			onExpand: onExpandField( field ),
 			onCollapse: onCollapseField( field ),
 			buttons: [<button
+					key={ field.id }
 					onClick={ ev => {
 						onClickField( field );
 						ev.stopPropagation();
