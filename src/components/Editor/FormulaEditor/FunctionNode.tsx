@@ -60,13 +60,9 @@ const FunctionNode = ( props: FunctionNodeProps ) => {
 
 	return props.connectDragSource(
 		<div
-			tabIndex={ 0 }
 			className={ className.join( ' ' ) }
 			style={{ left, top }}
-			onClick={ () => props.dispatch( selectNode( node.id )) }
-			onKeyPress={ ev => {
-				if ( ev.key === 'Delete' ) { props.dispatch( removeNode( node.id )); }}
-			}>
+			onClick={ () => props.dispatch( selectNode( node.id )) }>
 			<header>{ node.label }</header>
 
 			{ output && <div className="output" key={ output }>
@@ -79,7 +75,11 @@ const FunctionNode = ( props: FunctionNodeProps ) => {
 					<InputPin
 						node={ node }
 						index={ index } />
-					{ input }
+					<label>{ input }</label>
+					<div
+						tabIndex={ node.inputNodes[index] ? -1 : 0 }
+						className="value"
+						contentEditable={ !node.inputNodes[index] } />
 				</div>
 			)) }
 		</div>,

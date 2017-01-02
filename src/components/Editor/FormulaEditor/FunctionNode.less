@@ -61,5 +61,27 @@
 		flex-flow: row nowrap;
 		position: relative;
 		font-size: 13px;
+		width: 160px;
+
+		display: flex;
+		flex-flow: row nowrap;
+
+		.value {
+			margin-left: 8px;
+			padding-top: 2px;
+			flex: 1;
+			white-space: nowrap;
+			overflow: hidden;
+			line-height: 2;
+
+			&:not([contenteditable="false"]) {
+				cursor: text;
+				border-bottom: solid 2px @color-divider;
+			}
+
+			&:focus {
+				border-color: @color-primary;
+			}
+		}
 	}
 }
