@@ -3,7 +3,7 @@ import { ConnectDropTarget, DropTarget, DropTargetMonitor, DropTargetSpec } from
 import { connect as reduxConnect, Dispatch } from 'react-redux';
 
 import { Position } from 'data/shared';
-import AppState, { FormulaState, NodeState } from 'state';
+import AppState, { FieldState, NodeState } from 'state';
 
 import Types from './dndTypes';
 import FunctionNode from './FunctionNode';
@@ -23,7 +23,7 @@ interface NodeAreaDropTarget {
 
 interface NodeAreaState {
 	nodes: Map<number, NodeState>;
-	formulas: Map<number, FormulaState>;
+	fields: Map<number, FieldState>;
 }
 
 type NodeAreaProps = NodeAreaAttributes & NodeAreaDropTarget & NodeAreaState;
@@ -37,16 +37,16 @@ const nodeAreaTargetSpec: DropTargetSpec<NodeAreaDropTarget> = {
 
 //------------------------------------------------------------------------------
 
-const mapStateToProps = ( state: AppState ) => ({
-	formulas: state.formulas,
-	nodes: state.nodes,
+const mapStateToProps = ( { fields, nodes }: AppState ) => ({
+	fields,
+	nodes,
 });
 
 //------------------------------------------------------------------------------
 
 const NodeArea = ( props: NodeAreaProps ) => {
-	const { nodes, formulas, fieldId, connectDropTarget } = props;
-	const formula = ( formulas.get( fieldId ));
+	const { nodes, fields, fieldId, connectDropTarget } = props;
+	const formula = ( fields.get( fieldId ));
 	const formulaNodes = (( formula && formula.nodes ) || [] )
 		.map(( id ) => nodes.get( id ) as NodeState );
 

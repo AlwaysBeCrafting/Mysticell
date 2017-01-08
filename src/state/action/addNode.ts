@@ -12,18 +12,18 @@ export const reducer = ( state: AppState, action: Action ): AppState => {
 
 	const { fieldId, node } = action;
 
-	const formula = state.formulas.get( action.fieldId );
-	if ( !formula ) { return state; }
+	const field = state.fields.get( action.fieldId );
+	if ( !field ) { return state; }
 
-	const formulaClone = {
-		...formula,
-		nodes: [ ...formula.nodes, node.id ],
+	const fieldClone = {
+		...field,
+		nodes: [ ...field.nodes, node.id ],
 	};
 
 	return {
 		...state,
 		nodes: new Map( state.nodes ).set( node.id, node ),
-		formulas: new Map( state.formulas ).set( action.fieldId, formulaClone ),
+		fields: new Map( state.fields ).set( action.fieldId, fieldClone ),
 	};
 };
 

@@ -19,10 +19,10 @@ export const reducer = ( state: AppState, action: Action ): AppState => {
 			( acc, node ) => acc.set( node.id, node ),
 			new Map() );
 
-	const disconnectedFormulas = Array.from( state.formulas )
-		.map(( [formulaId, formula]) => ({
-			...formula,
-			nodes: formula.nodes.filter( nodeId => nodeId !== action.nodeId ),
+	const disconnectedFormulas = Array.from( state.fields )
+		.map(( [fieldId, field]) => ({
+			...field,
+			nodes: field.nodes.filter( nodeId => nodeId !== action.nodeId ),
 		}))
 		.reduce(
 			( acc, formula ) => acc.set( formula.id, formula ),

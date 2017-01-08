@@ -28,9 +28,6 @@ export interface FieldState extends Id {
 	parent?: number;
 	children: number[];
 	expanded: boolean;
-}
-
-export interface FormulaState extends Id {
 	resultNode: number;
 	nodes: number[];
 }
@@ -50,7 +47,6 @@ interface AppState {
 	cells: Map<number, CellState>;
 
 	fields: Map<number, FieldState>;
-	formulas: Map<number, FormulaState>;
 	nodes: Map<number, NodeState>;
 
 	selectedNodes: number[];

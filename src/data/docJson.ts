@@ -3,11 +3,7 @@ import { Position } from 'data/shared';
 export interface FieldJson {
 	id: number;
 	name: string;
-	formula?: FormulaJson;
 	children: FieldJson[];
-}
-
-export interface FormulaJson {
 	resultNode: number;
 	nodes: NodeJson[];
 }

@@ -1,7 +1,7 @@
 import AppState from 'state';
 import Action from 'state/action';
 
-import DocJson, { FieldJson, FormulaJson, NodeJson } from 'data/docJson';
+import DocJson, { FieldJson, NodeJson } from 'data/docJson';
 
 //==============================================================================
 
@@ -42,24 +42,16 @@ export const reducer = ( state: AppState, action: Action ): AppState => {
 				id: fieldJson.id,
 				name: fieldJson.name,
 				children: fieldJson.children.map( child => child.id ),
+				resultNode: fieldJson.resultNode,
+				nodes: ( fieldJson.nodes || [] ).map( node => node.id ),
 				expanded: false,
 			})),
 		),
-		formulas: arrayToIdMap( flatFields
-			.filter( fieldJson => fieldJson.formula )
-			.map( fieldJson => ({
-				id: fieldJson.id,
-				resultNode: 0,
-				nodes: ( fieldJson.formula || { nodes: [] as NodeJson[] }).nodes.map( node => node.id ),
-			})),
-		),
 		nodes: arrayToIdMap( flatFields
-			.filter( fieldJson => fieldJson.formula )
-			.map( fieldJson => fieldJson.formula )
 			.reduce(
-				( acc, formula ) => [
+				( acc, field ) => [
 					...acc,
-					...( formula || { nodes: [] as NodeJson[] }).nodes.map( nodeJson => ({
+					...( field.nodes || [] ).map( nodeJson => ({
 						id: nodeJson.id,
 						label: nodeJson.label,
 						fxn: nodeJson.fxn,
