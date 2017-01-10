@@ -2,6 +2,8 @@ import * as React from 'react';
 import { connect as reduxConnect } from 'react-redux';
 
 import { PopupState } from 'state';
+import Action from 'state/action';
+import hidePopup from 'state/action/hidePopup';
 
 import Fields from './Fields';
 import FormulaEditor from './FormulaEditor';
@@ -10,12 +12,19 @@ import Popup from './Popup';
 
 import './index.less';
 
-export interface EditorProps {
+interface EditorState {
 	path: string[];
 	popup?: PopupState;
 }
 
-const Editor = ( props: EditorProps ) => <main id="editor">
+interface EditorDispatch {
+	dispatch: ( action: Action ) => void;
+}
+
+type EditorProps = EditorState & EditorDispatch;
+
+const Editor = ( props: EditorProps ) =>
+<main id="editor" onClick={ ev => props.popup && props.dispatch( hidePopup() ) }>
 	<div id="document-area">
 		<Fields items = { [] } />
 		{ props.path.length ? <FormulaEditor /> : <Playmat /> }
@@ -29,4 +38,5 @@ const Editor = ( props: EditorProps ) => <main id="editor">
 
 export default reduxConnect(
 	({ path, popup }) => ({ path, popup }),
+	( dispatch ) => ({ dispatch }),
 )( Editor );

@@ -6,6 +6,7 @@ import { reducer as reduceCollapseField } from 'state/action/collapseField';
 import { reducer as reduceConnectNodes } from 'state/action/connectNodes';
 import { reducer as reduceDisconnectNodes } from 'state/action/disconnectNodes';
 import { reducer as reduceExpandField } from 'state/action/expandField';
+import { reducer as reduceHidePopup } from 'state/action/hidePopup';
 import { reducer as reduceLoadDocument } from 'state/action/loadDocument';
 import { reducer as reduceMoveNode } from 'state/action/moveNode';
 import { reducer as reduceRemoveNode } from 'state/action/removeNode';
@@ -38,6 +39,7 @@ const reducers = [
 	reduceConnectNodes,
 	reduceDisconnectNodes,
 	reduceExpandField,
+	reduceHidePopup,
 	reduceLoadDocument,
 	reduceMoveNode,
 	reduceRemoveNode,

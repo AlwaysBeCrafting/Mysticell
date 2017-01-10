@@ -5,6 +5,7 @@ import { CollapseFieldAction } from './collapseField';
 import { ConnectNodesAction } from './connectNodes';
 import { DisconnectNodesAction } from './disconnectNodes';
 import { ExpandFieldAction } from './expandField';
+import { HidePopupAction } from './hidePopup';
 import { LoadDocumentAction } from './loadDocument';
 import { MoveNodeAction } from './moveNode';
 import { RemoveNodeAction } from './removeNode';
@@ -20,6 +21,7 @@ export type Action =
 	ConnectNodesAction |
 	DisconnectNodesAction |
 	ExpandFieldAction |
+	HidePopupAction |
 	LoadDocumentAction |
 	MoveNodeAction |
 	RemoveNodeAction |
