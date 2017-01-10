@@ -1,3 +1,4 @@
+import { Fxn } from 'data/fxn';
 import { Anchor, Position } from 'data/shared';
 
 interface Id {
@@ -34,7 +35,7 @@ export interface FieldState extends Id {
 
 export interface NodeState extends Id {
 	label: string;
-	fxn: string;
+	fxn: Fxn;
 	inputNodes: number[];
 	position: Position;
 }

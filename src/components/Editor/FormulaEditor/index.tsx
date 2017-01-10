@@ -14,6 +14,7 @@ import showPopup from 'state/action/showPopup';
 import FAB from 'components/common/FAB';
 import Toolbar from 'components/common/Toolbar';
 
+import AddNodeMenu from './AddNodeMenu';
 import NodeArea from './NodeArea';
 
 import './index.less';
@@ -69,7 +70,7 @@ const FormulaEditor = ( props: FormulaEditorProps ) => {
 		<FAB icon="add" onClick={ ev => {
 			const { right: x, bottom: y } = ev.currentTarget.getBoundingClientRect();
 			dispatch( showPopup(
-				<div>Pop-up</div>,
+				<AddNodeMenu />,
 				{ x, y },
 				{ horizontal: 'right', vertical: 'bottom' },
 			));

@@ -11,7 +11,6 @@ import moveNode from 'state/action/moveNode';
 import removeNode from 'state/action/removeNode';
 import selectNode from 'state/action/selectNode';
 
-import Fxn from 'data/fxn';
 import { Position } from 'data/shared';
 
 import Types from './dndTypes';
@@ -50,7 +49,7 @@ type FunctionNodeProps =
 
 const FunctionNode = ( props: FunctionNodeProps ) => {
 	const { node } = props;
-	const { inputs, output } = Fxn[node.fxn];
+	const { inputs, output } = node.fxn;
 
 	const className = ['function-node'];
 	if ( props.isDragging ) { className.push( 'dragging' ); }

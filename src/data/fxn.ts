@@ -60,3 +60,11 @@ export default {
 	POWER,
 } as FxnLookup;
 
+export const fxnList = [
+	ADD,
+	SUBTRACT,
+	MULTIPLY,
+	DIVIDE,
+	SQRT,
+	POWER,
+];

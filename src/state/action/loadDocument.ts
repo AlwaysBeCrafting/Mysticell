@@ -1,7 +1,8 @@
-import AppState from 'state';
+import AppState, { NodeState } from 'state';
 import Action from 'state/action';
 
 import DocJson, { FieldJson, NodeJson } from 'data/docJson';
+import fxnLookup from 'data/fxn';
 
 //==============================================================================
 
@@ -47,6 +48,7 @@ export const reducer = ( state: AppState, action: Action ): AppState => {
 				expanded: false,
 			})),
 		),
+
 		nodes: arrayToIdMap( flatFields
 			.reduce(
 				( acc, field ) => [
@@ -54,12 +56,12 @@ export const reducer = ( state: AppState, action: Action ): AppState => {
 					...( field.nodes || [] ).map( nodeJson => ({
 						id: nodeJson.id,
 						label: nodeJson.label,
-						fxn: nodeJson.fxn,
+						fxn: fxnLookup[nodeJson.fxn],
 						inputNodes: nodeJson.inputNodes.filter( input => input !== null ),
 						position: nodeJson.position,
 					})),
 				],
-				[] as NodeJson[],
+				[] as NodeState[],
 			),
 		),
 
