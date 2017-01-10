@@ -13,6 +13,7 @@ import { reducer as reduceSelectNode } from 'state/action/selectNode';
 import { reducer as reduceSetPath } from 'state/action/setPath';
 import { reducer as reduceSetPathToFormula } from 'state/action/setPathToFormula';
 import { reducer as reduceSetTitle } from 'state/action/setTitle';
+import { reducer as reduceShowPopup } from 'state/action/showPopup';
 
 //==============================================================================
 
@@ -20,6 +21,7 @@ const defaultState = {
 	title: 'Document Title',
 	path: [],
 	selectedNodes: [],
+	popup: undefined,
 
 	fields: new Map(),
 	formulas: new Map(),
@@ -43,6 +45,7 @@ const reducers = [
 	reduceSetPath,
 	reduceSetPathToFormula,
 	reduceSetTitle,
+	reduceShowPopup,
 ];
 
 export default ( state: AppState = defaultState, action: Action ): AppState => reducers.reduce(

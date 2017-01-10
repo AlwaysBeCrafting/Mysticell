@@ -8,12 +8,12 @@ import SheetArea from './SheetArea';
 
 import './Playmat.less';
 
-interface PlaymatState {
+interface PlaymatProps {
 	cards: Map<number, CardState>;
 	sheets: Map<number, SheetState>;
 }
 
-const Playmat = ( props: PlaymatState ) => <div id="playmat">
+const Playmat = ( props: PlaymatProps ) => <div id="playmat">
 	<menu type="toolbar" />
 	<div id="display-area">
 		<CardArea cards={ props.cards } />
@@ -21,6 +21,6 @@ const Playmat = ( props: PlaymatState ) => <div id="playmat">
 	</div>
 </div>;
 
-export default reduxConnect<PlaymatState, {}, {}>(
+export default reduxConnect<PlaymatProps, {}, {}>(
 	({ cards, sheets }) => ({ cards, sheets }),
 )( Playmat );

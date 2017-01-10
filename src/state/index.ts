@@ -39,6 +39,11 @@ export interface NodeState extends Id {
 	position: Position;
 }
 
+export interface PopupState {
+	element: JSX.Element;
+	position: Position;
+}
+
 interface AppState {
 	title: string;
 
@@ -52,6 +57,7 @@ interface AppState {
 	selectedNodes: number[];
 
 	path: string[];
+	popup?: PopupState;
 };
 
 export default AppState;

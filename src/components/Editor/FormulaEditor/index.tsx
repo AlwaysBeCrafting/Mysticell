@@ -8,11 +8,8 @@ import { Parent } from 'data/shared';
 
 import AppState, { FieldState } from 'state';
 import Action  from 'state/action';
-import addNode from 'state/action/addNode';
-import selectNode from 'state/action/selectNode';
 import setPath from 'state/action/setPath';
-
-import { createNode } from 'state/generator';
+import showPopup from 'state/action/showPopup';
 
 import FAB from 'components/common/FAB';
 import Toolbar from 'components/common/Toolbar';
@@ -69,10 +66,13 @@ const FormulaEditor = ( props: FormulaEditorProps ) => {
 			<a className="icon">redo</a>
 		</Toolbar>
 		<NodeArea fieldId={ field.id } />
-		<FAB icon="add" onClick={ () => {
-			const node = createNode( 'ADD' );
-			dispatch( addNode( field.id, node ));
-			dispatch( selectNode( node.id ));
+		<FAB icon="add" onClick={ ev => {
+			const { top: x, bottom: y } = ev.currentTarget.getBoundingClientRect();
+			dispatch( showPopup(
+				<div>Pop-up</div>,
+				{ x, y },
+				{ horizontal: 'right', vertical: 'bottom'},
+			));
 		}} />
 	</div>;
 };

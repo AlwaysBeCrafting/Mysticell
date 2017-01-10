@@ -12,6 +12,7 @@ import { SelectNodeAction } from './selectNode';
 import { SetPathAction } from './setPath';
 import { SetPathToFormulaAction } from './setPathToFormula';
 import { SetTitleAction } from './setTitle';
+import { ShowPopupAction } from './showPopup';
 
 export type Action =
 	AddNodeAction |
@@ -25,6 +26,7 @@ export type Action =
 	SelectNodeAction |
 	SetPathAction |
 	SetPathToFormulaAction |
-	SetTitleAction;
+	SetTitleAction |
+	ShowPopupAction;
 
 export default Action;
