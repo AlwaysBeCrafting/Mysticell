@@ -21,7 +21,7 @@ const Editor = ( props: EditorProps ) => <main id="editor">
 		{ props.path.length ? <FormulaEditor /> : <Playmat /> }
 	</div>
 	{ !!props.popup &&
-		<Popup position={ props.popup.position }>
+		<Popup { ...props.popup }>
 			{ props.popup.element }
 		</Popup>
 	}

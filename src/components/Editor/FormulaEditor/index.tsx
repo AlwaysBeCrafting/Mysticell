@@ -67,11 +67,11 @@ const FormulaEditor = ( props: FormulaEditorProps ) => {
 		</Toolbar>
 		<NodeArea fieldId={ field.id } />
 		<FAB icon="add" onClick={ ev => {
-			const { top: x, bottom: y } = ev.currentTarget.getBoundingClientRect();
+			const { right: x, bottom: y } = ev.currentTarget.getBoundingClientRect();
 			dispatch( showPopup(
 				<div>Pop-up</div>,
 				{ x, y },
-				{ horizontal: 'right', vertical: 'bottom'},
+				{ horizontal: 'right', vertical: 'bottom' },
 			));
 		}} />
 	</div>;

@@ -13,7 +13,18 @@ interface PopupProps {
 
 export default class extends React.PureComponent<PopupProps, void> {
 	public render() {
-		return <div className="popup">
+		const className = [ 'popup' ];
+		if ( this.props.anchor ) {
+			className.push( `anchor-${ this.props.anchor.horizontal }` );
+			className.push( `anchor-${ this.props.anchor.vertical }` );
+		}
+		return <div
+			className={ className.join( ' ' )}
+			style={{
+				left: this.props.position.x,
+				top: this.props.position.y,
+			}}
+		>
 			{ this.props.children }
 		</div>;
 	}

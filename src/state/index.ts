@@ -1,4 +1,4 @@
-import { Position } from 'data/shared';
+import { Anchor, Position } from 'data/shared';
 
 interface Id {
 	id: number;
@@ -42,6 +42,7 @@ export interface NodeState extends Id {
 export interface PopupState {
 	element: JSX.Element;
 	position: Position;
+	anchor?: Anchor;
 }
 
 interface AppState {
