@@ -70,7 +70,7 @@ const FormulaEditor = ( props: FormulaEditorProps ) => {
 		<FAB icon="add" onClick={ ev => {
 			const { right: x, bottom: y } = ev.currentTarget.getBoundingClientRect();
 			dispatch( showPopup(
-				<AddNodeMenu />,
+				<AddNodeMenu fieldId={ field.id } />,
 				{ x, y },
 				{ horizontal: 'right', vertical: 'bottom' },
 			));
