@@ -73,8 +73,10 @@
 			white-space: nowrap;
 			overflow: hidden;
 			line-height: 2;
+			color: @color-text-disabled;
 
 			&:not([contenteditable="false"]) {
+				color: inherit;
 				cursor: text;
 				border-bottom: solid 2px @color-divider;
 			}

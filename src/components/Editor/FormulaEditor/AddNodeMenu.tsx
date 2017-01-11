@@ -23,11 +23,14 @@ type AddNodeMenuProps = AddNodeMenuAttributes & AddNodeMenuDispatch;
 const AddNodeMenu = ( props: AddNodeMenuProps ) => (
 	<ul className="add-node-menu">
 		{
-			fxnList.map( fxn => (
-				<li onClick={ ev => {
-					const node = createNode( fxn );
-					props.dispatch( addNode( props.fieldId, node ));
-				}}>
+			fxnList.map(( fxn, i ) => (
+				<li
+					key={ i }
+					onClick={ ev => {
+						const node = createNode( fxn );
+						props.dispatch( addNode( props.fieldId, node ));
+					}}
+				>
 					{ fxn.name }
 				</li>
 			))
