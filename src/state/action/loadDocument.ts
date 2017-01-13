@@ -59,6 +59,8 @@ export const reducer = ( state: AppState, action: Action ): AppState => {
 						fxn: fxnLookup[nodeJson.fxn],
 						inputNodes: nodeJson.inputNodes.filter( input => input !== null ),
 						position: nodeJson.position,
+						inputValues: new Array( fxnLookup[nodeJson.fxn].inputNames.length ).fill( 0 ),
+						outputValue: 0,
 					})),
 				],
 				[] as NodeState[],

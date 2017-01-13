@@ -38,6 +38,8 @@ export interface NodeState extends Id {
 	fxn: Fxn;
 	inputNodes: number[];
 	position: Position;
+	inputValues: Array<string|number>;
+	outputValue: string|number;
 }
 
 export interface PopupState {

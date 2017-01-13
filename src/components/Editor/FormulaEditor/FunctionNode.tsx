@@ -10,6 +10,7 @@ import Action from 'state/action';
 import moveNode from 'state/action/moveNode';
 import removeNode from 'state/action/removeNode';
 import selectNode from 'state/action/selectNode';
+import updateNodeInput from 'state/action/updateNodeInput';
 
 import { Position } from 'data/shared';
 
@@ -47,9 +48,23 @@ type FunctionNodeProps =
 
 //------------------------------------------------------------------------------
 
+const resolveNode = ( node: NodeState, nodes: Map<number, NodeState> ): string|number => {
+	const inputs = node.fxn.inputNames
+		.map(( inputName, i ) => {
+			const inputNode = nodes.get( node.inputNodes[i] );
+			return inputNode ?
+				resolveNode( inputNode, nodes ) :
+				node.inputValues[i];
+		});
+
+	const output = node.fxn.exec( ...inputs );
+
+	return output;
+};
+
 const FunctionNode = ( props: FunctionNodeProps ) => {
-	const { node } = props;
-	const { inputs, output } = node.fxn;
+	const { node, nodes } = props;
+	const { inputNames, outputName } = node.fxn;
 
 	const className = ['function-node'];
 	if ( props.isDragging ) { className.push( 'dragging' ); }
@@ -64,21 +79,35 @@ const FunctionNode = ( props: FunctionNodeProps ) => {
 			onClick={ () => props.dispatch( selectNode( node.id )) }>
 			<header>{ node.label }</header>
 
-			{ output && <div className="output" key={ output }>
+			{ outputName && <div className="output" key={ outputName }>
 				<OutputPin node={ node } />
-				{ output }
+				<label>{ outputName }</label>
+				<div className="value">
+					{ resolveNode( node, nodes ) }
+				</div>
 			</div> }
 
-			{ ( inputs || [] ).map(( input, index ) => (
-				<div className="input" key={ input }>
+			{ ( inputNames || [] ).map(( inputName, index ) => (
+				<div className="input" key={ inputName }>
 					<InputPin
 						node={ node }
 						index={ index } />
-					<label>{ input }</label>
-					<div
-						tabIndex={ node.inputNodes[index] ? -1 : 0 }
-						className="value"
-						contentEditable={ !node.inputNodes[index] } />
+					<label>{ inputName }</label>
+					{
+						node.inputNodes[index] && <div
+							className="value"
+							contentEditable={ false }>{ node.inputValues[index] }</div>
+					}
+					{
+						!node.inputNodes[index] && <div
+							className="value"
+							contentEditable={ true }
+							onInput={ ev => props.dispatch( updateNodeInput(
+								node.id,
+								index,
+								ev.currentTarget.textContent || 0,
+							)) } />
+					}
 				</div>
 			)) }
 		</div>,

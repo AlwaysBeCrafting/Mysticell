@@ -15,6 +15,7 @@ import { reducer as reduceSetPath } from 'state/action/setPath';
 import { reducer as reduceSetPathToFormula } from 'state/action/setPathToFormula';
 import { reducer as reduceSetTitle } from 'state/action/setTitle';
 import { reducer as reduceShowPopup } from 'state/action/showPopup';
+import { reducer as reduceUpdateNodeInput } from 'state/action/updateNodeInput';
 
 //==============================================================================
 
@@ -48,6 +49,7 @@ const reducers = [
 	reduceSetPathToFormula,
 	reduceSetTitle,
 	reduceShowPopup,
+	reduceUpdateNodeInput,
 ];
 
 export default ( state: AppState = defaultState, action: Action ): AppState => reducers.reduce(
