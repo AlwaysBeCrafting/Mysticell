@@ -48,20 +48,6 @@ type FunctionNodeProps =
 
 //------------------------------------------------------------------------------
 
-const resolveNode = ( node: NodeState, nodes: Map<number, NodeState> ): string|number => {
-	const inputs = node.fxn.inputNames
-		.map(( inputName, i ) => {
-			const inputNode = nodes.get( node.inputNodes[i] );
-			return inputNode ?
-				resolveNode( inputNode, nodes ) :
-				node.inputValues[i];
-		});
-
-	const output = node.fxn.exec( ...inputs );
-
-	return output;
-};
-
 const FunctionNode = ( props: FunctionNodeProps ) => {
 	const { node, nodes } = props;
 	const { inputNames, outputName } = node.fxn;
@@ -83,7 +69,7 @@ const FunctionNode = ( props: FunctionNodeProps ) => {
 				<OutputPin node={ node } />
 				<label>{ outputName }</label>
 				<div className="value">
-					{ resolveNode( node, nodes ) }
+					{ node.outputValue }
 				</div>
 			</div> }
 
