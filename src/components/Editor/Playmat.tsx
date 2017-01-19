@@ -1,12 +1,12 @@
-import * as React from 'react';
-import { connect as reduxConnect } from 'react-redux';
+import * as React from "react";
+import { connect as reduxConnect } from "react-redux";
 
-import AppState, { CardState, SheetState } from 'state';
+import { AppState, CardState, SheetState } from "redux/state";
 
-import CardArea from './CardArea';
-import SheetArea from './SheetArea';
+import CardArea from "./CardArea";
+import SheetArea from "./SheetArea";
 
-import './Playmat.less';
+import "./Playmat.less";
 
 interface PlaymatProps {
 	cards: Map<number, CardState>;

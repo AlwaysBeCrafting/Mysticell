@@ -1,15 +1,16 @@
-import * as React from 'react';
-import { ConnectDropTarget, DropTarget, DropTargetMonitor, DropTargetSpec } from 'react-dnd';
-import { connect as reduxConnect, Dispatch } from 'react-redux';
+import * as React from "react";
+import { ConnectDropTarget, DropTarget, DropTargetMonitor, DropTargetSpec } from "react-dnd";
+import { connect as reduxConnect, Dispatch } from "react-redux";
 
-import { Position } from 'data/shared';
-import AppState, { FieldState, NodeState } from 'state';
+import { Position } from "data/shared";
 
-import Types from './dndTypes';
-import FunctionNode from './FunctionNode';
-import Wire from './Wire';
+import { AppState, FieldState, NodeState } from "redux/state";
 
-import './NodeArea.less';
+import Types from "./dndTypes";
+import FunctionNode from "./FunctionNode";
+import Wire from "./Wire";
+
+import "./NodeArea.less";
 
 //==============================================================================
 

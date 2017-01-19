@@ -1,7 +1,7 @@
-import { Fxn } from 'data/fxn';
-import { Anchor, Position } from 'data/shared';
+import { Fxn } from "data/fxn";
+import { Anchor, Position } from "data/shared";
 
-interface Id {
+export interface Id {
 	id: number;
 }
 
@@ -48,7 +48,7 @@ export interface PopupState {
 	anchor?: Anchor;
 }
 
-interface AppState {
+export interface AppState {
 	title: string;
 
 	sheets: Map<number, SheetState>;
@@ -63,5 +63,3 @@ interface AppState {
 	path: string[];
 	popup?: PopupState;
 };
-
-export default AppState;

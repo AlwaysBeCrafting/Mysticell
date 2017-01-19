@@ -1,16 +1,17 @@
-import * as React from 'react';
-import { connect as reduxConnect } from 'react-redux';
+import * as React from "react";
+import { connect as reduxConnect } from "react-redux";
 
-import { PopupState } from 'state';
-import Action from 'state/action';
-import hidePopup from 'state/action/hidePopup';
+import { PopupState } from "redux/state";
 
-import Fields from './Fields';
-import FormulaEditor from './FormulaEditor';
-import Playmat from './Playmat';
-import Popup from './Popup';
+import { Action } from "redux/actions";
+import { hidePopup } from "redux/actions/popup";
 
-import './index.less';
+import Fields from "./Fields";
+import FormulaEditor from "./FormulaEditor";
+import Playmat from "./Playmat";
+import Popup from "./Popup";
+
+import "./index.less";
 
 interface EditorState {
 	path: string[];

@@ -1,6 +1,6 @@
-import { NodeState } from '.';
+import { NodeState } from "redux/state";
 
-import { Fxn } from 'data/fxn';
+import { Fxn } from "data/fxn";
 
 const createId = (): number => Math.floor( Math.random() * 1000000 );
 

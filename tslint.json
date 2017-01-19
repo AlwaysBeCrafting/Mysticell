@@ -24,8 +24,11 @@
         ],
         "quotemark": [
             true,
-            "single",
+            "double",
             "jsx-double"
+        ],
+        "member-access": [
+            false
         ]
     }
 }

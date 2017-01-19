@@ -1,14 +1,16 @@
-import * as React from 'react';
-import { connect as reduxConnect } from 'react-redux';
+import * as React from "react";
+import { connect as reduxConnect } from "react-redux";
 
-import { Fxn, fxnList } from 'data/fxn';
+import { Fxn, fxnList } from "data/fxn";
 
-import { NodeState } from 'state';
-import Action from 'state/action';
-import addNode from 'state/action/addNode';
-import { createNode } from 'state/generator';
+import { Action } from "redux/actions";
+import { addNode } from "redux/actions/nodes";
 
-import './AddNodeMenu.less';
+import { createNode } from "redux/generator";
+
+import { NodeState } from "redux/state";
+
+import "./AddNodeMenu.less";
 
 interface AddNodeMenuAttributes {
 	fieldId: number;

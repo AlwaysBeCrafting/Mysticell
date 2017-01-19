@@ -1,23 +1,23 @@
-import * as React from 'react';
-import { connect as reduxConnect } from 'react-redux';
+import * as React from "react";
+import { connect as reduxConnect } from "react-redux";
 
-import { DragDropContext } from 'react-dnd';
-import HTML5Backend from 'react-dnd-html5-backend';
+import { DragDropContext } from "react-dnd";
+import HTML5Backend from "react-dnd-html5-backend";
 
-import { Parent } from 'data/shared';
+import { Parent } from "data/shared";
 
-import AppState, { FieldState } from 'state';
-import Action  from 'state/action';
-import setPath from 'state/action/setPath';
-import showPopup from 'state/action/showPopup';
+import { Action } from "redux/actions";
+import { setPath } from "redux/actions/path";
+import { showPopup } from "redux/actions/popup";
+import { AppState, FieldState } from "redux/state";
 
-import FAB from 'components/common/FAB';
-import Toolbar from 'components/common/Toolbar';
+import FAB from "components/common/FAB";
+import Toolbar from "components/common/Toolbar";
 
-import AddNodeMenu from './AddNodeMenu';
-import NodeArea from './NodeArea';
+import AddNodeMenu from "./AddNodeMenu";
+import NodeArea from "./NodeArea";
 
-import './index.less';
+import "./index.less";
 
 //==============================================================================
 
@@ -55,7 +55,7 @@ const FormulaEditor = ( props: FormulaEditorProps ) => {
 
 	return <div id="node-editor">
 		<Toolbar>
-			<button className="icon" onClick={ () => dispatch( setPath( [] )) }>close</button>
+			<button className="icon" onClick={ () => dispatch( setPath( [] ))}>close</button>
 			<nav className="expanding path">{
 				path.map(( entry, i ) => <a
 					tabIndex={ 0 }
@@ -72,7 +72,7 @@ const FormulaEditor = ( props: FormulaEditorProps ) => {
 			dispatch( showPopup(
 				<AddNodeMenu fieldId={ field.id } />,
 				{ x, y },
-				{ horizontal: 'right', vertical: 'bottom' },
+				{ horizontal: "right", vertical: "bottom" },
 			));
 		}} />
 	</div>;

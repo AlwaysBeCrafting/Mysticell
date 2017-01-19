@@ -1,22 +1,39 @@
-import * as React from 'react';
-import { connect as reduxConnect } from 'react-redux';
+import * as React from "react";
+import { connect as reduxConnect } from "react-redux";
 
-import AppState from 'state';
-import Action from 'state/action';
-import { fieldParent } from 'state/field';
+import { AppState } from "redux/state";
 
-import collapseField from 'state/action/collapseField';
-import expandField from 'state/action/expandField';
-import setPathToFormula from 'state/action/setPathToFormula';
+import { Action } from "redux/actions";
+import { collapseField, expandField } from "redux/actions/fields";
+import { setPath } from "redux/actions/path";
 
-import Tree, { TreeItem, TreeProps } from 'components/common/Tree';
-import { FieldState } from 'state';
+import Tree, { TreeItem, TreeProps } from "components/common/Tree";
+import { FieldState } from "redux/state";
 
-import './Fields.less';
+import "./Fields.less";
 
 //==============================================================================
 
-const icFormula = require<string>('./ic_formula.svg');
+
+export const fieldParent = ( id: number, fields: Map<number, FieldState> ): number | undefined => {
+	const parent = Array.from( fields )
+		.find( entry =>  !!entry[1].children
+			.find( childId => childId === id ),
+		);
+	return parent && parent[0];
+};
+
+export const fieldPath = ( id: number, fields: Map<number, FieldState> ): string[] => {
+	const parent = fieldParent( id, fields );
+	const field = fields.get( id );
+	return [
+		...(( parent && fieldPath( parent, fields )) || [] ),
+		...(( field && [field.name] ) || [] ),
+	];
+};
+
+
+const icFormula = require<string>("./ic_formula.svg");
 
 const inflateFieldsToTreeItems = (
 	ids: number[],
@@ -78,7 +95,7 @@ const mergeProps = ( { fields }: StateProps, { dispatch }: DispatchProps ): Tree
 			( field: FieldState ) => () => dispatch( expandField( field.id )),
 			( field: FieldState ) => () => dispatch( collapseField( field.id )),
 			( field: FieldState ) => {
-				dispatch( setPathToFormula( field.id ));
+				dispatch( setPath( fieldPath( field.id, fields )));
 			},
 		),
 });
