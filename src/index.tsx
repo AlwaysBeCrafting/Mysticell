@@ -8,7 +8,7 @@ import Editor from "components/Editor";
 import { loadDocument } from "redux/actions/document";
 import { reducer } from "redux/reducers";
 
-import DocJson from "data/docJson";
+import { DocJson } from "data/docJson";
 
 //==============================================================================
 

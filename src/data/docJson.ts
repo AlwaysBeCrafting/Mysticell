@@ -1,4 +1,4 @@
-import { Position } from 'data/shared';
+import { Position } from "data/shared";
 
 export interface FieldJson {
 	id: number;
@@ -39,12 +39,10 @@ export interface CellJson {
 
 //------------------------------------------------------------------------------
 
-interface DocJson {
+export interface DocJson {
 	id: number;
 	title: string;
 	sheets: SheetJson[];
 	cards: CardJson[];
 	fields: FieldJson[];
 }
-
-export default DocJson;
