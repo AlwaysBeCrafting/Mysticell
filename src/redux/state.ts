@@ -30,10 +30,10 @@ export interface FieldState extends Id {
 	children: number[];
 	expanded: boolean;
 	resultNode: number;
-	nodes: number[];
 }
 
 export interface NodeState extends Id {
+	field: number;
 	label: string;
 	fxn: Fxn;
 	inputNodes: number[];

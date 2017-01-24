@@ -47,14 +47,15 @@ const mapStateToProps = ( { fields, nodes }: AppState ) => ({
 
 const NodeArea = ( props: NodeAreaProps ) => {
 	const { nodes, fields, fieldId, connectDropTarget } = props;
-	const formula = ( fields.get( fieldId ));
-	const formulaNodes = (( formula && formula.nodes ) || [] )
-		.map(( id ) => nodes.get( id ) as NodeState );
+	const field = ( fields.get( fieldId ));
+	const fieldNodes = Array.from( nodes )
+		.filter(([ id, node ]) => node.field === fieldId )
+		.map(([ id, node ]) => node );
 
 	return connectDropTarget(
 		<div id="node-area">
 			<svg id="wire-layer" preserveAspectRatio="none">
-			{ formulaNodes.map( node =>
+			{ fieldNodes.map( node =>
 				node.inputNodes
 					.map(( inputId, index ) => ({
 						node: nodes.get( inputId ) as NodeState,
@@ -74,7 +75,7 @@ const NodeArea = ( props: NodeAreaProps ) => {
 			)}
 			</svg>
 
-			{ formulaNodes.map( node => <FunctionNode
+			{ fieldNodes.map( node => <FunctionNode
 				key={ node.id }
 				node={ node } />,
 			)}

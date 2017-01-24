@@ -29,7 +29,7 @@ const AddNodeMenu = ( props: AddNodeMenuProps ) => (
 				<li
 					key={ i }
 					onClick={ ev => {
-						const node = createNode( fxn );
+						const node = createNode( props.fieldId, fxn );
 						props.dispatch( addNode( props.fieldId, node ));
 					}}
 				>

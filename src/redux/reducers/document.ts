@@ -29,16 +29,18 @@ const cellFromJson = ( json: docJson.CellJson ): CellState => ({
 const fieldFromJson = ( json: docJson.FieldJson ): FieldState => ({
 	...json,
 	children: ( json.children || [] ).map( child => child.id ),
-	nodes: ( json.nodes || [] ).map( node => node.id ),
 	expanded: false,
 });
 
-const nodeFromJson = ( json: docJson.NodeJson ): NodeState => ({
-	...json,
-	fxn: FxnLookup[ json.fxn ],
-	inputValues: [],
-	outputValue: "",
-});
+const nodesFromFieldJson = ( json: docJson.FieldJson ): NodeState[] => {
+	return ( json.nodes || [] ).map( node => ({
+		...node,
+		field: json.id,
+		fxn: FxnLookup[ node.fxn ],
+		inputValues: [],
+		outputValue: "",
+	}));
+};
 
 
 export const reducer = ( state: AppState, action: document.Actions ): AppState => {
@@ -72,8 +74,10 @@ export const reducer = ( state: AppState, action: document.Actions ): AppState =
 				),
 
 				nodes: flatFields
-					.reduce(( acc, field ) => [ ...acc, ...( field.nodes || [] ) ], [] as docJson.NodeJson[] )
-					.reduce(( acc, node ) => acc.set( node.id, nodeFromJson( node )), new Map() ),
+					.reduce(( acc, field ) => {
+						nodesFromFieldJson( field ).forEach( node => acc.set( node.id, node ));
+						return acc;
+					}, new Map() ),
 
 				path: [],
 				selectedNodes: [],

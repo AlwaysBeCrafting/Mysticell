@@ -4,7 +4,8 @@ import { Fxn } from "data/fxn";
 
 const createId = (): number => Math.floor( Math.random() * 1000000 );
 
-export const createNode = ( fxn: Fxn ): NodeState => ({
+export const createNode = ( fieldId: number, fxn: Fxn ): NodeState => ({
+	field: fieldId,
 	fxn,
 	id:          createId(),
 	inputNodes:  [],
