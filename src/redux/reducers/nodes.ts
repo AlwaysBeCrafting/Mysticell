@@ -39,6 +39,15 @@ export const reducer = (
 			connectedTo.inputNodes[connectedIndex] = connectedFrom.id;
 			return new Map( state ).set( connectedTo.id, connectedTo );
 
+		case nodes.ActionTypes.DISCONNECT_NODE:
+			const disconnectedIndex = action.payload.index;
+			const disconnectedNode = {
+				...action.payload.node,
+				inputNodes: [ ...action.payload.node.inputNodes ],
+			};
+			delete disconnectedNode.inputNodes[disconnectedIndex];
+			return new Map( state ).set( disconnectedNode.id, disconnectedNode );
+
 		default: return state;
 	}
 };
