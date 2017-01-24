@@ -3,12 +3,11 @@ export class ActionTypes {
 }
 
 export class SetPathAction {
-	type = ActionTypes.SET_PATH;
-	payload: { path: string[] };
+	readonly type = ActionTypes.SET_PATH;
+	constructor ( public payload: { path: string[] }) {};
 }
 export const setPath = ( path: string[] ) => ({
-	type: ActionTypes.SET_PATH,
-	payload: { path },
+	...new SetPathAction({ path }),
 });
 
 export type Actions = SetPathAction;

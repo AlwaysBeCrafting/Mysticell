@@ -3,12 +3,12 @@ export class ActionTypes {
 }
 
 export class SetTitleAction {
-	type = ActionTypes.SET_TITLE;
-	payload: { title: string };
+	readonly type = ActionTypes.SET_TITLE;
+	constructor ( public payload: { title: string }) {};
 }
 export const setTitle = ( title: string ): SetTitleAction => ({
-	type: ActionTypes.SET_TITLE,
-	payload: { title },
+	...new SetTitleAction({ title }),
 });
+
 
 export type Actions = SetTitleAction;

@@ -1,27 +1,24 @@
 export class ActionTypes {
-	static readonly EXPAND_FIELD   = "[Fields] Expand";
-	static readonly COLLAPSE_FIELD = "[Fields] Collapse";
+	static readonly EXPAND_FIELD = "[Field] Expand";
+	static readonly COLLAPSE_FIELD = "[Field] Collapse";
 }
 
 
 export class ExpandFieldAction {
-	type = ActionTypes.EXPAND_FIELD;
-	payload: { fieldId: number };
+	readonly type = ActionTypes.EXPAND_FIELD;
+	constructor ( public payload: { fieldId: number }) {};
 }
 export const expandField = ( fieldId: number ): ExpandFieldAction => ({
-	type: ActionTypes.EXPAND_FIELD,
-	payload: { fieldId },
+	...new ExpandFieldAction({ fieldId }),
 });
 
 
 export class CollapseFieldAction {
-	type = ActionTypes.COLLAPSE_FIELD;
+	readonly type = ActionTypes.COLLAPSE_FIELD;
 	constructor ( public payload: { fieldId: number }) {}
 }
 export const collapseField = ( fieldId: number ): CollapseFieldAction => ({
-	type: ActionTypes.COLLAPSE_FIELD,
-	payload: { fieldId },
+	...new CollapseFieldAction({ fieldId }),
 });
-
 
 export type Actions = ExpandFieldAction | CollapseFieldAction;

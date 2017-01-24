@@ -5,12 +5,11 @@ export class ActionTypes {
 }
 
 export class LoadDocumentAction {
-	type = ActionTypes.LOAD_DOCUMENT;
-	payload: { docJson: DocJson };
+	readonly type = ActionTypes.LOAD_DOCUMENT;
+	constructor ( public payload: { docJson: DocJson }) {};
 }
 export const loadDocument = ( docJson: DocJson ): LoadDocumentAction => ({
-	type: ActionTypes.LOAD_DOCUMENT,
-	payload: { docJson },
+	...new LoadDocumentAction({ docJson }),
 });
 
 export type Actions = LoadDocumentAction;
