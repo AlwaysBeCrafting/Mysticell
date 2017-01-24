@@ -33,21 +33,7 @@ const reducerChain: Array<( AppState, Action ) => AppState> = [
 	}),
 ];
 
-const defaultState: AppState = {
-	title: "Untitled Document",
-
-	sheets: new Map(),
-	cards: new Map(),
-	cells: new Map(),
-
-	fields: new Map(),
-	nodes: new Map(),
-
-	path: [],
-	selectedNodes: [],
-};
-
-export const reducer = ( state = defaultState, action: Action ) => reducerChain.reduce(
+export const reducer = ( state: AppState, action: Action ) => reducerChain.reduce(
 	( chainedState, chainedReducer ) =>  chainedReducer( chainedState, action ),
 	state,
 );

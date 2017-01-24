@@ -15,7 +15,7 @@ import "./index.less";
 
 interface EditorState {
 	path: string[];
-	popup?: PopupState;
+	popup: PopupState;
 }
 
 interface EditorDispatch {
@@ -25,7 +25,7 @@ interface EditorDispatch {
 type EditorProps = EditorState & EditorDispatch;
 
 const Editor = ( props: EditorProps ) =>
-<main id="editor" onClick={ ev => props.popup && props.dispatch( hidePopup() ) }>
+<main id="editor" onClick={ ev => props.popup.element && props.dispatch( hidePopup() ) }>
 	<div id="document-area">
 		<Fields items = { [] } />
 		{ props.path.length ? <FormulaEditor /> : <Playmat /> }

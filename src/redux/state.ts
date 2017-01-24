@@ -43,7 +43,7 @@ export interface NodeState extends Id {
 }
 
 export interface PopupState {
-	element: JSX.Element;
+	element?: JSX.Element;
 	position: Position;
 	anchor?: Anchor;
 }
@@ -61,5 +61,5 @@ export interface AppState {
 	selectedNodes: number[];
 
 	path: string[];
-	popup?: PopupState;
+	popup: PopupState;
 };

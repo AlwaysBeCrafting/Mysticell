@@ -5,4 +5,10 @@ const initialState: string[] = [];
 export const reducer = (
 	state = initialState,
 	action: path.Actions,
-): string[] => state;
+): string[] => {
+	switch ( action.type ) {
+		case path.ActionTypes.SET_PATH:
+			return action.payload.path;
+		default: return state;
+	}
+};
