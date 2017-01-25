@@ -36,9 +36,9 @@ export interface NodeState extends Id {
 	field: number;
 	label: string;
 	fxn: Fxn;
-	inputNodes: number[];
+	inputNodes: Array<number|undefined>;
 	position: Position;
-	inputValues: Array<string|number>;
+	inputValues: Array<string|number|undefined>;
 	outputValue: string|number;
 }
 

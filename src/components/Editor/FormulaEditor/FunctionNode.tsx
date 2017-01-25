@@ -6,7 +6,7 @@ import { DragSourceCollector, DragSourceConnector, DragSourceMonitor, DragSource
 import { connect as reduxConnect } from "react-redux";
 
 import { Action } from "redux/actions";
-import { moveNode, removeNode } from "redux/actions/nodes";
+import { moveNode, removeNode, updateNode } from "redux/actions/nodes";
 import { selectNodes } from "redux/actions/selectedNodes";
 
 import { AppState, NodeState } from "redux/state";
@@ -86,6 +86,7 @@ const FunctionNode = ( props: FunctionNodeProps ) => {
 					{
 						!node.inputNodes[index] && <div
 							className="value"
+							onInput={ ev => props.dispatch( updateNode( node, index, ev.currentTarget.textContent || "" )) }
 							contentEditable={ true } />
 					}
 				</div>

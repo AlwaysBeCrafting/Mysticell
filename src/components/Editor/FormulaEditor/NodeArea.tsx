@@ -56,7 +56,7 @@ const NodeArea = ( props: NodeAreaProps ) => {
 		<div id="node-area">
 			<svg id="wire-layer" preserveAspectRatio="none">
 			{ fieldNodes.map( node =>
-				node.inputNodes
+				( node.inputNodes.filter( inputId => !!inputId ) as number[] )
 					.map(( inputId, index ) => ({
 						node: nodes.get( inputId ) as NodeState,
 						index,

@@ -3,11 +3,13 @@ import { NodeState } from "redux/state";
 
 
 export class ActionTypes {
-	static readonly ADD_NODE        = "[Nodes] Add";
-	static readonly REMOVE_NODE     = "[Nodes] Remove";
-	static readonly MOVE_NODE       = "[Nodes] Move";
-	static readonly CONNECT_NODE    = "[Nodes] Connect";
-	static readonly DISCONNECT_NODE = "[Nodes] Disconnect";
+	static readonly ADD_NODE             = "[Nodes] Add";
+	static readonly REMOVE_NODE          = "[Nodes] Remove";
+	static readonly MOVE_NODE            = "[Nodes] Move";
+	static readonly CONNECT_NODE         = "[Nodes] Connect";
+	static readonly DISCONNECT_NODE      = "[Nodes] Disconnect";
+	static readonly SET_NODE_INPUT_VALUE = "[Nodes] Set input value";
+	static readonly UPDATE_NODE          = "[Nodes] Update";
 };
 
 
@@ -56,9 +58,19 @@ export const disconnectNode = ( node: NodeState, index: number ): DisconnectNode
 });
 
 
+export class UpdateNodeAction {
+	readonly type = ActionTypes.UPDATE_NODE;
+	constructor ( public payload: { node: NodeState, inputIndex: number, inputValue?: number|string }) {};
+}
+export const updateNode = ( node: NodeState, inputIndex: number, inputValue?: number|string ): UpdateNodeAction => ({
+	...new UpdateNodeAction({ node, inputIndex, inputValue }),
+});
+
+
 export type Actions =
-	AddNodeAction     |
-	RemoveNodeAction  |
-	MoveNodeAction    |
-	ConnectNodeAction |
-	DisconnectNodeAction;
+	AddNodeAction        |
+	RemoveNodeAction     |
+	MoveNodeAction       |
+	ConnectNodeAction    |
+	DisconnectNodeAction |
+	UpdateNodeAction;
