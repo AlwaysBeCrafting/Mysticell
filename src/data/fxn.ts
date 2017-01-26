@@ -26,10 +26,21 @@ export const ADD: Fxn = {
 };
 
 export const SUBTRACT: Fxn = {
-	name:   "Subtract",
+	name: "Subtract",
 	inputNames: [ "A", "B" ],
 	outputName: "Difference",
-	exec:   ( a: number, b: number ) => +a - +b,
+	exec: ( a: Param, b: Param ) => {
+		if ( typeof a === "number" && typeof b === "number" ) { return a - b; }
+
+		const normA = a === "" ? undefined : a;
+		const normB = b === "" ? undefined : b;
+
+		if ( typeof normA === "string" && typeof normB !== "undefined" ) {
+			return normA.substring( 0, normA.lastIndexOf( normB.toString() )) || normA;
+		}
+
+		return a || -b;
+	},
 };
 
 export const MULTIPLY: Fxn = {
