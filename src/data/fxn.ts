@@ -1,15 +1,17 @@
+type Param = number|string|undefined;
+
 export interface Fxn {
 	name: string;
 	inputNames: string[];
 	outputName: string;
-	exec: (...params: Array<number|string|undefined>) => number|string|undefined;
+	exec: (...params: Param[] ) => Param;
 }
 
 export const ADD: Fxn = {
 	name: "Add",
 	inputNames: [ "A", "B" ],
 	outputName: "Sum",
-	exec: ( a: number|string|undefined, b: number|string|undefined ) => {
+	exec: ( a: Param, b: Param ) => {
 		if ( typeof a === "number" && typeof b === "number" ) { return a + b; }
 
 		const normA = a === "" ? undefined : a;
@@ -31,10 +33,26 @@ export const SUBTRACT: Fxn = {
 };
 
 export const MULTIPLY: Fxn = {
-	name:   "Multiply",
+	name: "Multiply",
 	inputNames: [ "A", "B" ],
 	outputName: "Product",
-	exec:   ( a: number, b: number ) => +a * +b,
+	exec:   ( a: Param, b: Param ) => {
+		if ( typeof a === "number" && typeof b === "number" ) { return a * b; }
+
+		const normA = a === "" ? undefined : a;
+		const normB = b === "" ? undefined : b;
+
+		if ( typeof normA === "number" && typeof normB === "string" ) {
+			return normB.repeat( normA );
+		}
+		if ( typeof normA === "string" && typeof normB === "number" ) {
+			return normA.repeat( normB );
+		}
+
+		if ( typeof normA !== "string" && typeof normB !== "string" ) { return undefined; }
+
+		return a || b;
+	},
 };
 
 export const DIVIDE: Fxn = {
