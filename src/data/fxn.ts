@@ -112,10 +112,13 @@ export const SQRT: Fxn = {
 };
 
 export const POWER: Fxn = {
-	name:   "Power",
+	name: "Power",
 	inputNames: [ "Number", "Exponent" ],
 	outputName: "Result",
-	exec:   ( a: number, b: number ) => a ** +b,
+	exec: ( a: Param, b: Param ) => {
+		if ( typeof a === "number" && typeof b === "number" ) { return a ** b; }
+		return undefined;
+	},
 };
 
 export interface FxnLookup {
