@@ -102,10 +102,13 @@ export const DIVIDE: Fxn = {
 };
 
 export const SQRT: Fxn = {
-	name:   "Square Root",
+	name: "Square Root",
 	inputNames: [ "Number" ],
 	outputName: "Square root",
-	exec:   Math.sqrt,
+	exec: ( a: Param ) => {
+		if ( typeof a === "number" ) { return Math.sqrt( a ); }
+		return undefined;
+	},
 };
 
 export const POWER: Fxn = {
