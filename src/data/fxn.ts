@@ -6,10 +6,21 @@ export interface Fxn {
 }
 
 export const ADD: Fxn = {
-	name:   "Add",
+	name: "Add",
 	inputNames: [ "A", "B" ],
 	outputName: "Sum",
-	exec:   ( a: number, b: number ) => +a + +b,
+	exec: ( a: number|string|undefined, b: number|string|undefined ) => {
+		if ( typeof a === "number" && typeof b === "number" ) { return a + b; }
+
+		const normA = a === "" ? undefined : a;
+		const normB = b === "" ? undefined : b;
+
+		if ( typeof normA !== "undefined" && typeof normB !== "undefined" ) {
+			return normA.toString() + normB.toString();
+		}
+
+		return a || b;
+	},
 };
 
 export const SUBTRACT: Fxn = {
