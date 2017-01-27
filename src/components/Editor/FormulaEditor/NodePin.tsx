@@ -9,7 +9,7 @@ import { connect as reduxConnect } from "react-redux";
 import DndTypes from "./dndTypes";
 
 import { Action } from "redux/actions";
-import { connectNode, disconnectNode } from "redux/actions/nodes";
+import { connectNode, disconnectNode, updateNode } from "redux/actions/nodes";
 import { AppState, NodeState } from "redux/state";
 
 import "./NodePin.less";
@@ -39,6 +39,7 @@ type InputPinProps =
 const onInputPinClick = ( ev: React.MouseEvent<HTMLElement>, props: InputPinProps ) => {
 	if ( !ev.shiftKey ) { return; }
 	props.dispatch( disconnectNode( props.node.id, props.index ));
+	props.dispatch( updateNode( props.node.id, props.index ));
 	ev.preventDefault();
 };
 
@@ -112,6 +113,7 @@ const outputPinSourceSpec: DragSourceSpec<OutputPinDragSource> = {
 		if ( !monitor.didDrop() ) { return; }
 		const input = monitor.getDropResult() as { node: NodeState, index: number };
 		props.dispatch( connectNode( props.node.id, input.node.id, input.index ));
+		props.dispatch( updateNode( input.node.id, input.index ));
 	},
 };
 
