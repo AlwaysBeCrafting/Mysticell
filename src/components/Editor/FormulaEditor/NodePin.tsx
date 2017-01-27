@@ -38,7 +38,7 @@ type InputPinProps =
 
 const onInputPinClick = ( ev: React.MouseEvent<HTMLElement>, props: InputPinProps ) => {
 	if ( !ev.shiftKey ) { return; }
-	props.dispatch( disconnectNode( props.node, props.index ));
+	props.dispatch( disconnectNode( props.node.id, props.index ));
 	ev.preventDefault();
 };
 
@@ -111,7 +111,7 @@ const outputPinSourceSpec: DragSourceSpec<OutputPinDragSource> = {
 	endDrag: ( props: OutputPinProps, monitor: DragSourceMonitor ) => {
 		if ( !monitor.didDrop() ) { return; }
 		const input = monitor.getDropResult() as { node: NodeState, index: number };
-		props.dispatch( connectNode( props.node, input.node, input.index ));
+		props.dispatch( connectNode( props.node.id, input.node.id, input.index ));
 	},
 };
 

@@ -86,7 +86,7 @@ const FunctionNode = ( props: FunctionNodeProps ) => {
 					{
 						!node.inputNodes[index] && <div
 							className="value"
-							onInput={ ev => props.dispatch( updateNode( node, index, ev.currentTarget.textContent || "" )) }
+							onInput={ ev => props.dispatch( updateNode( node.id, index, ev.currentTarget.textContent || "" )) }
 							contentEditable={ true } />
 					}
 				</div>
@@ -109,7 +109,7 @@ const nodeSourceSpec: DragSourceSpec<FunctionNodeDragSource> = {
 				Math.round(( y + dy ) / 40 ) * 40,
 			];
 
-			props.dispatch( moveNode( props.node, { x: tx, y: ty } ));
+			props.dispatch( moveNode( props.node.id, { x: tx, y: ty } ));
 			props.dispatch( selectNodes( [ props.node.id ] ));
 		}
 	},

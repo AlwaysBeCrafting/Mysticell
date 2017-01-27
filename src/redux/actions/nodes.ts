@@ -24,46 +24,46 @@ export const addNode = ( fieldId: number, node: NodeState ): AddNodeAction => ({
 
 export class RemoveNodeAction {
 	readonly type = ActionTypes.REMOVE_NODE;
-	constructor ( public payload: { node: NodeState }) {};
+	constructor ( public payload: { nodeId: number }) {};
 }
-export const removeNode = ( node: NodeState ): RemoveNodeAction => ({
-	...new RemoveNodeAction({ node }),
+export const removeNode = ( nodeId: number ): RemoveNodeAction => ({
+	...new RemoveNodeAction({ nodeId }),
 });
 
 
 export class MoveNodeAction {
 	readonly type = ActionTypes.MOVE_NODE;
-	constructor ( public payload: { node: NodeState, position: Position }) {};
+	constructor ( public payload: { nodeId: number, position: Position }) {};
 }
-export const moveNode = ( node: NodeState, position: Position ): MoveNodeAction => ({
-	...new MoveNodeAction({ node, position }),
+export const moveNode = ( nodeId: number, position: Position ): MoveNodeAction => ({
+	...new MoveNodeAction({ nodeId, position }),
 });
 
 
 export class ConnectNodeAction {
 	readonly type = ActionTypes.CONNECT_NODE;
-	constructor ( public payload: { fromNode: NodeState, toNode: NodeState, toIndex: number }) {};
+	constructor ( public payload: { fromNodeId: number, toNodeId: number, toIndex: number }) {};
 }
-export const connectNode = ( fromNode: NodeState, toNode: NodeState, toIndex: number ): ConnectNodeAction => ({
-	...new ConnectNodeAction({ fromNode, toNode, toIndex }),
+export const connectNode = ( fromNodeId: number, toNodeId: number, toIndex: number ): ConnectNodeAction => ({
+	...new ConnectNodeAction({ fromNodeId, toNodeId, toIndex }),
 });
 
 
 export class DisconnectNodeAction {
 	readonly type = ActionTypes.DISCONNECT_NODE;
-	constructor ( public payload: { node: NodeState, index: number }) {};
+	constructor ( public payload: { nodeId: number, index: number }) {};
 }
-export const disconnectNode = ( node: NodeState, index: number ): DisconnectNodeAction => ({
-	...new DisconnectNodeAction({ node, index }),
+export const disconnectNode = ( nodeId: number, index: number ): DisconnectNodeAction => ({
+	...new DisconnectNodeAction({ nodeId, index }),
 });
 
 
 export class UpdateNodeAction {
 	readonly type = ActionTypes.UPDATE_NODE;
-	constructor ( public payload: { node: NodeState, inputIndex: number, inputValue?: number|string }) {};
+	constructor ( public payload: { nodeId: number, inputIndex: number, inputValue?: number|string }) {};
 }
-export const updateNode = ( node: NodeState, inputIndex: number, inputValue?: number|string ): UpdateNodeAction => ({
-	...new UpdateNodeAction({ node, inputIndex, inputValue }),
+export const updateNode = ( nodeId: number, inputIndex: number, inputValue?: number|string ): UpdateNodeAction => ({
+	...new UpdateNodeAction({ nodeId, inputIndex, inputValue }),
 });
 
 

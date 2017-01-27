@@ -14,13 +14,15 @@ export const reducer = (
 			return new Map( state ).set( addedNode.id, addedNode );
 
 		case nodes.ActionTypes.REMOVE_NODE:
-			const removedNode = action.payload.node;
+			const removedNode = state.get( action.payload.nodeId );
+			if ( !removedNode ) { return state; }
 			const clonedState = new Map( state );
 			clonedState.delete( removedNode.id );
 			return clonedState;
 
 		case nodes.ActionTypes.MOVE_NODE:
-			const movedNode = action.payload.node;
+			const movedNode = state.get( action.payload.nodeId );
+			if ( !movedNode ) { return state; }
 			return new Map( state ).set(
 				movedNode.id,
 				{
@@ -30,28 +32,36 @@ export const reducer = (
 			);
 
 		case nodes.ActionTypes.CONNECT_NODE:
-			const connectedFrom = action.payload.fromNode;
+			const connectedFrom = state.get( action.payload.fromNodeId );
+			const connectedTo = state.get( action.payload.toNodeId );
 			const connectedIndex = action.payload.toIndex;
-			const connectedTo = {
-				...action.payload.toNode,
-				inputNodes: [ ...action.payload.toNode.inputNodes ],
+			if ( !connectedFrom || !connectedTo ) { return state; }
+
+			const connectedToClone = {
+				...connectedTo,
+				inputNodes: [ ...connectedTo.inputNodes ],
 			};
-			connectedTo.inputNodes[connectedIndex] = connectedFrom.id;
-			return new Map( state ).set( connectedTo.id, connectedTo );
+			connectedToClone.inputNodes[connectedIndex] = connectedFrom.id;
+			return new Map( state ).set( connectedToClone.id, connectedToClone );
 
 		case nodes.ActionTypes.DISCONNECT_NODE:
 			const disconnectedIndex = action.payload.index;
-			const disconnectedNode = {
-				...action.payload.node,
-				inputNodes: [ ...action.payload.node.inputNodes ],
+			const disconnectedNode = state.get( action.payload.nodeId );
+			if ( !disconnectedNode ) { return state; }
+
+			const disconnectedNodeClone = {
+				...disconnectedNode,
+				inputNodes: [ ...disconnectedNode.inputNodes ],
 			};
-			delete disconnectedNode.inputNodes[disconnectedIndex];
-			return new Map( state ).set( disconnectedNode.id, disconnectedNode );
+			delete disconnectedNodeClone.inputNodes[disconnectedIndex];
+			return new Map( state ).set( disconnectedNodeClone.id, disconnectedNodeClone );
 
 		case nodes.ActionTypes.UPDATE_NODE:
-			const updatedNode = {
-				...action.payload.node,
-				inputValues: action.payload.node.inputValues,
+			const updatedNode = state.get( action.payload.nodeId );
+			if ( !updatedNode ) { return state; }
+			const updatedNodeClone = {
+				...updatedNode,
+				inputValues: updatedNode.inputValues,
 			};
 			const inVal = action.payload.inputValue;
 			updatedNode.inputValues[action.payload.inputIndex] = castInputValue( inVal );
