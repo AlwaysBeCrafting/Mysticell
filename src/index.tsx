@@ -2,6 +2,7 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
+import { composeWithDevTools } from "redux-devtools-extension/developmentOnly";
 
 import Editor from "components/Editor";
 
@@ -12,7 +13,7 @@ import { DocJson } from "data/docJson";
 
 //==============================================================================
 
-const store = createStore( reducer );
+const store = createStore( reducer, composeWithDevTools() );
 
 ReactDOM.render(
 	<Provider store={ store }><Editor /></Provider>,
