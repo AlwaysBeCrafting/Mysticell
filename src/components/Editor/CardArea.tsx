@@ -1,8 +1,8 @@
-import * as React from 'react';
+import * as React from "react";
 
-import { CardState } from 'state';
+import { CardState } from "redux/state";
 
-import './CardArea.less';
+import "./CardArea.less";
 
 export interface CardAreaProps {
 	cards: Map<number, CardState>;

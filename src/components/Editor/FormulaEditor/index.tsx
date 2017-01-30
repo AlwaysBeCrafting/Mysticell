@@ -1,25 +1,23 @@
-import * as React from 'react';
-import { connect as reduxConnect } from 'react-redux';
+import * as React from "react";
+import { connect as reduxConnect } from "react-redux";
 
-import { DragDropContext } from 'react-dnd';
-import HTML5Backend from 'react-dnd-html5-backend';
+import { DragDropContext } from "react-dnd";
+import HTML5Backend from "react-dnd-html5-backend";
 
-import { Parent } from 'data/shared';
+import { Parent } from "data/shared";
 
-import AppState, { FieldState } from 'state';
-import Action  from 'state/action';
-import addNode from 'state/action/addNode';
-import selectNode from 'state/action/selectNode';
-import setPath from 'state/action/setPath';
+import { Action } from "redux/actions";
+import { setPath } from "redux/actions/path";
+import { showPopup } from "redux/actions/popup";
+import { AppState, FieldState } from "redux/state";
 
-import { createNode } from 'state/generator';
+import FAB from "components/common/FAB";
+import Toolbar from "components/common/Toolbar";
 
-import FAB from 'components/common/FAB';
-import Toolbar from 'components/common/Toolbar';
+import AddNodeMenu from "./AddNodeMenu";
+import NodeArea from "./NodeArea";
 
-import NodeArea from './NodeArea';
-
-import './index.less';
+import "./index.less";
 
 //==============================================================================
 
@@ -57,7 +55,7 @@ const FormulaEditor = ( props: FormulaEditorProps ) => {
 
 	return <div id="node-editor">
 		<Toolbar>
-			<button className="icon" onClick={ () => dispatch( setPath( [] )) }>close</button>
+			<button className="icon" onClick={ () => dispatch( setPath( [] ))}>close</button>
 			<nav className="expanding path">{
 				path.map(( entry, i ) => <a
 					tabIndex={ 0 }
@@ -69,10 +67,13 @@ const FormulaEditor = ( props: FormulaEditorProps ) => {
 			<a className="icon">redo</a>
 		</Toolbar>
 		<NodeArea fieldId={ field.id } />
-		<FAB icon="add" onClick={ () => {
-			const node = createNode( 'ADD' );
-			dispatch( addNode( field.id, node ));
-			dispatch( selectNode( node.id ));
+		<FAB icon="add" onClick={ ev => {
+			const { right: x, bottom: y } = ev.currentTarget.getBoundingClientRect();
+			dispatch( showPopup(
+				<AddNodeMenu fieldId={ field.id } />,
+				{ x, y },
+				{ horizontal: "right", vertical: "bottom" },
+			));
 		}} />
 	</div>;
 };

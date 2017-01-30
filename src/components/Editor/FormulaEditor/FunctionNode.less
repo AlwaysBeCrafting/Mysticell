@@ -55,6 +55,11 @@
 		flex-flow: row-reverse nowrap;
 		position: relative;
 		font-size: 13px;
+
+		.value {
+			margin-right: 8px;
+			color: @color-text-disabled;
+		}
 	}
 	
 	.input {
@@ -68,13 +73,15 @@
 
 		.value {
 			margin-left: 8px;
-			padding-top: 2px;
 			flex: 1;
 			white-space: nowrap;
 			overflow: hidden;
 			line-height: 2;
+			color: @color-text-disabled;
 
 			&:not([contenteditable="false"]) {
+				padding-top: 2px;
+				color: inherit;
 				cursor: text;
 				border-bottom: solid 2px @color-divider;
 			}

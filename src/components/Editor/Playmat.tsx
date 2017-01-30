@@ -1,19 +1,19 @@
-import * as React from 'react';
-import { connect as reduxConnect } from 'react-redux';
+import * as React from "react";
+import { connect as reduxConnect } from "react-redux";
 
-import AppState, { CardState, SheetState } from 'state';
+import { AppState, CardState, SheetState } from "redux/state";
 
-import CardArea from './CardArea';
-import SheetArea from './SheetArea';
+import CardArea from "./CardArea";
+import SheetArea from "./SheetArea";
 
-import './Playmat.less';
+import "./Playmat.less";
 
-interface PlaymatState {
+interface PlaymatProps {
 	cards: Map<number, CardState>;
 	sheets: Map<number, SheetState>;
 }
 
-const Playmat = ( props: PlaymatState ) => <div id="playmat">
+const Playmat = ( props: PlaymatProps ) => <div id="playmat">
 	<menu type="toolbar" />
 	<div id="display-area">
 		<CardArea cards={ props.cards } />
@@ -21,6 +21,6 @@ const Playmat = ( props: PlaymatState ) => <div id="playmat">
 	</div>
 </div>;
 
-export default reduxConnect<PlaymatState, {}, {}>(
+export default reduxConnect<PlaymatProps, {}, {}>(
 	({ cards, sheets }) => ({ cards, sheets }),
 )( Playmat );

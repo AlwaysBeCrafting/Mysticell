@@ -6,32 +6,30 @@
 	"fields": [ {
 		"name":    "Stats",
 		"id":     3,
-		"formula": {
-			"resultNode": 501,
-			"nodes":      [
-				{
-					"id":        501,
-					"label":      "Add",
-					"fxn":        "ADD",
-					"inputNodes": [502,503],
-					"position":   { "x": 600, "y": 200 }
-				},
-				{
-					"id":        502,
-					"label":      "Add",
-					"fxn":        "ADD",
-					"inputNodes": [503,null],
-					"position":   { "x": 400, "y": 160 }
-				},
-				{
-					"id":        503,
-					"label":      "Add",
-					"fxn":        "ADD",
-					"inputNodes": [null,null],
-					"position":   { "x": 200, "y": 280 }
-				}
-			]
-		},
+		"resultNode": 501,
+		"nodes": [
+			{
+				"id":        501,
+				"label":      "Add",
+				"fxn":        "ADD",
+				"inputNodes": [502,503],
+				"position":   { "x": 600, "y": 200 }
+			},
+			{
+				"id":        502,
+				"label":      "Add",
+				"fxn":        "ADD",
+				"inputNodes": [503,null],
+				"position":   { "x": 400, "y": 160 }
+			},
+			{
+				"id":        503,
+				"label":      "Add",
+				"fxn":        "ADD",
+				"inputNodes": [null,null],
+				"position":   { "x": 200, "y": 280 }
+			}
+		],
 		"children": [ {
 			"name":     "Attributes",
 			"id":      4,

@@ -1,19 +1,18 @@
-import * as React from 'react';
+import * as React from "react";
 
-import { ConnectDragSource, ConnectDropTarget, DragSource, DropTarget } from 'react-dnd';
-import { DragSourceCollector, DragSourceConnector, DragSourceMonitor, DragSourceSpec } from 'react-dnd';
-import { DropTargetCollector, DropTargetConnector, DropTargetMonitor, DropTargetSpec } from 'react-dnd';
+import { ConnectDragSource, ConnectDropTarget, DragSource, DropTarget } from "react-dnd";
+import { DragSourceCollector, DragSourceConnector, DragSourceMonitor, DragSourceSpec } from "react-dnd";
+import { DropTargetCollector, DropTargetConnector, DropTargetMonitor, DropTargetSpec } from "react-dnd";
 
-import { connect as reduxConnect } from 'react-redux';
+import { connect as reduxConnect } from "react-redux";
 
-import DndTypes from './dndTypes';
+import DndTypes from "./dndTypes";
 
-import AppState, { NodeState } from 'state';
-import Action from 'state/action';
-import connectNodes from 'state/action/connectNodes';
-import disconnectNodes from 'state/action/disconnectNodes';
+import { Action } from "redux/actions";
+import { connectNode, disconnectNode, updateNode } from "redux/actions/nodes";
+import { AppState, NodeState } from "redux/state";
 
-import './NodePin.less';
+import "./NodePin.less";
 
 //==============================================================================
 
@@ -39,7 +38,8 @@ type InputPinProps =
 
 const onInputPinClick = ( ev: React.MouseEvent<HTMLElement>, props: InputPinProps ) => {
 	if ( !ev.shiftKey ) { return; }
-	props.dispatch( disconnectNodes( props.node, props.index ));
+	props.dispatch( disconnectNode( props.node.id, props.index ));
+	props.dispatch( updateNode( props.node.id, props.index ));
 	ev.preventDefault();
 };
 
@@ -112,7 +112,8 @@ const outputPinSourceSpec: DragSourceSpec<OutputPinDragSource> = {
 	endDrag: ( props: OutputPinProps, monitor: DragSourceMonitor ) => {
 		if ( !monitor.didDrop() ) { return; }
 		const input = monitor.getDropResult() as { node: NodeState, index: number };
-		props.dispatch( connectNodes( props.node, input.node, input.index ));
+		props.dispatch( connectNode( props.node.id, input.node.id, input.index ));
+		props.dispatch( updateNode( input.node.id, input.index ));
 	},
 };
 

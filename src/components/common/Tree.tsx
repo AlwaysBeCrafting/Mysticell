@@ -1,6 +1,6 @@
-import * as React from 'react';
+import * as React from "react";
 
-import './Tree.less';
+import "./Tree.less";
 
 //==============================================================================
 
@@ -42,9 +42,9 @@ const TreeNode = ( props: TreeNodeProps ): React.ReactElement<any> => {
 	return (
 		<li
 			className={ [
-				item.children.length ? 'parent' : '',
-				item.isExpanded ? 'expanded' : '',
-			].join( ' ' ) }>
+				item.children.length ? "parent" : "",
+				item.isExpanded ? "expanded" : "",
+			].join( " " ) }>
 			<a
 				tabIndex={ 0 }
 				onClick={ ev => {

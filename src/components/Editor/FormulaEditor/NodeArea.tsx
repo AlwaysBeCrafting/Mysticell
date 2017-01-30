@@ -1,15 +1,16 @@
-import * as React from 'react';
-import { ConnectDropTarget, DropTarget, DropTargetMonitor, DropTargetSpec } from 'react-dnd';
-import { connect as reduxConnect, Dispatch } from 'react-redux';
+import * as React from "react";
+import { ConnectDropTarget, DropTarget, DropTargetMonitor, DropTargetSpec } from "react-dnd";
+import { connect as reduxConnect, Dispatch } from "react-redux";
 
-import { Position } from 'data/shared';
-import AppState, { FormulaState, NodeState } from 'state';
+import { Position } from "data/shared";
 
-import Types from './dndTypes';
-import FunctionNode from './FunctionNode';
-import Wire from './Wire';
+import { AppState, FieldState, NodeState } from "redux/state";
 
-import './NodeArea.less';
+import Types from "./dndTypes";
+import FunctionNode from "./FunctionNode";
+import Wire from "./Wire";
+
+import "./NodeArea.less";
 
 //==============================================================================
 
@@ -23,7 +24,7 @@ interface NodeAreaDropTarget {
 
 interface NodeAreaState {
 	nodes: Map<number, NodeState>;
-	formulas: Map<number, FormulaState>;
+	fields: Map<number, FieldState>;
 }
 
 type NodeAreaProps = NodeAreaAttributes & NodeAreaDropTarget & NodeAreaState;
@@ -37,24 +38,25 @@ const nodeAreaTargetSpec: DropTargetSpec<NodeAreaDropTarget> = {
 
 //------------------------------------------------------------------------------
 
-const mapStateToProps = ( state: AppState ) => ({
-	formulas: state.formulas,
-	nodes: state.nodes,
+const mapStateToProps = ( { fields, nodes }: AppState ) => ({
+	fields,
+	nodes,
 });
 
 //------------------------------------------------------------------------------
 
 const NodeArea = ( props: NodeAreaProps ) => {
-	const { nodes, formulas, fieldId, connectDropTarget } = props;
-	const formula = ( formulas.get( fieldId ));
-	const formulaNodes = (( formula && formula.nodes ) || [] )
-		.map(( id ) => nodes.get( id ) as NodeState );
+	const { nodes, fields, fieldId, connectDropTarget } = props;
+	const field = ( fields.get( fieldId ));
+	const fieldNodes = Array.from( nodes )
+		.filter(([ id, node ]) => node.field === fieldId )
+		.map(([ id, node ]) => node );
 
 	return connectDropTarget(
 		<div id="node-area">
 			<svg id="wire-layer" preserveAspectRatio="none">
-			{ formulaNodes.map( node =>
-				node.inputNodes
+			{ fieldNodes.map( node =>
+				( node.inputNodes.filter( inputId => !!inputId ) as number[] )
 					.map(( inputId, index ) => ({
 						node: nodes.get( inputId ) as NodeState,
 						index,
@@ -73,7 +75,7 @@ const NodeArea = ( props: NodeAreaProps ) => {
 			)}
 			</svg>
 
-			{ formulaNodes.map( node => <FunctionNode
+			{ fieldNodes.map( node => <FunctionNode
 				key={ node.id }
 				node={ node } />,
 			)}

@@ -1,6 +1,6 @@
-import * as React from 'react';
+import * as React from "react";
 
-import './Toolbar.less';
+import "./Toolbar.less";
 
 // TODO: w/ TS 2.1 this shouldn't be needed any more
 export interface ToolbarProps { children?: any; }

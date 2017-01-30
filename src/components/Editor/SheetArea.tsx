@@ -1,8 +1,8 @@
-import * as React from 'react';
+import * as React from "react";
 
-import { SheetState } from 'state';
+import { SheetState } from "redux/state";
 
-import './SheetArea.less';
+import "./SheetArea.less";
 
 interface SheetAreaProps {
 	sheets: Map<number, SheetState>;

@@ -1,24 +1,23 @@
-import * as React from 'react';
+import * as React from "react";
 
-import { ConnectDragSource, DragSource } from 'react-dnd';
-import { DragSourceCollector, DragSourceConnector, DragSourceMonitor, DragSourceSpec } from 'react-dnd';
+import { ConnectDragSource, DragSource } from "react-dnd";
+import { DragSourceCollector, DragSourceConnector, DragSourceMonitor, DragSourceSpec } from "react-dnd";
 
-import { connect as reduxConnect } from 'react-redux';
+import { connect as reduxConnect } from "react-redux";
 
-import AppState, { NodeState } from 'state';
-import Action from 'state/action';
-import moveNode from 'state/action/moveNode';
-import removeNode from 'state/action/removeNode';
-import selectNode from 'state/action/selectNode';
+import { Action } from "redux/actions";
+import { moveNode, removeNode, updateNode } from "redux/actions/nodes";
+import { selectNodes } from "redux/actions/selectedNodes";
 
-import Fxn from 'data/fxn';
-import { Position } from 'data/shared';
+import { AppState, NodeState } from "redux/state";
 
-import Types from './dndTypes';
+import { Position } from "data/shared";
 
-import { InputPin, OutputPin } from './NodePin';
+import Types from "./dndTypes";
 
-import './FunctionNode.less';
+import { InputPin, OutputPin } from "./NodePin";
+
+import "./FunctionNode.less";
 
 //==============================================================================
 
@@ -49,37 +48,47 @@ type FunctionNodeProps =
 //------------------------------------------------------------------------------
 
 const FunctionNode = ( props: FunctionNodeProps ) => {
-	const { node } = props;
-	const { inputs, output } = Fxn[node.fxn];
+	const { node, nodes } = props;
+	const { inputNames, outputName } = node.fxn;
 
-	const className = ['function-node'];
-	if ( props.isDragging ) { className.push( 'dragging' ); }
-	if ( props.isSelected ) { className.push( 'selected' ); }
+	const className = ["function-node"];
+	if ( props.isDragging ) { className.push( "dragging" ); }
+	if ( props.isSelected ) { className.push( "selected" ); }
 
 	const { x: left, y: top } = node.position || { x: 0, y: 0 };
 
 	return props.connectDragSource(
 		<div
-			className={ className.join( ' ' ) }
+			className={ className.join( " " ) }
 			style={{ left, top }}
-			onClick={ () => props.dispatch( selectNode( node.id )) }>
+			onClick={ () => props.dispatch( selectNodes( [ node.id ])) }>
 			<header>{ node.label }</header>
 
-			{ output && <div className="output" key={ output }>
+			{ outputName && <div className="output" key={ outputName }>
 				<OutputPin node={ node } />
-				{ output }
+				<label>{ outputName }</label>
+				<div className="value">
+					{ node.outputValue }
+				</div>
 			</div> }
 
-			{ ( inputs || [] ).map(( input, index ) => (
-				<div className="input" key={ input }>
+			{ ( inputNames || [] ).map(( inputName, index ) => (
+				<div className="input" key={ inputName }>
 					<InputPin
 						node={ node }
 						index={ index } />
-					<label>{ input }</label>
-					<div
-						tabIndex={ node.inputNodes[index] ? -1 : 0 }
-						className="value"
-						contentEditable={ !node.inputNodes[index] } />
+					<label>{ inputName }</label>
+					{
+						node.inputNodes[index] && <div
+							className="value"
+							contentEditable={ false }>{ node.inputValues[index] }</div>
+					}
+					{
+						!node.inputNodes[index] && <div
+							className="value"
+							onInput={ ev => props.dispatch( updateNode( node.id, index, ev.currentTarget.textContent || "" )) }
+							contentEditable={ true } />
+					}
 				</div>
 			)) }
 		</div>,
@@ -100,8 +109,8 @@ const nodeSourceSpec: DragSourceSpec<FunctionNodeDragSource> = {
 				Math.round(( y + dy ) / 40 ) * 40,
 			];
 
-			props.dispatch( moveNode( props.node.id, { x: tx, y: ty }));
-			props.dispatch( selectNode( props.node.id ));
+			props.dispatch( moveNode( props.node.id, { x: tx, y: ty } ));
+			props.dispatch( selectNodes( [ props.node.id ] ));
 		}
 	},
 };

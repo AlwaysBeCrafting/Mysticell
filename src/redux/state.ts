@@ -1,6 +1,7 @@
-import { Position } from 'data/shared';
+import { Fxn } from "data/fxn";
+import { Anchor, Position } from "data/shared";
 
-interface Id {
+export interface Id {
 	id: number;
 }
 
@@ -28,21 +29,26 @@ export interface FieldState extends Id {
 	parent?: number;
 	children: number[];
 	expanded: boolean;
-}
-
-export interface FormulaState extends Id {
 	resultNode: number;
-	nodes: number[];
 }
 
 export interface NodeState extends Id {
+	field: number;
 	label: string;
-	fxn: string;
-	inputNodes: number[];
+	fxn: Fxn;
+	inputNodes: Array<number|undefined>;
 	position: Position;
+	inputValues: Array<string|number|undefined>;
+	outputValue: string|number;
 }
 
-interface AppState {
+export interface PopupState {
+	element?: JSX.Element;
+	position: Position;
+	anchor?: Anchor;
+}
+
+export interface AppState {
 	title: string;
 
 	sheets: Map<number, SheetState>;
@@ -50,12 +56,10 @@ interface AppState {
 	cells: Map<number, CellState>;
 
 	fields: Map<number, FieldState>;
-	formulas: Map<number, FormulaState>;
 	nodes: Map<number, NodeState>;
 
 	selectedNodes: number[];
 
 	path: string[];
+	popup: PopupState;
 };
-
-export default AppState;
