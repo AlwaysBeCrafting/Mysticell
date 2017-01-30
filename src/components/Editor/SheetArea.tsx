@@ -2,6 +2,8 @@ import * as React from "react";
 
 import { SheetState } from "redux/state";
 
+import Sheet from "./Sheet";
+
 import "./SheetArea.less";
 
 interface SheetAreaProps {
@@ -10,9 +12,6 @@ interface SheetAreaProps {
 
 export default ( props: SheetAreaProps ) => <ul id="sheet-area"> {
 	Array.from( props.sheets )
-		.map( ([ id, sheet ]) => sheet )
-		.filter( sheet => sheet.isVisible )
-		.map(({ title, id }) => <li className="sheet" id={ `sheet-${ id }` } key={ id }>
-			<header>{ title }</header>
-		</li> )
+		.filter(([ id, sheet ]) => sheet.isVisible )
+		.map(([ id, sheet ]) => <Sheet sheet={ sheet } /> )
 } </ul>;

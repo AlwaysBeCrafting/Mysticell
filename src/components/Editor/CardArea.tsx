@@ -2,6 +2,8 @@ import * as React from "react";
 
 import { CardState } from "redux/state";
 
+import Card from "./Card";
+
 import "./CardArea.less";
 
 export interface CardAreaProps {
@@ -10,9 +12,6 @@ export interface CardAreaProps {
 
 export default ( props: CardAreaProps ) => <ul id="card-area"> {
 	Array.from( props.cards )
-		.map(([ id, card ]) => card )
-		.filter( card => card.isVisible )
-		.map( ({ title, id }) => <li className="card" id={ `card-${ id }` } key={ id }>
-			<header>{ title }</header>
-		</li> )
+		.filter(([ id, card ]) => card.isVisible )
+		.map(([ id, card ]) => <Card card={ card } /> )
 } </ul>;

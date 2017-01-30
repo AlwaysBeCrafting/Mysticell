@@ -1,0 +1,62 @@
+@import '~components/common/Color';
+@import '~components/common/Dimen';
+
+
+@card-column-count: 6;
+@card-row-count: 8;
+
+@card-cell-size: @dimen-cell-size;
+
+@card-horizontal-padding: @dimen-keyline-padding;
+@card-vertical-padding: 8px;
+
+@card-width:  ( @card-column-count * @card-cell-size ) + ( @card-horizontal-padding * 2 );
+@card-height: ( @card-row-count    * @card-cell-size ) + ( @card-vertical-padding   * 2 );
+
+@card-radius: 4px;
+@card-background-color: white;
+
+
+.card {
+	box-shadow: 0 2px 4px @color-shadow;
+	border-radius: @card-radius;
+	width: @card-width; height: @card-height;
+	flex-basis: @card-height;
+	flex-grow: 0; flex-shrink: 0;
+	
+	margin: 8px;
+	padding: @card-vertical-padding 0;
+	
+	background: @card-background-color;
+	
+	line-height: @card-cell-size;
+	
+	display: flex;
+	flex-flow: column nowrap;
+	align-content: stretch;
+
+	header {
+		padding: 0 @card-horizontal-padding;
+		font-weight: bold;
+		flex-basis: 0;
+		flex-grow: 1;
+	}
+	
+	.row {
+		padding: 0 @card-horizontal-padding;
+		display: flex;
+		flex-flow: row nowrap;
+		align-content: stretch;
+		
+		flex-basis: 0;
+		flex-grow: 1;
+	}
+
+	.cell {
+		flex-basis: 0;
+		flex-grow: 1;
+		flex-shrink: 1;
+		
+		outline: solid thin @color-lightBlue100;
+	}
+}
