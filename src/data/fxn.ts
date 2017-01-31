@@ -1,18 +1,5 @@
 type Param = number|string|undefined;
 
-const stringDivide = ( original: string, substring: string ) => {
-	let index = 0;
-	let count = 0;
-	while ( index < original.length ) {
-		if ( !original.startsWith( substring, index )) {
-			return 0;
-		}
-		count += 1;
-		index += substring.length;
-	}
-	return count;
-};
-
 export interface Fxn {
 	name: string;
 	inputNames: string[];
@@ -94,7 +81,16 @@ export const DIVIDE: Fxn = {
 		}
 
 		if ( typeof normA === "string" && typeof normB === "string" ) {
-			return stringDivide( normA, normB );
+			let index = 0;
+			let count = 0;
+			while ( index < normA.length ) {
+				if ( !normA.startsWith( normB, index )) {
+					return 0;
+				}
+				count += 1;
+				index += normB.length;
+			}
+			return count;
 		}
 
 		return a;

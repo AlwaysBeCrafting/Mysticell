@@ -6,6 +6,7 @@ export interface Id {
 }
 
 export interface CellState extends Id {
+	sheet: number;
 	field: number;
 	start: Position;
 	end: Position;
@@ -14,13 +15,11 @@ export interface CellState extends Id {
 
 export interface SheetState extends Id {
 	title: string;
-	cells: Set<number>;
 	isVisible: boolean;
 }
 
 export interface CardState extends Id {
 	title: string;
-	cells: Set<number>;
 	isVisible: boolean;
 }
 

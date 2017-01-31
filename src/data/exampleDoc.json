@@ -1,7 +1,19 @@
 {
 	"id":    0,
 	"title":  "Open Legend Character Template",
-	"sheets": [ { "title": "Sheet 1", "id": 1, "cells": [] } ],
+	"sheets": [
+		{
+			"title": "Sheet 1",
+			"id": 1,
+			"cells": [
+				{
+					"field": 501,
+					"start": { "x": 0, "y": 0 },
+					"end": { "x": 160, "y": 40 }
+				}
+			]
+		}
+	],
 	"cards":  [ { "title": "Card 1", "id": 2, "cells": [] } ],
 	"fields": [ {
 		"name":    "Stats",

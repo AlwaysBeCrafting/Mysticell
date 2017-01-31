@@ -22,9 +22,12 @@ const cardFromJson = ( json: docJson.CardJson ): CardState => ({
 	isVisible: true,
 });
 
-const cellFromJson = ( json: docJson.CellJson ): CellState => ({
-	...json,
-});
+const cellsFromSheetJson = ( json: docJson.CardJson | docJson.SheetJson ): CellState[] => {
+	return ( json.cells || [] ).map( cell => ({
+		...cell,
+		sheet: json.id,
+	}));
+};
 
 const fieldFromJson = ( json: docJson.FieldJson ): FieldState => ({
 	...json,
@@ -63,18 +66,19 @@ export const reducer = ( state: AppState, action: document.Actions ): AppState =
 					( acc, card ) => acc.set( card.id, cardFromJson( card )),
 					new Map(),
 				),
-				cells: [ ...json.sheets, ...json.cards ]
-					.reduce(( acc, sheetOrCard ) => [ ...acc, ...sheetOrCard.cells ], [] as docJson.CellJson[] )
-					.reduce(( acc, cell ) => acc.set( cell.id, cellFromJson( cell )), new Map(),
-				),
+				cells: [ ...json.sheets, ...json.cards ].reduce(
+					( acc, sheetOrCard ) => {
+						cellsFromSheetJson( sheetOrCard ).forEach( cell => acc.set( cell.id, cell ));
+						return acc;
+					}, new Map() ),
 
 				fields: flatFields.reduce(
 					( acc, field ) => acc.set( field.id, fieldFromJson( field )),
 					new Map(),
 				),
 
-				nodes: flatFields
-					.reduce(( acc, field ) => {
+				nodes: flatFields.reduce(
+					( acc, field ) => {
 						nodesFromFieldJson( field ).forEach( node => acc.set( node.id, node ));
 						return acc;
 					}, new Map() ),
