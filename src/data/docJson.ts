@@ -18,13 +18,8 @@ export interface NodeJson {
 
 //------------------------------------------------------------------------------
 
-export interface SheetJson {
-	id: number;
-	title: string;
-	cells: CellJson[];
-}
-
-export interface CardJson {
+export interface GridJson {
+	type: "card" | "page";
 	id: number;
 	title: string;
 	cells: CellJson[];
@@ -42,7 +37,6 @@ export interface CellJson {
 export interface DocJson {
 	id: number;
 	title: string;
-	sheets: SheetJson[];
-	cards: CardJson[];
+	grids: GridJson[];
 	fields: FieldJson[];
 }

@@ -6,21 +6,17 @@ export interface Id {
 }
 
 export interface CellState extends Id {
-	sheet: number;
+	grid: number;
 	field: number;
 	start: Position;
 	end: Position;
 	format?: any;
 }
 
-export interface SheetState extends Id {
+export interface GridState extends Id {
 	title: string;
 	isVisible: boolean;
-}
-
-export interface CardState extends Id {
-	title: string;
-	isVisible: boolean;
+	type: "card" | "page";
 }
 
 export interface FieldState extends Id {
@@ -50,8 +46,7 @@ export interface PopupState {
 export interface AppState {
 	title: string;
 
-	sheets: Map<number, SheetState>;
-	cards: Map<number, CardState>;
+	grids: Map<number, GridState>;
 	cells: Map<number, CellState>;
 
 	fields: Map<number, FieldState>;

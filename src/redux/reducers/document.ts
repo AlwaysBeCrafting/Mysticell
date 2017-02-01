@@ -1,5 +1,5 @@
 import * as document from "redux/actions/document";
-import { AppState, CardState, CellState, FieldState, Id, NodeState, SheetState } from "redux/state";
+import { AppState, CellState, FieldState, GridState, Id, NodeState } from "redux/state";
 
 import * as docJson from "data/docJson";
 import FxnLookup from "data/fxn";
@@ -10,22 +10,16 @@ const flattenFields = ( fields: docJson.FieldJson[] ): docJson.FieldJson[] => fi
 	[] as docJson.FieldJson[],
 );
 
-const sheetFromJson = ( json: docJson.SheetJson ): SheetState => ({
+const gridFromJson = ( json: docJson.GridJson ): GridState => ({
 	...json,
 	cells: new Set( json.cells.map( cell => cell.id )),
 	isVisible: true,
 });
 
-const cardFromJson = ( json: docJson.CardJson ): CardState => ({
-	...json,
-	cells: new Set( json.cells.map( cell => cell.id )),
-	isVisible: true,
-});
-
-const cellsFromSheetJson = ( json: docJson.CardJson | docJson.SheetJson ): CellState[] => {
+const cellsFromGridJson = ( json: docJson.GridJson ): CellState[] => {
 	return ( json.cells || [] ).map( cell => ({
 		...cell,
-		sheet: json.id,
+		grid: json.id,
 	}));
 };
 
@@ -58,17 +52,13 @@ export const reducer = ( state: AppState, action: document.Actions ): AppState =
 
 				title: json.title,
 
-				sheets: json.sheets.reduce(
-					( acc, sheet ) => acc.set( sheet.id, sheetFromJson( sheet )),
+				grids: json.grids.reduce(
+					( acc, sheet ) => acc.set( sheet.id, gridFromJson( sheet )),
 					new Map(),
 				),
-				cards: json.cards.reduce(
-					( acc, card ) => acc.set( card.id, cardFromJson( card )),
-					new Map(),
-				),
-				cells: [ ...json.sheets, ...json.cards ].reduce(
-					( acc, sheetOrCard ) => {
-						cellsFromSheetJson( sheetOrCard ).forEach( cell => acc.set( cell.id, cell ));
+				cells: json.grids.reduce(
+					( acc, grid ) => {
+						cellsFromGridJson( grid ).forEach( cell => acc.set( cell.id, cell ));
 						return acc;
 					}, new Map() ),
 

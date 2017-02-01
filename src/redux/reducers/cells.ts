@@ -1,9 +1,9 @@
-import * as cards from "redux/actions/cards";
+import * as grids from "redux/actions/grids";
 import { CellState } from "redux/state";
 
 const initialState: Map<number, CellState> = new Map();
 
 export const reducer = (
 	state = initialState,
-	action: cards.Actions,
+	action: grids.Actions,
 ): Map<number, CellState> => state;
