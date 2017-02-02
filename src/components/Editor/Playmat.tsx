@@ -1,26 +1,23 @@
 import * as React from "react";
 import { connect as reduxConnect } from "react-redux";
 
-import { AppState, CardState, SheetState } from "redux/state";
+import { AppState, GridState } from "redux/state";
 
-import CardArea from "./CardArea";
-import SheetArea from "./SheetArea";
+import Grid from "./Grid";
 
 import "./Playmat.less";
 
 interface PlaymatProps {
-	cards: Map<number, CardState>;
-	sheets: Map<number, SheetState>;
+	grids: Map<number, GridState>;
 }
 
 const Playmat = ( props: PlaymatProps ) => <div id="playmat">
 	<menu type="toolbar" />
-	<div id="display-area">
-		<CardArea cards={ props.cards } />
-		<SheetArea sheets={ props.sheets } />
-	</div>
+	<div id="display-area">{
+		Array.from( props.grids ).map(([ id, grid ]) => <Grid grid={ grid } /> )
+	}</div>
 </div>;
 
 export default reduxConnect<PlaymatProps, {}, {}>(
-	({ cards, sheets }) => ({ cards, sheets }),
+	({ grids }) => ({ grids }),
 )( Playmat );

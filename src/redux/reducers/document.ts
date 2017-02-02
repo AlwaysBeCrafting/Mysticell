@@ -1,5 +1,5 @@
 import * as document from "redux/actions/document";
-import { AppState, CardState, CellState, FieldState, Id, NodeState, SheetState } from "redux/state";
+import { AppState, CellState, FieldState, GridState, Id, NodeState } from "redux/state";
 
 import * as docJson from "data/docJson";
 import FxnLookup from "data/fxn";
@@ -10,21 +10,18 @@ const flattenFields = ( fields: docJson.FieldJson[] ): docJson.FieldJson[] => fi
 	[] as docJson.FieldJson[],
 );
 
-const sheetFromJson = ( json: docJson.SheetJson ): SheetState => ({
+const gridFromJson = ( json: docJson.GridJson ): GridState => ({
 	...json,
 	cells: new Set( json.cells.map( cell => cell.id )),
 	isVisible: true,
 });
 
-const cardFromJson = ( json: docJson.CardJson ): CardState => ({
-	...json,
-	cells: new Set( json.cells.map( cell => cell.id )),
-	isVisible: true,
-});
-
-const cellFromJson = ( json: docJson.CellJson ): CellState => ({
-	...json,
-});
+const cellsFromGridJson = ( json: docJson.GridJson ): CellState[] => {
+	return ( json.cells || [] ).map( cell => ({
+		...cell,
+		grid: json.id,
+	}));
+};
 
 const fieldFromJson = ( json: docJson.FieldJson ): FieldState => ({
 	...json,
@@ -55,26 +52,23 @@ export const reducer = ( state: AppState, action: document.Actions ): AppState =
 
 				title: json.title,
 
-				sheets: json.sheets.reduce(
-					( acc, sheet ) => acc.set( sheet.id, sheetFromJson( sheet )),
+				grids: json.grids.reduce(
+					( acc, sheet ) => acc.set( sheet.id, gridFromJson( sheet )),
 					new Map(),
 				),
-				cards: json.cards.reduce(
-					( acc, card ) => acc.set( card.id, cardFromJson( card )),
-					new Map(),
-				),
-				cells: [ ...json.sheets, ...json.cards ]
-					.reduce(( acc, sheetOrCard ) => [ ...acc, ...sheetOrCard.cells ], [] as docJson.CellJson[] )
-					.reduce(( acc, cell ) => acc.set( cell.id, cellFromJson( cell )), new Map(),
-				),
+				cells: json.grids.reduce(
+					( acc, grid ) => {
+						cellsFromGridJson( grid ).forEach( cell => acc.set( cell.id, cell ));
+						return acc;
+					}, new Map() ),
 
 				fields: flatFields.reduce(
 					( acc, field ) => acc.set( field.id, fieldFromJson( field )),
 					new Map(),
 				),
 
-				nodes: flatFields
-					.reduce(( acc, field ) => {
+				nodes: flatFields.reduce(
+					( acc, field ) => {
 						nodesFromFieldJson( field ).forEach( node => acc.set( node.id, node ));
 						return acc;
 					}, new Map() ),
