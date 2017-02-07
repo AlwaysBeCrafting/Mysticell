@@ -4,7 +4,7 @@ export class ActionTypes {
 }
 
 
-export class ExpandFieldAction {
+class ExpandFieldAction {
 	readonly type = ActionTypes.EXPAND_FIELD;
 	constructor ( public payload: { fieldId: number }) {};
 }
@@ -13,7 +13,7 @@ export const expandField = ( fieldId: number ): ExpandFieldAction => ({
 });
 
 
-export class CollapseFieldAction {
+class CollapseFieldAction {
 	readonly type = ActionTypes.COLLAPSE_FIELD;
 	constructor ( public payload: { fieldId: number }) {}
 }

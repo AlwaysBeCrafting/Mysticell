@@ -1,12 +1,10 @@
-import * as fields from "redux/actions/fields";
-import { FieldState } from "redux/state";
+import { fields } from "redux/actions/document/fields";
 
-const initialState: Map<number, FieldState> = new Map();
+import { Field } from "data";
 
-export const reducer = (
-	state = initialState,
-	action: fields.Actions,
-): Map<number, FieldState> => {
+type FieldMap = Map<number, Field>;
+
+export const reducer = ( state = new Map(), action: fields.Actions ): FieldMap => {
 	switch ( action.type ) {
 
 		case fields.ActionTypes.EXPAND_FIELD:

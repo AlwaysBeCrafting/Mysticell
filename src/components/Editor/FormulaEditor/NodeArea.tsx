@@ -2,9 +2,10 @@ import * as React from "react";
 import { ConnectDropTarget, DropTarget, DropTargetMonitor, DropTargetSpec } from "react-dnd";
 import { connect as reduxConnect, Dispatch } from "react-redux";
 
+import { Field,  Node } from "data";
 import { Position } from "data/shared";
 
-import { AppState, FieldState, NodeState } from "redux/state";
+import { AppState } from "redux/reducers";
 
 import Types from "./dndTypes";
 import FunctionNode from "./FunctionNode";
@@ -23,8 +24,8 @@ interface NodeAreaDropTarget {
 }
 
 interface NodeAreaState {
-	nodes: Map<number, NodeState>;
-	fields: Map<number, FieldState>;
+	nodes: Map<number, Node>;
+	fields: Map<number, Field>;
 }
 
 type NodeAreaProps = NodeAreaAttributes & NodeAreaDropTarget & NodeAreaState;
@@ -38,9 +39,9 @@ const nodeAreaTargetSpec: DropTargetSpec<NodeAreaDropTarget> = {
 
 //------------------------------------------------------------------------------
 
-const mapStateToProps = ( { fields, nodes }: AppState ) => ({
-	fields,
-	nodes,
+const mapStateToProps = ( state: AppState ) => ({
+	fields: state.document.fields.fields,
+	nodes: state.document.nodes.nodes,
 });
 
 //------------------------------------------------------------------------------
@@ -49,7 +50,6 @@ const NodeArea = ( props: NodeAreaProps ) => {
 	const { nodes, fields, fieldId, connectDropTarget } = props;
 	const field = ( fields.get( fieldId ));
 	const fieldNodes = Array.from( nodes )
-		.filter(([ id, node ]) => node.field === fieldId )
 		.map(([ id, node ]) => node );
 
 	return connectDropTarget(
@@ -58,7 +58,7 @@ const NodeArea = ( props: NodeAreaProps ) => {
 			{ fieldNodes.map( node =>
 				( node.inputNodes.filter( inputId => !!inputId ) as number[] )
 					.map(( inputId, index ) => ({
-						node: nodes.get( inputId ) as NodeState,
+						node: nodes.get( inputId ) as Node,
 						index,
 					}))
 					.filter( pinSpec => pinSpec.node )

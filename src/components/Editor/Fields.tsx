@@ -1,21 +1,22 @@
 import * as React from "react";
 import { connect as reduxConnect } from "react-redux";
 
-import { AppState } from "redux/state";
+import { Field } from "data";
+
+import { AppState } from "redux/reducers";
 
 import { Action } from "redux/actions";
-import { collapseField, expandField } from "redux/actions/fields";
+import { fields as fieldActions } from "redux/actions/document/fields";
 import { setPath } from "redux/actions/path";
 
 import Tree, { TreeItem, TreeProps } from "components/common/Tree";
-import { FieldState } from "redux/state";
 
 import "./Fields.less";
 
 //==============================================================================
 
 
-export const fieldParent = ( id: number, fields: Map<number, FieldState> ): number | undefined => {
+export const fieldParent = ( id: number, fields: Map<number, Field> ): number | undefined => {
 	const parent = Array.from( fields )
 		.find( entry =>  !!entry[1].children
 			.find( childId => childId === id ),
@@ -23,7 +24,7 @@ export const fieldParent = ( id: number, fields: Map<number, FieldState> ): numb
 	return parent && parent[0];
 };
 
-export const fieldPath = ( id: number, fields: Map<number, FieldState> ): string[] => {
+export const fieldPath = ( id: number, fields: Map<number, Field> ): string[] => {
 	const parent = fieldParent( id, fields );
 	const field = fields.get( id );
 	return [
@@ -37,12 +38,12 @@ const icFormula = require<string>("./ic_formula.svg");
 
 const inflateFieldsToTreeItems = (
 	ids: number[],
-	fields: Map<number, FieldState>,
-	onExpandField: ( field: FieldState ) => () => void,
-	onCollapseField: ( field: FieldState ) => () => void,
-	onClickField: ( field: FieldState ) => void,
+	fields: Map<number, Field>,
+	onExpandField: ( field: Field ) => () => void,
+	onCollapseField: ( field: Field ) => () => void,
+	onClickField: ( field: Field ) => void,
 ): TreeItem[] => ids
-	.map( id => fields.get( id ) as FieldState )
+	.map( id => fields.get( id ) as Field )
 	.map( field => ({
 			id: field.id,
 			name: field.name,
@@ -71,11 +72,11 @@ const inflateFieldsToTreeItems = (
 	}));
 
 interface StateProps {
-	fields: Map<number, FieldState>;
+	fields: Map<number, Field>;
 }
 
-const mapStateToProps = ( { fields }: AppState ): StateProps => ({
-	fields,
+const mapStateToProps = ( state: AppState ): StateProps => ({
+	fields: state.document.fields.fields,
 });
 
 interface DispatchProps {
@@ -92,9 +93,9 @@ const mergeProps = ( { fields }: StateProps, { dispatch }: DispatchProps ): Tree
 				.filter(([ id, field ]) => !fieldParent( id, fields ))
 				.map(([ id, field ]) => id ),
 			fields,
-			( field: FieldState ) => () => dispatch( expandField( field.id )),
-			( field: FieldState ) => () => dispatch( collapseField( field.id )),
-			( field: FieldState ) => {
+			( field: Field ) => () => dispatch( fieldActions.expandField( field.id )),
+			( field: Field ) => () => dispatch( fieldActions.collapseField( field.id )),
+			( field: Field ) => {
 				dispatch( setPath( fieldPath( field.id, fields )));
 			},
 		),

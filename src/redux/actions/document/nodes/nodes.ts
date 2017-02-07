@@ -1,5 +1,5 @@
+import { Node } from "data";
 import { Position } from "data/shared";
-import { NodeState } from "redux/state";
 
 
 export class ActionTypes {
@@ -13,16 +13,16 @@ export class ActionTypes {
 };
 
 
-export class AddNodeAction {
+class AddNodeAction {
 	readonly type = ActionTypes.ADD_NODE;
-	constructor ( public payload: { fieldId: number, node: NodeState }) {};
+	constructor ( public payload: { fieldId: number, node: Node }) {};
 }
-export const addNode = ( fieldId: number, node: NodeState ): AddNodeAction => ({
+export const addNode = ( fieldId: number, node: Node ): AddNodeAction => ({
 	...new AddNodeAction({ fieldId, node }),
 });
 
 
-export class RemoveNodeAction {
+class RemoveNodeAction {
 	readonly type = ActionTypes.REMOVE_NODE;
 	constructor ( public payload: { nodeId: number }) {};
 }
@@ -31,7 +31,7 @@ export const removeNode = ( nodeId: number ): RemoveNodeAction => ({
 });
 
 
-export class MoveNodeAction {
+class MoveNodeAction {
 	readonly type = ActionTypes.MOVE_NODE;
 	constructor ( public payload: { nodeId: number, position: Position }) {};
 }
@@ -40,7 +40,7 @@ export const moveNode = ( nodeId: number, position: Position ): MoveNodeAction =
 });
 
 
-export class ConnectNodeAction {
+class ConnectNodeAction {
 	readonly type = ActionTypes.CONNECT_NODE;
 	constructor ( public payload: { fromNodeId: number, toNodeId: number, toIndex: number }) {};
 }
@@ -49,7 +49,7 @@ export const connectNode = ( fromNodeId: number, toNodeId: number, toIndex: numb
 });
 
 
-export class DisconnectNodeAction {
+class DisconnectNodeAction {
 	readonly type = ActionTypes.DISCONNECT_NODE;
 	constructor ( public payload: { nodeId: number, index: number }) {};
 }
@@ -58,7 +58,7 @@ export const disconnectNode = ( nodeId: number, index: number ): DisconnectNodeA
 });
 
 
-export class UpdateNodeAction {
+class UpdateNodeAction {
 	readonly type = ActionTypes.UPDATE_NODE;
 	constructor ( public payload: { nodeId: number, inputIndex: number, inputValue?: number|string }) {};
 }

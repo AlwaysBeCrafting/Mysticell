@@ -8,16 +8,18 @@ import { connect as reduxConnect } from "react-redux";
 
 import DndTypes from "./dndTypes";
 
+import { Node } from "data";
+
 import { Action } from "redux/actions";
-import { connectNode, disconnectNode, updateNode } from "redux/actions/nodes";
-import { AppState, NodeState } from "redux/state";
+import { nodes as nodeActions } from "redux/actions/document/nodes";
+import { AppState } from "redux/reducers";
 
 import "./NodePin.less";
 
 //==============================================================================
 
 interface InputPinAttributes {
-	node: NodeState;
+	node: Node;
 	index: number;
 }
 
@@ -38,8 +40,8 @@ type InputPinProps =
 
 const onInputPinClick = ( ev: React.MouseEvent<HTMLElement>, props: InputPinProps ) => {
 	if ( !ev.shiftKey ) { return; }
-	props.dispatch( disconnectNode( props.node.id, props.index ));
-	props.dispatch( updateNode( props.node.id, props.index ));
+	props.dispatch( nodeActions.disconnectNode( props.node.id, props.index ));
+	props.dispatch( nodeActions.updateNode( props.node.id, props.index ));
 	ev.preventDefault();
 };
 
@@ -80,7 +82,7 @@ export const InputPin = reduxConnect<{}, {}, InputPinAttributes>(
 //------------------------------------------------------------------------------
 
 interface OutputPinAttributes {
-	node: NodeState;
+	node: Node;
 }
 
 interface OutputPinDispatchers {
@@ -111,9 +113,9 @@ const outputPinSourceSpec: DragSourceSpec<OutputPinDragSource> = {
 	},
 	endDrag: ( props: OutputPinProps, monitor: DragSourceMonitor ) => {
 		if ( !monitor.didDrop() ) { return; }
-		const input = monitor.getDropResult() as { node: NodeState, index: number };
-		props.dispatch( connectNode( props.node.id, input.node.id, input.index ));
-		props.dispatch( updateNode( input.node.id, input.index ));
+		const input = monitor.getDropResult() as { node: Node, index: number };
+		props.dispatch( nodeActions.connectNode( props.node.id, input.node.id, input.index ));
+		props.dispatch( nodeActions.updateNode( input.node.id, input.index ));
 	},
 };
 

@@ -1,5 +1,5 @@
 export class ActionTypes {
-	static readonly SELECT_NODES = "[SelectedNodes] Select";
+	static readonly SELECT_NODES = "[Nodes] Select";
 }
 
 

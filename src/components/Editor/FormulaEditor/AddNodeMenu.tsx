@@ -2,13 +2,10 @@ import * as React from "react";
 import { connect as reduxConnect } from "react-redux";
 
 import { Fxn, fxnList } from "data/fxn";
+import { createNode } from "data/generator";
 
 import { Action } from "redux/actions";
-import { addNode } from "redux/actions/nodes";
-
-import { createNode } from "redux/generator";
-
-import { NodeState } from "redux/state";
+import { nodes as nodeActions } from "redux/actions/document/nodes";
 
 import "./AddNodeMenu.less";
 
@@ -30,7 +27,7 @@ const AddNodeMenu = ( props: AddNodeMenuProps ) => (
 					key={ i }
 					onClick={ ev => {
 						const node = createNode( props.fieldId, fxn );
-						props.dispatch( addNode( props.fieldId, node ));
+						props.dispatch( nodeActions.addNode( props.fieldId, node ));
 					}}
 				>
 					{ fxn.name }

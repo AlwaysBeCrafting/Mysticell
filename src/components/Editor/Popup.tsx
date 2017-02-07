@@ -2,7 +2,7 @@ import * as React from "react";
 import { connect as reduxConnect } from "react-redux";
 
 import { Anchor, Position } from "data/shared";
-import { PopupState } from "redux/state";
+import { PopupState } from "redux/reducers/popup";
 
 import "./Popup.less";
 

@@ -1,30 +1,33 @@
 import * as React from "react";
 import { connect as reduxConnect } from "react-redux";
 
-import { CellState, GridState } from "redux/state";
+import { Cell, Grid } from "data";
 
-import Cell from "./Cell";
+import { CellState } from "redux/reducers/document/cells";
+import { GridState } from "redux/reducers/document/grids";
+
+import CellComp from "./Cell";
 
 import "./Grid.less";
 
 interface GridAttributesProps {
-	grid: GridState;
+	grid: Grid;
 }
 
 interface GridStateProps {
-	cells: Map<number, CellState>;
+	cells: Map<number, Cell>;
 }
 
 type GridProps = GridAttributesProps & GridStateProps;
 
-const Grid = ( props: GridProps ) => (
+const GridComp = ( props: GridProps ) => (
 	<li className={ `grid ${ props.grid.type }` } id={ `grid-${ props.grid.id }` } key={ props.grid.id }>
 		<header>{ props.grid.title }</header>
 		<div className="cell-area"> {
 			Array.from( props.cells )
 				.filter(([ id, cell ]) => cell.grid )
 				.map(([ id, cell ]) => (
-					<Cell cell={ cell } />
+					<CellComp cell={ cell } />
 				))
 		} </div>
 	</li>
@@ -32,5 +35,5 @@ const Grid = ( props: GridProps ) => (
 
 
 export default reduxConnect<{}, {}, GridAttributesProps>(
-	({ cells }) => ({ cells }),
-)( Grid );
+	state => ({ cells: state.document.cells.cells }),
+)( GridComp );

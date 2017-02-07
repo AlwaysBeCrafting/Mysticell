@@ -1,22 +1,22 @@
 import * as React from "react";
 import { connect as reduxConnect } from "react-redux";
 
-import { CellState, FieldState, NodeState } from "redux/state";
+import { Cell, Field, Node } from "data";
 
 import "./Cell.less";
 
 interface CellAttributeProps {
-	cell: CellState;
+	cell: Cell;
 }
 
 interface CellStateProps {
-	fields: Map<number, FieldState>;
-	nodes: Map<number, NodeState>;
+	fields: Map<number, Field>;
+	nodes: Map<number, Node>;
 }
 
 type CellProps = CellAttributeProps & CellStateProps;
 
-const Cell = ( props: CellProps ) => {
+const CellComp = ( props: CellProps ) => {
 	const style = {
 		left: props.cell.start.x,
 		top: props.cell.start.y,
@@ -33,5 +33,8 @@ const Cell = ( props: CellProps ) => {
 };
 
 export default reduxConnect<{}, {}, CellAttributeProps>(
-	({ fields, nodes }) => ({ fields, nodes }),
-)( Cell );
+	state => ({
+		fields: state.document.fields.fields,
+		nodes: state.document.nodes.nodes,
+	}),
+)( CellComp );
