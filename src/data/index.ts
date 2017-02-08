@@ -1,37 +1,27 @@
-import { Fxn } from "./fxn";
-import { Position } from "./shared";
+import { combineReducers } from "redux";
 
-export interface Id {
-	id: number;
-}
+import document, { Action as DocumentAction, DocumentState } from "./document";
+import path,     { Action as PathAction                    } from "./path";
+import popup,    { Action as PopupAction,    PopupState    } from "./popup";
 
-export interface Cell extends Id {
-	grid: number;
-	field: number;
-	start: Position;
-	end: Position;
-	format?: any;
-}
 
-export interface Grid extends Id {
-	title: string;
-	isVisible: boolean;
-	type: "card" | "page";
-}
+export interface AppState {
+	document: DocumentState;
 
-export interface Field extends Id {
-	name: string;
-	parent?: number;
-	children: number[];
-	expanded: boolean;
-	resultNode: number;
-}
+	path: string[];
+	popup: PopupState;
+};
 
-export interface Node extends Id {
-	label: string;
-	fxn: Fxn;
-	inputNodes: Array<number|undefined>;
-	position: Position;
-	inputValues: Array<string|number|undefined>;
-	outputValue: string|number;
-}
+
+export type Action =
+	DocumentAction |
+	PathAction     |
+	PopupAction;
+
+
+export default combineReducers<AppState>({
+	document,
+
+	path,
+	popup,
+});

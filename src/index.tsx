@@ -4,12 +4,12 @@ import { Provider } from "react-redux";
 import { createStore } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension/developmentOnly";
 
-import Editor from "components/Editor";
+import Editor from "views/Editor";
 
-import { loadDocument } from "redux/actions/document";
-import { reducer } from "redux/reducers";
+import reducer from "data";
+import { loadDocument } from "data/document";
 
-import { DocJson } from "data/docJson";
+import { Document } from "common/types/json";
 
 //==============================================================================
 
@@ -20,5 +20,5 @@ ReactDOM.render(
 	document.getElementById( "root" ),
 );
 
-const exampleDoc = require<DocJson>( "data/exampleDoc.json" );
+const exampleDoc = require<Document>( "exampleDoc.json" );
 store.dispatch( loadDocument( exampleDoc ));
