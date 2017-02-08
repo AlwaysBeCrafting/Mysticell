@@ -13,7 +13,6 @@ import Wire from "./Wire";
 
 import "./NodeArea.less";
 
-//==============================================================================
 
 interface NodeAreaAttributes {
 	fieldId: number;
@@ -30,21 +29,18 @@ interface NodeAreaState {
 
 type NodeAreaProps = NodeAreaAttributes & NodeAreaDropTarget & NodeAreaState;
 
-//------------------------------------------------------------------------------
 
 const nodeAreaTargetSpec: DropTargetSpec<NodeAreaDropTarget> = {
 	drop:  ( props, monitor, component ) => monitor && monitor.getDifferenceFromInitialOffset() as Position,
 	hover: ( props, monitor, component ) => { /* Do nothing on hover */ },
 };
 
-//------------------------------------------------------------------------------
 
 const mapStateToProps = ( state: AppState ) => ({
 	fields: state.document.fields.collection,
 	nodes: state.document.nodes.collection,
 });
 
-//------------------------------------------------------------------------------
 
 const NodeArea = ( props: NodeAreaProps ) => {
 	const { nodes, fields, fieldId, connectDropTarget } = props;
@@ -83,7 +79,6 @@ const NodeArea = ( props: NodeAreaProps ) => {
 	);
 };
 
-//------------------------------------------------------------------------------
 
 const DroppableNodeArea = DropTarget( dnd.FORMULA_NODE, nodeAreaTargetSpec, ( connect, monitor ) => ({
 	connectDropTarget: connect.dropTarget(),

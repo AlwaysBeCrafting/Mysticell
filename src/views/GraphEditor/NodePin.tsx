@@ -14,27 +14,25 @@ import { connectNode, disconnectNode, updateNode } from "data/document/nodes/col
 
 import "./NodePin.less";
 
-//==============================================================================
 
-interface InputPinAttributes {
+interface InputPinAttributeProps {
 	node: Node;
 	index: number;
 }
 
-interface InputPinDispatcher {
+interface InputPinDispatchProps {
 	dispatch: ( action: Action ) => void;
 }
 
-interface InputPinDropTarget {
+interface InputPinDropTargetProps {
 	connectDropTarget: ConnectDropTarget;
 }
 
 type InputPinProps =
-	InputPinAttributes &
-	InputPinDispatcher &
-	InputPinDropTarget;
+	InputPinAttributeProps &
+	InputPinDispatchProps &
+	InputPinDropTargetProps;
 
-//------------------------------------------------------------------------------
 
 const onInputPinClick = ( ev: React.MouseEvent<HTMLElement>, props: InputPinProps ) => {
 	if ( !ev.shiftKey ) { return; }
@@ -47,65 +45,58 @@ const BareInputPin = ( props: InputPinProps ) => props.connectDropTarget(
 	<span className="pin" onClick={ ev => onInputPinClick( ev, props ) } />,
 );
 
-//------------------------------------------------------------------------------
 
 const inputPinTargetSpec: DropTargetSpec<InputPinProps> = {
 	drop: ( props, monitor, component ) => ({ node: props.node, index: props.index}),
 };
 
-const inputPinTargetCollector: DropTargetCollector = ( connect, monitor ): Partial<InputPinDropTarget> => ({
+const inputPinTargetCollector: DropTargetCollector = ( connect, monitor ): InputPinDropTargetProps => ({
 	connectDropTarget: connect.dropTarget(),
 });
 
-//------------------------------------------------------------------------------
 
 const DroppableInputPin = DropTarget(
 	dnd.OUTPUT_PIN,
 	inputPinTargetSpec,
 	inputPinTargetCollector,
-)( BareInputPin ) as React.ComponentClass<InputPinAttributes>;
+)( BareInputPin ) as React.ComponentClass<InputPinAttributeProps>;
 
-//------------------------------------------------------------------------------
 
-const mapDispatchToInputProps = ( dispatch: ( action: Action ) => void ): InputPinDispatcher => ({
+const mapDispatchToInputProps = ( dispatch: ( action: Action ) => void ): InputPinDispatchProps => ({
 	dispatch,
 });
 
-export const InputPin = reduxConnect<{}, {}, InputPinAttributes>(
+export const InputPin = reduxConnect<{}, {}, InputPinAttributeProps>(
 	() => ({}),
 	mapDispatchToInputProps,
 )( DroppableInputPin );
 
-//------------------------------------------------------------------------------
-//------------------------------------------------------------------------------
 
-interface OutputPinAttributes {
+interface OutputPinAttributeProps {
 	node: Node;
 }
 
-interface OutputPinDispatchers {
+interface OutputPinDispatchProps {
 	dispatch: ( action: Action ) => void;
 }
 
-interface OutputPinDragSource {
+interface OutputPinDragSourceProps {
 	connectDragSource: ConnectDragSource;
 	isDragging: boolean;
 }
 
 type OutputPinProps =
-	OutputPinAttributes &
-	OutputPinDispatchers &
-	OutputPinDragSource;
+	OutputPinAttributeProps &
+	OutputPinDispatchProps &
+	OutputPinDragSourceProps;
 
-//------------------------------------------------------------------------------
 
-const BareOutputPin = ( props: OutputPinDragSource ) => props.connectDragSource(
+const BareOutputPin = ( props: OutputPinDragSourceProps ) => props.connectDragSource(
 	<span className="pin" />,
 );
 
-//------------------------------------------------------------------------------
 
-const outputPinSourceSpec: DragSourceSpec<OutputPinDragSource> = {
+const outputPinSourceSpec: DragSourceSpec<OutputPinDragSourceProps> = {
 	beginDrag: ( props: OutputPinProps ) => {
 		return { id: 0 };
 	},
@@ -117,12 +108,11 @@ const outputPinSourceSpec: DragSourceSpec<OutputPinDragSource> = {
 	},
 };
 
-const outputPinSourceCollector: DragSourceCollector = ( connect, monitor ): OutputPinDragSource => ({
+const outputPinSourceCollector: DragSourceCollector = ( connect, monitor ): OutputPinDragSourceProps => ({
 	connectDragSource: connect.dragSource(),
 	isDragging: monitor.isDragging(),
 });
 
-//------------------------------------------------------------------------------
 
 const DraggableOutputPin = DragSource(
 	dnd.OUTPUT_PIN,
@@ -131,13 +121,12 @@ const DraggableOutputPin = DragSource(
 )( BareOutputPin );
 
 
-//------------------------------------------------------------------------------
 
-const mapDispatchToOutputProps = ( dispatch: ( action: Action ) => void ): OutputPinDispatchers => ({
+const mapDispatchToOutputProps = ( dispatch: ( action: Action ) => void ): OutputPinDispatchProps => ({
 	dispatch,
 });
 
-export const OutputPin = reduxConnect<{}, {}, OutputPinAttributes>(
+export const OutputPin = reduxConnect<{}, {}, OutputPinAttributeProps>(
 	_ => ({}),
 	mapDispatchToOutputProps,
 )( DraggableOutputPin );

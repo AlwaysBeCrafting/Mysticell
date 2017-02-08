@@ -1,6 +1,8 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
+
 import { Provider } from "react-redux";
+
 import { createStore } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension/developmentOnly";
 
@@ -11,7 +13,6 @@ import { loadDocument } from "data/document";
 
 import { Document } from "common/types/json";
 
-//==============================================================================
 
 const store = createStore( reducer, composeWithDevTools() );
 

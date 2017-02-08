@@ -18,7 +18,6 @@ import { InputPin, OutputPin } from "./NodePin";
 
 import "./FunctionNode.less";
 
-//==============================================================================
 
 interface FunctionNodeAttributes {
 	node: Node;
@@ -44,7 +43,6 @@ type FunctionNodeProps =
 	FunctionNodeStateProps &
 	FunctionNodeDragSource;
 
-//------------------------------------------------------------------------------
 
 const FunctionNode = ( props: FunctionNodeProps ) => {
 	const { node, nodes } = props;
@@ -94,7 +92,6 @@ const FunctionNode = ( props: FunctionNodeProps ) => {
 	);
 };
 
-//------------------------------------------------------------------------------
 
 const nodeSourceSpec: DragSourceSpec<FunctionNodeDragSource> = {
 	beginDrag: ( props: FunctionNodeProps ): Node => props.node,
@@ -128,7 +125,6 @@ const DraggableFunctionNode = DragSource(
 	nodeSourceCollector,
 )( FunctionNode );
 
-//------------------------------------------------------------------------------
 
 const mapStateToProps = ( state: AppState, props: FunctionNodeAttributes ): FunctionNodeStateProps => ({
 	nodes: state.document.nodes.collection,

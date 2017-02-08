@@ -11,8 +11,6 @@ import Tree, { TreeItemData, TreeProps } from "common/components/Tree";
 
 import "./Fields.less";
 
-//==============================================================================
-
 
 export const fieldParent = ( id: number, fields: Map<number, Field> ): number | undefined => {
 	const parent = Array.from( fields )
