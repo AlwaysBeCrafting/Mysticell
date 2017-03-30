@@ -5,7 +5,7 @@ import { connect as reduxConnect } from "react-redux";
 import { Action } from "data";
 import { hidePopup, PopupState } from "data/popup";
 
-import PopupComp from "common/components/Popup";
+import PopupComp from "components/molecules/PopupMenu";
 
 import GraphEditor from "../GraphEditor";
 import Playmat from "./Playmat";

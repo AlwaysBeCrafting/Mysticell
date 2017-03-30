@@ -6,7 +6,7 @@ import { Provider } from "react-redux";
 import { createStore } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension/developmentOnly";
 
-import Editor from "views/Editor";
+import Editor from "components/organisms/Editor";
 
 import reducer from "data";
 import { loadDocument } from "data/document";

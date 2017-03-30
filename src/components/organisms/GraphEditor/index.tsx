@@ -9,8 +9,8 @@ import { Action, AppState } from "data";
 import { setPath } from "data/path";
 import { showPopup } from "data/popup";
 
-import FAB from "common/components/FAB";
-import Toolbar from "common/components/Toolbar";
+import FAB from "components/atoms/FAB";
+import Toolbar from "components/molecules/Toolbar";
 
 import AddNodeMenu from "./AddNodeMenu";
 import NodeArea from "./NodeArea";

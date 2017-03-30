@@ -5,7 +5,7 @@ import { Sheet } from "common/types/document";
 
 import { AppState } from "data";
 
-import SheetComp from "../Sheet";
+import SheetComp from "components/molecules/Sheet";
 
 import "./Playmat.less";
 
