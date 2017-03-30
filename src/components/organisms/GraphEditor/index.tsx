@@ -1,9 +1,6 @@
 import * as React from "react";
 import { connect as reduxConnect } from "react-redux";
 
-import { DragDropContext } from "react-dnd";
-import HTML5Backend from "react-dnd-html5-backend";
-
 
 import { Action, AppState } from "data";
 import { setPath } from "data/path";
@@ -58,8 +55,6 @@ const GraphEditor = ( props: GraphEditorProps ) => {
 };
 
 
-const DragDropGraphEditor = DragDropContext( HTML5Backend )( GraphEditor );
-
 
 const mapStateToProps = ( state: AppState ): GraphEditorStateProps => ({
 	path:   state.path,
@@ -70,4 +65,4 @@ const mapDispatchToProps = ( dispatch: ( action: Action ) => void ): GraphEditor
 export default reduxConnect<{}, {}, {}>(
 	mapStateToProps,
 	mapDispatchToProps,
-)( DragDropGraphEditor );
+)( GraphEditor );
