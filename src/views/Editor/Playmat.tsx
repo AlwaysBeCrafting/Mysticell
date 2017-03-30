@@ -1,7 +1,7 @@
 import * as React from "react";
 import { connect as reduxConnect } from "react-redux";
 
-import { Sheet } from "common/types";
+import { Sheet } from "common/types/document";
 
 import { AppState } from "data";
 

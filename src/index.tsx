@@ -11,7 +11,6 @@ import Editor from "views/Editor";
 import reducer from "data";
 import { loadDocument } from "data/document";
 
-import { Document } from "common/types/json";
 
 
 const store = createStore( reducer, composeWithDevTools() );

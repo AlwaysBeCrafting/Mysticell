@@ -1,7 +1,7 @@
 import * as React from "react";
 import { connect as reduxConnect } from "react-redux";
 
-import { Cell, Sheet } from "common/types";
+import { Cell, Sheet } from "common/types/document";
 
 import CellComp from "./Cell";
 

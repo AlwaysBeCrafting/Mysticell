@@ -1,4 +1,4 @@
-import { Sheet } from "common/types";
+import { Sheet } from "common/types/document";
 
 
 class ActionTypes {}

@@ -4,7 +4,6 @@ import { connect as reduxConnect } from "react-redux";
 import { DragDropContext } from "react-dnd";
 import HTML5Backend from "react-dnd-html5-backend";
 
-import { Field } from "common/types";
 
 import { Action, AppState } from "data";
 import { setPath } from "data/path";
@@ -21,7 +20,6 @@ import "./index.less";
 
 interface GraphEditorStateProps {
 	path: string[];
-	fields: Map<number, Field>;
 }
 
 interface GraphEditorDispatchProps {
@@ -31,24 +29,8 @@ interface GraphEditorDispatchProps {
 type GraphEditorProps = GraphEditorStateProps & GraphEditorDispatchProps;
 
 
-// TODO investigate how to reduce casting (lots of 'as FieldState' feels dirty)
-const fieldAtPath = ( path: string[], fields: Map<number, Field> ): Field => {
-	return path.reduce(
-		( field, childName ) => field.children
-			.map( childId => fields.get( childId ))
-			.find( child => !!child && child.name === childName ) as Field,
-
-		{
-			children: Array.from( fields )
-				.filter(([ id, field ]) => !field.parent )
-				.map(([ id, field ]) => id ),
-		} as Field,
-	);
-};
-
 const GraphEditor = ( props: GraphEditorProps ) => {
-	const { fields, path, dispatch } = props;
-	const field = fieldAtPath( path, fields );
+	const { path, dispatch } = props;
 
 	return <div id="node-editor">
 		<Toolbar>
@@ -63,11 +45,11 @@ const GraphEditor = ( props: GraphEditorProps ) => {
 			<a className="icon">undo</a>
 			<a className="icon">redo</a>
 		</Toolbar>
-		<NodeArea fieldId={ field.id } />
+		<NodeArea fieldId={ 0 } />
 		<FAB icon="add" onClick={ ev => {
 			const { right: x, bottom: y } = ev.currentTarget.getBoundingClientRect();
 			dispatch( showPopup(
-				<AddNodeMenu fieldId={ field.id } />,
+				<AddNodeMenu fieldId={ 0 } />,
 				{ x, y },
 				{ horizontal: "right", vertical: "bottom" },
 			));
@@ -81,7 +63,6 @@ const DragDropGraphEditor = DragDropContext( HTML5Backend )( GraphEditor );
 
 const mapStateToProps = ( state: AppState ): GraphEditorStateProps => ({
 	path:   state.path,
-	fields: state.document.fields.collection,
 });
 const mapDispatchToProps = ( dispatch: ( action: Action ) => void ): GraphEditorDispatchProps => ({
 	dispatch,

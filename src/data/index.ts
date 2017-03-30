@@ -1,13 +1,11 @@
 import { combineReducers } from "redux";
 
-import document, { Action as DocumentAction, DocumentState } from "./document";
+import document, { Action as DocumentAction } from "./document";
 import path,     { Action as PathAction                    } from "./path";
 import popup,    { Action as PopupAction,    PopupState    } from "./popup";
 
 
 export interface AppState {
-	document: DocumentState;
-
 	path: string[];
 	popup: PopupState;
 };

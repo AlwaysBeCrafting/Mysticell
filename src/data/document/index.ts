@@ -1,24 +1,12 @@
 import { combineReducers } from "redux";
 
-import { Cell, Field, Node, Sheet } from "common/types";
+import { Cell, Sheet } from "common/types/document";
+import { Graph, Node } from "common/types/document/nodes";
 import FxnLookup from "common/types/fxn";
-import Json from "common/types/json";
 
-import cells,  { Action as CellAction,  CellState  } from "./cells";
-import fields, { Action as FieldAction, FieldState } from "./fields";
-import nodes,  { Action as NodeAction,  NodeState  } from "./nodes";
-import sheets, { Action as SheetAction, SheetState } from "./sheets";
-import title,  { Action as TitleAction             } from "./title";
-
-
-export interface DocumentState {
-	title: string;
-
-	cells: CellState;
-	fields: FieldState;
-	sheets: SheetState;
-	nodes: NodeState;
-}
+import graph,  { Action as NodeAction  } from "./graph";
+import sheets, { Action as SheetAction } from "./sheets";
+import title,  { Action as TitleAction } from "./title";
 
 
 class ActionTypes {
@@ -28,122 +16,39 @@ class ActionTypes {
 
 class LoadDocumentAction {
 	readonly type = ActionTypes.LOAD_DOCUMENT;
-	constructor ( public payload: { document: Json.Document }) {};
+	constructor ( public payload: { document: Document }) {};
 }
-export const loadDocument = ( document: Json.Document ): LoadDocumentAction => ({
+export const loadDocument = ( document: Document ): LoadDocumentAction => ({
 	...new LoadDocumentAction({ document }),
 });
 
 
 export type Action =
 	LoadDocumentAction |
-	CellAction         |
-	FieldAction        |
 	NodeAction         |
 	SheetAction        |
 	TitleAction;
 
-
-const flattenFields = ( fields: Json.Field[] ): Json.Field[] => fields.reduce(
-	( acc, field ) => [ ...acc, field, ...flattenFields( field.children )],
-	[] as Json.Field[],
-);
-
-const gridFromJson = ( json: Json.Sheet ): Sheet => ({
-	...json,
-	cells: new Set( json.cells.map( cell => cell.id )),
-	isVisible: true,
-});
-
-const cellsFromGridJson = ( json: Json.Sheet ): Cell[] => {
-	return ( json.cells || [] ).map( cell => ({
-		...cell,
-		sheet: json.id,
-	}));
-};
-
-const fieldFromJson = ( json: Json.Field ): Field => ({
-	...json,
-	children: ( json.children || [] ).map( child => child.id ),
-	expanded: false,
-});
-
-const nodesFromFieldJson = ( json: Json.Field ): Node[] => {
-	return ( json.nodes || [] ).map( node => ({
-		...node,
-		field: json.id,
-		fxn: FxnLookup[ node.fxn ],
-		inputValues: [],
-		outputValue: "",
-	}));
-};
-
-export const reduceLoadDocument = ( state: DocumentState, action: Action ): DocumentState => {
+export const reduceLoadDocument = ( state: Document, action: Action ): Document => {
 	switch ( action.type ) {
 		case ActionTypes.LOAD_DOCUMENT:
-			const document = action.payload.document;
-
-			const flatFields = flattenFields( document.fields );
-
-			return {
-				...state,
-
-				title: document.title,
-
-				sheets: {
-					...state.sheets,
-					collection: document.sheets.reduce(
-						( acc, sheet ) => acc.set( sheet.id, gridFromJson( sheet )),
-						new Map(),
-					),
-				},
-				cells: {
-					...state.cells,
-					collection: document.sheets.reduce(
-						( acc, grid ) => {
-							cellsFromGridJson( grid ).forEach( cell => acc.set( cell.id, cell ));
-							return acc;
-						}, new Map(),
-					),
-				},
-
-				fields: {
-					...state.fields,
-					collection: flatFields.reduce(
-						( acc, field ) => acc.set( field.id, fieldFromJson( field )),
-						new Map(),
-					),
-				},
-
-				nodes: {
-					...state.nodes,
-					collection: flatFields.reduce(
-						( acc, field ) => {
-							nodesFromFieldJson( field ).forEach( node => acc.set( node.id, node ));
-							return acc;
-						}, new Map(),
-					),
-					selection: [],
-				},
-			};
+			return action.payload.document;
 
 		default: return state;
 	}
 };
 
-const reducerChain: Array<( DocumentState, Action ) => DocumentState> = [
+const reducerChain: Array<( Document, Action ) => Document> = [
 	reduceLoadDocument,
-	combineReducers<DocumentState>({
+	combineReducers<Document>({
 		title,
 
-		cells,
-		fields,
 		sheets,
-		nodes,
+		graph,
 	}),
 ];
 
-export default ( state: DocumentState, action: Action ) => reducerChain.reduce(
+export default ( state: Document, action: Action ) => reducerChain.reduce(
 	( chainedState, chainedReducer ) => chainedReducer( chainedState, action ),
 	state,
 );

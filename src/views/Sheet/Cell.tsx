@@ -1,7 +1,7 @@
 import * as React from "react";
 import { connect as reduxConnect } from "react-redux";
 
-import { Cell, Field, Node } from "common/types";
+import { Cell, Graph, Node } from "common/types/document";
 
 import "./Cell.less";
 
@@ -10,8 +10,7 @@ interface CellAttributeProps {
 }
 
 interface CellStateProps {
-	fields: Map<number, Field>;
-	nodes: Map<number, Node>;
+	graph: Graph;
 }
 
 type CellProps = CellAttributeProps & CellStateProps;
@@ -24,11 +23,10 @@ const CellComp = ( props: CellProps ) => {
 		bottom: `calc( 100% - ${ props.cell.end.y }px )`,
 	};
 
-	const field = props.fields.get( props.cell.field );
-	const node = field && props.nodes.get( field.resultNode );
+	const node = props.graph.get( props.cell.node );
 
 	return (
-		<div className="cell" style={ style }>{ node && node.outputValue }</div>
+		<div className="cell" style={ style }>{ node && node.name }</div>
 	);
 };
 

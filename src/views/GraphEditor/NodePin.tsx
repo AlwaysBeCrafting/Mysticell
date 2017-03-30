@@ -6,11 +6,11 @@ import { DropTargetCollector, DropTargetConnector, DropTargetMonitor, DropTarget
 
 import { connect as reduxConnect } from "react-redux";
 
-import { Node } from "common/types";
 import dnd from "common/types/dnd";
+import { Node } from "common/types/document";
 
 import { Action } from "data";
-import { connectNode, disconnectNode, updateNode } from "data/document/nodes/collection";
+import { connectNode, disconnectNode, updateNode } from "data/document/graph";
 
 import "./NodePin.less";
 
