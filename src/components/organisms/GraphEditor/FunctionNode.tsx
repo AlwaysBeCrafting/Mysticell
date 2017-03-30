@@ -1,8 +1,5 @@
 import * as React from "react";
 
-import { ConnectDragSource, DragSource } from "react-dnd";
-import { DragSourceCollector, DragSourceConnector, DragSourceMonitor, DragSourceSpec } from "react-dnd";
-
 import { connect as reduxConnect } from "react-redux";
 
 import { Node } from "common/types/document";
@@ -34,7 +31,6 @@ interface FunctionNodeDispatchProps {
 
 interface FunctionNodeDragSource {
 	isDragging: boolean;
-	connectDragSource: ConnectDragSource;
 }
 
 type FunctionNodeProps =
@@ -52,7 +48,7 @@ const FunctionNode = ( props: FunctionNodeProps ) => {
 	if ( props.isSelected ) { className.push( "selected" ); }
 
 
-	return props.connectDragSource(
+	return (
 		<div
 			className={ className.join( " " ) }>
 
@@ -63,35 +59,9 @@ const FunctionNode = ( props: FunctionNodeProps ) => {
 			</div> }
 
 			)) }
-		</div>,
+		</div>
 	);
 };
-
-
-const nodeSourceSpec: DragSourceSpec<FunctionNodeDragSource> = {
-	beginDrag: ( props: FunctionNodeProps ): Node => props.node,
-	endDrag:   ( props: FunctionNodeProps, monitor: DragSourceMonitor, component ) => {
-		if ( monitor.didDrop() ) {
-			const { x: dx, y: dy } = monitor.getDropResult() as Position;
-
-		}
-	},
-};
-
-const nodeSourceCollector: DragSourceCollector = (
-	connect: DragSourceConnector,
-	monitor: DragSourceMonitor,
-) => ({
-	connectDragSource: connect.dragSource(),
-	isDragging: monitor.isDragging(),
-});
-
-const DraggableFunctionNode = DragSource(
-	dnd.FORMULA_NODE,
-	nodeSourceSpec,
-	nodeSourceCollector,
-)( FunctionNode );
-
 
 
 const mapDispatchToProps = ( dispatch: ( action: Action ) => void ): FunctionNodeDispatchProps => ({
@@ -100,4 +70,4 @@ const mapDispatchToProps = ( dispatch: ( action: Action ) => void ): FunctionNod
 
 export default reduxConnect<{}, {}, FunctionNodeAttributes>(
 	mapDispatchToProps,
-)( DraggableFunctionNode );
+)( FunctionNode );
