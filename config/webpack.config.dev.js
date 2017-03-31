@@ -27,18 +27,18 @@ module.exports = {
 		publicPath,
 	},
 	resolve: {
-		fallback:   paths.nodePaths,
-		extensions: [ '.js', '.json', '.jsx', '.ts', '.tsx', '' ],
+		extensions: [ '.js', '.jsx', '.json', '.ts', '.tsx' ],
 		alias:      {
 			'react-native': 'react-native-web',
 		},
-		root: [
+		modules: [
 			path.resolve( __dirname, '../src' ),
+			'node_modules',
 		],
 	},
 	
 	module: {
-		loaders: [
+		rules: [
 			{
 				test:    /\.tsx?$/,
 				include: paths.appSrc,
@@ -46,42 +46,39 @@ module.exports = {
 			},
 			{
 				test:   /\.less$/,
-				loader: 'style!css?importLoaders=1!postcss!less',
-			},
-			{
-				test:   /\.json$/,
-				loader: 'json',
+				use: [
+					{
+						loader: 'style-loader',
+					},
+					{
+						loader: 'css-loader',
+						options: {
+							importLoaders: 1,
+						},
+					},
+					{
+						loader: 'less-loader',
+					},
+				],
 			},
 			{
 				test:   /\.(ico|jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2)(\?.*)?$/,
-				loader: 'file',
-				query:  {
+				loader: 'file-loader',
+				options:  {
 					name: 'static/media/[name].[hash:8].[ext]',
 				},
 			},
 			{
 				test:   /\.(mp4|webm|wav|mp3|m4a|aac|oga)(\?.*)?$/,
-				loader: 'url',
-				query:  {
+				loader: 'url-loader',
+				options:  {
 					limit: 10000,
 					name:  'static/media/[name].[hash:8].[ext]',
 				},
 			},
 		],
 	},
-	
-	postcss() {
-		return [
-			autoprefixer({
-				browsers: [
-					'>1%',
-					'last 4 versions',
-					'Firefox ESR',
-					'not ie < 9', // React doesn't support IE8 anyway
-				],
-			}),
-		];
-	},
+
 	plugins: [
 		new InterpolateHtmlPlugin({
 			PUBLIC_URL: publicUrl,
