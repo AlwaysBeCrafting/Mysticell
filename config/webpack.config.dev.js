@@ -38,18 +38,11 @@ module.exports = {
 	},
 	
 	module: {
-		preLoaders: [
-			{
-				test:    /\.(ts|tsx)$/,
-				loader:  'tslint-loader',
-				include: paths.appSrc,
-			},
-		],
 		loaders: [
 			{
-				test:    /\.(ts|tsx)$/,
+				test:    /\.tsx?$/,
 				include: paths.appSrc,
-				loader:  `babel-loader?cacheDirectory=${findCacheDir({name: 'react-scripts'})}!ts-loader`,
+				loader:  'awesome-typescript-loader',
 			},
 			{
 				test:   /\.less$/,
