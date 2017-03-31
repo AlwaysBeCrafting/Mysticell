@@ -39,7 +39,7 @@ export const SUBTRACT: Fxn = {
 			return normA.substring( 0, normA.lastIndexOf( normB.toString() )) || normA;
 		}
 
-		return a || -b;
+		return a || b;
 	},
 };
 

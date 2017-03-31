@@ -30,11 +30,6 @@ const Editor = ( props: EditorProps ) => (
 		<div id="document-area">
 			{ props.path.length ? <GraphEditor /> : <Playmat /> }
 		</div>
-		{ !!props.popup &&
-			<PopupComp { ...props.popup }>
-				{ props.popup.element }
-			</PopupComp>
-		}
 	</main>
 );
 
