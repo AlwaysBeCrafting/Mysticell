@@ -15,7 +15,7 @@
         "align": [
             false
         ],
-        "arrow-parens": false,
+        "arrow-parens": true,
         "comment-format": [
             false
         ],
@@ -24,11 +24,14 @@
         ],
         "quotemark": [
             true,
-            "double",
+            "single",
             "jsx-double"
         ],
         "member-access": [
             false
+        ],
+        "only-arrow-functions": [
+            true
         ]
     }
 }
