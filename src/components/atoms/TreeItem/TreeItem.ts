@@ -2,7 +2,7 @@ interface TreeItem {
 	id: number;
 	title: string;
 	isExpanded: boolean;
-	children?: TreeItem[]
+	children?: TreeItem[];
 }
 
 export default TreeItem;

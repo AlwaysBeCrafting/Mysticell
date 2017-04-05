@@ -1,7 +1,7 @@
 import { Id } from 'common/types';
 
-import { Graph } from 'data/Graph/model';
 import { Cell } from 'data/Cell/model';
+import { Graph } from 'data/Graph/model';
 
 
 export interface Document extends Id {

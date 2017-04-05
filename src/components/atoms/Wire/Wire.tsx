@@ -1,8 +1,8 @@
-import * as React from "react";
+import * as React from 'react';
 
-import { Position } from "common/types/layout";
+import { Position } from 'common/types/layout';
 
-import "./Wire.less";
+import './Wire.less';
 
 
 interface Props {

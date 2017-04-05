@@ -1,4 +1,4 @@
-import { Id } from "common/types";
+import { Id } from 'common/types';
 
 import { Param } from './Param';
 

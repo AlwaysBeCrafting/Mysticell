@@ -1,4 +1,4 @@
-import { Anchor, Position } from "common/types";
+import { Anchor, Position } from 'common/types';
 
 
 export interface UiState {

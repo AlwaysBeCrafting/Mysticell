@@ -1,5 +1,5 @@
-import UiState from './model';
 import Action, { ActionTypes } from './actions';
+import UiState from './model';
 
 export default ( state: UiState, action: Action ): UiState => {
 	switch ( action.type ) {

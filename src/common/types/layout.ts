@@ -4,6 +4,6 @@ export interface Position {
 }
 
 export interface Anchor {
-	horizontal: "left" | "center" | "right";
-	vertical: "top" | "center" | "bottom";
+	horizontal: 'left' | 'center' | 'right';
+	vertical: 'top' | 'center' | 'bottom';
 }

@@ -12,4 +12,4 @@ export default ( props: Props ) => (
 	<Card { ...props } />
 );
 
-export const createNodeCard = () => {}
+export const createNodeCard = () => {};

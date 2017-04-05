@@ -2,18 +2,18 @@ import { Graph } from './model';
 
 
 class ActionTypes {
-	static readonly CREATE_NODE          = "[Graph] Create";
-	static readonly DELETE_NODE          = "[Graph] Delete";
-	static readonly CONNECT_NODE         = "[Graph] Connect";
-	static readonly DISCONNECT_NODE      = "[Graph] Disconnect";
-	static readonly SET_NODE_INPUT_VALUE = "[Graph] Set input value";
-	static readonly UPDATE_NODE          = "[Graph] Update";
-};
+	static readonly CREATE_NODE          = '[Graph] Create';
+	static readonly DELETE_NODE          = '[Graph] Delete';
+	static readonly CONNECT_NODE         = '[Graph] Connect';
+	static readonly DISCONNECT_NODE      = '[Graph] Disconnect';
+	static readonly SET_NODE_INPUT_VALUE = '[Graph] Set input value';
+	static readonly UPDATE_NODE          = '[Graph] Update';
+}
 
 
 class CreateNodeAction {
 	readonly type = ActionTypes.CREATE_NODE;
-	constructor ( public payload: {  }) {};
+	constructor( public payload: {  }) {}
 }
 export const createNode = ( fieldId: number, node: Node ): CreateNodeAction => ({
 	...new CreateNodeAction({ fieldId, node }),
@@ -22,7 +22,7 @@ export const createNode = ( fieldId: number, node: Node ): CreateNodeAction => (
 
 class DeleteNodeAction {
 	readonly type = ActionTypes.DELETE_NODE;
-	constructor ( public payload: { nodeId: number }) {};
+	constructor( public payload: { nodeId: number }) {}
 }
 export const deleteNode = ( nodeId: number ): DeleteNodeAction => ({
 	...new DeleteNodeAction({ nodeId }),
@@ -31,7 +31,7 @@ export const deleteNode = ( nodeId: number ): DeleteNodeAction => ({
 
 class ConnectNodeAction {
 	readonly type = ActionTypes.CONNECT_NODE;
-	constructor ( public payload: { fromNodeId: number, toNodeId: number, toIndex: number }) {};
+	constructor( public payload: { fromNodeId: number, toNodeId: number, toIndex: number }) {}
 }
 export const connectNode = ( fromNodeId: number, toNodeId: number, toIndex: number ): ConnectNodeAction => ({
 	...new ConnectNodeAction({ fromNodeId, toNodeId, toIndex }),
@@ -40,7 +40,7 @@ export const connectNode = ( fromNodeId: number, toNodeId: number, toIndex: numb
 
 class DisconnectNodeAction {
 	readonly type = ActionTypes.DISCONNECT_NODE;
-	constructor ( public payload: { nodeId: number, index: number }) {};
+	constructor( public payload: { nodeId: number, index: number }) {}
 }
 export const disconnectNode = ( nodeId: number, index: number ): DisconnectNodeAction => ({
 	...new DisconnectNodeAction({ nodeId, index }),
@@ -49,7 +49,7 @@ export const disconnectNode = ( nodeId: number, index: number ): DisconnectNodeA
 
 class UpdateNodeAction {
 	readonly type = ActionTypes.UPDATE_NODE;
-	constructor ( public payload: { nodeId: number, inputIndex: number, inputValue?: number|string }) {};
+	constructor( public payload: { nodeId: number, inputIndex: number, inputValue?: number|string }) {}
 }
 export const updateNode = ( nodeId: number, inputIndex: number, inputValue?: number|string ): UpdateNodeAction => ({
 	...new UpdateNodeAction({ nodeId, inputIndex, inputValue }),

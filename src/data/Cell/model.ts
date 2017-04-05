@@ -1,4 +1,4 @@
-import { Position } from "common/types";
+import { Position } from 'common/types';
 
 
 export interface Format {}

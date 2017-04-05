@@ -1,9 +1,9 @@
-import * as React from "react";
+import * as React from 'react';
 
-import { FAB } from "components/atoms";
-import { Toolbar } from "components/molecules";
+import { FAB } from 'components/atoms';
+import { Toolbar } from 'components/molecules';
 
-import "./GraphEditor.less";
+import './GraphEditor.less';
 
 
 interface Props {}

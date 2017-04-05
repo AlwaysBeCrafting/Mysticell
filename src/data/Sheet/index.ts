@@ -1,3 +1,3 @@
-import Sheet from './model'
+import Sheet from './model';
 
 export default ( state: Sheet ) => state;
