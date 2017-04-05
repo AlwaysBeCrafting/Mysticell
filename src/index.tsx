@@ -1,24 +1,10 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 
-import { Provider } from "react-redux";
+import { Editor } from "components/pages";
 
-import { createStore } from "redux";
-import { composeWithDevTools } from "redux-devtools-extension/developmentOnly";
-
-import Editor from "components/organisms/Editor";
-
-import reducer from "data";
-import { loadDocument } from "data/document";
-
-
-
-const store = createStore( reducer, composeWithDevTools() );
 
 ReactDOM.render(
-	<Provider store={ store }><Editor /></Provider>,
+	<Editor path={ [] }/>,
 	document.getElementById( "root" ),
 );
-
-const exampleDoc = require<Document>( "exampleDoc.json" );
-store.dispatch( loadDocument( exampleDoc ));

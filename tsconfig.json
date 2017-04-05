@@ -13,6 +13,8 @@
         "noFallthroughCasesInSwitch": true,
         "noImplicitAny": false,
         "noImplicitReturns": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
         "strictNullChecks": true,
 
         "removeComments": true,

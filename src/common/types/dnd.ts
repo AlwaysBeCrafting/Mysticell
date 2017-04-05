@@ -1,4 +1,0 @@
-export default {
-	FORMULA_NODE: "FORMULA_NODE",
-	OUTPUT_PIN: "OUTPUT_PIN",
-};
