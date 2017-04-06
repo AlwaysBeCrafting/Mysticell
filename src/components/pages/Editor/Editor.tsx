@@ -13,7 +13,7 @@ interface Props {
 
 export default ( props: Props ) => (
 	<main className="editor">
-		<Toolbar title="Mysticell" className="editor-appbar" />
+		<Toolbar title="Mysticell" className="editor-appbar mod-inverted" />
 		<div className="editor-document">
 			{ props.path.length ? <GraphEditor /> : <SheetEditor /> }
 		</div>

@@ -1,4 +1,6 @@
+@import '~common/styles/colors.scss';
 @import '~common/styles/dimensions.scss';
+
 
 .toolbar {
 	flex: 0 0 64px;
@@ -7,13 +9,21 @@
 	justify-content: flex-start;
 	align-items: stretch;
 	background: #fafafa;
-	color: rgba( 0, 0, 0, 0.87 );
-	padding: 0 ( $dimen-keyline-padding / 2 );
+	// padding: 0 $dimen-keyline-padding;
 	font-size: 20px;
+	color: $color-text-primary;
 }
+
+.toolbar.mod-inverted {
+	color: $color-text-primary-inverted;
+}
+	.toolbar-nav {
+		margin-right: $dimen-keyline-content - $dimen-toolbar-size;
+	}
+
 	.toolbar-title {
 		flex: 1 0 auto;
 		align-self: center;
-		font-size: 20px 500;
+		font-size: 20px;
 		font-weight: 500;
 	}

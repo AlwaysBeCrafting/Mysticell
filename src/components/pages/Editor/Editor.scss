@@ -1,26 +1,16 @@
 @import '~common/styles/colors';
 @import '~common/styles/dimensions';
-@import '~common/styles/fonts';
 
 
-$appBackground: #f5f5f5;
-$appText: rgba( #fff, 0.87 );
-
-$appbarBackground: $color-primary;
-$appbarText: #ffffff;
+$color-editor-background: $color-grey-100;
+$color-appbar-background: $color-brand-primary;
 
 
 .editor {
-	background: $appBackground;
-	color: $appText;
+	background: $color-editor-background;
+	color: $color-text-primary;
 }
 	.editor-appbar {
-		color: $appbarText;
 		box-shadow: 0 2px 4px $color-shadow;
-		background: $appbarBackground;
+		background: $color-appbar-background;
 	}
-
-		// Inherited color doesn't override user agent style
-		.editor-appbar .toolbar-item {
-			color: $appbarText;
-		}

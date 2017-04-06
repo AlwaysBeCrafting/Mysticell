@@ -1,11 +1,24 @@
+@import '~common/styles/colors';
+@import '~common/styles/dimensions';
+
+
 .toolbar-item {
 	// outline: solid thin red;
-	flex: 0 0 48px;
+	flex: 0 0 $dimen-toolbar-size;
 	user-select: none;
 	font-size: 24px;
 	font-family: Material Icons;
+	color: $color-text-primary;
 }
 
 .toolbar-item.is-disabled {
-	color: rgba( 0, 0, 0, 0.54 );
+	color: $color-text-disabled;
+}
+
+.mod-inverted .toolbar-item {
+	color: $color-text-primary-inverted;
+}
+
+.mod-inverted .toolbar-item.is-disabled {
+	color: $color-text-disabled-inverted;
 }
