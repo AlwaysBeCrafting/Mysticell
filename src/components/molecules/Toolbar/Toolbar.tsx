@@ -3,7 +3,7 @@ import * as classNames from 'classnames';
 
 import { MenuItem } from 'components/atoms';
 
-import { createItem } from './Item';
+import Item from './Item';
 import './Toolbar.scss';
 
 
@@ -21,8 +21,8 @@ const navItem: MenuItem = {
 
 export default ( props: Props ) => (
 	<menu type="toolbar" className={ classNames( 'toolbar', props.className ) }>
-		{ createItem( navItem ) }
+		{ <Item item={ navItem } /> }
 		<li className="toolbar-title">{ props.title }</li>
-		{ ( props.items || [] ).map( createItem ) }
+		{ ( props.items || [] ).map(( item ) => <Item item={ item } /> ) }
 	</menu>
 );

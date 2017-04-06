@@ -3,7 +3,8 @@ import * as React from 'react';
 import { TreeItem } from 'components/atoms';
 
 
-interface Props {
+interface Props extends React.HTMLAttributes<HTMLLIElement> {
+	item: TreeItem;
 	title: string;
 	isExpanded?: boolean;
 	children?: TreeItem[];
@@ -17,7 +18,7 @@ const Item = ( props: Props ) => {
 
 	const childrenElem = props.children && !!props.children.length && (
 		<ul className="treeView-item-children">
-			{ props.children.map( createItem ) }
+			{ props.children.map(( child ) => <Item item={ child } /> ) }
 		</ul>
 	);
 
@@ -32,11 +33,3 @@ const Item = ( props: Props ) => {
 };
 
 export default Item;
-
-
-export const createItem = ( item: TreeItem ) => (
-	<Item
-		key={ item.id }
-		title={ item.title }
-		/>
-);

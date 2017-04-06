@@ -5,9 +5,8 @@ import { MenuItem } from 'components/atoms';
 import './Item.scss';
 
 
-interface Props {
-	text: string;
-	icon?: string;
+interface Props extends React.HTMLAttributes<HTMLButtonElement> {
+	item: MenuItem;
 	enabled?: boolean;
 	checkable?: boolean;
 	checked?: boolean;
@@ -15,27 +14,19 @@ interface Props {
 
 
 export const Item = ( props: Props ) => {
-	const iconElem = props.icon && (
+	const iconElem = props.item.icon && (
 		<img
 			className="toolbar-item-icon"
-			title={ props.text }
-			src={ props.icon }
+			title={ props.item.title }
+			src={ props.item.icon }
 			/>
 	);
 
 	return (
 		<button className="toolbar-item">
-			{ iconElem || props.text }
+			{ iconElem || props.item.title }
 		</button>
 	);
 };
 
 export default Item;
-
-
-export const createItem = ( item: MenuItem ) => (
-	<Item
-		text={ item.title }
-		icon={ item.icon }
-		/>
-);
