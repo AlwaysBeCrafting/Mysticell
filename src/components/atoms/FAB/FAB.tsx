@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import './FAB.less';
+import './FAB.scss';
 
 
 interface Props {

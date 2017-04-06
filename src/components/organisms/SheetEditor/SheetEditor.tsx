@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import './SheetEditor.less';
+import './SheetEditor.scss';
 
 
 interface Props {}

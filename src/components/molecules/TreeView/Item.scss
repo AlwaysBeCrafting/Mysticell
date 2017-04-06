@@ -1,5 +1,5 @@
 .treeView-item {
-	padding: 0 @dimen-keyline-padding;
+	padding: 0 $dimen-keyline-padding;
 	display: flex;
 	flex-flow: column nowrap;
 }
@@ -9,7 +9,7 @@
 	}
 
 	.treeView-item-children {
-		padding-left: @dimen-keyline-padding;
+		padding-left: $dimen-keyline-padding;
 		display: flex;
 		flex-flow: column nowrap;
 	}

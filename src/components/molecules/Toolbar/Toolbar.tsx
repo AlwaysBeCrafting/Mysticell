@@ -3,7 +3,7 @@ import * as React from 'react';
 import { MenuItem } from 'components/atoms';
 
 import { createItem } from './Item';
-import './Toolbar.less';
+import './Toolbar.scss';
 
 
 interface Props {

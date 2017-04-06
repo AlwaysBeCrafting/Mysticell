@@ -3,7 +3,7 @@ import * as ReactDOM from 'react-dom';
 
 import { Editor } from 'components/pages';
 
-import 'common/styles/normalize.less';
+import 'common/styles/normalize.scss';
 
 
 ReactDOM.render(

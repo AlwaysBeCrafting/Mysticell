@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Toolbar } from 'components/molecules';
 import { GraphEditor, SheetEditor } from 'components/organisms';
 
-import './Editor.less';
+import './Editor.scss';
 
 
 interface Props {

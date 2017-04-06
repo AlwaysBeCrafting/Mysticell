@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { Position } from 'common/types/layout';
 
-import './Wire.less';
+import './Wire.scss';
 
 
 interface Props {

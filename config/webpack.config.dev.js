@@ -45,7 +45,7 @@ module.exports = {
 				loader:  'awesome-typescript-loader',
 			},
 			{
-				test:   /\.less$/,
+				test:   /\.scss$/,
 				use: [
 					{
 						loader: 'style-loader',
@@ -57,7 +57,7 @@ module.exports = {
 						},
 					},
 					{
-						loader: 'less-loader',
+						loader: 'sass-loader',
 					},
 				],
 			},

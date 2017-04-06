@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { Card } from 'components/atoms';
 
-import './NodeCard.less';
+import './NodeCard.scss';
 
 
 interface Props {}

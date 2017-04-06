@@ -6,14 +6,14 @@
 	position: absolute;
 	
 	left: 120px; top: 120px;
-	right: ~'calc( 100% - 160px )';
-	bottom: ~'calc( 100% - 160px )';
+	right: calc( 100% - 160px );
+	bottom: calc( 100% - 160px );
 	min-width: 6px;
 	min-height: 6px;
 	
 	fill: none;
 	
-	stroke: @color-primary;
+	stroke: $color-primary;
 	stroke-width: 3px;
 
 	vector-effect: non-scaling-stroke;

@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { MenuItem } from 'components/atoms';
 
-import './Item.less';
+import './Item.scss';
 
 
 interface Props {

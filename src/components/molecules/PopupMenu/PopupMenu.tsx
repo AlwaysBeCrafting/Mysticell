@@ -5,7 +5,7 @@ import { Anchor, Position } from 'common/types/layout';
 import { MenuItem } from 'components/atoms';
 
 import { createItem } from './Item';
-import './PopupMenu.less';
+import './PopupMenu.scss';
 
 
 interface Props {

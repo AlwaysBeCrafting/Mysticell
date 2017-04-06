@@ -3,7 +3,7 @@ import * as React from 'react';
 import { TreeItem } from 'components/atoms';
 
 import { createItem } from './Item';
-import './TreeView.less';
+import './TreeView.scss';
 
 
 interface Props {
