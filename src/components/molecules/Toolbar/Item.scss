@@ -1,8 +1,9 @@
 .toolbar-item {
-	flex: 1 0 64px;
-	cursor: pointer;
+	// outline: solid thin red;
+	flex: 0 0 48px;
 	user-select: none;
-	color: rgba( 0, 0, 0, 0.87 );
+	font-size: 24px;
+	font-family: Material Icons;
 }
 
 .toolbar-item.is-disabled {

@@ -19,3 +19,8 @@ $appbarText: #ffffff;
 		box-shadow: 0 2px 4px $color-shadow;
 		background: $appbarBackground;
 	}
+
+		// Inherited color doesn't override user agent style
+		.editor-appbar .toolbar-item {
+			color: $appbarText;
+		}

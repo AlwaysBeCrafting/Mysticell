@@ -14,8 +14,15 @@ interface Props extends React.HTMLAttributes<HTMLMenuElement> {
 }
 
 
+const navItem: MenuItem = {
+	title: 'menu'
+};
+
+
 export default ( props: Props ) => (
 	<menu type="toolbar" className={ classNames( 'toolbar', props.className ) }>
+		{ createItem( navItem ) }
+		<li className="toolbar-title">{ props.title }</li>
 		{ ( props.items || [] ).map( createItem ) }
 	</menu>
 );

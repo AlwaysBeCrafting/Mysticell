@@ -24,7 +24,7 @@ export const Item = ( props: Props ) => {
 	);
 
 	return (
-		<button className="toolbar-button">
+		<button className="toolbar-item">
 			{ iconElem || props.text }
 		</button>
 	);

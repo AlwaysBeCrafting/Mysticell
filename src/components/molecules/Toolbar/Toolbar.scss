@@ -1,13 +1,19 @@
+@import '~common/styles/dimensions.scss';
+
 .toolbar {
 	flex: 0 0 64px;
 	display: flex;
 	flex-flow: row nowrap;
 	justify-content: flex-start;
-	align-items: center;
+	align-items: stretch;
 	background: #fafafa;
+	color: rgba( 0, 0, 0, 0.87 );
+	padding: 0 ( $dimen-keyline-padding / 2 );
+	font-size: 20px;
 }
 	.toolbar-title {
 		flex: 1 0 auto;
+		align-self: center;
 		font-size: 20px 500;
 		font-weight: 500;
 	}
