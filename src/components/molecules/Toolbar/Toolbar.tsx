@@ -1,5 +1,5 @@
-import * as React from 'react';
 import * as classNames from 'classnames';
+import * as React from 'react';
 
 import { MenuItem } from 'components/atoms';
 
@@ -15,7 +15,7 @@ interface Props extends React.HTMLAttributes<HTMLMenuElement> {
 
 
 const navItem: MenuItem = {
-	title: 'menu'
+	title: 'menu',
 };
 
 
