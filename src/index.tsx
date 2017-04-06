@@ -8,5 +8,5 @@ import 'common/styles/normalize.scss';
 
 ReactDOM.render(
 	<Editor path={ [] }/>,
-	document.getElementById( 'root' ),
+	document.querySelector( '.root' ),
 );
