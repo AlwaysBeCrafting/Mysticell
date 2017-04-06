@@ -1,3 +1,4 @@
+import * as classNames from 'classnames';
 import * as React from 'react';
 
 import { TreeItem } from 'components/atoms';
@@ -12,9 +13,13 @@ interface Props extends React.HTMLAttributes<HTMLLIElement> {
 
 
 const Item = ( props: Props ) => {
-	const classList = [ 'treeView-item' ];
-	if ( props.isExpanded ) classList.push( 'is-expanded' );
-	if ( props.children && props.children.length ) classList.push( 'is-parent' );
+	const className = classNames(
+		'treeView-item',
+		{
+			'is-expanded': props.isExpanded,
+			'is-parent': props.children && props.children.length,
+		},
+	);
 
 	const childrenElem = props.children && !!props.children.length && (
 		<ul className="treeView-item-children">
@@ -23,7 +28,7 @@ const Item = ( props: Props ) => {
 	);
 
 	return (
-		<li className={ classList.join( ' ' ) }>
+		<li className={ className }>
 			<a className="treeView-item-body">
 				<span className="treeView-item-body-title">{ props.title }</span>
 			</a>
