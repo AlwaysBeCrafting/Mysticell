@@ -10,37 +10,12 @@ $appbarBackground: $color-primary;
 $appbarText: #ffffff;
 
 
-body {
+.editor {
 	background: $appBackground;
 	color: $appText;
-	height: 100vh;
-	flex-flow: column nowrap;
 }
-
-#appbar {
-	color: $appbarText;
-	z-index: 100;
-	
-	box-shadow: 0 2px 4px $color-shadow;
-	
-	background: $appbarBackground;
-}
-
-#root {
-	flex-grow: 1;
-	display: flex;
-	flex-flow: column;
-}
-
-#editor {
-	flex-grow: 1;
-	display: flex;
-	flex-flow: column nowrap;
-	// position: relative;
-	
-	#document-area {
-		display: flex;
-		flex-grow: 1;
-		flex-flow: row nowrap;
+	.editor-appbar {
+		color: $appbarText;
+		box-shadow: 0 2px 4px $color-shadow;
+		background: $appbarBackground;
 	}
-}
