@@ -1,11 +1,12 @@
 import * as React from 'react';
+import classNames from 'classnames';
 
 import './Card.scss';
 
 
-interface Props {}
+interface Props extends React.HTMLAttributes<HTMLDivElement> {}
 
 
 export default ( props: Props ) => (
-	<div className="card"> { props } </div>
+	<div className={ classNames( 'card', props.className ) }> { props } </div>
 );
