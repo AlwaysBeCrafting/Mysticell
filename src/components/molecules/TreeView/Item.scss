@@ -1,12 +1,36 @@
+@import '~common/styles/colors';
+@import '~common/styles/dimensions';
+
+
 .treeView-item {
-	padding: 0 $dimen-keyline-padding;
 	display: flex;
 	flex-flow: column nowrap;
+	align-items: stretch;
 }
 	.treeView-item-body {
+		flex: 0 0 48px;
 		display: flex;
 		flex-flow: row nowrap;
+		padding: 0 $dimen-keyline-padding;
+		align-items: center
 	}
+		.treeView-item-body-icon {
+			flex: 0 0 $dimen-icon-size;
+			font-size: $dimen-icon-size;
+			font-family: Material Icons;
+			color: $color-icon-active;
+			transform: rotate( -90deg );
+		}
+
+		.treeView-item-body-title {
+			margin-left: $dimen-keyline-content;
+			flex: 1 0 auto;
+			font-size: 16px;
+		}
+
+		.treeView-item-body-icon + .treeView-item-body-title {
+			margin-left: $dimen-keyline-content - ( $dimen-keyline-padding + $dimen-icon-size );
+		}
 
 	.treeView-item-children {
 		padding-left: $dimen-keyline-padding;

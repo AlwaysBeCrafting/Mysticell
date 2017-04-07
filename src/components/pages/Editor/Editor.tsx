@@ -21,6 +21,18 @@ const navItem: MenuItem = {
 };
 
 
+const treeItems = [
+	{ id: generateBadId(), title: 'item' },
+	{ id: generateBadId(), title: 'item' },
+	{ id: generateBadId(), title: 'item' },
+	{ id: generateBadId(), title: 'item' },
+	{ id: generateBadId(), title: 'item' },
+	{ id: generateBadId(), title: 'item' },
+	{ id: generateBadId(), title: 'item' },
+	{ id: generateBadId(), title: 'item' },
+];
+
+
 export default ({ path, className, ...attrs }: Props ) => {
 	const ContentEditor = path.length ? GraphEditor : SheetEditor;
 
@@ -28,7 +40,7 @@ export default ({ path, className, ...attrs }: Props ) => {
 		<main { ...attrs } className={ classNames( 'editor', className ) }>
 			<Toolbar title="Mysticell" className="editor-appbar mod-inverted" navItem={ navItem } />
 			<div className="editor-document">
-				<TreeView className="editor-document-nav" items={ [] } expandedItems={ [] } />
+				<TreeView className="editor-document-nav" items={ treeItems } expandedItems={ [] } />
 				{ <ContentEditor className="editor-document-content" /> }
 			</div>
 		</main>
