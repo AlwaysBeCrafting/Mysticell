@@ -1,7 +1,7 @@
 import * as classNames from 'classnames';
 import * as React from 'react';
 
-import { MenuItem } from 'common/types';
+import { MenuItem } from 'data/common';
 
 import Item from './Item';
 import './Toolbar.scss';

@@ -1,7 +1,9 @@
 import * as classNames from 'classnames';
 import * as React from 'react';
 
-import { Anchor, MenuItem, Position } from 'common/types';
+import { Anchor, Position } from 'common/types';
+
+import { MenuItem } from 'data/common';
 
 import Item from './Item';
 import './PopupMenu.scss';
