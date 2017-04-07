@@ -7,10 +7,26 @@ $color-appbar-background: $color-brand-primary;
 
 
 .editor {
+	flex: 1 0 auto;
 	background: $color-editor-background;
 	color: $color-text-primary;
 }
 	.editor-appbar {
 		box-shadow: 0 2px 4px $color-shadow;
 		background: $color-appbar-background;
+		z-index: 100;
 	}
+
+	.editor-document {
+		flex: 1 0 auto;
+		flex-flow: row nowrap;
+	}
+		.editor-document-nav {
+			flex: 0 0 320px;
+			background: $color-grey-50;
+			border-right: solid thin $color-divider;
+		}
+
+		.editor-document-content {
+			flex: 1 0 auto;
+		}

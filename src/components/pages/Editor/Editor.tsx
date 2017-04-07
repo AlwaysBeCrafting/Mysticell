@@ -4,7 +4,7 @@ import * as React from 'react';
 import { MenuItem } from 'common/types';
 import { generateBadId } from 'common/util';
 
-import { Toolbar } from 'components/molecules';
+import { Toolbar, TreeView } from 'components/molecules';
 import { GraphEditor, SheetEditor } from 'components/organisms';
 
 import './Editor.scss';
@@ -21,11 +21,16 @@ const navItem: MenuItem = {
 };
 
 
-export default ({ path, className, ...attrs }: Props ) => (
-	<main { ...attrs } className={ classNames( 'editor', className ) }>
-		<Toolbar title="Mysticell" className="editor-appbar mod-inverted" navItem={ navItem } />
-		<div className="editor-document">
-			{ path.length ? <GraphEditor /> : <SheetEditor /> }
-		</div>
-	</main>
-);
+export default ({ path, className, ...attrs }: Props ) => {
+	const ContentEditor = path.length ? GraphEditor : SheetEditor;
+
+	return (
+		<main { ...attrs } className={ classNames( 'editor', className ) }>
+			<Toolbar title="Mysticell" className="editor-appbar mod-inverted" navItem={ navItem } />
+			<div className="editor-document">
+				<TreeView className="editor-document-nav" items={ [] } expandedItems={ [] } />
+				{ <ContentEditor className="editor-document-content" /> }
+			</div>
+		</main>
+	);
+};

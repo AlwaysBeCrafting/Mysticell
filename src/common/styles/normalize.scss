@@ -4,6 +4,10 @@
 	outline: none;
 }
 
+html, body, .root {
+	height: 100vh;
+}
+
 article, aside, body, div, footer, header, hgroup, main, nav, section, ul, ol {
 	display: flex;
 	flex-flow: column nowrap;
