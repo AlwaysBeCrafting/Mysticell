@@ -3,7 +3,7 @@ export interface MenuItem {
 	title: string;
 	hint?: string;
 	icon?: string;
-	children?: MenuItem[];
+	childItems?: MenuItem[];
 }
 
 export default MenuItem;
