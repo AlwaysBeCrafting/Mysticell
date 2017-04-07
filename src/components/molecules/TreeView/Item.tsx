@@ -1,14 +1,14 @@
 import * as classNames from 'classnames';
 import * as React from 'react';
 
-import { TreeItem } from 'components/atoms';
+import { MenuItem } from 'common/types';
 
 
 interface Props extends React.HTMLAttributes<HTMLLIElement> {
-	item: TreeItem;
+	item: MenuItem;
 	title: string;
 	isExpanded?: boolean;
-	children?: TreeItem[];
+	children?: MenuItem[];
 }
 
 

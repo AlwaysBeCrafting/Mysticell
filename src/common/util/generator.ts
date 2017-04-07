@@ -1,1 +1,1 @@
-export const createBadId = () => Math.floor( Math.random() * 1000000 );
+export const generateBadId = () => Math.floor( Math.random() * 1000000 );

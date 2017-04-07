@@ -1,13 +1,13 @@
 import * as React from 'react';
 
-import { TreeItem } from 'components/atoms';
+import { MenuItem } from 'common/types';
 
 import Item from './Item';
 import './TreeView.scss';
 
 
 interface Props {
-	items: TreeItem[];
+	items: MenuItem[];
 	expanded: number[] | (( TreeItem ) => boolean );
 }
 

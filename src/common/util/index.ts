@@ -1,0 +1,1 @@
+export { generateBadId } from './generator';

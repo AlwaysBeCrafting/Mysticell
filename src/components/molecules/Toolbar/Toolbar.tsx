@@ -1,7 +1,7 @@
 import * as classNames from 'classnames';
 import * as React from 'react';
 
-import { MenuItem } from 'components/atoms';
+import { MenuItem } from 'common/types';
 
 import Item from './Item';
 import './Toolbar.scss';
@@ -14,15 +14,10 @@ interface Props extends React.HTMLAttributes<HTMLMenuElement> {
 }
 
 
-const navItem: MenuItem = {
-	title: 'menu',
-};
-
-
-export default ( props: Props ) => (
-	<menu type="toolbar" className={ classNames( 'toolbar', props.className ) }>
-		{ <Item item={ navItem } /> }
-		<li className="toolbar-title">{ props.title }</li>
-		{ ( props.items || [] ).map(( item ) => <Item item={ item } /> ) }
+export default ({ title, navItem, items, className, ...attrs }: Props ) => (
+	<menu type="toolbar" { ...attrs } className={ classNames( 'toolbar', className ) }>
+		{ navItem && <Item item={ navItem } /> }
+		<li className="toolbar-title">{ title }</li>
+		{ items && items.map(( item ) => <Item item={ item } /> ) }
 	</menu>
 );

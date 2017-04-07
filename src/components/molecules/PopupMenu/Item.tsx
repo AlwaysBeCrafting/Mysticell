@@ -1,7 +1,7 @@
 import * as classNames from 'classnames';
 import * as React from 'react';
 
-import { MenuItem } from 'components/atoms';
+import { MenuItem } from 'common/types';
 
 import './Item.scss';
 
