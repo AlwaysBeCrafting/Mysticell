@@ -7,6 +7,8 @@ import './Card.scss';
 interface Props extends React.HTMLAttributes<HTMLDivElement> {}
 
 
-export default ( props: Props ) => (
-	<div className={ classNames( 'card', props.className ) }> { props } </div>
+export default ({ className, children, ...attrs }: Props ) => (
+	<div { ...attrs } className={ classNames( 'card', className ) }>
+		{ children }
+	</div>
 );

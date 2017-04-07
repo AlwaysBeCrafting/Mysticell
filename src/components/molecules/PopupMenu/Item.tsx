@@ -1,3 +1,4 @@
+import * as classNames from 'classnames';
 import * as React from 'react';
 
 import { MenuItem } from 'components/atoms';
@@ -5,28 +6,23 @@ import { MenuItem } from 'components/atoms';
 import './Item.scss';
 
 
-interface Props {
-	title: string;
-	description?: string;
-	enabled?: boolean;
-	icon?: string;
-	checkable?: boolean;
-	checked?: boolean;
+interface Props extends React.HTMLAttributes<HTMLDivElement> {
+	item: MenuItem;
 }
 
 
-const Item = ( props: Props ) => {
-	const descElem = props.description && (
-		<span className="menuItem-description">{ props.description || '' }</span>
+const Item = ({ item, className, ...attrs }: Props ) => {
+	const descElem = item.title && (
+		<span className="menuItem-description">{ item.title || '' }</span>
 	);
 
-	const iconElem = props.icon && (
-		<img src={ props.icon } />
+	const iconElem = item.icon && (
+		<img src={ item.icon } />
 	);
 
 	return (
-		<div className="menuItem">
-			<span className="menuItem-title">{ props.title }</span>
+		<div { ...attrs } className={ classNames( 'menuItem', className ) }>
+			<span className="menuItem-title">{ item.title }</span>
 			{ descElem }
 			{ iconElem }
 		</div>
@@ -34,12 +30,3 @@ const Item = ( props: Props ) => {
 };
 
 export default Item;
-
-
-export const createItem = ( item: MenuItem ) => (
-	<Item
-		title={ item.title }
-		description={ item.hint }
-		icon={ item.icon }
-		/>
-);

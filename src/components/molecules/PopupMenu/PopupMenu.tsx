@@ -1,37 +1,40 @@
+import * as classNames from 'classnames';
 import * as React from 'react';
 
 import { Anchor, Position } from 'common/types/layout';
 
 import { MenuItem } from 'components/atoms';
 
-import { createItem } from './Item';
+import Item from './Item';
 import './PopupMenu.scss';
 
 
-interface Props {
+interface Props extends React.HTMLAttributes<HTMLDivElement> {
 	position: Position;
 	anchor?: Anchor;
 	items: MenuItem[];
 }
 
 
-export default ( props: Props ) => {
+export default ({ position, anchor, items, ...attrs }: Props ) => {
 	const style = {
-		left: props.position.x,
-		top: props.position.y,
+		left: position.x,
+		top: position.y,
 	};
 
-	const classList = [ 'popup' ];
-	if ( props.anchor ) {
-		classList.push(
-			`anchor-${ props.anchor.horizontal }`,
-			`anchor-${ props.anchor.vertical }`,
-		);
-	}
+	const className = classNames(
+		'popup',
+		{
+			'anchor-left': anchor && anchor.horizontal === 'left',
+			'anchor-right': anchor && anchor.horizontal === 'right',
+			'anchor-top': anchor && anchor.vertical === 'top',
+			'anchor-bottom': anchor && anchor.vertical === 'bottom',
+		},
+	);
 
 	return (
-		<div className={ classList.join( ' ' ) } style={ style }>
-			{ props.items.map( createItem ) }
+		<div { ...attrs } className={ className } style={ style }>
+			{ items.map(( item ) => <Item item={ item } /> ) }
 		</div>
 	);
 };
