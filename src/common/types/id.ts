@@ -1,3 +1,3 @@
 export interface Id {
-	id: number;
+	readonly id: number;
 }
