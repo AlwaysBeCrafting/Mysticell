@@ -2,7 +2,7 @@ import * as classNames from 'classnames';
 import * as React from 'react';
 
 import { MenuItem } from 'data/common';
-import { generateBadId } from 'common/util';
+import { generateId } from 'common/util';
 
 import { Toolbar, TreeView } from 'components/molecules';
 import { GraphEditor, SheetEditor } from 'components/organisms';
@@ -16,20 +16,20 @@ interface Props extends React.HTMLAttributes<HTMLElement> { // cannot find name 
 
 
 const navItem: MenuItem = {
-	id: generateBadId(),
+	id: generateId(),
 	title: 'menu',
 };
 
 
 const treeItems = [
-	{ id: generateBadId(), title: 'item' },
-	{ id: generateBadId(), title: 'item' },
-	{ id: generateBadId(), title: 'item' },
-	{ id: generateBadId(), title: 'item' },
-	{ id: generateBadId(), title: 'item' },
-	{ id: generateBadId(), title: 'item' },
-	{ id: generateBadId(), title: 'item' },
-	{ id: generateBadId(), title: 'item' },
+	{ id: generateId(), title: 'item' },
+	{ id: generateId(), title: 'item' },
+	{ id: generateId(), title: 'item' },
+	{ id: generateId(), title: 'item' },
+	{ id: generateId(), title: 'item' },
+	{ id: generateId(), title: 'item' },
+	{ id: generateId(), title: 'item' },
+	{ id: generateId(), title: 'item' },
 ];
 
 

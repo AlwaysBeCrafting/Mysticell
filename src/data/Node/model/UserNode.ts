@@ -10,8 +10,8 @@ interface Member extends Id {
 }
 
 
-export interface NodeGroup extends Node {
+export interface UserNode extends Node {
 	members: Map<number, Member>;
 }
 
-export default NodeGroup;
+export default UserNode;

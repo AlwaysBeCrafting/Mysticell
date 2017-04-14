@@ -25,8 +25,9 @@ interface ErrorParam {
 }
 
 export type Param = NumberParam | StringParam | EmptyParam | ArrayParam | ErrorParam;
+export default Param;
 
-export const errorParam = ( message ): ErrorParam => ({
+export const makeError = ( message ): ErrorParam => ({
 	type: 'error',
 	value: 'ERR',
 	message,

@@ -3,6 +3,7 @@ import * as ReactDOM from 'react-dom';
 
 import { Editor } from 'components/pages';
 
+import 'common/styles/fonts.scss';
 import 'common/styles/normalize.scss';
 
 
