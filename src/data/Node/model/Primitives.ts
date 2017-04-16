@@ -1,8 +1,15 @@
 import { makeError, Param } from './Param';
-import { PrimitiveNode } from './PrimitiveNode';
 
 
-export const add: Partial<PrimitiveNode> = {
+interface PrimitiveNodeDefinition {
+	name: string;
+	inputNames: string[];
+	outputNames: string[];
+	exec: ( ...params: Param[] ) => Param[];
+}
+
+
+export const add: PrimitiveNodeDefinition = {
 	name: 'Add',
 	inputNames: [ 'A', 'B' ],
 	outputNames: [ 'Sum' ],
@@ -15,7 +22,7 @@ export const add: Partial<PrimitiveNode> = {
 };
 
 
-export const subtract: Partial<PrimitiveNode> = {
+export const subtract: PrimitiveNodeDefinition = {
 	name: 'Subtract',
 	inputNames: [ 'A', 'B' ],
 	outputNames: [ 'Difference' ],
@@ -28,7 +35,7 @@ export const subtract: Partial<PrimitiveNode> = {
 };
 
 
-export const multiply: Partial<PrimitiveNode> = {
+export const multiply: PrimitiveNodeDefinition = {
 	name: 'Multiply',
 	inputNames: [ 'A', 'B' ],
 	outputNames: [ 'Product' ],
@@ -41,7 +48,7 @@ export const multiply: Partial<PrimitiveNode> = {
 };
 
 
-export const divide: Partial<PrimitiveNode> = {
+export const divide: PrimitiveNodeDefinition = {
 	name: 'Divide',
 	inputNames: [ 'A', 'B' ],
 	outputNames: [ 'Quotient' ],
@@ -52,3 +59,6 @@ export const divide: Partial<PrimitiveNode> = {
 		return [makeError( 'Both arguments to Divide must be numbers' )];
 	},
 };
+
+
+export default PrimitiveNodeDefinition;
