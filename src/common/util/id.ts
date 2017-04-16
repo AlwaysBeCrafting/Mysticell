@@ -1,4 +1,4 @@
-import shortid from 'shortid';
+import * as shortid from 'shortid';
 
 const userNamespace = 'USER';
 const primitiveNamespace = 'PRIM';

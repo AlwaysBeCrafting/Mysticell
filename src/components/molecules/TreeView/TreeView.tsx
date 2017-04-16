@@ -9,7 +9,7 @@ import './TreeView.scss';
 
 interface Props extends React.HTMLAttributes<HTMLUListElement> {
 	items: MenuItem[];
-	expandedItems: number[];
+	expandedItems: string[];
 }
 
 
