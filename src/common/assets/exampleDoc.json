@@ -1,116 +1,47 @@
 {
-	"id":    0,
-	"title":  "Open Legend Character Template",
+	"id": "DOCUMENT-0000",
+	"title": "Example Document",
 	"sheets": [
-		{ "type": "card", "title": "Card 1", "id": 2, "cells": [] },
 		{
-			"type": "page",
-			"title": "Page 1",
-			"id": 1,
-			"cells": [
-				{
-					"field": 3,
-					"start": { "x": 0, "y": 0 },
-					"end": { "x": 160, "y": 40 }
-				}
-			]
+			"id": "SHEET-0000",
+			"title": "Sheet 1",
+			"size": { "width": 16, "height": 22 },
+			"cells": []
 		}
 	],
-	"cards":  [  ],
-	"fields": [ {
-		"name":    "Stats",
-		"id":     3,
-		"resultNode": 501,
-		"nodes": [
-			{
-				"id":        501,
-				"label":      "Add",
-				"fxn":        "ADD",
-				"inputNodes": [502,503],
-				"position":   { "x": 600, "y": 200 }
-			},
-			{
-				"id":        502,
-				"label":      "Add",
-				"fxn":        "ADD",
-				"inputNodes": [503,null],
-				"position":   { "x": 400, "y": 160 }
-			},
-			{
-				"id":        503,
-				"label":      "Add",
-				"fxn":        "ADD",
-				"inputNodes": [null,null],
-				"position":   { "x": 200, "y": 280 }
-			}
-		],
-		"children": [ {
-			"name":     "Attributes",
-			"id":      4,
-			"children": [
-				{ "name": "Strength",     "id": 5,  "children": [ { "name": "Modifier", "id": 6,  "children": [] } ] },
-				{ "name": "Dexterity",    "id": 7,  "children": [ { "name": "Modifier", "id": 8,  "children": [] } ] },
-				{ "name": "Constitution", "id": 9,  "children": [ { "name": "Modifier", "id": 10, "children": [] } ] },
-				{ "name": "Intelligence", "id": 11, "children": [ { "name": "Modifier", "id": 12, "children": [] } ] },
-				{ "name": "Wisdom",       "id": 13, "children": [ { "name": "Modifier", "id": 14, "children": [] } ] },
-				{ "name": "Charisma",     "id": 15, "children": [ { "name": "Modifier", "id": 16, "children": [] } ] }
-			]
-		},
-		{
-			"name":     "Saves",
-			"id":      17,
-			"children": [
-				{ "name": "Fortitude", "id": 18, "children": [] },
-				{ "name": "Reflex",    "id": 19, "children": [] },
-				{ "name": "Will",      "id": 20, "children": [] }
-			]
-		},
-		{
-			"name":     "Skills",
-			"id":      21,
-			"children": [
-				{ "name": "Acrobatics",     "id": 22, "children": [] },
-				{ "name": "Appraise",       "id": 23, "children": [] },
-				{ "name": "Bluff",          "id": 24, "children": [] },
-				{ "name": "Climb",          "id": 25, "children": [] },
-				{ "name": "Craft",          "id": 26, "children": [] },
-				{ "name": "Diplomacy",      "id": 27, "children": [] },
-				{ "name": "Disable Device", "id": 28, "children": [] },
-				{ "name": "Disguise",       "id": 29, "children": [] },
-				{ "name": "Escape Artist",  "id": 30, "children": [] },
-				{ "name": "Fly",            "id": 31, "children": [] },
-				{ "name": "Handle Animal",  "id": 32, "children": [] },
-				{ "name": "Heal",           "id": 33, "children": [] },
-				{ "name": "Intimidate",     "id": 34, "children": [] },
-				{
-					"name":     "Knowledge",
-					"id":      35,
-					"children": [
-						{ "name": "Arcana",        "id": 36, "children": [] },
-						{ "name": "Dungeoneering", "id": 37, "children": [] },
-						{ "name": "Engineering",   "id": 38, "children": [] },
-						{ "name": "Geography",     "id": 39, "children": [] },
-						{ "name": "History",       "id": 41, "children": [] },
-						{ "name": "Local",         "id": 42, "children": [] },
-						{ "name": "Nature",        "id": 43, "children": [] },
-						{ "name": "Nobility",      "id": 44, "children": [] },
-						{ "name": "Planes",        "id": 45, "children": [] },
-						{ "name": "Religion",      "id": 46, "children": [] }
+	"graph": {
+		"NODE-0000": {
+			"name": "Ability Mod",
+			"inputNames": [ "Value" ],
+			"outputNames": [ "Modifier" ],
+			"definition": {
+				"MEMBER-0000": {
+					"node": "PRIMITIVE-subtract",
+					"inputs": [
+						{ "groupInput": 0 },
+						10
 					]
 				},
-				{ "name": "Linguistics",      "id": 47, "children": [] },
-				{ "name": "Perception",       "id": 48, "children": [] },
-				{ "name": "Perform",          "id": 49, "children": [] },
-				{ "name": "Profession",       "id": 51, "children": [] },
-				{ "name": "Ride",             "id": 52, "children": [] },
-				{ "name": "Sense Motive",     "id": 53, "children": [] },
-				{ "name": "Sleight of Hand",  "id": 54, "children": [] },
-				{ "name": "Spellcraft",       "id": 55, "children": [] },
-				{ "name": "Stealth",          "id": 56, "children": [] },
-				{ "name": "Survival",         "id": 57, "children": [] },
-				{ "name": "Swim",             "id": 58, "children": [] },
-				{ "name": "Use Magic Device", "id": 59, "children": [] }
+				"MEMBER-0001": {
+					"node": "PRIMITIVE-divide",
+					"inputs": [
+						{ "member": "MEMBER-0000", "index": 0 },
+						2
+					]
+				},
+				"MEMBER-0002": {
+					"node": "PRIMITIVE-floor",
+					"inputs": [{ "member": "MEMBER-0001", "index": 0 }]
+				}
+			},
+			"outputs": [
+				{ "member": "MEMBER-0002", "index": 0 }
 			]
-		} ]
-	} ]
+		}
+	},
+	"layout": {
+		"MEMBER-0000": { "x": 2, "y": 2 },
+		"MEMBER-0001": { "x": 8, "y": 2 },
+		"MEMBER-0002": { "x": 14, "y": 2 }
+	}
 }
