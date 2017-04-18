@@ -21,7 +21,7 @@ const navItem: MenuItem = {
 };
 
 
-const treeItems = Array( 12 ).map( () => ({ id: generate( 'FIELD' ) , title: 'item' }));
+const treeItems = Array( 12 ).fill( 0 ).map( () => ({ id: generate( 'FIELD' ) , title: 'item' }));
 
 
 export default ({ path, className, ...attrs }: Props ) => {
