@@ -74,6 +74,7 @@ module.exports = {
 	devServer: {
 		hot: true,
 		inline: false,
+		port: 3000,
 	},
 
 	plugins: [
