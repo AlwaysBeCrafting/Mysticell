@@ -11,3 +11,5 @@ ReactDOM.render(
 	<Editor path={ [] }/>,
 	document.querySelector( '.root' ),
 );
+
+

@@ -1,36 +1,28 @@
 const path = require( 'path' );
 const autoprefixer = require('autoprefixer');
 const webpack = require('webpack');
-const findCacheDir = require('find-cache-dir');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
-const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
-const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
-const getClientEnvironment = require('./env');
-const paths = require('./paths');
 
+const paths = require( './paths' );
 const publicPath = '/';
 const publicUrl = '';
-const env = getClientEnvironment(publicUrl);
 
 module.exports = {
 	devtool: 'source-map',
-	entry:   [
-		require.resolve('react-dev-utils/webpackHotDevClient'),
-		require.resolve('./polyfills'),
-		paths.appIndexJs,
+	entry: [
+		'react-hot-loader/patch',
+		'webpack-dev-server/client?http://localhost:8080',
+		'webpack/hot/only-dev-server',
+		paths.appIndex,
 	],
 	output: {
-		path:     paths.appBuild,
+		path:     paths.appDist,
 		pathinfo: true,
 		filename: 'static/js/bundle.js',
 		publicPath,
 	},
 	resolve: {
 		extensions: [ '.js', '.jsx', '.json', '.ts', '.tsx' ],
-		alias:      {
-			'react-native': 'react-native-web',
-		},
 		modules: [
 			path.resolve( __dirname, '../src' ),
 			'node_modules',
@@ -62,16 +54,16 @@ module.exports = {
 				],
 			},
 			{
-				test:   /\.(ico|jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2)(\?.*)?$/,
+				test: /\.(ico|jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2)(\?.*)?$/,
 				loader: 'file-loader',
-				options:  {
+				options: {
 					name: 'static/media/[name].[hash:8].[ext]',
 				},
 			},
 			{
-				test:   /\.(mp4|webm|wav|mp3|m4a|aac|oga)(\?.*)?$/,
+				test: /\.(mp4|webm|wav|mp3|m4a|aac|oga)(\?.*)?$/,
 				loader: 'url-loader',
-				options:  {
+				options: {
 					limit: 10000,
 					name:  'static/media/[name].[hash:8].[ext]',
 				},
@@ -79,22 +71,17 @@ module.exports = {
 		],
 	},
 
+	devServer: {
+		hot: true,
+		inline: false,
+	},
+
 	plugins: [
-		new InterpolateHtmlPlugin({
-			PUBLIC_URL: publicUrl,
-		}),
 		new HtmlWebpackPlugin({
 			inject:   true,
 			template: paths.appHtml,
 		}),
-		new webpack.DefinePlugin(env),
+		new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"development"' }),
 		new webpack.HotModuleReplacementPlugin(),
-		new CaseSensitivePathsPlugin(),
-		new WatchMissingNodeModulesPlugin(paths.appNodeModules),
 	],
-	node: {
-		fs:  'empty',
-		net: 'empty',
-		tls: 'empty',
-	},
 };
