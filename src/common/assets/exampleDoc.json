@@ -1,14 +1,13 @@
 {
 	"id": "DOCUMENT-0000",
 	"title": "Example Document",
-	"sheets": [
-		{
-			"id": "SHEET-0000",
+	"sheets": {
+		"SHEET-0000": {
 			"title": "Sheet 1",
 			"size": { "width": 16, "height": 22 },
 			"cells": []
 		}
-	],
+	},
 	"graph": {
 		"NODE-0000": {
 			"name": "Ability Mod",
