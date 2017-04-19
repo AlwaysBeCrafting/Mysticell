@@ -1,4 +1,65 @@
+@import '~common/styles/colors';
+@import '~common/styles/dimensions';
+
+
+$dimen-cellSize: $dimen-graph-cell-size;
+
+$dimen-cellLineStart: $dimen-cellSize - 1px;
+$dimen-cellLineEnd: $dimen-cellSize;
+
+$dimen-panelWidth: $dimen-cellSize * 4;
+
+$color-gridLine: rgba( $color-brand-primary, 0.2 );
+
+
 .graphEditor {
 	flex: 1 0 auto;
 	position: relative;
+	display: flex;
+	flex-flow: column nowrap;
 }
+	.graphEditor-toolbar {
+		flex: 0 0 $dimen-toolbar-size;
+	}
+
+	.graphEditor-nodes {
+		flex: 1 0 auto;
+		display: flex;
+		flex-flow: row nowrap;
+	}
+		.graphEditor-nodes-panel {
+			flex: 0 0 $dimen-panelWidth;
+		}
+
+		.graphEditor-nodes-leftPanel {
+			border-right: solid 1px $color-gridLine;
+		}
+
+		.graphEditor-nodes-rightPanel {
+			border-left: solid 1px $color-gridLine;
+		}
+
+		.graphEditor-nodes-grid {
+			flex: 1 0 auto;
+			background:
+				repeating-linear-gradient(
+					transparent,
+					transparent $dimen-cellLineStart,
+					$color-gridLine $dimen-cellLineStart,
+					$color-gridLine $dimen-cellLineEnd
+				),
+				repeating-linear-gradient(
+					90deg,
+					transparent,
+					transparent $dimen-cellLineStart,
+					$color-gridLine $dimen-cellLineStart,
+					$color-gridLine $dimen-cellLineEnd
+				);
+		}
+
+	.graphEditor-fab {
+		background: $color-brand-primary;
+		position: absolute;
+		right: $dimen-keyline-padding;
+		bottom: $dimen-keyline-padding;
+	}

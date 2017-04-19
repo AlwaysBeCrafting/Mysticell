@@ -12,7 +12,12 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {}
 
 export default ({ className, ...attrs }: Props ) => (
 	<div { ...attrs } className={ classNames( 'graphEditor', className ) }>
-		<Toolbar title="Editor" />
-		<FAB icon="add" />
+		<Toolbar title="Editor" className="graphEditor-toolbar" />
+		<div className="graphEditor-nodes">
+			<div className="graphEditor-nodes-panel graphEditor-nodes-leftPanel" />
+			<div className="graphEditor-nodes-grid" />
+			<div className="graphEditor-nodes-panel graphEditor-nodes-rightPanel" />
+		</div>
+		<FAB icon="add" className="graphEditor-fab" />
 	</div>
 );

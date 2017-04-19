@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 import { Editor } from 'components/pages';
 
@@ -12,7 +13,7 @@ const rootElem = document.querySelector( '.root' );
 
 
 const renderRoot = () => {
-	const editor = <Editor path={ [] }/>;
+	const editor = <Router><Editor /></Router>;
 	ReactDOM.render(
 		( process.env.NODE_ENV === 'development' )
 			? <AppContainer>{ editor }</AppContainer>

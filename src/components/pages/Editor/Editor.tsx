@@ -1,18 +1,17 @@
 import * as classNames from 'classnames';
 import * as React from 'react';
+import { Route } from 'react-router-dom';
 
-import { MenuItem } from 'data/common';
 import { generate } from 'common/util';
+import { MenuItem } from 'data/common';
 
 import { Toolbar, TreeView } from 'components/molecules';
-import { GraphEditor, SheetEditor } from 'components/organisms';
+import { GraphEditor } from 'components/organisms';
 
 import './Editor.scss';
 
 
-interface Props extends React.HTMLAttributes<HTMLElement> { // cannot find name HTMLMainElement :<
-	path: string[];
-}
+interface Props extends React.HTMLAttributes<HTMLElement> {} // cannot find name HTMLMainElement :<
 
 
 const navItem: MenuItem = {
@@ -24,16 +23,12 @@ const navItem: MenuItem = {
 const treeItems = Array( 12 ).fill( 0 ).map( () => ({ id: generate( 'FIELD' ) , title: 'item' }));
 
 
-export default ({ path, className, ...attrs }: Props ) => {
-	const ContentEditor = path.length ? GraphEditor : SheetEditor;
-
-	return (
-		<main { ...attrs } className={ classNames( 'editor', className ) }>
-			<Toolbar title="Mysticell" className="editor-appbar mod-inverted" navItem={ navItem } />
-			<div className="editor-document">
-				<TreeView className="editor-document-nav" items={ treeItems } expandedItems={ [] } />
-				{ <ContentEditor className="editor-document-content" /> }
-			</div>
-		</main>
-	);
-};
+export default ({ className, ...attrs }: Props ) => (
+	<main { ...attrs } className={ classNames( 'editor', className ) }>
+		<Toolbar title="Mysticell" className="editor-appbar mod-inverted" navItem={ navItem } />
+		<div className="editor-document">
+			<TreeView className="editor-document-nav" items={ treeItems } expandedItems={ [] } />
+			<Route exact path="/" render={ () => <GraphEditor className="editor-document-content" /> } />
+		</div>
+	</main>
+);
