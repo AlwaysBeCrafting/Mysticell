@@ -1,5 +1,6 @@
 import * as classNames from 'classnames';
 import * as React from 'react';
+import { RouteComponentProps } from 'react-router';
 
 import { FAB } from 'components/atoms';
 import { Toolbar } from 'components/molecules';
@@ -7,12 +8,16 @@ import { Toolbar } from 'components/molecules';
 import './GraphEditor.scss';
 
 
-interface Props extends React.HTMLAttributes<HTMLDivElement> {}
+export interface RouteParams {
+	id: string;
+}
+
+interface Props extends React.HTMLAttributes<HTMLDivElement>, RouteComponentProps<RouteParams> {}
 
 
-export default ({ className, ...attrs }: Props ) => (
+export default ({ className, match, ...attrs }: Props ) => (
 	<div { ...attrs } className={ classNames( 'graphEditor', className ) }>
-		<Toolbar title="Editor" className="graphEditor-toolbar" />
+		<Toolbar title={ match.params.id } className="graphEditor-toolbar" />
 		<div className="graphEditor-nodes">
 			<div className="graphEditor-nodes-panel graphEditor-nodes-leftPanel" />
 			<div className="graphEditor-nodes-grid" />
