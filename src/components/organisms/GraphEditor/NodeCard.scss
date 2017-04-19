@@ -1,0 +1,19 @@
+$dimen-nodeCard-rowHeight: 40px;
+
+.nodeCard {
+	display: flex;
+	flex-flow: column nowrap;
+}
+	.nodeCard-row {
+		flex: 0 0 $dimen-nodeCard-rowHeight;
+	}
+
+	.nodeCard-headerRow {
+		display: flex;
+		flex-flow: row nowrap;
+	}
+		.nodeCard-headerRow-name {
+			flex: 1 0 auto;
+			font-size: 20px;
+			font-weight: 500;
+		}
