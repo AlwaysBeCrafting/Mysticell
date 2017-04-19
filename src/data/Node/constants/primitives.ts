@@ -1,12 +1,10 @@
-import { makeError, Param } from './Param';
+import { ErrorParam, Param, PrimitiveNodeDefinition } from 'data/Node/model';
 
-
-interface PrimitiveNodeDefinition {
-	name: string;
-	inputNames: string[];
-	outputNames: string[];
-	exec: ( ...params: Param[] ) => Param[];
-}
+export const makeError = ( message ): ErrorParam => ({
+	type: 'error',
+	value: 'ERR',
+	message,
+});
 
 
 export const add: PrimitiveNodeDefinition = {
@@ -59,6 +57,3 @@ export const divide: PrimitiveNodeDefinition = {
 		return [makeError( 'Both arguments to Divide must be numbers' )];
 	},
 };
-
-
-export default PrimitiveNodeDefinition;

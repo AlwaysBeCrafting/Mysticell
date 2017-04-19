@@ -11,6 +11,7 @@ interface Member extends Id {
 
 
 export interface UserNode extends Node {
+	type: 'group' | 'input' | 'computed';
 	definition: Map<string, Member>;
 	outputs: Connection[];
 }
