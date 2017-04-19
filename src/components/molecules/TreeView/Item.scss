@@ -14,6 +14,10 @@
 		padding: 0 $dimen-keyline-padding;
 		align-items: center
 	}
+
+	.treeView-item-body:hover {
+		background: $color-black-alpha-12;
+	}
 		.treeView-item-body-icon {
 			flex: 0 0 $dimen-icon-size;
 			font-size: $dimen-icon-size;
