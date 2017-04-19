@@ -1,8 +1,7 @@
 import { Id } from 'common/types';
-import { generateForPrimitive } from 'common/util/id';
+import { addIdToNamedExports, generateForPrimitive } from 'common/util';
 
 import PrimitiveNodeDefinition, * as PrimitiveDefs from './Primitives';
-import { addIdToNamedExports } from './util';
 
 
 interface PrimitiveNode extends PrimitiveNodeDefinition, Id {}

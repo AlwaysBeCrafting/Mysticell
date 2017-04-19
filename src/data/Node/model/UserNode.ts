@@ -4,14 +4,15 @@ import { Connection } from './Connection';
 
 
 interface Member extends Id {
-	node: number;
+	node: string;
 	label: string;
-	inputs: Map<number, Connection>;
+	inputs: Map<string, Connection>;
 }
 
 
 export interface UserNode extends Node {
-	members: Map<number, Member>;
+	definition: Map<string, Member>;
+	outputs: Connection[];
 }
 
 export default UserNode;
