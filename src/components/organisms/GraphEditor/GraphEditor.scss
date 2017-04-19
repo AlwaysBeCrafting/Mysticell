@@ -23,25 +23,26 @@ $color-gridLine: rgba( $color-brand-primary, 0.2 );
 		border-bottom: solid 1px $color-divider;
 	}
 
-	.graphEditor-nodes {
+	.graphEditor-graph {
 		flex: 1 0 auto;
 		display: flex;
 		flex-flow: row nowrap;
+		overflow-x: auto;
 	}
-		.graphEditor-nodes-panel {
+		.graphEditor-graph-panel {
 			flex: 0 0 $dimen-panelWidth;
 		}
 
-		.graphEditor-nodes-leftPanel {
+		.graphEditor-graph-leftPanel {
 			border-right: solid 1px $color-gridLine;
 		}
 
-		.graphEditor-nodes-rightPanel {
+		.graphEditor-graph-rightPanel {
 			border-left: solid 1px $color-gridLine;
 		}
 
-		.graphEditor-nodes-grid {
-			flex: 1 0 auto;
+		.graphEditor-graph-grid {
+			flex: 1 0 $dimen-cellSize * 6;
 			background:
 				repeating-linear-gradient(
 					transparent,

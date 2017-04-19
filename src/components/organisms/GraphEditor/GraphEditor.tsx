@@ -18,10 +18,10 @@ interface Props extends React.HTMLAttributes<HTMLDivElement>, RouteComponentProp
 export default ({ className, match, ...attrs }: Props ) => (
 	<div { ...attrs } className={ classNames( 'graphEditor', className ) }>
 		<Toolbar title={ match.params.id } className="graphEditor-toolbar" />
-		<div className="graphEditor-nodes">
-			<div className="graphEditor-nodes-panel graphEditor-nodes-leftPanel" />
-			<div className="graphEditor-nodes-grid" />
-			<div className="graphEditor-nodes-panel graphEditor-nodes-rightPanel" />
+		<div className="graphEditor-graph">
+			<div className="graphEditor-graph-panel graphEditor-graph-leftPanel" />
+			<div className="graphEditor-graph-grid" />
+			<div className="graphEditor-graph-panel graphEditor-graph-rightPanel" />
 		</div>
 		<FAB icon="add" className="graphEditor-fab" />
 	</div>
