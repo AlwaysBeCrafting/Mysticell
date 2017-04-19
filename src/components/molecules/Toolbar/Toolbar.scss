@@ -2,6 +2,10 @@
 @import '~common/styles/dimensions.scss';
 
 
+$dimen-toolbar-padding: $dimen-keyline-padding - (( $dimen-toolbar-size - $dimen-icon-size ) / 2 );
+$dimen-title-margin: $dimen-keyline-content - ( $dimen-toolbar-size + $dimen-toolbar-padding );
+
+
 .toolbar {
 	flex: 0 0 64px;
 	display: flex;
@@ -9,7 +13,7 @@
 	justify-content: flex-start;
 	align-items: stretch;
 	background: #fafafa;
-	// padding: 0 $dimen-keyline-padding;
+	padding: 0 $dimen-toolbar-padding;
 	font-size: 20px;
 	color: $color-text-primary;
 }
@@ -24,6 +28,7 @@
 	.toolbar-title {
 		flex: 1 0 auto;
 		align-self: center;
+		margin: 0 $dimen-title-margin;
 		font-size: 20px;
 		font-weight: 500;
 	}
