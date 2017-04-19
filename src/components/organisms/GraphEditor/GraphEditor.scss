@@ -20,6 +20,7 @@ $color-gridLine: rgba( $color-brand-primary, 0.2 );
 }
 	.graphEditor-toolbar {
 		flex: 0 0 $dimen-toolbar-size;
+		border-bottom: solid 1px $color-divider;
 	}
 
 	.graphEditor-nodes {

@@ -3,7 +3,8 @@
 
 
 $dimen-toolbar-padding: $dimen-keyline-padding - (( $dimen-toolbar-size - $dimen-icon-size ) / 2 );
-$dimen-title-margin: $dimen-keyline-content - ( $dimen-toolbar-size + $dimen-toolbar-padding );
+$dimen-title-margin: $dimen-keyline-padding - $dimen-toolbar-padding;
+$dimen-title-margin-afterNav: $dimen-keyline-content - ( $dimen-toolbar-size + $dimen-toolbar-padding );
 
 
 .toolbar {
@@ -31,4 +32,8 @@ $dimen-title-margin: $dimen-keyline-content - ( $dimen-toolbar-size + $dimen-too
 		margin: 0 $dimen-title-margin;
 		font-size: 20px;
 		font-weight: 500;
+	}
+
+	.toolbar-nav + .toolbar-title {
+		margin: 0 $dimen-title-margin-afterNav;
 	}
