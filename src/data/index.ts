@@ -11,7 +11,7 @@ import UiState from './UI/model';
 
 export interface AppState {
 	document: Document;
-	UI: UiState;
+	ui: UiState;
 }
 
 
