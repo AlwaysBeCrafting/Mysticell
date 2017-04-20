@@ -1,9 +1,13 @@
 import * as classNames from 'classnames';
 import * as React from 'react';
+import { connect } from 'react-redux';
 import { match } from 'react-router';
 
 import { FAB } from 'components/atoms';
 import { Toolbar } from 'components/molecules';
+
+import { AppState } from 'data';
+import { Node } from 'data/Node/model';
 
 import './GraphEditor.scss';
 
@@ -12,12 +16,20 @@ export interface RouteParams {
 	id: string;
 }
 
-interface Props extends React.HTMLAttributes<HTMLDivElement> {
+interface PublicProps extends React.HTMLAttributes<HTMLDivElement> {
 	match: match<RouteParams>;
 }
 
+interface StateProps {
+	nodes: Map<string, Node>;
+}
 
-export default ({ className, match, ...attrs }: Props ) => (
+interface DispatchProps {}
+
+type Props = StateProps & DispatchProps & PublicProps;
+
+
+const GraphEditor = ({ className, match, ...attrs }: Props ) => (
 	<div { ...attrs } className={ classNames( 'graphEditor', className ) }>
 		<Toolbar title={ match.params.id } className="graphEditor-toolbar" />
 		<div className="graphEditor-graph">
@@ -28,3 +40,8 @@ export default ({ className, match, ...attrs }: Props ) => (
 		<FAB icon="add" className="graphEditor-fab" />
 	</div>
 );
+
+
+export default connect<StateProps, DispatchProps, PublicProps>(
+	( state: AppState ) => ({ nodes: state.document.nodes }),
+)( GraphEditor );

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
+import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { createStore } from 'redux';
 
@@ -26,7 +27,7 @@ store.dispatch( loadDocument( require( 'common/assets/exampleDoc.json' )));
 const rootElem = document.querySelector( '.root' );
 
 const renderRoot = () => {
-	const editor = <Router><Editor /></Router>;
+	const editor = <Provider store={ store }><Router><Editor /></Router></Provider>;
 	ReactDOM.render(
 		( process.env.NODE_ENV === 'development' )
 			? <AppContainer>{ editor }</AppContainer>
