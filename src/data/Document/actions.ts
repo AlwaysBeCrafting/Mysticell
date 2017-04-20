@@ -1,3 +1,23 @@
-export interface Action {}
+import { Document, DocumentJson, documentJsonToState } from './model';
 
+
+export namespace ActionTypes {
+	export const LOAD_DOCUMENT = '[Document] Load';
+}
+
+
+interface LoadDocumentAction {
+	readonly type: typeof ActionTypes.LOAD_DOCUMENT;
+	payload: { documentJson: DocumentJson };
+}
+
+const loadDocument = ( documentJson: DocumentJson ): Document => documentJsonToState( documentJson );
+
+
+type Action = LoadDocumentAction;
+
+
+export { loadDocument };
+
+export { Action };
 export default Action;

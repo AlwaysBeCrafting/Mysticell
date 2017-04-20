@@ -19,7 +19,7 @@
 				"MEMBER-0000": {
 					"node": "PRIMITIVE-subtract",
 					"inputs": [
-						{ "groupInput": 0 },
+						{ "parent": 0 },
 						10
 					]
 				},
@@ -32,7 +32,9 @@
 				},
 				"MEMBER-0002": {
 					"node": "PRIMITIVE-floor",
-					"inputs": [{ "member": "MEMBER-0001", "index": 0 }]
+					"inputs": [
+						{ "member": "MEMBER-0001", "index": 0 }
+					]
 				}
 			},
 			"outputs": [

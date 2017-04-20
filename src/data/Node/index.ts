@@ -2,13 +2,11 @@ import { Action, ActionTypes } from './actions';
 import { UserNode } from './model';
 
 
-
 export default ( state = new Map(), action: Action ): Map<string, UserNode> => {
 	switch ( action.type ) {
 
 		case ActionTypes.CREATE_NODE:
-			// Create a new node
-			return new Map( state ); //.set( newNode.id, newNode );
+			return new Map( state ).set( action.payload.node.id, action.payload.node );
 
 		case ActionTypes.DELETE_NODE:
 			const copiedGraph = new Map( state );
@@ -16,15 +14,12 @@ export default ( state = new Map(), action: Action ): Map<string, UserNode> => {
 			return copiedGraph;
 
 		case ActionTypes.CONNECT_NODE:
-			// Create connected node copy
-			return new Map( state ); //.set( connectedNode.id, connectedNode );
+			return new Map( state );
 
 		case ActionTypes.DISCONNECT_NODE:
-			// Create disconnected node copy
-			return new Map( state ); //.set( disconnectedNode.id, disconnectedNode );
+			return new Map( state );
 
 		case ActionTypes.UPDATE_NODE:
-			// Do all the heavy lifting
 			return new Map( state );
 
 		default: return state;
