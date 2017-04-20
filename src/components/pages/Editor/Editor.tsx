@@ -1,9 +1,13 @@
 import * as classNames from 'classnames';
 import * as React from 'react';
+import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, RouteComponentProps } from 'react-router-dom';
 
 import { generate } from 'common/util';
+
+import { AppState } from 'data';
 import { MenuItem } from 'data/common';
+import { Node } from 'data/Node/model';
 
 import { Toolbar, TreeView } from 'components/molecules';
 import { GraphEditor, GraphEditorRouteParams } from 'components/organisms';
@@ -11,7 +15,15 @@ import { GraphEditor, GraphEditorRouteParams } from 'components/organisms';
 import './Editor.scss';
 
 
-interface Props extends React.HTMLAttributes<HTMLElement> {} // cannot find name HTMLMainElement :<
+interface PublicProps extends React.HTMLAttributes<HTMLElement> {} // cannot find name HTMLMainElement :<
+
+interface StateProps {
+	nodes: Map<string, Node>;
+}
+
+interface DispatchProps {}
+
+type Props = StateProps & DispatchProps & PublicProps;
 
 
 const navItem: MenuItem = {
@@ -28,7 +40,7 @@ const renderGraphEditor = ( props: RouteComponentProps<GraphEditorRouteParams> )
 );
 
 
-export default ({ className, ...attrs }: Props ) => (
+const Editor = ({ className, nodes, ...attrs }: Props ) => (
 	<Router>
 		<main { ...attrs } className={ classNames( 'editor', className ) }>
 			<Toolbar title="Mysticell" className="editor-appbar mod-inverted" navItem={ navItem } />
@@ -39,3 +51,8 @@ export default ({ className, ...attrs }: Props ) => (
 		</main>
 	</Router>
 );
+
+
+export default connect<StateProps, DispatchProps, PublicProps>(
+	({ document }: AppState ) => ({ nodes: document.nodes }),
+)( Editor );
