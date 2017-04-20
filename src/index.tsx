@@ -12,8 +12,11 @@ import { loadDocument } from 'data/Document/actions';
 import 'common/styles/fonts.scss';
 import 'common/styles/normalize.scss';
 
-
-const store = createStore( reducer );
+const store = createStore(
+	reducer,
+	// tslint:disable-next-line:no-string-literal
+	window['__REDUX_DEVTOOLS_EXTENSION__'] && window['__REDUX_DEVTOOLS_EXTENSION__'](),
+);
 
 
 const rootElem = document.querySelector( '.root' );
