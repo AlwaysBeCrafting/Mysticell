@@ -3,6 +3,7 @@ import * as ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
+import { devToolsEnhancer } from 'redux-devtools-extension';
 
 import { Editor } from 'components/pages';
 
@@ -14,11 +15,7 @@ import 'common/styles/fonts.scss';
 import 'common/styles/normalize.scss';
 
 
-const store = createStore<AppState>(
-	reducer,
-	// tslint:disable-next-line:no-string-literal
-	window['__REDUX_DEVTOOLS_EXTENSION__'] && window['__REDUX_DEVTOOLS_EXTENSION__'](),
-);
+const store = createStore<AppState>( reducer, devToolsEnhancer() );
 
 store.dispatch( loadDocument( require( 'common/assets/exampleDoc.json' )));
 
