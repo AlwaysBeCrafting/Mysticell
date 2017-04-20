@@ -8,7 +8,7 @@
 	align-items: stretch;
 }
 	.treeView-item-body {
-		flex: 0 0 48px;
+		flex: 0 0 $dimen-listItem-size;
 		display: flex;
 		flex-flow: row nowrap;
 		padding: 0 $dimen-keyline-padding;
