@@ -1,6 +1,6 @@
 import * as classNames from 'classnames';
 import * as React from 'react';
-import { RouteComponentProps } from 'react-router';
+import { match } from 'react-router';
 
 import { FAB } from 'components/atoms';
 import { Toolbar } from 'components/molecules';
@@ -12,7 +12,9 @@ export interface RouteParams {
 	id: string;
 }
 
-interface Props extends React.HTMLAttributes<HTMLDivElement>, RouteComponentProps<RouteParams> {}
+interface Props extends React.HTMLAttributes<HTMLDivElement> {
+	match: match<RouteParams>;
+}
 
 
 export default ({ className, match, ...attrs }: Props ) => (

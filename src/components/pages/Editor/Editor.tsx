@@ -24,7 +24,7 @@ const treeItems = Array( 12 ).fill( 0 ).map( () => ({ id: generate( 'FIELD' ) , 
 
 
 const renderGraphEditor = ( props: RouteComponentProps<GraphEditorRouteParams> ) => (
-	<GraphEditor className="editor-document-content" { ...props } />
+	<GraphEditor className="editor-document-content" match={ props.match } />
 );
 
 
