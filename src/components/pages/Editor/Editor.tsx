@@ -1,6 +1,6 @@
 import * as classNames from 'classnames';
 import * as React from 'react';
-import { Route, RouteComponentProps } from 'react-router-dom';
+import { BrowserRouter as Router, Route, RouteComponentProps } from 'react-router-dom';
 
 import { generate } from 'common/util';
 import { MenuItem } from 'data/common';
@@ -29,11 +29,13 @@ const renderGraphEditor = ( props: RouteComponentProps<GraphEditorRouteParams> )
 
 
 export default ({ className, ...attrs }: Props ) => (
-	<main { ...attrs } className={ classNames( 'editor', className ) }>
-		<Toolbar title="Mysticell" className="editor-appbar mod-inverted" navItem={ navItem } />
-		<div className="editor-document">
-			<TreeView className="editor-document-nav" items={ treeItems } expandedItems={ [] } />
-			<Route exact path="/formula/:id" render={ renderGraphEditor } />
-		</div>
-	</main>
+	<Router>
+		<main { ...attrs } className={ classNames( 'editor', className ) }>
+			<Toolbar title="Mysticell" className="editor-appbar mod-inverted" navItem={ navItem } />
+			<div className="editor-document">
+				<TreeView className="editor-document-nav" items={ treeItems } expandedItems={ [] } />
+				<Route exact path="/formula/:id" render={ renderGraphEditor } />
+			</div>
+		</main>
+	</Router>
 );
