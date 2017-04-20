@@ -1,4 +1,3 @@
-export { Connection } from './Connection';
 export { Node } from './Node';
 export { UserNode } from './UserNode';
 export { Param, ErrorParam } from './Param';

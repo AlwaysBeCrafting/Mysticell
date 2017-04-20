@@ -9,7 +9,7 @@
 			"cells": []
 		}
 	},
-	"graph": {
+	"nodes": {
 		"NODE-0000": {
 			"name": "Ability Mod",
 			"type": "group",

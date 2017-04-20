@@ -30,6 +30,7 @@
         "member-access": [
             false
         ],
+        "no-namespace": false,
         "only-arrow-functions": [
             true
         ]
