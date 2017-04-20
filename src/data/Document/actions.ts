@@ -1,4 +1,4 @@
-import { Document, DocumentJson, documentJsonToState } from './model';
+import { DocumentJson } from './model';
 
 
 export namespace ActionTypes {
@@ -11,7 +11,10 @@ interface LoadDocumentAction {
 	payload: { documentJson: DocumentJson };
 }
 
-const loadDocument = ( documentJson: DocumentJson ): Document => documentJsonToState( documentJson );
+const loadDocument = ( documentJson: DocumentJson ): LoadDocumentAction => ({
+	type: ActionTypes.LOAD_DOCUMENT,
+	payload: { documentJson },
+});
 
 
 type Action = LoadDocumentAction;

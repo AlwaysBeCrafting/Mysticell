@@ -1,10 +1,5 @@
-import { Anchor, Position } from 'common/types';
+interface UiState {}
 
 
-export interface UiState {
-	element?: JSX.Element;
-	position: Position;
-	anchor?: Anchor;
-}
-
+export { UiState };
 export default UiState;

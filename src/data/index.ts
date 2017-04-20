@@ -1,7 +1,8 @@
 import { combineReducers } from 'redux';
 
-import document, { Document } from './Document';
+import document from './Document';
 import DocumentAction from './Document/actions';
+import { Document } from './Document/model';
 
 import ui from './UI';
 import UiAction from './UI/actions';

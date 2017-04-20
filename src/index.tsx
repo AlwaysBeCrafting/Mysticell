@@ -2,11 +2,18 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { createStore } from 'redux';
 
 import { Editor } from 'components/pages';
 
+import reducer from 'data';
+import { loadDocument } from 'data/Document/actions';
+
 import 'common/styles/fonts.scss';
 import 'common/styles/normalize.scss';
+
+
+const store = createStore( reducer );
 
 
 const rootElem = document.querySelector( '.root' );
@@ -29,3 +36,5 @@ renderRoot();
 if (( process.env.NODE_ENV === 'development' ) && module.hot ) {
 	module.hot.accept( 'components/pages', renderRoot );
 }
+
+store.dispatch( loadDocument( require( 'common/assets/exampleDoc.json' )));
