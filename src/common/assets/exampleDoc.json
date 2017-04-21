@@ -18,6 +18,7 @@
 			"definition": {
 				"MEMBER-0000": {
 					"node": "PRIMITIVE-subtract",
+					"label": "Subtract",
 					"inputs": [
 						{ "parent": 0 },
 						10
@@ -25,6 +26,7 @@
 				},
 				"MEMBER-0001": {
 					"node": "PRIMITIVE-divide",
+					"label": "Divide",
 					"inputs": [
 						{ "member": "MEMBER-0000", "index": 0 },
 						2
@@ -32,6 +34,7 @@
 				},
 				"MEMBER-0002": {
 					"node": "PRIMITIVE-floor",
+					"label": "Floor",
 					"inputs": [
 						{ "member": "MEMBER-0001", "index": 0 }
 					]
