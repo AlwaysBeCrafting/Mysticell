@@ -15,8 +15,8 @@ interface RouteParams {
 interface Props extends React.HTMLAttributes<HTMLDivElement>, RouteComponentProps<RouteParams> {}
 
 
-const GraphEditor = ({ className, match, ...attrs }: Props ) => (
-	<div { ...attrs } className={ classNames( 'graphEditor', className ) }>
+const GraphEditor = ({ className, match }: Props ) => (
+	<div className={ classNames( 'graphEditor', className ) }>
 		<Toolbar title={ match.params.id } className="graphEditor-toolbar" />
 		<div className="graphEditor-graph">
 			<div className="graphEditor-graph-panel graphEditor-graph-leftPanel" />
@@ -28,5 +28,5 @@ const GraphEditor = ({ className, match, ...attrs }: Props ) => (
 );
 
 
-export { GraphEditor };
+export { GraphEditor, RouteParams };
 export default GraphEditor;
