@@ -1,7 +1,7 @@
 import * as classNames from 'classnames';
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { BrowserRouter as Router, Route, RouteComponentProps } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import { generate } from 'common/util';
 
@@ -10,7 +10,7 @@ import { MenuItem } from 'data/common';
 import { Node } from 'data/Node/model';
 
 import { Toolbar, TreeView } from 'components/molecules';
-import { GraphEditor, GraphEditorRouteParams } from 'components/organisms';
+import { GraphEditor } from 'components/organisms';
 
 import './Editor.scss';
 
@@ -35,18 +35,15 @@ const navItem: MenuItem = {
 const treeItems = Array( 12 ).fill( 0 ).map( () => ({ id: generate( 'FIELD' ) , title: 'item' }));
 
 
-const renderGraphEditor = ( props: RouteComponentProps<GraphEditorRouteParams> ) => (
-	<GraphEditor className="editor-document-content" match={ props.match } />
-);
-
-
 const Editor = ({ className, nodes, ...attrs }: Props ) => (
 	<Router>
 		<main { ...attrs } className={ classNames( 'editor', className ) }>
 			<Toolbar title="Mysticell" className="editor-appbar mod-inverted" navItem={ navItem } />
 			<div className="editor-document">
 				<TreeView className="editor-document-nav" items={ treeItems } expandedItems={ [] } />
-				<Route exact path="/formula/:id" render={ renderGraphEditor } />
+				<Route exact path="/formula/:id" render={ ( routeProps ) => (
+					<GraphEditor className="editor-document-content" { ...routeProps }/>
+				)} />
 			</div>
 		</main>
 	</Router>

@@ -1,6 +1,6 @@
 import * as classNames from 'classnames';
 import * as React from 'react';
-import { match } from 'react-router';
+import { RouteComponentProps } from 'react-router';
 
 import { FAB } from 'components/atoms';
 import { Toolbar } from 'components/molecules';
@@ -8,13 +8,11 @@ import { Toolbar } from 'components/molecules';
 import './GraphEditor.scss';
 
 
-export interface RouteParams {
+interface RouteParams {
 	id: string;
 }
 
-interface Props extends React.HTMLAttributes<HTMLDivElement> {
-	match: match<RouteParams>;
-}
+interface Props extends React.HTMLAttributes<HTMLDivElement>, RouteComponentProps<RouteParams> {}
 
 
 const GraphEditor = ({ className, match, ...attrs }: Props ) => (
