@@ -1,11 +1,11 @@
-import { Connector } from './Connector';
+import { InputConnector, OutputConnector } from './Connector';
 
 
-export interface Connection {
-	from: Connector;
-	to: Connector;
+interface Connection {
+	from: OutputConnector;
+	to: InputConnector;
 }
 
 
-export { Connector };
-export default Connector;
+export { Connection };
+export default Connection;
