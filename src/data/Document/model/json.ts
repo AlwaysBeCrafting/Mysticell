@@ -2,7 +2,8 @@ import { Position } from 'common/types';
 import { dictToMap } from 'common/util';
 
 import { Cell } from 'data/Cell/model';
-import { Node } from 'data/Node/model';
+import { ParamSource } from 'data/common';
+import { UserNode } from 'data/Node/model';
 import { Sheet } from 'data/Sheet/model';
 
 import { Document } from './Document';
@@ -28,11 +29,10 @@ interface SheetJson {
 const sheetJsonToState = ( id: string, sheet: SheetJson ): Sheet => ({ id, ...sheet });
 
 
-type ConnectionJson = string | { parent: number } | { member: string, index: number };
-
 interface GraphMemberJson {
 	node: string;
-	inputs: ConnectionJson;
+	label: string;
+	inputs: ParamSource[];
 }
 
 interface NodeJson {
@@ -40,11 +40,21 @@ interface NodeJson {
 	type: 'group' | 'input' | 'computed';
 	inputNames: string[];
 	outputNames: string[];
-	members: { [id: string]: GraphMemberJson };
-	outputs: ConnectionJson[];
+	definition: { [id: string]: GraphMemberJson };
+	outputs: ParamSource[];
 }
 
-const nodeJsonToState = ( id: string, node: NodeJson ): Node => ({ id, ...node });
+const nodeJsonToState = ( id: string, node: NodeJson ): UserNode => {
+	const definition = dictToMap(
+		node.definition,
+		( memberId, member ) => ({ id: memberId, ...member }),
+	);
+	return {
+		id,
+		...node,
+		definition,
+	};
+};
 
 
 interface DocumentJson {

@@ -1,4 +1,5 @@
-import { ErrorParam, Param, PrimitiveNodeDefinition } from 'data/Node/model';
+import { ErrorParam, Param } from 'data/common';
+import { PrimitiveNodeDefinition } from 'data/Node/model';
 
 export const makeError = ( message ): ErrorParam => ({
 	type: 'error',

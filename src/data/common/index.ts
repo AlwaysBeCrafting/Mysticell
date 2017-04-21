@@ -1,3 +1,3 @@
 export { MenuItem } from './MenuItem';
-export { Connection } from './Connection';
-export { Connector } from './Connector';
+export { Param, ErrorParam } from './Param';
+export { ConnectedParamSource, ValueParamSource, ParamSource } from './ParamSource';

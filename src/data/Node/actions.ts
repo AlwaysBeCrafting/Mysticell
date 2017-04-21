@@ -1,4 +1,4 @@
-import { Connection, Connector } from 'data/common';
+import { ConnectedParamSource, ValueParamSource } from 'data/common';
 import { UserNode } from 'data/Node/model';
 
 
@@ -36,34 +36,34 @@ export const deleteNode = ( nodeId: string ): DeleteNodeAction => ({
 
 interface ConnectNodeAction {
 	readonly type: typeof ActionTypes.CONNECT_NODE;
-	payload: { connection: Connection };
+	payload: { id: string, index: number, source: ConnectedParamSource };
 }
 
-export const connectNode = ( connection: Connection ): ConnectNodeAction => ({
+export const connectNode = ( id: string, index: number, source: ConnectedParamSource ): ConnectNodeAction => ({
 	type: ActionTypes.CONNECT_NODE,
-	payload: { connection },
+	payload: { id, index, source },
 });
 
 
 interface DisconnectNodeAction {
 	readonly type: typeof ActionTypes.DISCONNECT_NODE;
-	payload: { connection: Connection };
+	payload: { id: string, index: number };
 }
 
-export const disconnectNode = ( connection: Connection ): DisconnectNodeAction => ({
+export const disconnectNode = ( id: string, index: number ): DisconnectNodeAction => ({
 	type: ActionTypes.DISCONNECT_NODE,
-	payload: { connection },
+	payload: { id, index },
 });
 
 
 interface UpdateNodeAction {
 	readonly type: typeof ActionTypes.UPDATE_NODE;
-	payload: { pin: Connector, value: string };
+	payload: { id: string, index: number, value: ValueParamSource };
 }
 
-export const updateNode = ( pin: Connector, value: string ): UpdateNodeAction => ({
+export const updateNode = ( id: string, index: number, value: ValueParamSource ): UpdateNodeAction => ({
 	type: ActionTypes.UPDATE_NODE,
-	payload: { pin, value },
+	payload: { id, index, value },
 });
 
 

@@ -1,11 +1,9 @@
 import * as classNames from 'classnames';
 import * as React from 'react';
-import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, RouteComponentProps } from 'react-router-dom';
 
 import { generate } from 'common/util';
 
-import { AppState } from 'data';
 import { MenuItem } from 'data/common';
 
 import { Toolbar, TreeView } from 'components/molecules';
@@ -14,13 +12,7 @@ import { GraphEditor, GraphEditorRouteParams } from 'components/organisms';
 import './Editor.scss';
 
 
-interface PublicProps extends React.HTMLAttributes<HTMLElement> {} // cannot find name HTMLMainElement :<
-
-interface StateProps {}
-
-interface DispatchProps {}
-
-type Props = StateProps & DispatchProps & PublicProps;
+interface Props extends React.HTMLAttributes<HTMLElement> {} // cannot find name HTMLMainElement :<
 
 
 const navItem: MenuItem = {
@@ -54,7 +46,4 @@ const Editor = ({ className }: Props ) => (
 	</Router>
 );
 
-
-export default connect<StateProps, DispatchProps, PublicProps>(
-	({ document }: AppState ) => ({ nodes: document.nodes }),
-)( Editor );
+export default Editor;

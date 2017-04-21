@@ -1,6 +1,6 @@
 import { Id } from 'common/types';
 
-import { Connection } from 'data/common/Connection';
+import { ParamSource } from 'data/common';
 
 import { Node } from './Node';
 
@@ -8,14 +8,14 @@ import { Node } from './Node';
 interface Member extends Id {
 	node: string;
 	label: string;
-	inputs: Map<string, Connection>;
+	inputs: ParamSource[];
 }
 
 
 interface UserNode extends Node {
 	type: 'group' | 'input' | 'computed';
 	definition: Map<string, Member>;
-	outputs: Connection[];
+	outputs: ParamSource[];
 }
 
 
