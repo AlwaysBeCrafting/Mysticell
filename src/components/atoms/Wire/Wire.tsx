@@ -19,10 +19,10 @@ export default ({ startPos, endPos, className, ...attrs }: Props ) => {
 	};
 
 	const pathString = (
-		`M ${ startPos.x },${ startPos.y } ` +
-		`C ${ center.x   },${ startPos.y } ` +
-		`  ${ center.x   },${ endPos.y   } ` +
-		`  ${ endPos.x   },${ endPos.y   } `
+		`M ${ startPos.x * 40 },${ startPos.y  * 40 + 20 } ` +
+		`C ${ center.x   * 40 },${ startPos.y  * 40 + 20 } ` +
+		`  ${ center.x   * 40 },${ endPos.y    * 40 + 20 } ` +
+		`  ${ endPos.x   * 40 },${ endPos.y    * 40 + 20 } `
 	);
 
 	return (

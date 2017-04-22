@@ -10,14 +10,14 @@ import { Node, Primitive } from 'data/Node/model';
 import './NodeCard.scss';
 
 
-const InputRow = ( name: string ) => (
+const renderInputRow = ( name: string ) => (
 	<div className="nodeCard-inputRow nodeCard-row">
 		{ name }
 	</div>
 );
 
 
-const OutputRow = ( name: string ) => (
+const renderOutputRow = ( name: string ) => (
 	<div className="nodeCard-outputRow nodeCard-row">
 		{ name }
 	</div>
@@ -43,11 +43,12 @@ const NodeCard = ({ position, node, definition }: Props ) => {
 			<header className="nodeCard-headerRow">
 				<span className="nodeCard-headerRow-name">{ name }</span>
 			</header>
-			{ definition.outputNames.map( OutputRow ) }
-			{ definition.inputNames.map( InputRow ) }
+			{ definition.outputNames.map( renderOutputRow ) }
+			{ definition.inputNames.map( renderInputRow ) }
 		</Card>
 	);
 };
+
 
 export { NodeCard };
 export default NodeCard;

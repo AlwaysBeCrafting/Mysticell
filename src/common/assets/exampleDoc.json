@@ -26,23 +26,32 @@
 			"definition": "PRIMITIVE-subtract",
 			"label": "Subtract",
 			"inputs": [
-				{ "graph": 0, "userValue": "" },
+				{ "type": "graph", "index": 0, "userValue": "" },
 				10
+			],
+			"outputs": [
+				{ "type": "number", "value": -10 }
 			]
 		},
 		"NODE-0001": {
 			"definition": "PRIMITIVE-divide",
 			"label": "Divide",
 			"inputs": [
-				{ "node": "NODE-0000", "index": 0, "userValue": "" },
+				{ "type": "node", "id": "NODE-0000", "index": 0, "userValue": "" },
 				2
+			],
+			"outputs": [
+				{ "type": "number", "value": -5 }
 			]
 		},
 		"NODE-0002": {
 			"definition": "PRIMITIVE-floor",
 			"label": "Floor",
 			"inputs": [
-				{ "node": "NODE-0001", "index": 0, "userValue": "" }
+				{ "type": "node", "id": "NODE-0001", "index": 0, "userValue": "" }
+			],
+			"outputs": [
+				{ "type": "number", "value": -5 }
 			]
 		}
 	},

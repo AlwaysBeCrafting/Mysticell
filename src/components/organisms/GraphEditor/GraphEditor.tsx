@@ -12,6 +12,8 @@ import { AppState } from 'data';
 import { Graph } from 'data/Graph/model';
 import { Node } from 'data/Node/model';
 
+import { WireLayer } from './WireLayer';
+
 import './GraphEditor.scss';
 
 
@@ -66,9 +68,7 @@ const renderGraph = ( graph: Graph, nodes: Map<string, Node>, layout: Layout ) =
 
 const renderGrid = ( graph: Graph, nodes: Map<string, Node>, layout: Layout ) => (
 	<div className="graphEditor-graph-grid">
-	{ JSON.stringify( graph ) }
-	{ JSON.stringify( nodes ) }
-	{ JSON.stringify( layout ) }
+		<WireLayer graph={ graph } nodes={ nodes } layout={ layout } className="graphEditor-graph-grid-wires" />
 	</div>
 );
 

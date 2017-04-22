@@ -43,6 +43,8 @@ $color-gridLine: rgba( $color-brand-primary, 0.2 );
 
 		.graphEditor-graph-grid {
 			flex: 1 0 $dimen-cellSize * 6;
+			display: flex;
+			flex-flow: column nowrap;
 			width: 0; // Needed for overflow scrolling to work ???
 			background:
 				repeating-linear-gradient(
@@ -59,6 +61,9 @@ $color-gridLine: rgba( $color-brand-primary, 0.2 );
 					$color-gridLine $dimen-cellLineEnd
 				);
 		}
+			.graphEditor-graph-grid-wires {
+				flex: 1 0 100%;
+			}
 
 	.graphEditor-fab {
 		background: $color-brand-primary;

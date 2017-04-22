@@ -24,5 +24,11 @@ type ConnectedParamSource = NodeParamSource | GraphParamSource;
 type ParamSource = ConnectedParamSource | ValueParamSource;
 
 
-export { ConnectedParamSource, ValueParamSource, ParamSource };
+export {
+	NodeParamSource,
+	GraphParamSource,
+	ConnectedParamSource,
+	ValueParamSource,
+	ParamSource,
+};
 export default ParamSource;
