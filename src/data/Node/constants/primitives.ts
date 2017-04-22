@@ -1,12 +1,5 @@
-import { ErrorParam, Param } from 'data/common';
+import { makeErrorParam, Param } from 'data/common';
 import { Primitive } from 'data/Node/model';
-
-
-export const makeError = ( message ): ErrorParam => ({
-	type: 'error',
-	value: 'ERR',
-	message,
-});
 
 
 export const add: Primitive = {
@@ -17,7 +10,7 @@ export const add: Primitive = {
 		if ( a.type === 'number' && b.type === 'number' ) {
 			return [{ type: 'number', value: a.value + b.value }];
 		}
-		return [makeError( 'Both arguments to Add must be numbers' )];
+		return [makeErrorParam( 'Both arguments to Add must be numbers' )];
 	},
 };
 
@@ -30,7 +23,7 @@ export const subtract: Primitive = {
 		if ( a.type === 'number' && b.type === 'number' ) {
 			return [{ type: 'number', value: a.value - b.value }];
 		}
-		return [makeError( 'Both arguments to Subtract must be numbers' )];
+		return [makeErrorParam( 'Both arguments to Subtract must be numbers' )];
 	},
 };
 
@@ -43,7 +36,7 @@ export const multiply: Primitive = {
 		if ( a.type === 'number' && b.type === 'number' ) {
 			return [{ type: 'number', value: a.value * b.value }];
 		}
-		return [makeError( 'Both arguments to Multiply must be numbers' )];
+		return [makeErrorParam( 'Both arguments to Multiply must be numbers' )];
 	},
 };
 
@@ -56,6 +49,6 @@ export const divide: Primitive = {
 		if ( a.type === 'number' && b.type === 'number' ) {
 			return [{ type: 'number', value: a.value / b.value }];
 		}
-		return [makeError( 'Both arguments to Divide must be numbers' )];
+		return [makeErrorParam( 'Both arguments to Divide must be numbers' )];
 	},
 };

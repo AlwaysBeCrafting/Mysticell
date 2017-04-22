@@ -1,5 +1,5 @@
 export { MenuItem } from './MenuItem';
-export { Param, ErrorParam } from './Param';
+export { Param, ErrorParam, makeErrorParam } from './Param';
 export {
 	NodeParamSource,
 	GraphParamSource,

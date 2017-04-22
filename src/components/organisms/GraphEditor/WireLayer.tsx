@@ -21,24 +21,24 @@ const WireLayer = ( props: Props & React.HTMLAttributes<SVGElement> ) => {
 
 	return (
 		<svg className={ classNames( 'wireLayer', className ) }>
-			{ graph.nodes.map(( nodeId ) => renderSourceWires( props, nodeId )) }
+			{ graph.nodes.map(( nodeId ) => renderWires( props, nodeId )) }
 		</svg>
 	);
 };
 
 
-const renderSourceWires = ( props: Props, nodeId: string ) => {
+const renderWires = ( props: Props, nodeId: string ) => {
 	const { nodes, layout } = props;
 	const node = nodes.get( nodeId );
-	const position = layout.get( nodeId );
+	const pos = layout.get( nodeId );
 
-	if ( !node || !position ) { return; }
+	if ( !node || !pos ) { return; }
 
 	return node.inputs.map(( source, index ) => {
 		const startPos = { x: 0, y: 0 };
 		const endPos = {
-			x: position.x,
-			y: position.y + node.outputs.length + index + 1,
+			x: pos.x,
+			y: pos.y + node.outputs.length + index + 1,
 		};
 
 		switch ( source.type ) {

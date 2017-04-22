@@ -46,6 +46,7 @@ $color-gridLine: rgba( $color-brand-primary, 0.2 );
 			display: flex;
 			flex-flow: column nowrap;
 			width: 0; // Needed for overflow scrolling to work ???
+			position: relative;
 			background:
 				repeating-linear-gradient(
 					transparent,
@@ -62,7 +63,21 @@ $color-gridLine: rgba( $color-brand-primary, 0.2 );
 				);
 		}
 			.graphEditor-graph-grid-wires {
-				flex: 1 0 100%;
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				left: 0;
+				top: 0;
+				right: 0;
+				bottom: 0;
+			}
+
+			.graphEditor-graph-grid-nodes {
+				position: absolute;
+				left: 0;
+				top: 0;
+				right: 0;
+				bottom: 0;
 			}
 
 	.graphEditor-fab {

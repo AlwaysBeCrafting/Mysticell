@@ -11,14 +11,14 @@ import './NodeCard.scss';
 
 
 const renderInputRow = ( name: string ) => (
-	<div className="nodeCard-inputRow nodeCard-row">
+	<div className="nodeCard-inputRow nodeCard-row" key={ name }>
 		{ name }
 	</div>
 );
 
 
 const renderOutputRow = ( name: string ) => (
-	<div className="nodeCard-outputRow nodeCard-row">
+	<div className="nodeCard-outputRow nodeCard-row" key={ name }>
 		{ name }
 	</div>
 );
@@ -36,7 +36,7 @@ const NodeCard = ({ position, node, definition }: Props ) => {
 	const name = node.label || definition.name;
 	const style = {
 		gridRow: `${ position.y } / span ${ rowCount }`,
-		gridColumn: `${ position.x } / span 4`,
+		gridColumn: `${ position.x + 1 } / span 4`,
 	};
 	return (
 		<Card className="nodeCard" style={ style }>

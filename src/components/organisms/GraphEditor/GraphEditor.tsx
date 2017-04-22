@@ -12,6 +12,7 @@ import { AppState } from 'data';
 import { Graph } from 'data/Graph/model';
 import { Node } from 'data/Node/model';
 
+import { NodeLayer } from './NodeLayer';
 import { WireLayer } from './WireLayer';
 
 import './GraphEditor.scss';
@@ -27,6 +28,7 @@ interface StateProps {
 	graph: Graph;
 	nodes: Map<string, Node>;
 	layout: Layout;
+	renderGrid: () => JSX.Element;
 }
 
 interface DispatchProps {}
@@ -36,7 +38,9 @@ interface PublicProps extends React.HTMLAttributes<HTMLDivElement>, RouteCompone
 type Props = StateProps & DispatchProps & PublicProps;
 
 
-const GraphEditor = ({ className, match, graph, nodes, layout }: Props ) => {
+const GraphEditor = ( props: Props ) => {
+	const { className, match, graph, renderGrid } = props;
+
 	if ( !graph ) {
 		return (
 			<div className={ classNames( 'graphEditor', 'graphEditor-error', className ) }>
@@ -48,29 +52,15 @@ const GraphEditor = ({ className, match, graph, nodes, layout }: Props ) => {
 	return (
 		<div className={ classNames( 'graphEditor', className ) }>
 			<Toolbar title={ graph.name } className="graphEditor-toolbar" />
-			{ renderGraph( graph, nodes, layout ) }
+			<div className="graphEditor-graph">
+				<div className="graphEditor-graph-panel graphEditor-graph-leftPanel" />
+				{ renderGrid() }
+				<div className="graphEditor-graph-panel graphEditor-graph-rightPanel" />
+			</div>
 			<FAB icon="add" className="graphEditor-fab" />
 		</div>
 	);
 };
-
-
-const renderGraph = ( graph: Graph, nodes: Map<string, Node>, layout: Layout ) => {
-	return (
-		<div className="graphEditor-graph">
-			<div className="graphEditor-graph-panel graphEditor-graph-leftPanel" />
-			{ renderGrid( graph, nodes, layout ) }
-			<div className="graphEditor-graph-panel graphEditor-graph-rightPanel" />
-		</div>
-	);
-};
-
-
-const renderGrid = ( graph: Graph, nodes: Map<string, Node>, layout: Layout ) => (
-	<div className="graphEditor-graph-grid">
-		<WireLayer graph={ graph } nodes={ nodes } layout={ layout } className="graphEditor-graph-grid-wires" />
-	</div>
-);
 
 
 const mapStateToProps = ( state: AppState, ownProps?: PublicProps ): StateProps => {
@@ -79,6 +69,26 @@ const mapStateToProps = ( state: AppState, ownProps?: PublicProps ): StateProps 
 		graph: state.document.graphs.get( graphId ) as Graph,
 		nodes: state.document.nodes,
 		layout: state.document.layout,
+		renderGrid: () => {
+			const { graphs, nodes, layout } = state.document;
+			const graph = state.document.graphs.get( graphId );
+			if ( !graph ) { return <div />; }
+			return (
+				<div className="graphEditor-graph-grid">
+					<WireLayer
+						graph={ graph }
+						nodes={ nodes }
+						layout={ layout }
+						className="graphEditor-graph-grid-wires" />
+					<NodeLayer
+						graphs={ graphs }
+						graph={ graph }
+						nodes={ nodes }
+						layout={ layout }
+						className="graphEditor-graph-grid-nodes" />
+				</div>
+			);
+		},
 	};
 };
 

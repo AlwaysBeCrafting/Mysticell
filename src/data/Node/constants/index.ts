@@ -1,9 +1,16 @@
-import { addIdToNamedExports, generateForPrimitive } from 'common/util';
+import { generateForPrimitive } from 'common/util';
 
 import * as PrimitiveDefs from './primitives';
 
 
-const Primitives = addIdToNamedExports( PrimitiveDefs, generateForPrimitive );
+const Primitives = Object.keys( PrimitiveDefs ).reduce(
+	( exportedPrimitives, key ) => {
+		const id = generateForPrimitive( key );
+		exportedPrimitives[id] = { ...PrimitiveDefs[key], id };
+		return exportedPrimitives;
+	},
+	{},
+);
 
 
 export { Primitives };
