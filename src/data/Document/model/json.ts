@@ -1,7 +1,7 @@
 import { Position } from 'common/types';
 import { dictToMap } from 'common/util';
 
-import { ParamSource } from 'data/common';
+import { Param, ParamSource } from 'data/common';
 
 import { Cell } from 'data/Cell/model';
 import { Graph } from 'data/Graph/model';
@@ -73,6 +73,7 @@ interface NodeJson {
 	definition: string;
 	label: string;
 	inputs: ParamSource[];
+	outputs: Param[];
 }
 
 const nodeJsonToState = ( id: string, node: NodeJson ): Node => ({ id, ...node });

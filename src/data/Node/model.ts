@@ -7,6 +7,7 @@ interface Node extends Id {
 	definition: string; // Graph or Primitive ID
 	label: string;
 	inputs: ParamSource[];
+	outputs: Param[];
 }
 
 
