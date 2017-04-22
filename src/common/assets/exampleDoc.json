@@ -9,45 +9,46 @@
 			"cells": []
 		}
 	},
-	"nodes": {
-		"NODE-0000": {
+	"graphs": {
+		"GRAPH-0000": {
 			"name": "Ability Mod",
 			"type": "group",
 			"inputNames": [ "Value" ],
 			"outputNames": [ "Modifier" ],
-			"definition": {
-				"MEMBER-0000": {
-					"node": "PRIMITIVE-subtract",
-					"label": "Subtract",
-					"inputs": [
-						{ "parent": 0 },
-						10
-					]
-				},
-				"MEMBER-0001": {
-					"node": "PRIMITIVE-divide",
-					"label": "Divide",
-					"inputs": [
-						{ "member": "MEMBER-0000", "index": 0 },
-						2
-					]
-				},
-				"MEMBER-0002": {
-					"node": "PRIMITIVE-floor",
-					"label": "Floor",
-					"inputs": [
-						{ "member": "MEMBER-0001", "index": 0 }
-					]
-				}
-			},
+			"nodes":[ "NODE-0000", "NODE-0001", "NODE-0002" ],
 			"outputs": [
-				{ "member": "MEMBER-0002", "index": 0 }
+				{ "node": "NODE-0002", "index": 0, "userValue": "" }
+			]
+		}
+	},
+	"nodes": {
+		"NODE-0000": {
+			"definition": "PRIMITIVE-subtract",
+			"label": "Subtract",
+			"inputs": [
+				{ "graph": 0, "userValue": "" },
+				10
+			]
+		},
+		"NODE-0001": {
+			"definition": "PRIMITIVE-divide",
+			"label": "Divide",
+			"inputs": [
+				{ "node": "NODE-0000", "index": 0, "userValue": "" },
+				2
+			]
+		},
+		"NODE-0002": {
+			"definition": "PRIMITIVE-floor",
+			"label": "Floor",
+			"inputs": [
+				{ "node": "NODE-0001", "index": 0, "userValue": "" }
 			]
 		}
 	},
 	"layout": {
-		"MEMBER-0000": { "x": 2, "y": 2 },
-		"MEMBER-0001": { "x": 8, "y": 2 },
-		"MEMBER-0002": { "x": 14, "y": 2 }
+		"NODE-0000": { "x": 2, "y": 2 },
+		"NODE-0001": { "x": 8, "y": 2 },
+		"NODE-0002": { "x": 14, "y": 2 }
 	}
 }

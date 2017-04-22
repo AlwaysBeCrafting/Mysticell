@@ -4,7 +4,8 @@ import { Position } from 'common/types';
 
 import { Card } from 'components/atoms';
 
-import { Node } from 'data/Node/model';
+import { Graph } from 'data/Graph/model';
+import { Node, Primitive } from 'data/Node/model';
 
 import './NodeCard.scss';
 
@@ -26,11 +27,13 @@ const OutputRow = ( name: string ) => (
 interface Props {
 	position: Position;
 	node: Node;
+	definition: Primitive | Graph;
 }
 
 
-const NodeCard = ({ position, node }: Props ) => {
-	const rowCount = 1 + node.inputNames.length + node.outputNames.length;
+const NodeCard = ({ position, node, definition }: Props ) => {
+	const rowCount = 1 + definition.inputNames.length + definition.outputNames.length;
+	const name = node.label || definition.name;
 	const style = {
 		gridRow: `${ position.y } / span ${ rowCount }`,
 		gridColumn: `${ position.x } / span 4`,
@@ -38,10 +41,10 @@ const NodeCard = ({ position, node }: Props ) => {
 	return (
 		<Card className="nodeCard" style={ style }>
 			<header className="nodeCard-headerRow">
-				<span className="nodeCard-headerRow-name">{ node.name }</span>
+				<span className="nodeCard-headerRow-name">{ name }</span>
 			</header>
-			{ node.outputNames.map( OutputRow ) }
-			{ node.inputNames.map( InputRow ) }
+			{ definition.outputNames.map( OutputRow ) }
+			{ definition.inputNames.map( InputRow ) }
 		</Card>
 	);
 };

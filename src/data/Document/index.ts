@@ -10,6 +10,7 @@ const defaultState: Document = {
 
 	cells: new Map(),
 	sheets: new Map(),
+	graphs: new Map(),
 	nodes: new Map(),
 
 	layout: new Map(),

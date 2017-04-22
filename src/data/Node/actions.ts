@@ -1,5 +1,5 @@
 import { ConnectedParamSource, ValueParamSource } from 'data/common';
-import { UserNode } from 'data/Node/model';
+import { Node } from 'data/Node/model';
 
 
 export namespace ActionTypes {
@@ -14,10 +14,10 @@ export namespace ActionTypes {
 
 interface CreateNodeAction {
 	readonly type: typeof ActionTypes.CREATE_NODE;
-	payload: { node: UserNode };
+	payload: { node: Node };
 }
 
-export const createNode = ( node: UserNode ): CreateNodeAction => ({
+export const createNode = ( node: Node ): CreateNodeAction => ({
 	type: ActionTypes.CREATE_NODE,
 	payload: { node },
 });

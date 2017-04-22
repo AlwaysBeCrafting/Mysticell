@@ -1,8 +1,8 @@
 import { Action, ActionTypes } from './actions';
-import { UserNode } from './model';
+import { Node } from './model';
 
 
-export default ( state = new Map(), action: Action ): Map<string, UserNode> => {
+export default ( state = new Map(), action: Action ): Map<string, Node> => {
 	switch ( action.type ) {
 
 		case ActionTypes.CREATE_NODE:

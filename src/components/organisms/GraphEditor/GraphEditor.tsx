@@ -9,7 +9,8 @@ import { FAB } from 'components/atoms';
 import { Toolbar } from 'components/molecules';
 
 import { AppState } from 'data';
-import { UserNode } from 'data/Node/model';
+import { Graph } from 'data/Graph/model';
+import { Node } from 'data/Node/model';
 
 import './GraphEditor.scss';
 
@@ -17,12 +18,14 @@ import './GraphEditor.scss';
 type Layout = Map<string, Position>;
 
 
+interface RouteParams { id: string; }
+
+
 interface StateProps {
-	nodes: Map<string, UserNode>;
+	graph: Graph;
+	nodes: Map<string, Node>;
 	layout: Layout;
 }
-
-interface RouteParams { id: string; }
 
 interface DispatchProps {}
 
@@ -31,10 +34,8 @@ interface PublicProps extends React.HTMLAttributes<HTMLDivElement>, RouteCompone
 type Props = StateProps & DispatchProps & PublicProps;
 
 
-const GraphEditor = ({ className, match, nodes, layout }: Props ) => {
-	const node = nodes.get( `NODE-${ match.params.id }` );
-
-	if ( !node ) {
+const GraphEditor = ({ className, match, graph, nodes, layout }: Props ) => {
+	if ( !graph ) {
 		return (
 			<div className={ classNames( 'graphEditor', 'graphEditor-error', className ) }>
 				No node with ID { match.params.id }
@@ -44,37 +45,46 @@ const GraphEditor = ({ className, match, nodes, layout }: Props ) => {
 
 	return (
 		<div className={ classNames( 'graphEditor', className ) }>
-			<Toolbar title={ match.params.id } className="graphEditor-toolbar" />
-			{ renderGraph( node, layout ) }
+			<Toolbar title={ graph.name } className="graphEditor-toolbar" />
+			{ renderGraph( graph, nodes, layout ) }
 			<FAB icon="add" className="graphEditor-fab" />
 		</div>
 	);
 };
 
 
-const renderGraph = ( node: UserNode, layout: Layout ) => {
+const renderGraph = ( graph: Graph, nodes: Map<string, Node>, layout: Layout ) => {
 	return (
 		<div className="graphEditor-graph">
 			<div className="graphEditor-graph-panel graphEditor-graph-leftPanel" />
-			{ renderGrid( node, layout ) }
+			{ renderGrid( graph, nodes, layout ) }
 			<div className="graphEditor-graph-panel graphEditor-graph-rightPanel" />
 		</div>
 	);
 };
 
 
-const renderGrid = ( node: UserNode, layout: Layout ) => {
-	const members = node.definition.entries();
-	return (
-		<div className="graphEditor-graph-grid">
-		{ members.toString() }
-		{ layout.toString() }
-		</div>
-	);
+const renderGrid = ( graph: Graph, nodes: Map<string, Node>, layout: Layout ) => (
+	<div className="graphEditor-graph-grid">
+	{ JSON.stringify( graph ) }
+	{ JSON.stringify( nodes ) }
+	{ JSON.stringify( layout ) }
+	</div>
+);
+
+
+const mapStateToProps = ( state: AppState, ownProps?: PublicProps ): StateProps => {
+	const graphId = `GRAPH-${ ownProps && ownProps.match.params.id }`;
+	return {
+		graph: state.document.graphs.get( graphId ) as Graph,
+		nodes: state.document.nodes,
+		layout: state.document.layout,
+	};
 };
 
+const ConnectedGraphEditor = connect<StateProps, DispatchProps, PublicProps>(
+	mapStateToProps,
+)( GraphEditor );
 
 export { RouteParams };
-export default connect<StateProps, DispatchProps, PublicProps>(
-	({ document: { nodes, layout }}: AppState ) => ({ nodes, layout }),
-)( GraphEditor );
+export default ConnectedGraphEditor;

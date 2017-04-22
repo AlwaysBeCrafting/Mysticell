@@ -1,5 +1,6 @@
 import { ErrorParam, Param } from 'data/common';
-import { PrimitiveNodeDefinition } from 'data/Node/model';
+import { Primitive } from 'data/Node/model';
+
 
 export const makeError = ( message ): ErrorParam => ({
 	type: 'error',
@@ -8,7 +9,7 @@ export const makeError = ( message ): ErrorParam => ({
 });
 
 
-export const add: PrimitiveNodeDefinition = {
+export const add: Primitive = {
 	name: 'Add',
 	inputNames: [ 'A', 'B' ],
 	outputNames: [ 'Sum' ],
@@ -21,7 +22,7 @@ export const add: PrimitiveNodeDefinition = {
 };
 
 
-export const subtract: PrimitiveNodeDefinition = {
+export const subtract: Primitive = {
 	name: 'Subtract',
 	inputNames: [ 'A', 'B' ],
 	outputNames: [ 'Difference' ],
@@ -34,7 +35,7 @@ export const subtract: PrimitiveNodeDefinition = {
 };
 
 
-export const multiply: PrimitiveNodeDefinition = {
+export const multiply: Primitive = {
 	name: 'Multiply',
 	inputNames: [ 'A', 'B' ],
 	outputNames: [ 'Product' ],
@@ -47,7 +48,7 @@ export const multiply: PrimitiveNodeDefinition = {
 };
 
 
-export const divide: PrimitiveNodeDefinition = {
+export const divide: Primitive = {
 	name: 'Divide',
 	inputNames: [ 'A', 'B' ],
 	outputNames: [ 'Quotient' ],

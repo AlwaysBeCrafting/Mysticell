@@ -1,12 +1,40 @@
 import { Position } from 'common/types';
 import { dictToMap } from 'common/util';
 
-import { Cell } from 'data/Cell/model';
 import { ParamSource } from 'data/common';
-import { UserNode } from 'data/Node/model';
+
+import { Cell } from 'data/Cell/model';
+import { Graph } from 'data/Graph/model';
+import { Node } from 'data/Node/model';
 import { Sheet } from 'data/Sheet/model';
 
 import { Document } from './Document';
+
+
+interface DocumentJson {
+	id: string;
+	title: string;
+
+	cells: { [id: string]: CellJson };
+	sheets: { [id: string]: SheetJson };
+	graphs: { [id: string]: GraphJson };
+	nodes: { [id: string]: NodeJson };
+
+	layout: { [id: string]: Position };
+}
+
+
+const documentJsonToState = ( document: DocumentJson ): Document => ({
+	id: document.id,
+	title: document.title,
+
+	cells:  dictToMap( document.cells,  cellJsonToState  ),
+	sheets: dictToMap( document.sheets, sheetJsonToState ),
+	graphs: dictToMap( document.graphs, graphJsonToState ),
+	nodes:  dictToMap( document.nodes,  nodeJsonToState  ),
+
+	layout: dictToMap( document.layout, ( _, pos ) => pos ),
+});
 
 
 interface CellJson {
@@ -29,56 +57,26 @@ interface SheetJson {
 const sheetJsonToState = ( id: string, sheet: SheetJson ): Sheet => ({ id, ...sheet });
 
 
-interface GraphMemberJson {
-	node: string;
+interface GraphJson {
+	name: string;
+	type: 'function' | 'input' | 'computed';
+	inputNames: string[];
+	outputNames: string[];
+	nodes: string[]; // Node IDs
+	outputs: ParamSource[];
+}
+
+const graphJsonToState = ( id: string, graph: GraphJson ): Graph => ({ id, ...graph });
+
+
+interface NodeJson {
+	definition: string;
 	label: string;
 	inputs: ParamSource[];
 }
 
-interface NodeJson {
-	name: string;
-	type: 'group' | 'input' | 'computed';
-	inputNames: string[];
-	outputNames: string[];
-	definition: { [id: string]: GraphMemberJson };
-	outputs: ParamSource[];
-}
+const nodeJsonToState = ( id: string, node: NodeJson ): Node => ({ id, ...node });
 
-const nodeJsonToState = ( id: string, node: NodeJson ): UserNode => {
-	const definition = dictToMap(
-		node.definition,
-		( memberId, member ) => ({ id: memberId, ...member }),
-	);
-	return {
-		id,
-		...node,
-		definition,
-	};
-};
-
-
-interface DocumentJson {
-	id: string;
-	title: string;
-
-	cells: { [id: string]: CellJson };
-	sheets: { [id: string]: SheetJson };
-	nodes: { [id: string]: NodeJson };
-
-	layout: { [id: string]: Position };
-}
-
-
-const documentJsonToState = ( document: DocumentJson ): Document => ({
-	id: document.id,
-	title: document.title,
-
-	cells: dictToMap( document.cells, cellJsonToState ),
-	sheets: dictToMap( document.sheets, sheetJsonToState ),
-	nodes: dictToMap( document.nodes, nodeJsonToState ),
-
-	layout: dictToMap( document.layout, ( _, pos ) => pos ),
-});
 
 
 export { DocumentJson, documentJsonToState };
