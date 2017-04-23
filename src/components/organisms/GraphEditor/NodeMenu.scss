@@ -1,0 +1,91 @@
+@import '~common/styles/colors';
+@import '~common/styles/dimensions';
+@import '~common/styles/mixins';
+
+
+.nodeMenu {
+	@include elevation( 4px );
+
+	display: flex;
+	flex-flow: row nowrap;
+	height: $dimen-toolbar-size;
+}
+	.nodeMenu-toggle {
+		flex: 0 0 auto;
+		display: flex;
+		flex-flow: row nowrap;
+		padding: 0 $dimen-keyline-padding;
+		align-items: center;
+		color: $color-text-primary;
+		font-size: 13px;
+		font-weight: 500;
+		text-align: baseline;
+		line-height: $dimen-toolbar-size;
+	}
+
+	.nodeMenu-toggle::before {
+		margin-right: $dimen-keyline-padding / 2;
+		flex: 0 0 $dimen-icon-size;
+		font-family: Material Icons;
+		color: $color-icon-active;
+		font-size: $dimen-icon-size;
+		content: 'chevron_left';
+		transition: transform 200ms ease-in-out;
+	}
+
+	.nodeMenu-toggle.is-open::before {
+		transform: rotate( 180deg );
+	}
+
+	.nodeMenu-body {
+		flex: 0 0 auto;
+		width: 0;
+		overflow-x: hidden;
+		display: flex;
+		flex-flow: row nowrap;
+		border-left: solid thin $color-divider;
+		transition: width 1000ms ease-in-out;
+	}
+
+	.nodeMenu-body.is-open {
+		width: auto;
+	}
+		.nodeMenu-body-categories {
+			flex: 0 0 auto;
+			display: flex;
+			flex-flow: row nowrap;
+			padding: 0 $dimen-keyline-padding / 2;
+		}
+			.nodeMenu-body-categories-category {
+				flex-flow: column-reverse nowrap;
+			}
+				.nodeMenu-body-categories-category-toggle {
+					padding: 0 $dimen-keyline-padding / 2;
+					flex: 0 0 $dimen-toolbar-size;
+					line-height: $dimen-toolbar-size;
+					font-size: 13px;
+					font-weight: 500;
+				}
+
+		.nodeMenu-body-search {
+			flex: 1 0 auto;
+			display: flex;
+			flex-flow: row nowrap;
+			align-items: center;
+			padding-right: $dimen-keyline-padding;
+		}
+			.nodeMenu-body-search-button {
+				flex: 0 0 $dimen-toolbar-size;
+				width: $dimen-toolbar-size;
+				align-self: stretch;
+				color: $color-icon-active;
+			}
+
+			.nodeMenu-body-search-input {
+				flex: 1 0 8em;
+				width: 8em;
+				height: 3ex;
+				border-bottom: solid 2px $color-divider;
+			}
+
+

@@ -86,3 +86,9 @@ $color-gridLine: rgba( $color-brand-primary, 0.2 );
 		right: $dimen-keyline-padding;
 		bottom: $dimen-keyline-padding;
 	}
+
+	.graphEditor-nodeMenu {
+		position: absolute;
+		right: $dimen-keyline-padding;
+		bottom: $dimen-keyline-padding;
+	}

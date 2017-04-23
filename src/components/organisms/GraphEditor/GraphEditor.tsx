@@ -5,7 +5,6 @@ import { RouteComponentProps } from 'react-router';
 
 import { Position } from 'common/types';
 
-import { FAB } from 'components/atoms';
 import { Toolbar } from 'components/molecules';
 
 import { AppState } from 'data';
@@ -13,6 +12,7 @@ import { Graph } from 'data/Graph/model';
 import { Node } from 'data/Node/model';
 
 import { NodeLayer } from './NodeLayer';
+import { NodeMenu } from './NodeMenu';
 import { WireLayer } from './WireLayer';
 
 import './GraphEditor.scss';
@@ -57,7 +57,7 @@ const GraphEditor = ( props: Props ) => {
 				{ renderGrid() }
 				<div className="graphEditor-graph-panel graphEditor-graph-rightPanel" />
 			</div>
-			<FAB icon="add" className="graphEditor-fab" />
+			<NodeMenu className="graphEditor-nodeMenu" onItemSelected={ () => ({}) } />
 		</div>
 	);
 };
