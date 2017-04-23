@@ -1,9 +1,8 @@
 @mixin elevation( $elevation ) {
 	$key-distance: $elevation * 11 / 12;
-	$key-size:     $elevation      /  2;
 	$ambient-size: $elevation *  2 /  3;
 
 	box-shadow:
-		0 $key-distance $key-size     rgba( 0, 0, 0, 0.26 ),
+		0 $key-distance $elevation    rgba( 0, 0, 0, 0.26 ),
 		0             0 $ambient-size rgba( 0, 0, 0, 0.08 );
 }
