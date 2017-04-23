@@ -53,9 +53,9 @@ const GraphEditor = ( props: Props ) => {
 		<div className={ classNames( 'graphEditor', className ) }>
 			<Toolbar title={ graph.name } className="graphEditor-toolbar" />
 			<div className="graphEditor-graph">
-				<div className="graphEditor-graph-panel graphEditor-graph-leftPanel" />
+				<div className="graphEditor-graph-panel graphEditor-graph-inputPanel" />
 				{ renderGrid() }
-				<div className="graphEditor-graph-panel graphEditor-graph-rightPanel" />
+				<div className="graphEditor-graph-panel graphEditor-graph-outputPanel" />
 			</div>
 			<NodeMenu className="graphEditor-nodeMenu" onItemSelected={ () => ({}) } />
 		</div>

@@ -2,28 +2,12 @@ import * as React from 'react';
 
 import { Position } from 'common/types';
 
-import { Card } from 'components/atoms';
+import { Card, DestinationPinRow, SourcePinRow } from 'components/atoms';
 
 import { Graph } from 'data/Graph/model';
 import { Node, Primitive } from 'data/Node/model';
 
 import './NodeCard.scss';
-
-
-const renderInputRow = ( name: string ) => (
-	<div className="nodeCard-inputRow nodeCard-row nodeCard-connectionRow" key={ name }>
-		<div className="nodeCard-inputRow-pin nodeCard-connectionRow-pin" />
-		{ name }
-	</div>
-);
-
-
-const renderOutputRow = ( name: string ) => (
-	<div className="nodeCard-outputRow nodeCard-row nodeCard-connectionRow" key={ name }>
-		<div className="nodeCard-outputRow-pin nodeCard-connectionRow-pin" />
-		{ name }
-	</div>
-);
 
 
 interface Props {
@@ -45,8 +29,12 @@ const NodeCard = ({ position, node, definition }: Props ) => {
 			<header className="nodeCard-headerRow nodeCard-row">
 				<span className="nodeCard-headerRow-name">{ name }</span>
 			</header>
-			{ definition.outputNames.map( renderOutputRow ) }
-			{ definition.inputNames.map( renderInputRow ) }
+			{ definition.outputNames.map(( outputName ) => (
+				<SourcePinRow name={ outputName } />
+			))}
+			{ definition.inputNames.map(( inputName ) => (
+				<DestinationPinRow name={ inputName } />
+			))}
 		</Card>
 	);
 };

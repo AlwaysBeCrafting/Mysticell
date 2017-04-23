@@ -1,0 +1,27 @@
+.pinRow {
+	position: relative;
+	vertical-align: center;
+}
+
+	.pinRow-pin {
+		position: absolute;
+		top: ( $row-height - $pin-size / 2 ) / 2 - 3px;
+		width: $pin-size;
+		height: $pin-size;
+		border-radius: 50%;
+		border: solid thin $color-divider;
+		background: $color-grey-300;
+		content: ' ';
+	}
+
+.sourcePinRow {
+	flex-direction: row-reverse;
+}
+
+.sourcePinRow-pin {
+	right: -$pin-size / 2;
+}
+
+.destinationPinRow-pin {
+	left: -$pin-size / 2;
+}

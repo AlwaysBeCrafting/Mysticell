@@ -3,8 +3,7 @@
 @import '~common/styles/mixins';
 
 
-$row-height: 40px;
-$pin-size: 12px;
+$row-height: $dimen-graph-cell-size;
 
 .nodeCard {
 	@include elevation( 2px );
@@ -28,31 +27,3 @@ $pin-size: 12px;
 			flex: 1 0 auto;
 			font-weight: 500;
 		}
-
-	.nodeCard-connectionRow {
-		position: relative;
-		vertical-align: center;
-	}
-
-	.nodeCard-connectionRow-pin {
-		position: absolute;
-		top: ( $row-height - $pin-size/ 2 ) / 2 - 3px;
-		width: $pin-size;
-		height: $pin-size;
-		border-radius: 50%;
-		border: solid thin $color-divider;
-		background: $color-grey-300;
-		content: ' ';
-	}
-
-	.nodeCard-inputRow-pin {
-		left: -$pin-size / 2;
-	}
-
-	.nodeCard-outputRow {
-		flex-direction: row-reverse;
-	}
-
-	.nodeCard-outputRow-pin {
-		right: -$pin-size / 2;
-	}

@@ -33,11 +33,11 @@ $color-gridLine: rgba( $color-brand-primary, 0.2 );
 			flex: 0 0 $dimen-panelWidth;
 		}
 
-		.graphEditor-graph-leftPanel {
+		.graphEditor-graph-inputPanel {
 			border-right: solid 1px $color-gridLine;
 		}
 
-		.graphEditor-graph-rightPanel {
+		.graphEditor-graph-outputPanel {
 			border-left: solid 1px $color-gridLine;
 		}
 
