@@ -1,11 +1,23 @@
-$dimen-nodeCard-rowHeight: 40px;
+@import '~common/styles/colors';
+@import '~common/styles/dimensions';
+@import '~common/styles/mixins';
+
+
+$row-height: 40px;
+$pin-size: 12px;
 
 .nodeCard {
+	@include elevation( 2px );
+	font-size: 13px;
+	line-height: $row-height;
 	display: flex;
 	flex-flow: column nowrap;
 }
 	.nodeCard-row {
-		flex: 0 0 $dimen-nodeCard-rowHeight;
+		flex: 0 0 $row-height;
+		padding: 0 $dimen-keyline-padding / 2;
+		display: flex;
+		flex-flow: row nowrap;
 	}
 
 	.nodeCard-headerRow {
@@ -14,6 +26,33 @@ $dimen-nodeCard-rowHeight: 40px;
 	}
 		.nodeCard-headerRow-name {
 			flex: 1 0 auto;
-			font-size: 20px;
 			font-weight: 500;
 		}
+
+	.nodeCard-connectionRow {
+		position: relative;
+		vertical-align: center;
+	}
+
+	.nodeCard-connectionRow-pin {
+		position: absolute;
+		top: ( $row-height - $pin-size/ 2 ) / 2 - 3px;
+		width: $pin-size;
+		height: $pin-size;
+		border-radius: 50%;
+		border: solid thin $color-divider;
+		background: $color-grey-300;
+		content: ' ';
+	}
+
+	.nodeCard-inputRow-pin {
+		left: -$pin-size / 2;
+	}
+
+	.nodeCard-outputRow {
+		flex-direction: row-reverse;
+	}
+
+	.nodeCard-outputRow-pin {
+		right: -$pin-size / 2;
+	}

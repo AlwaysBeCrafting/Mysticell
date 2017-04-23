@@ -11,14 +11,16 @@ import './NodeCard.scss';
 
 
 const renderInputRow = ( name: string ) => (
-	<div className="nodeCard-inputRow nodeCard-row" key={ name }>
+	<div className="nodeCard-inputRow nodeCard-row nodeCard-connectionRow" key={ name }>
+		<div className="nodeCard-inputRow-pin nodeCard-connectionRow-pin" />
 		{ name }
 	</div>
 );
 
 
 const renderOutputRow = ( name: string ) => (
-	<div className="nodeCard-outputRow nodeCard-row" key={ name }>
+	<div className="nodeCard-outputRow nodeCard-row nodeCard-connectionRow" key={ name }>
+		<div className="nodeCard-outputRow-pin nodeCard-connectionRow-pin" />
 		{ name }
 	</div>
 );
@@ -40,7 +42,7 @@ const NodeCard = ({ position, node, definition }: Props ) => {
 	};
 	return (
 		<Card className="nodeCard" style={ style }>
-			<header className="nodeCard-headerRow">
+			<header className="nodeCard-headerRow nodeCard-row">
 				<span className="nodeCard-headerRow-name">{ name }</span>
 			</header>
 			{ definition.outputNames.map( renderOutputRow ) }
