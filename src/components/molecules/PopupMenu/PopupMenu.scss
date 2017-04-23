@@ -1,12 +1,14 @@
 @import '~common/styles/colors';
+@import '~common/styles/mixins';
 
 
 .popup {
+	@include elevation( 8px );
+
 	position: fixed;
 	background: white;
 	z-index: 200;
 	border-radius: 4px;
-	box-shadow: 0 8px 24px $color-shadow;
 
 	&.anchor-left {
 		&.anchor-top    { transform: translate( 0,    0  ); }

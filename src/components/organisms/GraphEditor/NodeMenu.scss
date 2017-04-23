@@ -4,7 +4,7 @@
 
 
 .nodeMenu {
-	@include elevation( 4px );
+	@include elevation( 8px );
 
 	display: flex;
 	flex-flow: row nowrap;

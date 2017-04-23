@@ -1,5 +1,6 @@
 @import '~common/styles/colors';
 @import '~common/styles/dimensions';
+@import '~common/styles/mixins';
 
 
 $color-editor-background: $color-grey-100;
@@ -12,7 +13,8 @@ $color-appbar-background: $color-brand-primary;
 	color: $color-text-primary;
 }
 	.editor-appbar {
-		box-shadow: 0 2px 4px $color-shadow;
+		@include elevation( 4px );
+
 		background: $color-appbar-background;
 		z-index: 100;
 	}
