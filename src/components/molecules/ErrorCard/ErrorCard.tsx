@@ -15,7 +15,7 @@ interface Props {
 
 const ErrorCard = ({ position, message }: Props ) => {
 	const style = {
-		gridRow: `${ position.y } / span 3`,
+		gridRow: `${ position.y + 1 } / span 3`,
 		gridColumn: `${ position.x + 1 } / span 4`,
 	};
 	return (

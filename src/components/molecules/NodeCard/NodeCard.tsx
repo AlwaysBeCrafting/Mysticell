@@ -21,7 +21,7 @@ const NodeCard = ({ position, node, definition }: Props ) => {
 	const rowCount = 1 + definition.inputNames.length + definition.outputNames.length;
 	const name = node.label || definition.name;
 	const style = {
-		gridRow: `${ position.y } / span ${ rowCount }`,
+		gridRow: `${ position.y + 1 } / span ${ rowCount }`,
 		gridColumn: `${ position.x + 1 } / span 4`,
 	};
 	return (

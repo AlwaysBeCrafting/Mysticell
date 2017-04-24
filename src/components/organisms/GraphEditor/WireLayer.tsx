@@ -44,7 +44,7 @@ const renderWires = ( props: Props, nodeId: string ) => {
 		switch ( source.type ) {
 			case 'graph':
 				startPos.x = 0;
-				startPos.y = source.index;
+				startPos.y = source.index + 1;
 				break;
 
 			case 'node':
