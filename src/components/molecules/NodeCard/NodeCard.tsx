@@ -17,15 +17,19 @@ interface Props {
 }
 
 
-const NodeCard = ({ position, node, definition }: Props ) => {
-	const rowCount = 1 + definition.inputNames.length + definition.outputNames.length;
+const NodeCard = ( props: Props ) => {
+	return props.definition
+		? renderCard( props )
+		: renderError( props, `Node definition ${ props.node.definition } doesn't exist` );
+};
+
+
+const renderCard = ( props: Props ) => {
+	const { position, node, definition } = props;
 	const name = node.label || definition.name;
-	const style = {
-		gridRow: `${ position.y + 1 } / span ${ rowCount }`,
-		gridColumn: `${ position.x + 1 } / span 4`,
-	};
+	const pinCount = definition.inputNames.length + definition.outputNames.length;
 	return (
-		<Card className="nodeCard" style={ style }>
+		<Card className="nodeCard" style={ makeStyle( position, pinCount ) }>
 			<header className="nodeCard-headerRow nodeCard-row">
 				<span className="nodeCard-headerRow-name">{ name }</span>
 			</header>
@@ -38,6 +42,26 @@ const NodeCard = ({ position, node, definition }: Props ) => {
 		</Card>
 	);
 };
+
+
+const renderError = ( props: Props, message: string ) => {
+	const { position, node } = props;
+	const pinRowCount = node.inputs.length + node.outputs.length;
+	return (
+		<Card className="nodeCard errorNodeCard" style={ makeStyle( position, pinRowCount ) }>
+			<header className="nodeCard-headerRow nodeCard-row">
+				<div className="nodeCard-headerRow-name">Error</div>
+			</header>
+			<div className="errorNodeCard-messageRow nodeCard-row">{ message }</div>
+		</Card>
+	);
+};
+
+
+const makeStyle = ( position: Position, pinRowCount: number ) => ({
+	gridRow: `${ position.y + 1 } / span ${ pinRowCount + 1 }`,
+	gridColumn: `${ position.x + 1 } / span 4`,
+});
 
 
 export { NodeCard };

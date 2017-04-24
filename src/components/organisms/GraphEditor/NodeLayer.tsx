@@ -3,7 +3,7 @@ import * as React from 'react';
 
 import { Position } from 'common/types';
 
-import { ErrorCard, NodeCard } from 'components/molecules';
+import { NodeCard } from 'components/molecules';
 
 import { Graph } from 'data/Graph/model';
 import { Primitives } from 'data/Node/constants';
@@ -39,38 +39,14 @@ const renderNode = ( props: Props, nodeId: string ) => {
 
 	const pos = layout.get( nodeId ) || { x: 0, y: 0 };
 
+	let def;
 	if ( node.definition.startsWith( 'PRIMITIVE-' )) {
-		const def = Primitives[node.definition];
-		return def
-			? <NodeCard
-				node={ node }
-				position={ pos }
-				definition={ def }
-				key={ nodeId } />
-			: <ErrorCard
-				position={ pos }
-				message={ `No primitive ${ node.definition } exists` }
-				key={ nodeId } />;
+		def = Primitives[node.definition];
+	} else if ( node.definition.startsWith( 'GRAPH-' )) {
+		def = graphs.get( node.definition );
 	}
 
-	if ( node.definition.startsWith( 'GRAPH-' )) {
-		const def = graphs.get( node.definition );
-		return def
-			? <NodeCard
-				node={ node }
-				position={ pos }
-				definition={ def }
-				key={ nodeId } />
-			: <ErrorCard
-				position={ pos }
-				message={ `No graph ${ node.definition } exists` }
-				key={ nodeId } />;
-	}
-
-	return <ErrorCard
-		position={ pos }
-		message={ `Can't handle node with definition ${ node.definition }` }
-		key={ nodeId } />;
+	return <NodeCard node={ node } position={ pos } definition={ def } key={ nodeId } />;
 };
 
 
