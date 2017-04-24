@@ -13,6 +13,7 @@ import { Node } from 'data/Node/model';
 
 import { NodeLayer } from './NodeLayer';
 import { NodeMenu } from './NodeMenu';
+import { Panel } from './Panel';
 import { WireLayer } from './WireLayer';
 
 import './GraphEditor.scss';
@@ -53,9 +54,9 @@ const GraphEditor = ( props: Props ) => {
 		<div className={ classNames( 'graphEditor', className ) }>
 			<Toolbar title={ graph.name } className="graphEditor-toolbar" />
 			<div className="graphEditor-graph">
-				<div className="graphEditor-graph-panel graphEditor-graph-inputPanel" />
+				<Panel type="input" pinNames={ graph.inputNames } />
 				{ renderGrid() }
-				<div className="graphEditor-graph-panel graphEditor-graph-outputPanel" />
+				<Panel type="output" pinNames={ graph.outputNames } />
 			</div>
 			<NodeMenu className="graphEditor-nodeMenu" onItemSelected={ () => ({}) } />
 		</div>

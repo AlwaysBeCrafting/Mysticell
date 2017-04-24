@@ -4,8 +4,9 @@ import React from 'react';
 import './PinRow.scss';
 
 
-interface Props extends React.HTMLAttributes<HTMLDivElement> {
+interface Props {
 	name: string;
+	className?: string;
 }
 
 
