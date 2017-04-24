@@ -30,10 +30,10 @@ const NodeCard = ({ position, node, definition }: Props ) => {
 				<span className="nodeCard-headerRow-name">{ name }</span>
 			</header>
 			{ definition.outputNames.map(( outputName ) => (
-				<SourcePinRow name={ outputName } />
+				<SourcePinRow name={ outputName } key={ outputName } />
 			))}
 			{ definition.inputNames.map(( inputName ) => (
-				<DestinationPinRow name={ inputName } />
+				<DestinationPinRow name={ inputName } key={ inputName } />
 			))}
 		</Card>
 	);

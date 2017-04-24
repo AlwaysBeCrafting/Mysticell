@@ -24,7 +24,7 @@ class NodeMenu extends React.Component<Props, State> {
 	}
 
 	render() {
-		const { className, onItemSelected } = this.props;
+		const { className } = this.props;
 		const { open } = this.state;
 		const openClass = { 'is-open': open };
 		return (
