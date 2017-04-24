@@ -1,6 +1,15 @@
+@import '~common/styles/colors';
+@import '~common/styles/dimensions';
+
+
+$row-height: $dimen-keyline-padding;
+$pin-size: 14px;
+
+
 .pinRow {
 	position: relative;
 	vertical-align: center;
+	padding: 0 $dimen-keyline-padding / 2;
 }
 
 	.pinRow-pin {
@@ -18,9 +27,9 @@
 	flex-direction: row-reverse;
 }
 
-.sourcePinRow-pin {
-	right: -$pin-size / 2;
-}
+	.sourcePinRow-pin {
+		right: -$pin-size / 2;
+	}
 
 .destinationPinRow-pin {
 	left: -$pin-size / 2;

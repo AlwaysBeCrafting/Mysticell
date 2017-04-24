@@ -1,6 +1,8 @@
 import * as classNames from 'classnames';
 import * as React from 'react';
 
+import './PinRow.scss';
+
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
 	name: string;
