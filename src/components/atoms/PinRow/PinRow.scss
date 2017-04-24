@@ -2,7 +2,7 @@
 @import '~common/styles/dimensions';
 
 
-$row-height: $dimen-keyline-padding;
+$row-height: $dimen-graph-cell-size;
 $pin-size: 14px;
 
 
@@ -14,7 +14,7 @@ $pin-size: 14px;
 
 	.pinRow-pin {
 		position: absolute;
-		top: ( $row-height - $pin-size / 2 ) / 2 - 3px;
+		top: ( $row-height - $pin-size ) / 2;
 		width: $pin-size;
 		height: $pin-size;
 		border-radius: 50%;
