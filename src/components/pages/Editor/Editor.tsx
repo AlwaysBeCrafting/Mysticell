@@ -1,5 +1,5 @@
-import * as classNames from 'classnames';
-import * as React from 'react';
+import classNames from 'classnames';
+import React from 'react';
 import { BrowserRouter as Router, Route, RouteComponentProps } from 'react-router-dom';
 
 import { generate } from 'common/util';
