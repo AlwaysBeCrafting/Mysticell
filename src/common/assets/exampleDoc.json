@@ -17,7 +17,7 @@
 			"outputNames": [ "Modifier" ],
 			"nodes":[ "NODE-0000", "NODE-0001", "NODE-0002" ],
 			"outputs": [
-				{ "node": "NODE-0002", "index": 0, "userValue": "" }
+				{ "type": "node", "id": "NODE-0002", "index": 0, "userValue": "" }
 			]
 		}
 	},
