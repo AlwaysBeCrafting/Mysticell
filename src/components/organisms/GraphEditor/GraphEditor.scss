@@ -17,6 +17,7 @@ $color-gridLine: rgba( $color-brand-primary, 0.2 );
 	position: relative;
 	display: flex;
 	flex-flow: column nowrap;
+	overflow-x: hidden;
 }
 	.graphEditor-toolbar {
 		flex: 0 0 $dimen-toolbar-size;
