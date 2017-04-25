@@ -10,6 +10,8 @@ $pin-size: 14px;
 	position: relative;
 	vertical-align: center;
 	padding: 0 $dimen-keyline-padding / 2;
+	line-height: $row-height;
+	font-size: 13px;
 }
 
 	.pinRow-pin {

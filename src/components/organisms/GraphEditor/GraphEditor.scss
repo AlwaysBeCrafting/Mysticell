@@ -28,10 +28,24 @@ $color-gridLine: rgba( $color-brand-primary, 0.2 );
 		display: flex;
 		flex-flow: row nowrap;
 		overflow-x: auto;
+		align-items: stretch;
 	}
 		.graphEditor-graph-panel {
 			flex: 0 0 $dimen-panelWidth;
+			display: flex;
+			flex-flow: column nowrap;
 		}
+			.graphEditor-graph-panel-heading {
+				line-height: $dimen-graph-cell-size;
+				padding: 0 $dimen-keyline-padding / 2;
+				font-size: 13px;
+				font-weight: 500;
+				text-transform: capitalize;
+			}
+
+			.graphEditor-graph-inputPanel-heading {
+				align-items: flex-end;
+			}
 
 		.graphEditor-graph-inputPanel {
 			border-right: solid 1px $color-gridLine;
