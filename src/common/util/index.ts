@@ -1,6 +1,3 @@
-export * from './id';
-
-
 interface Dict<T> {
 	[key: string]: T;
 }
@@ -16,3 +13,6 @@ const dictToMap = <In, Out>( dict: Dict<In>, convert: Converter<In, Out> ): Map<
 
 
 export { dictToMap };
+
+export * from './id';
+export { layoutGridWidth } from './layout';

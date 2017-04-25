@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 
 import { Position } from 'common/types';
+import { layoutGridWidth } from 'common/util';
 
 import { Toolbar } from 'components/molecules';
 
@@ -75,9 +76,7 @@ const mapStateToProps = ( state: AppState, ownProps?: PublicProps ): StateProps 
 			const graph = state.document.graphs.get( graphId );
 			if ( !graph ) { return <div />; }
 
-			const maxNodeX = Array.from( layout.values() )
-				.reduce(( max, current ) => current.x > max ? current.x : max, 2 );
-			const gridStyle = { minWidth: 40 * ( maxNodeX + 6 ) };
+			const gridStyle = { minWidth: 40 * layoutGridWidth( layout ) };
 
 			return (
 				<div className="graphEditor-graph-grid" style={ gridStyle }>
