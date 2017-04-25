@@ -34,6 +34,7 @@ $color-gridLine: rgba( $color-brand-primary, 0.2 );
 			flex: 0 0 $dimen-panelWidth;
 			display: flex;
 			flex-flow: column nowrap;
+			z-index: 100;
 		}
 			.graphEditor-graph-panel-heading {
 				line-height: $dimen-graph-cell-size;
@@ -102,6 +103,7 @@ $color-gridLine: rgba( $color-brand-primary, 0.2 );
 	}
 
 	.graphEditor-nodeMenu {
+		z-index: 200;
 		position: absolute;
 		right: $dimen-keyline-padding;
 		bottom: $dimen-keyline-padding;
