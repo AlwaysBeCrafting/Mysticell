@@ -1,5 +1,6 @@
 @import '~common/styles/colors';
 @import '~common/styles/dimensions';
+@import '~common/styles/fonts';
 
 
 $dimen-cellSize: $dimen-graph-cell-size;
@@ -36,12 +37,11 @@ $color-gridLine: rgba( $color-brand-primary, 0.2 );
 			display: flex;
 			flex-flow: column nowrap;
 			z-index: 100;
+			line-height: $dimen-graph-cell-size;
 		}
 			.graphEditor-graph-panel-heading {
-				line-height: $dimen-graph-cell-size;
 				padding: 0 $dimen-keyline-padding / 2;
-				font-size: 13px;
-				font-weight: 500;
+				@include font-body2();
 				text-transform: capitalize;
 			}
 
@@ -53,12 +53,8 @@ $color-gridLine: rgba( $color-brand-primary, 0.2 );
 			border-right: solid 1px $color-gridLine;
 		}
 
-		.graphEditor-graph-outputPanel {
-			border-left: solid 1px $color-gridLine;
-		}
-
 		.graphEditor-graph-grid {
-			flex: 1 0 $dimen-cellSize * 6;
+			flex: 0 0 $dimen-cellSize * 6;
 			display: flex;
 			flex-flow: column nowrap;
 			width: 0; // Needed for overflow scrolling to work ???

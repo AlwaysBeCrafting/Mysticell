@@ -1,5 +1,6 @@
 @import '~common/styles/colors';
 @import '~common/styles/dimensions';
+@import '~common/styles/fonts';
 
 
 $row-height: $dimen-graph-cell-size;
@@ -10,8 +11,7 @@ $pin-size: 14px;
 	position: relative;
 	vertical-align: center;
 	padding: 0 $dimen-keyline-padding / 2;
-	line-height: $row-height;
-	font-size: 13px;
+	@include font-body1();
 }
 
 	.pinRow-pin {

@@ -76,7 +76,7 @@ const mapStateToProps = ( state: AppState, ownProps?: PublicProps ): StateProps 
 			const graph = state.document.graphs.get( graphId );
 			if ( !graph ) { return <div />; }
 
-			const gridStyle = { minWidth: 40 * layoutGridWidth( layout ) };
+			const gridStyle = { flexBasis: 40 * layoutGridWidth( layout ) };
 
 			return (
 				<div className="graphEditor-graph-grid" style={ gridStyle }>

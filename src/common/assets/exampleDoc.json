@@ -14,9 +14,12 @@
 			"name": "Ability Mod",
 			"type": "group",
 			"inputNames": [ "Value" ],
-			"outputNames": [ "Modifier" ],
+			"outputNames": [ "Modifier", "Output2", "Something3", "Another4" ],
 			"nodes":[ "NODE-0000", "NODE-0001", "NODE-0002" ],
 			"outputs": [
+				{ "type": "node", "id": "NODE-0002", "index": 0, "userValue": "" },
+				{ "type": "node", "id": "NODE-0002", "index": 0, "userValue": "" },
+				{ "type": "node", "id": "NODE-0002", "index": 0, "userValue": "" },
 				{ "type": "node", "id": "NODE-0002", "index": 0, "userValue": "" }
 			]
 		}

@@ -1,11 +1,13 @@
+@import '~common/styles/fonts';
+
+
 .menuItem {
 	flex: 0 0 32px;
 	display: flex;
 	flex-flow: row nowrap;
 	justify-content: space-between;
 	align-items: center;
-
-	font-size: 15px;
+	@include font-button();
 }
 	.menuItem-title {
 		color: rgba( 0, 0, 0, 0.87 );

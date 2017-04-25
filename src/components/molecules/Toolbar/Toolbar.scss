@@ -1,5 +1,6 @@
-@import '~common/styles/colors.scss';
-@import '~common/styles/dimensions.scss';
+@import '~common/styles/colors';
+@import '~common/styles/dimensions';
+@import '~common/styles/fonts';
 
 
 $dimen-toolbar-padding: $dimen-keyline-padding - (( $dimen-toolbar-size - $dimen-icon-size ) / 2 );
@@ -15,8 +16,8 @@ $dimen-title-margin-afterNav: $dimen-keyline-content - ( $dimen-toolbar-size + $
 	align-items: stretch;
 	background: #fafafa;
 	padding: 0 $dimen-toolbar-padding;
-	font-size: 20px;
 	color: $color-text-primary;
+	@include font-button();
 }
 
 .toolbar.mod-inverted {
@@ -30,8 +31,7 @@ $dimen-title-margin-afterNav: $dimen-keyline-content - ( $dimen-toolbar-size + $
 		flex: 1 0 auto;
 		align-self: center;
 		margin: 0 $dimen-title-margin;
-		font-size: 20px;
-		font-weight: 500;
+		@include font-title();
 	}
 
 	.toolbar-nav + .toolbar-title {

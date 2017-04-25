@@ -1,11 +1,13 @@
 @import '~common/styles/colors';
 @import '~common/styles/dimensions';
+@import '~common/styles/fonts';
 
 
 .treeView-item {
 	display: flex;
 	flex-flow: column nowrap;
 	align-items: stretch;
+	@include font-body1();
 }
 	.treeView-item-body {
 		flex: 0 0 $dimen-listItem-size;
@@ -29,7 +31,6 @@
 		.treeView-item-body-title {
 			margin-left: $dimen-keyline-content;
 			flex: 1 0 auto;
-			font-size: 16px;
 		}
 
 		.treeView-item-body-icon + .treeView-item-body-title {

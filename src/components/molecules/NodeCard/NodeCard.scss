@@ -1,5 +1,6 @@
 @import '~common/styles/colors';
 @import '~common/styles/dimensions';
+@import '~common/styles/fonts';
 @import '~common/styles/mixins';
 
 
@@ -7,7 +8,7 @@ $row-height: $dimen-graph-cell-size;
 
 .nodeCard {
 	@include elevation( 2px );
-	font-size: 13px;
+	@include font-body1();
 	line-height: $row-height;
 	display: flex;
 	flex-flow: column nowrap;
@@ -25,7 +26,7 @@ $row-height: $dimen-graph-cell-size;
 	}
 		.nodeCard-headerRow-name {
 			flex: 1 0 auto;
-			font-weight: 500;
+			@include font-body2();
 		}
 
 .errorNodeCard {

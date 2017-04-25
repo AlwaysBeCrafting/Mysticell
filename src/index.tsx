@@ -11,7 +11,6 @@ import reducer from 'data';
 import { AppState } from 'data';
 import { loadDocument } from 'data/Document/actions';
 
-import 'common/styles/fonts.scss';
 import 'common/styles/normalize.scss';
 
 
