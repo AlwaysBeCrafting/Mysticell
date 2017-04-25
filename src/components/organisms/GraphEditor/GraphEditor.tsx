@@ -74,8 +74,13 @@ const mapStateToProps = ( state: AppState, ownProps?: PublicProps ): StateProps 
 			const { graphs, nodes, layout } = state.document;
 			const graph = state.document.graphs.get( graphId );
 			if ( !graph ) { return <div />; }
+
+			const maxNodeX = Array.from( layout.values() )
+				.reduce(( max, current ) => current.x > max ? current.x : max, 2 );
+			const gridStyle = { minWidth: 40 * ( maxNodeX + 6 ) };
+
 			return (
-				<div className="graphEditor-graph-grid">
+				<div className="graphEditor-graph-grid" style={ gridStyle }>
 					<WireLayer
 						graph={ graph }
 						nodes={ nodes }
