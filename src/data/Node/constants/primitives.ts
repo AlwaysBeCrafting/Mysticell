@@ -52,3 +52,16 @@ export const divide: Primitive = {
 		return [makeErrorParam( 'Both arguments to Divide must be numbers' )];
 	},
 };
+
+
+export const floor: Primitive = {
+	name: 'Floor',
+	inputNames: [ 'Num' ],
+	outputNames: [ 'Floor' ],
+	exec: ( a ) => {
+		if ( a.type === 'number' ) {
+			return [{ type: 'number', value: Math.floor( a.value ) }];
+		}
+		return [makeErrorParam( 'Argument to Floor must be a number' )];
+	},
+};
