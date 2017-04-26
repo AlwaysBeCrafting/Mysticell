@@ -42,8 +42,11 @@ $color-gridLine: rgba( $color-brand-primary, 0.2 );
 		}
 			.graphEditor-graph-panel-heading {
 				padding: 0 $dimen-keyline-padding / 2;
-				@include font-body2();
+				@include font-title;
+				color: $color-text-disabled;
 				text-transform: capitalize;
+				grid-row: 1 / span 2;
+				line-height: $dimen-graph-cell-size * 2;
 			}
 
 			.graphEditor-graph-inputPanel-heading {

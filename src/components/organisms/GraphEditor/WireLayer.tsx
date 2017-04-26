@@ -10,6 +10,9 @@ import { Graph } from 'data/Graph/model';
 import { Node } from 'data/Node/model';
 
 
+const panelHeaderRows = 2;
+
+
 interface Props {
 	graph: Graph;
 	nodes: Map<string, Node>;
@@ -44,7 +47,7 @@ const renderNodeWires = ( props: Props, nodeId: string ) => {
 const renderOutputWires = ( props: Props ) => {
 	const { graph, layout } = props;
 	const position: Position = { x: layoutGridWidth( layout ), y: 0 };
-	return graph.outputs.map( mapSourceToWire( 1, position, layout, 'GRAPH' ));
+	return graph.outputs.map( mapSourceToWire( panelHeaderRows, position, layout, 'GRAPH' ));
 };
 
 const mapSourceToWire = ( indexOffset: number, pos: Position, layout: Map<string, Position>, key: string ) => (
@@ -57,7 +60,7 @@ const mapSourceToWire = ( indexOffset: number, pos: Position, layout: Map<string
 		switch ( source.type ) {
 			case 'graph':
 				startPos.x = 0;
-				startPos.y = source.index + 1;
+				startPos.y = source.index + panelHeaderRows;
 				break;
 
 			case 'node':
