@@ -15,12 +15,12 @@
 			"type": "group",
 			"inputNames": [ "Value" ],
 			"outputNames": [ "Modifier", "Output2", "Something3", "Another4" ],
-			"nodes":[ "NODE-0000", "NODE-0001", "NODE-0002" ],
+			"nodes":[ "NODE-0000", "NODE-0001", "NODE-0002", "NODE-0003", "NODE-0004", "NODE-0005" ],
 			"outputs": [
 				{ "type": "node", "id": "NODE-0002", "index": 0, "userValue": "" },
 				{ "type": "node", "id": "NODE-0002", "index": 0, "userValue": "" },
-				{ "type": "node", "id": "NODE-0002", "index": 0, "userValue": "" },
-				{ "type": "node", "id": "NODE-0002", "index": 0, "userValue": "" }
+				{ "type": "node", "id": "NODE-0004", "index": 0, "userValue": "" },
+				{ "type": "node", "id": "NODE-0005", "index": 0, "userValue": "" }
 			]
 		}
 	},
@@ -56,11 +56,44 @@
 			"outputs": [
 				{ "type": "number", "value": -5 }
 			]
+		},
+		"NODE-0003": {
+			"definition": "PRIMITIVE-add",
+			"label": "Add",
+			"inputs": [
+				{ "type": "graph", "index": 0, "userValue": "" }
+			],
+			"outputs": [
+				{ "type": "number", "value": -5 }
+			]
+		},
+		"NODE-0004": {
+			"definition": "PRIMITIVE-subtract",
+			"label": "Subtract",
+			"inputs": [
+				{ "type": "node", "id": "NODE-0003", "index": 0, "userValue": "" }
+			],
+			"outputs": [
+				{ "type": "number", "value": -5 }
+			]
+		},
+		"NODE-0005": {
+			"definition": "PRIMITIVE-multiply",
+			"label": "Whatever",
+			"inputs": [
+				{ "type": "node", "id": "NODE-0004", "index": 0, "userValue": "" }
+			],
+			"outputs": [
+				{ "type": "number", "value": -5 }
+			]
 		}
 	},
 	"layout": {
 		"NODE-0000": { "x": 2, "y": 2 },
 		"NODE-0001": { "x": 8, "y": 2 },
-		"NODE-0002": { "x": 14, "y": 2 }
+		"NODE-0002": { "x": 14, "y": 2 },
+		"NODE-0003": { "x": 2, "y": 8 },
+		"NODE-0004": { "x": 8, "y": 8 },
+		"NODE-0005": { "x": 14, "y": 8 }
 	}
 }
