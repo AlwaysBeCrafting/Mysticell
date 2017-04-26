@@ -34,8 +34,9 @@ $color-gridLine: rgba( $color-brand-primary, 0.2 );
 	}
 		.graphEditor-graph-panel {
 			flex: 0 0 $dimen-panelWidth;
-			display: flex;
-			flex-flow: column nowrap;
+			display: grid;
+			grid-template-columns: 1fr;
+			grid-auto-rows: 40px;
 			z-index: 100;
 			line-height: $dimen-graph-cell-size;
 		}
@@ -57,7 +58,6 @@ $color-gridLine: rgba( $color-brand-primary, 0.2 );
 			flex: 0 0 $dimen-cellSize * 6;
 			display: flex;
 			flex-flow: column nowrap;
-			width: 0; // Needed for overflow scrolling to work ???
 			position: relative;
 			background:
 				repeating-linear-gradient(

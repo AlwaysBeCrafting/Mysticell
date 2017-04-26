@@ -10,14 +10,16 @@ $row-height: $dimen-graph-cell-size;
 	@include elevation( 2px );
 	@include font-body1();
 	line-height: $row-height;
-	display: flex;
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-auto-rows: 40px;
 	flex-flow: column nowrap;
 }
 	.nodeCard-row {
-		flex: 0 0 $row-height;
 		padding: 0 $dimen-keyline-padding / 2;
 		display: flex;
 		flex-flow: row nowrap;
+
 	}
 
 	.nodeCard-headerRow {
