@@ -26,8 +26,15 @@
 
 * {
 	padding: 0; margin: 0;
-	box-sizing: border-box;
 	outline: none;
+}
+
+*, *:before, *:after {
+	box-sizing: inherit;
+}
+
+html {
+	box-sizing: border-box;
 }
 
 html, body, .root {
@@ -37,6 +44,11 @@ html, body, .root {
 article, aside, body, div, footer, header, hgroup, main, nav, section, ul, ol {
 	display: flex;
 	flex-flow: column nowrap;
+}
+
+input, button {
+	color: inherit;
+	font: inherit;
 }
 
 ul, ol {
