@@ -98,14 +98,8 @@
 	},
 	"tree": [
 		{
-			"type": "folder",
-			"name": "Abilities",
-			"children": [
-				{
-					"type": "graph",
-					"id": "GRAPH-0000"
-				}
-			]
+			"id": "GRAPH-0000",
+			"children": []
 		}
 	]
 }
