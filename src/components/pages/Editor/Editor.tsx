@@ -4,10 +4,11 @@ import { BrowserRouter as Router, Route, RouteComponentProps } from 'react-route
 
 import { generate } from 'common/util';
 
-import { MenuItem } from 'data/common';
-
+import { MenuBar } from 'components/molecules';
 import { Toolbar, TreeView } from 'components/molecules';
 import { GraphEditor, GraphEditorRouteParams } from 'components/organisms';
+
+import { MenuItem } from 'data/common';
 
 import './Editor.scss';
 
@@ -37,10 +38,31 @@ const renderDocument = () => (
 );
 
 
+const demoMenuItems: MenuItem[] = [
+	{ id: 'MENU-file', title: 'File', childItems: [] },
+	{ id: 'MENU-edit', title: 'Edit', childItems: [] },
+	{ id: 'MENU-view', title: 'View', childItems: [] },
+];
+
+
+const toolbarItems: MenuItem[] = [
+	{
+		title: 'Menu',
+		id: 'app-menu',
+		render: ( item: MenuItem ) => <MenuBar items={ demoMenuItems } key={ item.id } />,
+	},
+];
+
+
 const Editor = ({ className }: Props ) => (
 	<Router>
 		<main className={ classNames( 'editor', className ) }>
-			<Toolbar title="Mysticell" className="editor-appbar mod-inverted" navItem={ navItem } />
+			<Toolbar
+				title="Mysticell"
+				className="editor-appbar mod-inverted"
+				navItem={ navItem }
+				items={ toolbarItems }
+			/>
 			{ renderDocument() }
 		</main>
 	</Router>

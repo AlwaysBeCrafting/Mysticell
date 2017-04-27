@@ -13,7 +13,6 @@ import { Graph } from 'data/Graph/model';
 import { Node } from 'data/Node/model';
 
 import { NodeLayer } from './NodeLayer';
-import { NodeMenu } from './NodeMenu';
 import { Panel } from './Panel';
 import { WireLayer } from './WireLayer';
 
@@ -59,7 +58,6 @@ const GraphEditor = ( props: Props ) => {
 				{ renderGrid() }
 				<Panel type="output" pinNames={ graph.outputNames } />
 			</div>
-			<NodeMenu className="graphEditor-nodeMenu" onItemSelected={ () => ({}) } />
 		</div>
 	);
 };

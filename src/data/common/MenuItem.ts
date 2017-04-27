@@ -5,6 +5,7 @@ export interface MenuItem extends Id {
 	hint?: string;
 	icon?: string;
 	childItems?: MenuItem[];
+	render?: ( MenuItem ) => JSX.Element;
 }
 
 export default MenuItem;

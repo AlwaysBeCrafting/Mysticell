@@ -6,7 +6,7 @@ import './Item.scss';
 
 
 interface Props extends React.HTMLAttributes<HTMLButtonElement> {
-	item: MenuItem;
+	menuItem: MenuItem;
 	enabled?: boolean;
 	checkable?: boolean;
 	checked?: boolean;
@@ -14,19 +14,25 @@ interface Props extends React.HTMLAttributes<HTMLButtonElement> {
 
 
 export const Item = ( props: Props ) => {
-	const iconElem = props.item.icon && (
+	const { menuItem } = props;
+	const iconElem = menuItem.icon && (
 		<img
 			className="toolbar-item-icon"
-			title={ props.item.title }
-			src={ props.item.icon }
+			title={ menuItem.title }
+			src={ menuItem.icon }
 			/>
 	);
 
-	return (
-		<button className="toolbar-item">
-			{ iconElem || props.item.title }
-		</button>
-	);
+	if ( menuItem.render ) {
+		return menuItem.render( menuItem );
+
+	} else {
+		return (
+			<button className="toolbar-item">
+				{ iconElem || menuItem.title }
+			</button>
+		);
+	}
 };
 
 export default Item;
