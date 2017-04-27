@@ -17,7 +17,7 @@ $dimen-title-margin-afterNav: $dimen-keyline-content - ( $dimen-toolbar-size + $
 	background: #fafafa;
 	padding: 0 $dimen-toolbar-padding;
 	color: $color-text-primary;
-	@include font-button();
+	@include font-button;
 }
 
 .toolbar.mod-inverted {
@@ -31,7 +31,7 @@ $dimen-title-margin-afterNav: $dimen-keyline-content - ( $dimen-toolbar-size + $
 		flex: 1 0 auto;
 		align-self: center;
 		margin: 0 $dimen-title-margin;
-		@include font-title();
+		@include font-title;
 	}
 
 	.toolbar-nav + .toolbar-title {

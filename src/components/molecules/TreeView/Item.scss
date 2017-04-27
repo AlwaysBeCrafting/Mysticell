@@ -7,7 +7,7 @@
 	display: flex;
 	flex-flow: column nowrap;
 	align-items: stretch;
-	@include font-body1();
+	@include font-body1;
 }
 	.treeView-item-body {
 		flex: 0 0 $dimen-listItem-size;

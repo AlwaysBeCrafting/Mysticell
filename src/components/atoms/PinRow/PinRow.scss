@@ -11,7 +11,7 @@ $pin-size: 14px;
 	position: relative;
 	vertical-align: center;
 	padding: 0 $dimen-keyline-padding / 2;
-	@include font-body1();
+	@include font-body1;
 }
 
 	.pinRow-pin {

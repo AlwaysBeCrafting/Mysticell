@@ -7,7 +7,7 @@
 	flex-flow: row nowrap;
 	justify-content: space-between;
 	align-items: center;
-	@include font-button();
+	@include font-button;
 }
 	.menuItem-title {
 		color: rgba( 0, 0, 0, 0.87 );

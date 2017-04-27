@@ -8,7 +8,7 @@ $row-height: $dimen-graph-cell-size;
 
 .nodeCard {
 	@include elevation( 2px );
-	@include font-body1();
+	@include font-body1;
 	line-height: $row-height;
 	display: grid;
 	grid-template-columns: 1fr;
@@ -28,7 +28,7 @@ $row-height: $dimen-graph-cell-size;
 	}
 		.nodeCard-headerRow-name {
 			flex: 1 0 auto;
-			@include font-body2();
+			@include font-body2;
 		}
 
 .errorNodeCard {
