@@ -27,17 +27,17 @@ const NodeCard = ( props: Props ) => {
 const renderCard = ( props: Props ) => {
 	const { position, node, definition } = props;
 	const name = node.label || definition.name;
-	const pinCount = definition.inputNames.length + definition.outputNames.length;
+	const pinRowCount = definition.inputNames.length + definition.outputNames.length;
 	return (
-		<Card className="nodeCard" style={ makeStyle( position, pinCount ) }>
+		<Card className="nodeCard" style={ makeStyle( position, pinRowCount ) }>
 			<header className="nodeCard-headerRow nodeCard-row">
 				<span className="nodeCard-headerRow-name">{ name }</span>
 			</header>
 			{ definition.outputNames.map(( outputName ) => (
 				<SourcePinRow name={ outputName } key={ outputName } />
 			))}
-			{ definition.inputNames.map(( inputName ) => (
-				<DestinationPinRow name={ inputName } key={ inputName } />
+			{ definition.inputNames.map(( inputName, index ) => (
+				<DestinationPinRow name={ inputName } source={ node.inputs[ index ]} key={ inputName } />
 			))}
 		</Card>
 	);

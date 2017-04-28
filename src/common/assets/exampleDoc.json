@@ -40,7 +40,7 @@
 			"label": "Subtract",
 			"inputs": [
 				{ "type": "graph", "index": 0, "userValue": "" },
-				10
+				{ "type": "value", "userValue": "10" }
 			],
 			"outputs": [
 				{ "type": "number", "value": -10 }
@@ -51,7 +51,7 @@
 			"label": "Divide",
 			"inputs": [
 				{ "type": "node", "id": "NODE-0000", "index": 0, "userValue": "" },
-				2
+				{ "type": "value", "userValue": "2" }
 			],
 			"outputs": [
 				{ "type": "number", "value": -5 }
@@ -71,7 +71,8 @@
 			"definition": "PRIMITIVE-add",
 			"label": "Add",
 			"inputs": [
-				{ "type": "graph", "index": 0, "userValue": "" }
+				{ "type": "graph", "index": 0, "userValue": "" },
+				{ "type": "value", "userValue": "100" }
 			],
 			"outputs": [
 				{ "type": "number", "value": -5 }
@@ -81,7 +82,8 @@
 			"definition": "PRIMITIVE-subtract",
 			"label": "Subtract",
 			"inputs": [
-				{ "type": "node", "id": "NODE-0003", "index": 0, "userValue": "" }
+				{ "type": "node", "id": "NODE-0003", "index": 0, "userValue": "" },
+				{ "type": "value", "userValue": "45" }
 			],
 			"outputs": [
 				{ "type": "number", "value": -5 }
@@ -91,7 +93,8 @@
 			"definition": "PRIMITIVE-multiply",
 			"label": "Whatever",
 			"inputs": [
-				{ "type": "node", "id": "NODE-0004", "index": 0, "userValue": "" }
+				{ "type": "node", "id": "NODE-0004", "index": 0, "userValue": "" },
+				{ "type": "value", "userValue": "3.8" }
 			],
 			"outputs": [
 				{ "type": "number", "value": -5 }

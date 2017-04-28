@@ -9,7 +9,9 @@ $pin-size: 14px;
 
 .pinRow {
 	position: relative;
-	vertical-align: center;
+	display: flex;
+	flex-flow: row nowrap;
+	align-items: baseline;
 	padding: 0 $dimen-keyline-padding / 2;
 	@include font-body1;
 }
@@ -23,6 +25,26 @@ $pin-size: 14px;
 		border: solid thin $color-black-alpha-38;
 		background: $color-grey-400;
 		content: ' ';
+	}
+
+	.pinRow-label {
+		color: $color-text-secondary;
+	}
+	
+	.pinRow-value {
+		width: 0;
+		flex: 1 0 0;
+		text-align: right;
+		margin-left: 16px;
+		line-height: 1;
+		border: none;
+		border-bottom: solid 2px $color-black-alpha-12;
+		padding: 6px 0 4px;
+		color: $color-text-primary;
+	}
+
+	.pinRow-value:focus {
+		border-color: $color-brand-primary;
 	}
 
 .sourcePinRow {

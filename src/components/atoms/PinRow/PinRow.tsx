@@ -1,23 +1,31 @@
 import classNames from 'classnames';
 import React from 'react';
 
+import { ParamSource } from 'data/common';
+
 import './PinRow.scss';
 
 
 interface Props {
 	name: string;
 	className?: string;
+	source?: ParamSource;
 }
 
 
-const PinRow = ( type: string ) => ({ name, className, ...attrs }: Props ) => (
+const PinRow = ( type: string ) => ({ name, className, source, ...attrs }: Props ) => (
 	<div
 		className={ classNames( `pinRow ${ type }PinRow`, className ) }
 		key={ name }
 		{ ...attrs }
 	>
 		<div className={ `pinRow-pin ${ type }PinRow-pin` } />
-		{ name }
+		<label className="pinRow-label">{ name }</label>
+		{
+			source && source.type === 'value'
+				? <input className="pinRow-value" value={ source.userValue } />
+				: undefined
+		}
 	</div>
 );
 

@@ -47,6 +47,7 @@ article, aside, body, div, footer, header, hgroup, main, nav, section, ul, ol {
 }
 
 input, button {
+	-webkit-appearance: none;
 	color: inherit;
 	font: inherit;
 }
