@@ -9,6 +9,7 @@ import { layoutGridWidth } from 'common/util';
 import { Toolbar } from 'components/molecules';
 
 import { AppState } from 'data';
+import { Document } from 'data/Document/model';
 import { Graph } from 'data/Graph/model';
 import { Node } from 'data/Node/model';
 
@@ -63,41 +64,43 @@ const GraphEditor = ( props: Props ) => {
 };
 
 
-const mapStateToProps = ( state: AppState, ownProps?: PublicProps ): StateProps => {
-	const graphId = `GRAPH-${ ownProps && ownProps.match.params.id }`;
-	return {
-		graph: state.document.graphs.get( graphId ) as Graph,
-		nodes: state.document.nodes,
-		layout: state.document.layout,
-		renderGrid: () => {
-			const { graphs, nodes, layout } = state.document;
-			const graph = state.document.graphs.get( graphId );
-			if ( !graph ) { return <div />; }
+const renderGraphGrid = ( graphId: string, document: Document ) => () => {
+	const { graphs, nodes, layout } = document;
+	const graph = document.graphs.get( graphId );
+	if ( !graph ) { return <div />; }
 
-			const gridStyle = { flexBasis: 40 * layoutGridWidth( layout ) };
+	const gridStyle = { flexBasis: 40 * layoutGridWidth( layout ) };
 
-			return (
-				<div className="graphEditor-graph-grid" style={ gridStyle }>
-					<WireLayer
-						graph={ graph }
-						nodes={ nodes }
-						layout={ layout }
-						className="graphEditor-graph-grid-wires" />
-					<NodeLayer
-						graphs={ graphs }
-						graph={ graph }
-						nodes={ nodes }
-						layout={ layout }
-						className="graphEditor-graph-grid-nodes" />
-				</div>
-			);
-		},
-	};
+	return (
+		<div className="graphEditor-graph-grid" style={ gridStyle }>
+			<WireLayer
+				graph={ graph }
+				nodes={ nodes }
+				layout={ layout }
+				className="graphEditor-graph-grid-wires" />
+			<NodeLayer
+				graphs={ graphs }
+				graph={ graph }
+				nodes={ nodes }
+				layout={ layout }
+				className="graphEditor-graph-grid-nodes" />
+		</div>
+	);
 };
 
+
 const ConnectedGraphEditor = connect<StateProps, DispatchProps, PublicProps>(
-	mapStateToProps,
+	( state: AppState, ownProps: PublicProps ) => {
+		const graphId = `GRAPH-${ ownProps && ownProps.match.params.id }`;
+		return {
+			graph: state.document.graphs.get( graphId ) as Graph,
+			nodes: state.document.nodes,
+			layout: state.document.layout,
+			renderGrid: renderGraphGrid( graphId, state.document ),
+		};
+	},
 )( GraphEditor );
+
 
 export { RouteParams };
 export default ConnectedGraphEditor;
