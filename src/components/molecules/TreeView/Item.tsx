@@ -9,11 +9,11 @@ import './Item.scss';
 interface Props extends React.HTMLAttributes<HTMLLIElement> {
 	item: MenuItem;
 	isExpanded?: boolean;
-	childItems?: MenuItem[];
 }
 
 
-const Item = ({ item, isExpanded, childItems, ...attrs }: Props ) => {
+const Item = ({ item, isExpanded, ...attrs }: Props ) => {
+	const { childItems } = item;
 	const className = classNames(
 		'treeView-item',
 		{
@@ -24,7 +24,7 @@ const Item = ({ item, isExpanded, childItems, ...attrs }: Props ) => {
 
 	const childrenElem = childItems && !!childItems.length && (
 		<ul className="treeView-item-children">
-			{ childItems.map(( child ) => <Item item={ child } /> ) }
+			{ childItems.map(( child ) => <Item item={ child } key={ child.id }/> ) }
 		</ul>
 	);
 

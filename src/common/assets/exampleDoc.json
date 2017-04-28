@@ -22,6 +22,16 @@
 				{ "type": "node", "id": "NODE-0004", "index": 0, "userValue": "" },
 				{ "type": "node", "id": "NODE-0005", "index": 0, "userValue": "" }
 			]
+		},
+		"GRAPH-0001": {
+			"name": "Strength",
+			"type": "input",
+			"inputNames": [ "Value" ],
+			"outputNames": [ "Value" ],
+			"nodes": [],
+			"outputs": [
+				{ "type": "graph", "index": 0, "userValue": "" }
+			]
 		}
 	},
 	"nodes": {
@@ -98,8 +108,9 @@
 	},
 	"tree": [
 		{
-			"id": "GRAPH-0000",
-			"children": []
+			 "id": "GRAPH-0000", "children": [
+				{ "id": "GRAPH-0001", "children": [] }
+			]
 		}
 	]
 }
