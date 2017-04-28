@@ -1,6 +1,6 @@
-import classNames from 'classnames';
 import React from 'react';
 import { BrowserRouter as Router, Route, RouteComponentProps } from 'react-router-dom';
+import { Dispatch } from 'redux';
 
 import { generate } from 'common/util';
 
@@ -8,12 +8,33 @@ import { MenuBar } from 'components/molecules';
 import { Toolbar, TreeView } from 'components/molecules';
 import { GraphEditor, GraphEditorRouteParams } from 'components/organisms';
 
+import { Action } from 'data';
 import { MenuItem } from 'data/common';
 
 import './Editor.scss';
 
 
-interface Props extends React.HTMLAttributes<HTMLElement> {} // cannot find name HTMLMainElement :<
+interface TreeItem {
+	id: string;
+	children: TreeItem[];
+}
+
+
+interface StateProps {
+	title?: string;
+	tree?: TreeItem[];
+}
+
+
+interface DispatchProps {
+	dispatch?: Dispatch<Action>;
+}
+
+
+interface PublicProps {}
+
+
+type Props = StateProps & DispatchProps & PublicProps;
 
 
 const navItem: MenuItem = {
@@ -54,18 +75,22 @@ const toolbarItems: MenuItem[] = [
 ];
 
 
-const Editor = ({ className }: Props ) => (
-	<Router>
-		<main className={ classNames( 'editor', className ) }>
-			<Toolbar
-				title="Mysticell"
-				className="editor-appbar mod-inverted"
-				navItem={ navItem }
-				items={ toolbarItems }
-			/>
-			{ renderDocument() }
-		</main>
-	</Router>
-);
+const Editor = ( props: Props ) => {
+	const { title } = props;
+	return (
+		<Router>
+			<main className="editor">
+				<Toolbar
+					title={ title || 'Mysticell' }
+					className="editor-appbar mod-inverted"
+					navItem={ navItem }
+					items={ toolbarItems }
+				/>
+				{ renderDocument() }
+			</main>
+		</Router>
+	);
+};
+
 
 export default Editor;
