@@ -3,10 +3,7 @@ import { dictToMap } from 'common/util';
 
 import { Param, ParamSource } from 'data/common';
 
-import { Cell } from 'data/Cell/model';
-import { Graph } from 'data/Graph/model';
-import { Node } from 'data/Node/model';
-import { Sheet } from 'data/Sheet/model';
+import { TreeItem } from 'data/Tree/model';
 
 import { Document } from './Document';
 
@@ -21,6 +18,8 @@ interface DocumentJson {
 	nodes: { [id: string]: NodeJson };
 
 	layout: { [id: string]: Position };
+
+	tree: TreeItem[];
 }
 
 
@@ -28,13 +27,20 @@ const documentJsonToState = ( document: DocumentJson ): Document => ({
 	id: document.id,
 	title: document.title,
 
-	cells:  dictToMap( document.cells,  cellJsonToState  ),
-	sheets: dictToMap( document.sheets, sheetJsonToState ),
-	graphs: dictToMap( document.graphs, graphJsonToState ),
-	nodes:  dictToMap( document.nodes,  nodeJsonToState  ),
+	cells:  dictToMap( document.cells,  fillId ),
+	sheets: dictToMap( document.sheets, fillId ),
+	graphs: dictToMap( document.graphs, fillId ),
+	nodes:  dictToMap( document.nodes,  fillId ),
 
 	layout: dictToMap( document.layout, ( _, pos ) => pos ),
+
+	tree: document.tree,
 });
+
+
+const fillId = <T extends object>( id: string, obj: T ): T & { id: string } => (
+	Object.assign({ id }, obj )
+);
 
 
 interface CellJson {
@@ -45,16 +51,12 @@ interface CellJson {
 	format?: {};
 }
 
-const cellJsonToState = ( id: string, cell: CellJson ): Cell => ({ id, ...cell });
-
 
 interface SheetJson {
 	title: string;
 	size: { width: number, height: number };
 	cells: string[];
 }
-
-const sheetJsonToState = ( id: string, sheet: SheetJson ): Sheet => ({ id, ...sheet });
 
 
 interface GraphJson {
@@ -66,8 +68,6 @@ interface GraphJson {
 	outputs: ParamSource[];
 }
 
-const graphJsonToState = ( id: string, graph: GraphJson ): Graph => ({ id, ...graph });
-
 
 interface NodeJson {
 	definition: string;
@@ -75,9 +75,6 @@ interface NodeJson {
 	inputs: ParamSource[];
 	outputs: Param[];
 }
-
-const nodeJsonToState = ( id: string, node: NodeJson ): Node => ({ id, ...node });
-
 
 
 export { DocumentJson, documentJsonToState };

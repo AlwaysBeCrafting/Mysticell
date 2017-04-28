@@ -14,6 +14,8 @@ const defaultState: Document = {
 	nodes: new Map(),
 
 	layout: new Map(),
+
+	tree: [],
 };
 
 
