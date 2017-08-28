@@ -1,9 +1,9 @@
-import { Id } from 'common/types';
-
-
-export interface Sheet extends Id {
+interface Sheet {
+	id: string;
 	title: string;
-	size: { width: number, height: number };
+	size: [ number, number ];
+	layout: {[ cellId: string ]: [ number, number, number, number ]};
 }
 
-export default Sheet;
+
+export { Sheet };

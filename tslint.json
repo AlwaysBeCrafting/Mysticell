@@ -34,6 +34,7 @@
         "no-empty-interface": false,
         "only-arrow-functions": [
             true
-        ]
+        ],
+        "ban-types": false
     }
 }
