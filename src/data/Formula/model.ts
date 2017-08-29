@@ -7,6 +7,7 @@ interface Formula extends NodeFunction {
 	type: 'formula';
 	isProperty: boolean;
 	graph: ObjMap<ObjMap<Array<[number, number]>>>;
+	layout: ObjMap<[number, number]>;
 }
 
 
