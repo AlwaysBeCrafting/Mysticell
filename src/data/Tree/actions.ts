@@ -1,33 +1,30 @@
-export namespace ActionTypes {
-	export const EXPAND_TREE_ITEM   = '[Tree Item] Expand';
-	export const COLLAPSE_TREE_ITEM = '[Tree Item] Collapse';
+namespace ActionTypes {
+	export const EXPAND_ITEM   = '[Tree] Expand item';
+	export const COLLAPSE_ITEM = '[Tree] Collapse item';
 }
+type Action =
+	| ExpandItemAction
+	| CollapseItemAction;
 
 
-interface ExpandTreeItemAction {
-	readonly type: typeof ActionTypes.EXPAND_TREE_ITEM;
+interface ExpandItemAction {
+	readonly type: typeof ActionTypes.EXPAND_ITEM;
 	payload: { id: string };
 }
+const expandItem = ( id: string ): ExpandItemAction => ({
+	type: ActionTypes.EXPAND_ITEM,
+	payload: { id },
+});
 
-const expandTreeItem = ( id: string ): ExpandTreeItemAction => ({
-	type: ActionTypes.EXPAND_TREE_ITEM,
+interface CollapseItemAction {
+	readonly type: typeof ActionTypes.COLLAPSE_ITEM;
+	payload: { id: string };
+}
+const collapseItem = ( id: string ): CollapseItemAction => ({
+	type: ActionTypes.COLLAPSE_ITEM,
 	payload: { id },
 });
 
 
-interface CollapseTreeItemAction {
-	readonly type: typeof ActionTypes.COLLAPSE_TREE_ITEM;
-	payload: { id: string };
-}
-
-const collapseTreeItem = ( id: string ): CollapseTreeItemAction => ({
-	type: ActionTypes.COLLAPSE_TREE_ITEM,
-	payload: { id },
-});
-
-
-type Action = ExpandTreeItemAction | CollapseTreeItemAction;
-
-
-export { expandTreeItem, collapseTreeItem };
-export default Action;
+export { Action, ActionTypes };
+export { expandItem, collapseItem };

@@ -1,3 +1,7 @@
-import Sheet from './model';
+import { Sheet } from './model';
 
-export default ( state: Sheet ) => state;
+
+const reducer = ( state: Sheet ) => state;
+
+
+export { reducer };
