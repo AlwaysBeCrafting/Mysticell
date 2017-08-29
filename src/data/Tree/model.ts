@@ -1,14 +1,7 @@
-interface TreeDir {
-	type: 'dir';
+interface TreeItem {
+	id: string;
 	children: TreeItem[];
 }
-
-interface TreeFunction {
-	type: 'function';
-	id: string;
-}
-
-type TreeItem = TreeDir | TreeFunction;
 
 
 export { TreeItem };
