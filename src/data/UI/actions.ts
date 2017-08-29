@@ -1,11 +1,8 @@
 namespace ActionTypes {}
-
-
 interface Action {
-	type: string;
+	readonly type: string;
 	payload: {};
 }
 
 
 export { Action, ActionTypes };
-export default Action;
