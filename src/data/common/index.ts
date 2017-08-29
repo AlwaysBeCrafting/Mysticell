@@ -1,2 +1,2 @@
 export { MenuItem } from './MenuItem';
-export { Param, ErrorParam, makeErrorParam } from './Param';
+export { Param, ErrorParam, params } from './Param';

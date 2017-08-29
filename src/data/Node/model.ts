@@ -5,5 +5,13 @@ interface Node {
 	inputValues: number[];
 }
 
+interface NodeFunction {
+	id: string;
+	type: 'formula' | 'primitive';
+	name: string;
+	inputNames: string[];
+	outputNames: string[];
+}
 
-export { Node };
+
+export { Node, NodeFunction };

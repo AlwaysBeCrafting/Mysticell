@@ -1,4 +1,4 @@
-import { Function } from './model';
+import { Formula } from './model';
 
 
 namespace ActionTypes {
@@ -15,9 +15,9 @@ type Action =
 
 interface CreateAction {
 	readonly type: typeof ActionTypes.CREATE;
-	payload: { fxn: Function };
+	payload: { fxn: Formula };
 }
-const create = ( fxn: Function ): CreateAction => ({
+const create = ( fxn: Formula ): CreateAction => ({
 	type: ActionTypes.CREATE,
 	payload: { fxn },
 });

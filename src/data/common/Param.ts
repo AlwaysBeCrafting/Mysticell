@@ -24,12 +24,36 @@ interface ErrorParam {
 	message: string;
 }
 
-const makeErrorParam = ( message ): ErrorParam => ({
-	type: 'error',
-	value: 'ERR',
-	message,
-});
+type Param =
+	| NumberParam
+	| StringParam
+	| EmptyParam
+	| ArrayParam
+	| ErrorParam;
 
-export { ErrorParam, makeErrorParam };
-export type Param = NumberParam | StringParam | EmptyParam | ArrayParam | ErrorParam;
-export default Param;
+const params = {
+	number: ( value: number ): NumberParam => ({
+		type: 'number',
+		value,
+	}),
+	string: ( value: string ): StringParam => ({
+		type: 'string',
+		value,
+	}),
+	empty: (): EmptyParam => ({
+		type: 'empty',
+		value: undefined,
+	}),
+	array: ( value: Param[] ) => ({
+		type: 'array',
+		value,
+	}),
+	error: ( message: string ): ErrorParam => ({
+		type: 'error',
+		value: 'ERR',
+		message,
+	}),
+};
+
+
+export { Param, ErrorParam, params };
