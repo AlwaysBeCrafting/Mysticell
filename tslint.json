@@ -35,6 +35,13 @@
         "only-arrow-functions": [
             true
         ],
-        "ban-types": false
+        "ban-types": false,
+        "no-submodule-imports": [
+            true,
+            "common",
+            "components",
+            "data"
+        ],
+        "space-within-parens": false
     }
 }

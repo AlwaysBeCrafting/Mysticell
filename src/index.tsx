@@ -7,14 +7,13 @@ import { devToolsEnhancer } from 'redux-devtools-extension';
 
 import { Editor } from 'components/pages';
 
-import reducer from 'data';
-import { AppState } from 'data';
+import { AppState, reducer } from 'data';
 import { loadDocument } from 'data/Document/actions';
 
 import 'common/styles/normalize.scss';
 
 
-const store = createStore<AppState>( reducer, devToolsEnhancer() );
+const store = createStore<AppState>( reducer, devToolsEnhancer( {} ));
 
 store.dispatch( loadDocument( require( 'common/assets/exampleDoc.json' )));
 

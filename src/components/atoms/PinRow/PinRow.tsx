@@ -1,37 +1,54 @@
 import classNames from 'classnames';
 import React from 'react';
 
-import { ParamSource } from 'data/common';
+import { Param } from 'data/common';
 
 import './PinRow.scss';
 
 
-interface Props {
+interface AlwaysProps {
 	name: string;
 	className?: string;
-	source?: ParamSource;
 }
 
+interface SrcProps extends AlwaysProps {
+	type: 'src';
+	computedValue: Param;
+}
 
-const PinRow = ( type: string ) => ({ name, className, source, ...attrs }: Props ) => (
-	<div
-		className={ classNames( `pinRow ${ type }PinRow`, className ) }
-		key={ name }
-		{ ...attrs }
-	>
-		<div className={ `pinRow-pin ${ type }PinRow-pin` } />
-		<label className="pinRow-label">{ name }</label>
-		{
-			source && source.type === 'value'
-				? <input className="pinRow-value" value={ source.userValue } />
-				: undefined
-		}
-	</div>
-);
+interface ConnectedProps extends AlwaysProps {
+	type: 'dst';
+	isConnected: true;
+	param: Param;
+}
+
+interface DisconnectedProps extends AlwaysProps {
+	type: 'dst';
+	isConnected: false;
+	userValue: string;
+}
+
+type DstProps = ConnectedProps | DisconnectedProps;
+
+type Props = SrcProps | DstProps;
+
+const PinRow = ( props: Props ) => {
+	const { type, className } = props;
+	return (
+		<div
+			className={ classNames( `pinRow ${ type }PinRow`, className ) }
+			key={ name }
+		>
+			<div className={ `pinRow-pin ${ type }PinRow-pin` } />
+			<label className="pinRow-label">{ name }</label>
+			{
+				props.type === 'dst'
+					&& !props.isConnected
+					&& <input className="pinRow-value" value={ props.userValue } />
+			}
+		</div>
+	);
+};
 
 
-const SourcePinRow = PinRow( 'source' );
-const DestinationPinRow = PinRow( 'destination' );
-
-
-export { SourcePinRow, DestinationPinRow };
+export { PinRow };

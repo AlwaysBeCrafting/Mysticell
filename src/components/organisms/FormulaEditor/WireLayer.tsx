@@ -1,6 +1,8 @@
 import classNames from 'classnames';
 import React from 'react';
 
+import { formulaLayoutWidth } from 'common/util';
+
 import { Wire } from 'components/atoms';
 
 import { Formula } from 'data/Formula/model';
@@ -9,13 +11,6 @@ import { Formula } from 'data/Formula/model';
 const nodeHeaderRows = 1;
 const panelHeaderRows = 2;
 const nodeWidth = 4;
-
-const formulaLayoutWidth = ( layout: {[nodeId: string]: [ number, number ]}) => (
-	Object.keys( layout )
-		.map(( key ) => layout[key] )
-		.reduce(( max, current ) => Math.max( current[0], max ), 2 )
-		+ 6
-);
 
 interface Props {
 	formula: Formula;
