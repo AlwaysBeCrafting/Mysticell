@@ -9,8 +9,8 @@ const defaultState: Document = {
 
 	cells: {},
 	sheets: {},
-	formulas: {},
 	nodes: {},
+	formulas: {},
 
 	tree: [],
 };
@@ -18,7 +18,7 @@ const defaultState: Document = {
 const reducer = ( state: Document = defaultState, action: Action ): Document => {
 	switch ( action.type ) {
 		case ActionTypes.LOAD_DOCUMENT:
-			return { ...state, ...action.payload.documentJson };
+			return { ...defaultState, ...action.payload.documentJson };
 
 		default:
 			return state;

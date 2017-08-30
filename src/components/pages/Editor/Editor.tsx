@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, RouteComponentProps } from 'react-router-dom';
 import { Dispatch } from 'redux';
 
-import { IdMap } from 'common/types';
+import { Tree } from 'common/types';
 import { generate } from 'common/util';
 
 import { MenuBar, Toolbar, TreeView } from 'components/molecules';
@@ -12,14 +12,13 @@ import { FormulaEditor, FormulaEditorRouteParams } from 'components/organisms';
 import { Action, AppState } from 'data';
 import { MenuItem } from 'data/common';
 import { Formula } from 'data/Formula/model';
-import { TreeItem } from 'data/Tree/model';
 
 import './Editor.scss';
 
 
 interface StateProps {
 	title: string;
-	tree: MenuItem[];
+	tree: Tree<Formula>;
 }
 
 interface DispatchProps {
@@ -34,16 +33,6 @@ type Props = StateProps & DispatchProps & PublicProps;
 const navItem: MenuItem = {
 	id: generate( 'MENU' ),
 	title: 'menu',
-};
-
-
-const treeItemToMenuItem = ( formulas: IdMap<Formula> ) => ( item: TreeItem ): MenuItem => {
-	const graph = formulas[item.id];
-	return {
-		title: ( graph && graph.name ) || item.id,
-		id: item.id,
-		childItems: item.children.map( treeItemToMenuItem( formulas )),
-	};
 };
 
 
@@ -80,7 +69,7 @@ const Editor = ( props: Props ) => {
 					items={ toolbarItems }
 				/>
 				<div className="editor-document">
-					<TreeView className="editor-document-nav" items={ tree } expandedItems={ [] } />
+					<TreeView className="editor-document-nav" tree={ tree } expandedItems={ {} } />
 					<Route exact path="/formula/:id" render={ renderGraphEditor } />
 				</div>
 			</main>
@@ -92,7 +81,7 @@ const Editor = ( props: Props ) => {
 export default connect<StateProps, DispatchProps, PublicProps>(
 	({ document }: AppState ) => ({
 		title: document.title,
-		tree: document.tree.map( treeItemToMenuItem( document.formulas )),
+		tree: document.tree,
 	}),
 	( dispatch: Dispatch<Action> ) => ({ dispatch }),
 )( Editor );

@@ -1,10 +1,9 @@
-import { IdMap } from 'common/types';
+import { IdMap, Tree } from 'common/types';
 
 import { Cell } from 'data/Cell/model';
 import { Formula } from 'data/Formula/model';
 import { Node } from 'data/Node/model';
 import { Sheet } from 'data/Sheet/model';
-import { TreeItem } from 'data/Tree/model';
 
 
 interface Document {
@@ -14,7 +13,7 @@ interface Document {
 	sheets: IdMap<Sheet>;
 	nodes: IdMap<Node>;
 	formulas: IdMap<Formula>;
-	tree: TreeItem[];
+	tree: Tree<Formula>;
 }
 
 

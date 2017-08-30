@@ -1,24 +1,32 @@
 import classNames from 'classnames';
 import React from 'react';
 
-import { MenuItem } from 'data/common';
+import { ObjMap, Tree } from 'common/types';
 
 import Item from './Item';
 import './TreeView.scss';
 
 
-interface Props extends React.HTMLAttributes<HTMLUListElement> {
-	items: MenuItem[];
-	expandedItems: string[];
+interface Props<T> {
+	tree: Tree<T>;
+	expandedItems: ObjMap<boolean>;
+	className?: string;
 }
 
-
-export default ({ items, expandedItems, className, ...attrs }: Props ) => (
-	<ul { ...attrs } className={ classNames( 'treeView', className ) }>
+const TreeView = <T extends {}>({ tree, expandedItems, className }: Props<T> ) => (
+	<ul className={ classNames( 'treeView', className ) }>
 		{
-			items.map(( item ) => (
-				<Item key={ item.id } item={ item } isExpanded={ expandedItems.indexOf( item.id ) >= 0 } />
+			tree.map(( treeNode ) => (
+				<Item
+					key={ treeNode.name }
+					treeNode={ treeNode }
+					path={ [ treeNode.name ] }
+					expandedItems={ expandedItems }
+				/>
 			))
 		}
 	</ul>
 );
+
+
+export { TreeView };

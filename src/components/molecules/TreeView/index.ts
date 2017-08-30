@@ -1,1 +1,1 @@
-export { default } from './TreeView';
+export { TreeView } from './TreeView';
