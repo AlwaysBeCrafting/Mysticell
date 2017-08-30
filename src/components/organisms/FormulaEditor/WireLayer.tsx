@@ -8,6 +8,7 @@ import { Wire } from 'components/atoms';
 
 import { Formula } from 'data/Formula/model';
 import { Node } from 'data/Node/model';
+import { PRIMITIVES } from 'data/Primitive/constants';
 
 
 const nodeHeaderRows = 1;
@@ -75,6 +76,8 @@ const renderWire = ( props: Props, srcId: string, dstId: string, indices: [ numb
 		dstPos[1] += panelHeaderRows;
 	} else {
 		dstPos[1] += nodeHeaderRows;
+		const dstFunc = props.nodes[dstId].function;
+		dstPos[1] += ( props.formulas[dstFunc] || PRIMITIVES[dstFunc] ).outputNames.length;
 	}
 	srcPos[1] += indices[0];
 	dstPos[1] += indices[1];

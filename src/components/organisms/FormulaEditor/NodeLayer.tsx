@@ -39,6 +39,8 @@ const renderNode = ( props: Props ) => ( nodeId: string ) => {
 	const position = formula.layout[nodeId] || [ 0, 0 ];
 	const nodeFunction = formulas[node.function] || PRIMITIVES[node.function];
 
+	if ( !nodeFunction ) { throw new Error( `No function ${ nodeFunction } exists` ); }
+
 	return (
 		<NodeCard
 			node={ node }
