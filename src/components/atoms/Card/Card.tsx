@@ -4,7 +4,10 @@ import React from "react";
 import "./Card.scss";
 
 
-interface Props extends React.HTMLAttributes<HTMLDivElement> {}
+interface Props {
+	className?: string;
+	children?: JSX.Element[] | string;
+}
 
 
 export default ({ className, children, ...attrs }: Props) => (

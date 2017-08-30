@@ -25,9 +25,7 @@ interface DispatchProps {
 	dispatch: Dispatch<Action>;
 }
 
-interface PublicProps {}
-
-type Props = StateProps & DispatchProps & PublicProps;
+type Props = StateProps & DispatchProps;
 
 
 const navItem: MenuItem = {
@@ -78,7 +76,7 @@ const Editor = (props: Props) => {
 };
 
 
-export default connect<StateProps, DispatchProps, PublicProps>(
+export default connect<StateProps, DispatchProps, {}>(
 	({ document }: AppState) => ({
 		title: document.title,
 		tree: document.tree,

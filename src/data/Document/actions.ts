@@ -1,9 +1,9 @@
 import { Document } from "./model";
 
 
-namespace ActionTypes {
-	export const LOAD_DOCUMENT = "[Document] Load";
-}
+const ActionTypes = {
+	LOAD_DOCUMENT: "[Document] Load",
+};
 type Action = LoadDocumentAction;
 
 interface LoadDocumentAction {

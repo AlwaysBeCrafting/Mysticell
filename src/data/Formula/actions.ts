@@ -1,12 +1,12 @@
 import { Formula } from "./model";
 
 
-namespace ActionTypes {
-	export const CREATE      = "[Function] Create";
-	export const DESTROY     = "[Function] Destroy";
-	export const ADD_NODE    = "[Function] Add node";
-	export const REMOVE_NODE = "[Function] Remove node";
-}
+const ActionTypes = {
+	CREATE:      "[Function] Create",
+	DESTROY:     "[Function] Destroy",
+	ADD_NODE:    "[Function] Add node",
+	REMOVE_NODE: "[Function] Remove node",
+};
 type Action =
 	| CreateAction
 	| DestroyAction

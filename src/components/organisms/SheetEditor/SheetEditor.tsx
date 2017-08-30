@@ -4,9 +4,11 @@ import React from "react";
 import "./SheetEditor.scss";
 
 
-interface Props extends React.HTMLAttributes<HTMLDivElement> {}
+interface Props {
+	className?: string;
+}
 
 
-export default ({ className, ...attrs }: Props) => (
-	<div { ...attrs } className={ classNames("sheetEditor", className) } />
+export default (props: Props) => (
+	<div className={ classNames("sheetEditor", props.className) } />
 );

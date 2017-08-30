@@ -1,11 +1,11 @@
 import { Node } from "./model";
 
 
-namespace ActionTypes {
-	export const CREATE          = "[Node] Create";
-	export const DESTROY         = "[Node] Destroy";
-	export const SET_INPUT_VALUE = "[Node] Set input value";
-}
+const ActionTypes = {
+	CREATE:          "[Node] Create",
+	DESTROY:         "[Node] Destroy",
+	SET_INPUT_VALUE: "[Node] Set input value",
+};
 type Action =
 	| CreateAction
 	| DestroyAction

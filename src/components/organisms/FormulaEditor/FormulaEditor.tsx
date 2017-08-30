@@ -27,14 +27,12 @@ interface StateProps {
 	nodes: IdMap<Node>;
 }
 
-interface DispatchProps {}
-
 interface PublicProps {
 	className?: string;
 	match: Match<RouteParams>;
 }
 
-type Props = StateProps & DispatchProps & PublicProps;
+type Props = StateProps & PublicProps;
 
 const GraphEditor = (props: Props) => {
 	const { className, formula, formulas, nodes } = props;
@@ -81,7 +79,7 @@ const renderGrid = (formula: Formula, formulas: IdMap<Formula>, nodes: IdMap<Nod
 	);
 };
 
-const ConnectedGraphEditor = connect<StateProps, DispatchProps, PublicProps>(
+const ConnectedGraphEditor = connect<StateProps, {}, PublicProps>(
 	(state: AppState, ownProps: PublicProps) => {
 		const formulaId = `FORMULA-${ ownProps && ownProps.match.params.id }`;
 		return {

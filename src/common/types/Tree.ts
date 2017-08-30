@@ -1,4 +1,4 @@
-interface Tree<T> extends Array<TreeNode<T>> {}
+type Tree<T> = Array<TreeNode<T>>;
 
 type TreeNode<T> = TreeParent<T> | TreeItem<T>;
 
