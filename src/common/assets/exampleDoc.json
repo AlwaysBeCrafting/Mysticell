@@ -43,15 +43,15 @@
 		},
 		"NODE-0006": {
 			"id": "NODE-0006",
-			"function": "FUNCTION-0000",
+			"function": "FORMULA-0000",
 			"inputValues": [10]
 		}
 	},
-	"functions": {
-		"FUNCTION-0000": {
-			"id": "FUNCTION-0000",
+	"formulas": {
+		"FORMULA-0000": {
+			"id": "FORMULA-0000",
 			"isProperty": false,
-			"title": "Ability Mod",
+			"name": "Ability Mod",
 			"inputNames": ["Ability Score"],
 			"outputNames": ["Modifier", "Output2", "Something3", "Another4"],
 			"graph": {
@@ -87,10 +87,10 @@
 				"NODE-0005": [14, 8]
 			}
 		},
-		"FUNCTION-0001": {
-			"id": "FUNCTION-0001",
+		"FORMULA-0001": {
+			"id": "FORMULA-0001",
 			"isProperty": true,
-			"title": "Strength",
+			"name": "Strength",
 			"inputNames": ["Score"],
 			"outputNames": ["Score", "Modifier"],
 			"graph": {
@@ -103,8 +103,14 @@
 				}
 			},
 			"layout": {
-				"NODE-0006": [2, 1]
+				"NODE-0006": [2, 3]
 			}
 		}
-	}
+	},
+	"tree": [
+		{ "type": "parent", "name": "Abilities", "children": [
+			{ "type": "item", "name": "Ability Mod", "item": "FORMULA-0000" },
+			{ "type": "item", "name": "Strength", "item": "FORMULA-0001" }
+		]}
+	]
 }

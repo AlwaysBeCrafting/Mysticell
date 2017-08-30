@@ -1,5 +1,5 @@
 export { default as PopupMenu } from './PopupMenu';
 export { default as Toolbar } from './Toolbar';
-export { default as TreeView } from './TreeView';
+export { TreeView } from './TreeView';
 export { NodeCard } from './NodeCard';
 export { MenuBar } from './MenuBar';

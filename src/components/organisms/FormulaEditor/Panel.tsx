@@ -15,8 +15,8 @@ const Panel = ( props: Props ) => {
 	const { pinNames, type } = props;
 
 	return (
-		<div className={ `graphEditor-graph-panel graphEditor-graph-${ type }Panel` }>
-			<div className={ `graphEditor-graph-panel-heading graphEditor-graph-${ type }Panel-heading` }>
+		<div className={ `formulaEditor-graph-panel formulaEditor-graph-${ type }Panel` }>
+			<div className={ `formulaEditor-graph-panel-heading formulaEditor-graph-${ type }Panel-heading` }>
 				{ type }
 			</div>
 			{ pinNames.map(( name ) => (

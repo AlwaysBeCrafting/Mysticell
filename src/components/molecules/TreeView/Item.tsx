@@ -1,38 +1,48 @@
 import classNames from 'classnames';
 import React from 'react';
 
-import { MenuItem } from 'data/common';
+import { ObjMap, TreeNode } from 'common/types';
 
 import './Item.scss';
 
 
-interface Props extends React.HTMLAttributes<HTMLLIElement> {
-	item: MenuItem;
-	isExpanded?: boolean;
+interface Props<T> {
+	treeNode: TreeNode<T>;
+	path: string[];
+	expandedItems: ObjMap<boolean>;
 }
 
 
-const Item = ({ item, isExpanded, ...attrs }: Props ) => {
-	const { childItems } = item;
+const Item = <T extends {}>( props: Props<T> ) => {
+	const { treeNode, path, expandedItems } = props;
 	const className = classNames(
 		'treeView-item',
 		{
-			'is-expanded': isExpanded,
-			'is-parent': childItems && childItems.length,
+			'is-expanded': expandedItems[treeNode.name],
+			'is-parent': treeNode.type === 'parent',
 		},
 	);
 
-	const childrenElem = childItems && !!childItems.length && (
+	const childrenElem = treeNode.type === 'parent' && (
 		<ul className="treeView-item-children">
-			{ childItems.map(( child ) => <Item item={ child } key={ child.id }/> ) }
+			{
+				treeNode.children.map(( child ) => (
+					<Item
+						treeNode={ child }
+						path={ [ ...path, child.name ] }
+						expandedItems={ expandedItems }
+						key={ child.name }
+					/>
+				))
+			}
 		</ul>
 	);
 
 	return (
-		<li { ...attrs } className={ className }>
+		<li className={ className }>
 			<a className="treeView-item-body">
 				<span className="treeView-item-body-icon">arrow_drop_down</span>
-				<span className="treeView-item-body-title">{ item.title }</span>
+				<span className="treeView-item-body-title">{ treeNode.name }</span>
 			</a>
 			{ childrenElem }
 		</li>
