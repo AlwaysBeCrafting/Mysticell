@@ -55,7 +55,7 @@ const toolbarItems: MenuItem[] = [
 ];
 
 
-const Editor = (props: Props) => {
+const ProtoEditor = (props: Props) => {
 	const { title, tree } = props;
 	return (
 		<Router>
@@ -76,10 +76,13 @@ const Editor = (props: Props) => {
 };
 
 
-export default connect<StateProps, DispatchProps, {}>(
+const Editor = connect<StateProps, DispatchProps, {}>(
 	({ document }: AppState) => ({
 		title: document.title,
 		tree: document.tree,
 	}),
 	(dispatch: Dispatch<Action>) => ({ dispatch }),
-)(Editor);
+)(ProtoEditor);
+
+
+export { Editor };

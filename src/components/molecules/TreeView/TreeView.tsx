@@ -3,7 +3,7 @@ import React from "react";
 
 import { ObjMap, Tree } from "common/types";
 
-import Item from "./Item";
+import { Item } from "./Item";
 import "./TreeView.scss";
 
 

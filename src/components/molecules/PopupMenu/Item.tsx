@@ -29,4 +29,4 @@ const Item = ({ item, className, ...attrs }: Props) => {
 	);
 };
 
-export default Item;
+export { Item };

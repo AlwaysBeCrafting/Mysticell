@@ -5,7 +5,7 @@ import { Anchor, Position } from "common/types";
 
 import { MenuItem } from "data/common";
 
-import Item from "./Item";
+import { Item } from "./Item";
 import "./PopupMenu.scss";
 
 
@@ -16,7 +16,7 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 
-export default ({ position, anchor, items, ...attrs }: Props) => {
+const PopupMenu = ({ position, anchor, items, ...attrs }: Props) => {
 	const style = {
 		left: position.x,
 		top: position.y,
@@ -38,3 +38,6 @@ export default ({ position, anchor, items, ...attrs }: Props) => {
 		</div>
 	);
 };
+
+
+export { PopupMenu };

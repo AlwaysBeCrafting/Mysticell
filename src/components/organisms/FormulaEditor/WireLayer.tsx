@@ -93,4 +93,3 @@ const renderWire = (props: Props, srcId: string, dstId: string, indices: [ numbe
 
 
 export { WireLayer };
-export default WireLayer;

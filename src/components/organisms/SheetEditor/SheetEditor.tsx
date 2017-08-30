@@ -9,6 +9,9 @@ interface Props {
 }
 
 
-export default (props: Props) => (
+const SheetEditor = (props: Props) => (
 	<div className={ classNames("sheetEditor", props.className) } />
 );
+
+
+export { SheetEditor };

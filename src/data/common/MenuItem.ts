@@ -1,4 +1,4 @@
-export interface MenuItem {
+interface MenuItem {
 	id: string;
 	title: string;
 	hint?: string;
@@ -7,4 +7,5 @@ export interface MenuItem {
 	render?: (MenuItem) => JSX.Element;
 }
 
-export default MenuItem;
+
+export { MenuItem };

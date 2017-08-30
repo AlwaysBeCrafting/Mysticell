@@ -30,4 +30,3 @@ const MenuBar = (props: Props) => (
 
 
 export { MenuBar };
-export default MenuBar;

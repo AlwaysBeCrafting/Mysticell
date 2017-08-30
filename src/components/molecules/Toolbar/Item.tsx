@@ -13,7 +13,7 @@ interface Props extends React.HTMLAttributes<HTMLButtonElement> {
 }
 
 
-export const Item = (props: Props) => {
+const Item = (props: Props) => {
 	const { menuItem } = props;
 	const iconElem = menuItem.icon && (
 		<img
@@ -35,4 +35,4 @@ export const Item = (props: Props) => {
 	}
 };
 
-export default Item;
+export { Item };

@@ -49,4 +49,4 @@ const Item = <T extends {}>(props: Props<T>) => {
 	);
 };
 
-export default Item;
+export { Item };

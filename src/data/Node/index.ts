@@ -4,7 +4,7 @@ import { Action, ActionTypes } from "./actions";
 import { Node } from "./model";
 
 
-export default (state: IdMap<Node> = {}, action: Action): IdMap<Node> => {
+const reducer = (state: IdMap<Node> = {}, action: Action): IdMap<Node> => {
 	switch (action.type) {
 		case ActionTypes.CREATE: {
 			return {
@@ -29,3 +29,6 @@ export default (state: IdMap<Node> = {}, action: Action): IdMap<Node> => {
 		default: return state;
 	}
 };
+
+
+export { reducer };

@@ -1,2 +1,2 @@
-export { default as FormulaEditor, FormulaEditorRouteParams } from "./FormulaEditor";
-export { default as SheetEditor } from "./SheetEditor";
+export { FormulaEditor, FormulaEditorRouteParams } from "./FormulaEditor";
+export { SheetEditor } from "./SheetEditor";

@@ -10,8 +10,11 @@ interface Props {
 }
 
 
-export default ({ className, children, ...attrs }: Props) => (
-	<div { ...attrs } className={ classNames("card", className) }>
+const Card = ({ className, children }: Props) => (
+	<div className={ classNames("card", className) }>
 		{ children }
 	</div>
 );
+
+
+export { Card };

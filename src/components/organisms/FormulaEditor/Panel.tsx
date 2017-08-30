@@ -47,4 +47,3 @@ const Panel = (props: Props) => {
 
 
 export { Panel };
-export default Panel;

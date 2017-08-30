@@ -56,4 +56,3 @@ const makeStyle = (position: [ number, number ], pinRowCount: number) => ({
 
 
 export { NodeCard };
-export default NodeCard;

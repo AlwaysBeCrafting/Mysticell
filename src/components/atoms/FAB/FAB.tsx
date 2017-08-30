@@ -9,8 +9,11 @@ interface Props extends React.HTMLAttributes<HTMLButtonElement> {
 }
 
 
-export default ({ icon, className, ...attrs }: Props) => (
+const FAB = ({ icon, className, ...attrs }: Props) => (
 	<button { ...attrs } className={ classNames("fab", className) }>
 		<span className="icon">{ icon }</span>
 	</button>
 );
+
+
+export { FAB };

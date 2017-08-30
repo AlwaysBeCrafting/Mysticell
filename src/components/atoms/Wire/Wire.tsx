@@ -10,7 +10,7 @@ interface Props {
 	className?: string;
 }
 
-export default ({ srcPos, dstPos, className, ...attrs }: Props) => {
+const Wire = ({ srcPos, dstPos, className, ...attrs }: Props) => {
 	const center = [
 		(srcPos[0] + dstPos[0]) / 2,
 		(srcPos[1] + dstPos[1]) / 2,
@@ -27,3 +27,6 @@ export default ({ srcPos, dstPos, className, ...attrs }: Props) => {
 		<path { ...attrs } className={ classNames("wire", className) } d={ pathString }/>
 	);
 };
+
+
+export { Wire };

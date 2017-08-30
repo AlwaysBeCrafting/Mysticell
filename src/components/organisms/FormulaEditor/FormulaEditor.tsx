@@ -34,7 +34,7 @@ interface PublicProps {
 
 type Props = StateProps & PublicProps;
 
-const GraphEditor = (props: Props) => {
+const ProtoFormulaEditor = (props: Props) => {
 	const { className, formula, formulas, nodes } = props;
 
 	return (
@@ -79,7 +79,7 @@ const renderGrid = (formula: Formula, formulas: IdMap<Formula>, nodes: IdMap<Nod
 	);
 };
 
-const ConnectedGraphEditor = connect<StateProps, {}, PublicProps>(
+const FormulaEditor = connect<StateProps, {}, PublicProps>(
 	(state: AppState, ownProps: PublicProps) => {
 		const formulaId = `FORMULA-${ ownProps && ownProps.match.params.id }`;
 		return {
@@ -88,8 +88,7 @@ const ConnectedGraphEditor = connect<StateProps, {}, PublicProps>(
 			nodes: state.document.nodes,
 		};
 	},
-)(GraphEditor);
+)(ProtoFormulaEditor);
 
 
-export { RouteParams };
-export default ConnectedGraphEditor;
+export { FormulaEditor, RouteParams };

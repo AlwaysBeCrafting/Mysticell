@@ -65,4 +65,3 @@ class NodeMenu extends React.Component<Props, State> {
 
 
 export { NodeMenu };
-export default NodeMenu;
