@@ -14,37 +14,37 @@
 		"NODE-0000": {
 			"id": "NODE-0000",
 			"function": "PRIMITIVE-subtract",
-			"inputValues": [0, 10]
+			"userValues": [0, 10]
 		},
 		"NODE-0001": {
 			"id": "NODE-0001",
 			"function": "PRIMITIVE-divide",
-			"inputValues": [0, 2]
+			"userValues": [0, 2]
 		},
 		"NODE-0002": {
 			"id": "NODE-0002",
 			"function": "PRIMITIVE-floor",
-			"inputValues": [0]
+			"userValues": [0]
 		},
 		"NODE-0003": {
 			"id": "NODE-0003",
 			"function": "PRIMITIVE-add",
-			"inputValues": [0, 100]
+			"userValues": [0, 100]
 		},
 		"NODE-0004": {
 			"id": "NODE-0004",
 			"function": "PRIMITIVE-subtract",
-			"inputValues": [0, 45]
+			"userValues": [0, 45]
 		},
 		"NODE-0005": {
 			"id": "NODE-0005",
 			"function": "PRIMITIVE-multiply",
-			"inputValues": [0, 3.8]
+			"userValues": [0, 3.8]
 		},
 		"NODE-0006": {
 			"id": "NODE-0006",
 			"function": "FORMULA-0000",
-			"inputValues": [10]
+			"userValues": [10]
 		}
 	},
 	"formulas": {

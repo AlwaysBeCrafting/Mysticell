@@ -16,24 +16,17 @@ interface SrcProps extends AlwaysProps {
 	computedValue: Param;
 }
 
-interface ConnectedProps extends AlwaysProps {
+interface DstProps extends AlwaysProps {
 	type: 'dst';
-	isConnected: true;
+	isConnected: boolean;
 	param: Param;
-}
-
-interface DisconnectedProps extends AlwaysProps {
-	type: 'dst';
-	isConnected: false;
 	userValue: string;
 }
-
-type DstProps = ConnectedProps | DisconnectedProps;
 
 type Props = SrcProps | DstProps;
 
 const PinRow = ( props: Props ) => {
-	const { type, className } = props;
+	const { name, type, className } = props;
 	return (
 		<div
 			className={ classNames( `pinRow ${ type }PinRow`, className ) }

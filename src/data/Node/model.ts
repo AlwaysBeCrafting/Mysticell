@@ -2,7 +2,7 @@ interface Node {
 	id: string;
 	function: string;
 	label: string;
-	inputValues: number[];
+	userValues: string[];
 }
 
 interface NodeFunction {

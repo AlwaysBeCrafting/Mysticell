@@ -14,4 +14,5 @@ const dictToMap = <In, Out>( dict: Dict<In>, convert: Converter<In, Out> ): Map<
 
 export { dictToMap };
 export { formulaLayoutWidth } from './layout';
+export { connectedInputs } from './graph';
 export * from './id';

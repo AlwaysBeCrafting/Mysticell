@@ -11,11 +11,12 @@ import './NodeCard.scss';
 interface Props {
 	position: [ number, number ];
 	node: Node;
+	connectedInputs: number[];
 	nodeFunction: NodeFunction;
 }
 
 const NodeCard = ( props: Props ) => {
-	const { position, node, nodeFunction } = props;
+	const { position, node, connectedInputs, nodeFunction } = props;
 	const name = node.label || nodeFunction.name;
 	const pinRowCount = nodeFunction.inputNames.length + nodeFunction.outputNames.length;
 	return (
@@ -31,15 +32,19 @@ const NodeCard = ( props: Props ) => {
 					key={ outputName }
 				/>
 			))}
-			{ nodeFunction.inputNames.map(( inputName ) => (
-				<PinRow
-					type="dst"
-					name={ inputName }
-					isConnected={ false }
-					userValue={ '' }
-					key={ inputName }
-				/>
-			))}
+			{ nodeFunction.inputNames.map(( inputName, index ) => {
+				const isConnected = connectedInputs.indexOf( index ) > -1;
+				return (
+					<PinRow
+						type="dst"
+						name={ inputName }
+						isConnected={ isConnected }
+						userValue={ node.userValues[index] }
+						param={ params.empty() }
+						key={ inputName }
+					/>
+				);
+			})}
 		</Card>
 	);
 };
