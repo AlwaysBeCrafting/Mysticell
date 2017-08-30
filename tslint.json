@@ -1,47 +1,16 @@
 {
-    "extends": "tslint:latest",
-    "rules": {
-        "indent": [
-            true,
-            "tabs"
-        ],
-        "no-consecutive-blank-lines": [true, 3],
-        "no-var-requires": false,
-        "interface-name": [
-            true,
-            "never-prefix"
-        ],
-        "object-literal-sort-keys": false,
-        "align": [
-            false
-        ],
-        "arrow-parens": true,
-        "comment-format": [
-            false
-        ],
-        "max-classes-per-file": [
-            false
-        ],
-        "quotemark": [
-            true,
-            "single",
-            "jsx-double"
-        ],
-        "member-access": [
-            false
-        ],
-        "no-namespace": false,
-        "no-empty-interface": false,
-        "only-arrow-functions": [
-            true
-        ],
-        "ban-types": false,
-        "no-submodule-imports": [
-            true,
-            "common",
-            "components",
-            "data"
-        ],
-        "space-within-parens": false
-    }
+	"extends": "tslint:latest",
+	"rules": {
+		"indent": [true, "tabs"],
+		"no-var-requires": false,
+		"no-consecutive-blank-lines": [true, 2],
+		"interface-name": [true, "never-prefix"],
+		"object-literal-sort-keys": [false],
+		"align": [false],
+		"arrow-parens": [true, "ban-single-arg-parens"],
+		"quotemark": [true, "double", "jsx-double", "avoid-escape"],
+		"only-arrow-functions": [true],
+		"ban-types": false,
+		"no-submodule-imports": [true, "common", "components", "data"]
+	}
 }
