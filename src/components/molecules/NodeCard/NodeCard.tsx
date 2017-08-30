@@ -1,66 +1,52 @@
 import React from 'react';
 
-import { Position } from 'common/types';
+import { Card, PinRow } from 'components/atoms';
 
-import { Card, DestinationPinRow, SourcePinRow } from 'components/atoms';
-
-import { Graph } from 'data/Graph/model';
-import { Node, Primitive } from 'data/Node/model';
+import { params } from 'data/common';
+import { Node, NodeFunction } from 'data/Node/model';
 
 import './NodeCard.scss';
 
 
 interface Props {
-	position: Position;
+	position: [ number, number ];
 	node: Node;
-	definition: Primitive | Graph;
+	nodeFunction: NodeFunction;
 }
 
-
 const NodeCard = ( props: Props ) => {
-	return props.definition
-		? renderCard( props )
-		: renderError( props, `Node definition ${ props.node.definition } doesn't exist` );
-};
-
-
-const renderCard = ( props: Props ) => {
-	const { position, node, definition } = props;
-	const name = node.label || definition.name;
-	const pinRowCount = definition.inputNames.length + definition.outputNames.length;
+	const { position, node, nodeFunction } = props;
+	const name = node.label || nodeFunction.name;
+	const pinRowCount = nodeFunction.inputNames.length + nodeFunction.outputNames.length;
 	return (
 		<Card className="nodeCard" style={ makeStyle( position, pinRowCount ) }>
 			<header className="nodeCard-headerRow nodeCard-row">
 				<span className="nodeCard-headerRow-name">{ name }</span>
 			</header>
-			{ definition.outputNames.map(( outputName ) => (
-				<SourcePinRow name={ outputName } key={ outputName } />
+			{ nodeFunction.outputNames.map(( outputName ) => (
+				<PinRow
+					type="src"
+					name={ outputName }
+					computedValue={ params.string( '' ) }
+					key={ outputName }
+				/>
 			))}
-			{ definition.inputNames.map(( inputName, index ) => (
-				<DestinationPinRow name={ inputName } source={ node.inputs[ index ]} key={ inputName } />
+			{ nodeFunction.inputNames.map(( inputName ) => (
+				<PinRow
+					type="dst"
+					name={ inputName }
+					isConnected={ false }
+					userValue={ '' }
+					key={ inputName }
+				/>
 			))}
 		</Card>
 	);
 };
 
-
-const renderError = ( props: Props, message: string ) => {
-	const { position, node } = props;
-	const pinRowCount = node.inputs.length + node.outputs.length;
-	return (
-		<Card className="nodeCard errorNodeCard" style={ makeStyle( position, pinRowCount ) }>
-			<header className="nodeCard-headerRow nodeCard-row">
-				<div className="nodeCard-headerRow-name">Error</div>
-			</header>
-			<div className="errorNodeCard-messageRow nodeCard-row">{ message }</div>
-		</Card>
-	);
-};
-
-
-const makeStyle = ( position: Position, pinRowCount: number ) => ({
-	gridRow: `${ position.y + 1 } / span ${ pinRowCount + 1 }`,
-	gridColumn: `${ position.x + 1 } / span 4`,
+const makeStyle = ( position: [ number, number ], pinRowCount: number ) => ({
+	gridRow: `${ position[1] + 1 } / span ${ pinRowCount + 1 }`,
+	gridColumn: `${ position[0] + 1 } / span 4`,
 });
 
 

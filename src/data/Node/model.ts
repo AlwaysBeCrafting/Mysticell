@@ -1,23 +1,17 @@
-import { Id } from 'common/types';
-
-import { Param, ParamSource } from 'data/common';
-
-
-interface Node extends Id {
-	definition: string; // Graph or Primitive ID
+interface Node {
+	id: string;
+	function: string;
 	label: string;
-	inputs: ParamSource[];
-	outputs: Param[];
+	inputValues: number[];
 }
 
-
-interface Primitive {
+interface NodeFunction {
+	id: string;
+	type: 'formula' | 'primitive';
 	name: string;
 	inputNames: string[];
 	outputNames: string[];
-	exec: ( ...params: Param[] ) => Param[];
 }
 
 
-export { Node, Primitive };
-export default Node;
+export { Node, NodeFunction };

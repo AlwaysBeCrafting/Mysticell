@@ -1,26 +1,20 @@
-import { DocumentJson } from './model';
+import { Document } from './model';
 
 
-export namespace ActionTypes {
+namespace ActionTypes {
 	export const LOAD_DOCUMENT = '[Document] Load';
 }
-
+type Action = LoadDocumentAction;
 
 interface LoadDocumentAction {
 	readonly type: typeof ActionTypes.LOAD_DOCUMENT;
-	payload: { documentJson: DocumentJson };
+	payload: { documentJson: Document };
 }
-
-const loadDocument = ( documentJson: DocumentJson ): LoadDocumentAction => ({
+const loadDocument = ( documentJson: Document ): LoadDocumentAction => ({
 	type: ActionTypes.LOAD_DOCUMENT,
 	payload: { documentJson },
 });
 
 
-type Action = LoadDocumentAction;
-
-
 export { loadDocument };
-
-export { Action };
-export default Action;
+export { Action, ActionTypes };

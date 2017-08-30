@@ -1,11 +1,18 @@
-import Action from './actions';
+import { Action, ActionTypes } from './actions';
 import { TreeItem } from './model';
 
 
-
-export default ( state: TreeItem[], action: Action ): TreeItem[] => {
+const reducer = ( state: TreeItem[], action: Action ): TreeItem[] => {
 	switch ( action.type ) {
-		default:
+		case ActionTypes.EXPAND_ITEM: {
 			return state;
+		}
+		case ActionTypes.COLLAPSE_ITEM: {
+			return state;
+		}
+		default: return state;
 	}
 };
+
+
+export { reducer };

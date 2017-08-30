@@ -1,6 +1,5 @@
-import { Id } from 'common/types';
-
-export interface MenuItem extends Id {
+export interface MenuItem {
+	id: string;
 	title: string;
 	hint?: string;
 	icon?: string;

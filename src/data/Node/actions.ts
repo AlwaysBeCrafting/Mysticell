@@ -1,76 +1,43 @@
-import { ConnectedParamSource, ValueParamSource } from 'data/common';
-import { Node } from 'data/Node/model';
+import { Node } from './model';
 
 
-export namespace ActionTypes {
-	export const CREATE_NODE          = '[Graph] Create';
-	export const DELETE_NODE          = '[Graph] Delete';
-	export const CONNECT_NODE         = '[Graph] Connect';
-	export const DISCONNECT_NODE      = '[Graph] Disconnect';
-	export const SET_NODE_INPUT_VALUE = '[Graph] Set input value';
-	export const UPDATE_NODE          = '[Graph] Update';
+namespace ActionTypes {
+	export const CREATE          = '[Node] Create';
+	export const DESTROY         = '[Node] Destroy';
+	export const SET_INPUT_VALUE = '[Node] Set input value';
 }
+type Action =
+	| CreateAction
+	| DestroyAction
+	| SetInputValueAction;
 
-
-interface CreateNodeAction {
-	readonly type: typeof ActionTypes.CREATE_NODE;
+interface CreateAction {
+	readonly type: typeof ActionTypes.CREATE;
 	payload: { node: Node };
 }
-
-export const createNode = ( node: Node ): CreateNodeAction => ({
-	type: ActionTypes.CREATE_NODE,
+const create = ( node: Node ): CreateAction => ({
+	type: ActionTypes.CREATE,
 	payload: { node },
 });
 
-
-interface DeleteNodeAction {
-	readonly type: typeof ActionTypes.DELETE_NODE;
+interface DestroyAction {
+	readonly type: typeof ActionTypes.DESTROY;
 	payload: { nodeId: string };
 }
-
-export const deleteNode = ( nodeId: string ): DeleteNodeAction => ({
-	type: ActionTypes.DELETE_NODE,
+const destroy = ( nodeId: string ): DestroyAction => ({
+	type: ActionTypes.DESTROY,
 	payload: { nodeId },
 });
 
-
-interface ConnectNodeAction {
-	readonly type: typeof ActionTypes.CONNECT_NODE;
-	payload: { id: string, index: number, source: ConnectedParamSource };
+interface SetInputValueAction {
+	readonly type: typeof ActionTypes.SET_INPUT_VALUE;
+	payload: { nodeId: string, index: number, value: string };
 }
-
-export const connectNode = ( id: string, index: number, source: ConnectedParamSource ): ConnectNodeAction => ({
-	type: ActionTypes.CONNECT_NODE,
-	payload: { id, index, source },
+const setInputValue = ( nodeId: string, index: number, value: string ): SetInputValueAction => ({
+	type: ActionTypes.SET_INPUT_VALUE,
+	payload: { nodeId, index, value },
 });
 
 
-interface DisconnectNodeAction {
-	readonly type: typeof ActionTypes.DISCONNECT_NODE;
-	payload: { id: string, index: number };
-}
-
-export const disconnectNode = ( id: string, index: number ): DisconnectNodeAction => ({
-	type: ActionTypes.DISCONNECT_NODE,
-	payload: { id, index },
-});
-
-
-interface UpdateNodeAction {
-	readonly type: typeof ActionTypes.UPDATE_NODE;
-	payload: { id: string, index: number, value: ValueParamSource };
-}
-
-export const updateNode = ( id: string, index: number, value: ValueParamSource ): UpdateNodeAction => ({
-	type: ActionTypes.UPDATE_NODE,
-	payload: { id, index, value },
-});
-
-
-export type Action =
-	| CreateNodeAction
-	| DeleteNodeAction
-	| ConnectNodeAction
-	| DisconnectNodeAction
-	| UpdateNodeAction;
-
+export { Action, ActionTypes };
+export { create, destroy, setInputValue };

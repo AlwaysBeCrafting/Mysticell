@@ -1,15 +1,10 @@
-import { Id, Position } from 'common/types';
+interface Format {}
 
-
-export interface Format {}
-
-
-export interface Cell extends Id {
-	sheet: string;
-	node: string;
-	start: Position;
-	end: Position;
+interface Cell {
+	id: string;
+	property: string;
 	format?: Format;
 }
 
-export default Cell;
+
+export { Cell };

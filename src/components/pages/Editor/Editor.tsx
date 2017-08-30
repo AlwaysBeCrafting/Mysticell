@@ -3,15 +3,15 @@ import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, RouteComponentProps } from 'react-router-dom';
 import { Dispatch } from 'redux';
 
+import { IdMap } from 'common/types';
 import { generate } from 'common/util';
 
-import { MenuBar } from 'components/molecules';
-import { Toolbar, TreeView } from 'components/molecules';
-import { GraphEditor, GraphEditorRouteParams } from 'components/organisms';
+import { MenuBar, Toolbar, TreeView } from 'components/molecules';
+import { FormulaEditor, FormulaEditorRouteParams } from 'components/organisms';
 
 import { Action, AppState } from 'data';
 import { MenuItem } from 'data/common';
-import { Graph } from 'data/Graph/model';
+import { Formula } from 'data/Formula/model';
 import { TreeItem } from 'data/Tree/model';
 
 import './Editor.scss';
@@ -37,18 +37,18 @@ const navItem: MenuItem = {
 };
 
 
-const treeItemToMenuItem = ( graphs: Map<string, Graph> ) => ( item: TreeItem ): MenuItem => {
-	const graph = graphs.get( item.id );
+const treeItemToMenuItem = ( formulas: IdMap<Formula> ) => ( item: TreeItem ): MenuItem => {
+	const graph = formulas[item.id];
 	return {
 		title: ( graph && graph.name ) || item.id,
 		id: item.id,
-		childItems: item.children.map( treeItemToMenuItem( graphs )),
+		childItems: item.children.map( treeItemToMenuItem( formulas )),
 	};
 };
 
 
-const renderGraphEditor = ( routeProps: RouteComponentProps<GraphEditorRouteParams> ) => (
-	<GraphEditor className="editor-document-content" { ...routeProps } />
+const renderGraphEditor = ( routeProps: RouteComponentProps<FormulaEditorRouteParams> ) => (
+	<FormulaEditor className="editor-document-content" { ...routeProps } />
 );
 
 
@@ -92,7 +92,7 @@ const Editor = ( props: Props ) => {
 export default connect<StateProps, DispatchProps, PublicProps>(
 	({ document }: AppState ) => ({
 		title: document.title,
-		tree: document.tree.map( treeItemToMenuItem( document.graphs )),
+		tree: document.tree.map( treeItemToMenuItem( document.formulas )),
 	}),
 	( dispatch: Dispatch<Action> ) => ({ dispatch }),
 )( Editor );

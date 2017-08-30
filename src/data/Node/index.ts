@@ -1,27 +1,31 @@
+import { IdMap } from 'common/types';
+
 import { Action, ActionTypes } from './actions';
 import { Node } from './model';
 
 
-export default ( state = new Map(), action: Action ): Map<string, Node> => {
+export default ( state = {}, action: Action ): IdMap<Node> => {
 	switch ( action.type ) {
-
-		case ActionTypes.CREATE_NODE:
-			return new Map( state ).set( action.payload.node.id, action.payload.node );
-
-		case ActionTypes.DELETE_NODE:
-			const copiedGraph = new Map( state );
-			copiedGraph.delete( action.payload.nodeId );
-			return copiedGraph;
-
-		case ActionTypes.CONNECT_NODE:
-			return new Map( state );
-
-		case ActionTypes.DISCONNECT_NODE:
-			return new Map( state );
-
-		case ActionTypes.UPDATE_NODE:
-			return new Map( state );
-
+		case ActionTypes.CREATE: {
+			return {
+				...state,
+				[action.payload.node.id]: action.payload.node,
+			};
+		}
+		case ActionTypes.DESTROY: {
+			const nodes = { ...state };
+			delete nodes[action.payload.nodeId];
+			return nodes;
+		}
+		case ActionTypes.SET_INPUT_VALUE: {
+			const node = { ...state[action.payload.nodeId] };
+			node.inputValues = [ ...node.inputValues ];
+			node.inputValues[action.payload.index] = action.payload.value;
+			return {
+				...state,
+				[node.id]: node,
+			};
+		}
 		default: return state;
 	}
 };

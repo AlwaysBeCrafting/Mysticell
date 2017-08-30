@@ -4,116 +4,107 @@
 	"cells": {},
 	"sheets": {
 		"SHEET-0000": {
+			"id": "SHEET-0000",
 			"title": "Sheet 1",
-			"size": { "width": 16, "height": 22 },
-			"cells": []
-		}
-	},
-	"graphs": {
-		"GRAPH-0000": {
-			"name": "Ability Mod",
-			"type": "group",
-			"inputNames": [ "Value" ],
-			"outputNames": [ "Modifier", "Output2", "Something3", "Another4" ],
-			"nodes":[ "NODE-0000", "NODE-0001", "NODE-0002", "NODE-0003", "NODE-0004", "NODE-0005" ],
-			"outputs": [
-				{ "type": "node", "id": "NODE-0002", "index": 0, "userValue": "" },
-				{ "type": "node", "id": "NODE-0002", "index": 0, "userValue": "" },
-				{ "type": "node", "id": "NODE-0004", "index": 0, "userValue": "" },
-				{ "type": "node", "id": "NODE-0005", "index": 0, "userValue": "" }
-			]
-		},
-		"GRAPH-0001": {
-			"name": "Strength",
-			"type": "input",
-			"inputNames": [ "Value" ],
-			"outputNames": [ "Value" ],
-			"nodes": [],
-			"outputs": [
-				{ "type": "graph", "index": 0, "userValue": "" }
-			]
+			"size": [16, 22],
+			"layout": {}
 		}
 	},
 	"nodes": {
 		"NODE-0000": {
-			"definition": "PRIMITIVE-subtract",
-			"label": "Subtract",
-			"inputs": [
-				{ "type": "graph", "index": 0, "userValue": "" },
-				{ "type": "value", "userValue": "10" }
-			],
-			"outputs": [
-				{ "type": "number", "value": -10 }
-			]
+			"id": "NODE-0000",
+			"function": "PRIMITIVE-subtract",
+			"inputValues": [0, 10]
 		},
 		"NODE-0001": {
-			"definition": "PRIMITIVE-divide",
-			"label": "Divide",
-			"inputs": [
-				{ "type": "node", "id": "NODE-0000", "index": 0, "userValue": "" },
-				{ "type": "value", "userValue": "2" }
-			],
-			"outputs": [
-				{ "type": "number", "value": -5 }
-			]
+			"id": "NODE-0001",
+			"function": "PRIMITIVE-divide",
+			"inputValues": [0, 2]
 		},
 		"NODE-0002": {
-			"definition": "PRIMITIVE-floor",
-			"label": "Floor",
-			"inputs": [
-				{ "type": "node", "id": "NODE-0001", "index": 0, "userValue": "" }
-			],
-			"outputs": [
-				{ "type": "number", "value": -5 }
-			]
+			"id": "NODE-0002",
+			"function": "PRIMITIVE-floor",
+			"inputValues": [0]
 		},
 		"NODE-0003": {
-			"definition": "PRIMITIVE-add",
-			"label": "Add",
-			"inputs": [
-				{ "type": "graph", "index": 0, "userValue": "" },
-				{ "type": "value", "userValue": "100" }
-			],
-			"outputs": [
-				{ "type": "number", "value": -5 }
-			]
+			"id": "NODE-0003",
+			"function": "PRIMITIVE-add",
+			"inputValues": [0, 100]
 		},
 		"NODE-0004": {
-			"definition": "PRIMITIVE-subtract",
-			"label": "Subtract",
-			"inputs": [
-				{ "type": "node", "id": "NODE-0003", "index": 0, "userValue": "" },
-				{ "type": "value", "userValue": "45" }
-			],
-			"outputs": [
-				{ "type": "number", "value": -5 }
-			]
+			"id": "NODE-0004",
+			"function": "PRIMITIVE-subtract",
+			"inputValues": [0, 45]
 		},
 		"NODE-0005": {
-			"definition": "PRIMITIVE-multiply",
-			"label": "Whatever",
-			"inputs": [
-				{ "type": "node", "id": "NODE-0004", "index": 0, "userValue": "" },
-				{ "type": "value", "userValue": "3.8" }
-			],
-			"outputs": [
-				{ "type": "number", "value": -5 }
-			]
+			"id": "NODE-0005",
+			"function": "PRIMITIVE-multiply",
+			"inputValues": [0, 3.8]
+		},
+		"NODE-0006": {
+			"id": "NODE-0006",
+			"function": "FUNCTION-0000",
+			"inputValues": [10]
 		}
 	},
-	"layout": {
-		"NODE-0000": { "x": 2, "y": 1 },
-		"NODE-0001": { "x": 8, "y": 1 },
-		"NODE-0002": { "x": 14, "y": 1 },
-		"NODE-0003": { "x": 2, "y": 6 },
-		"NODE-0004": { "x": 8, "y": 6 },
-		"NODE-0005": { "x": 14, "y": 8 }
-	},
-	"tree": [
-		{
-			 "id": "GRAPH-0000", "children": [
-				{ "id": "GRAPH-0001", "children": [] }
-			]
+	"functions": {
+		"FUNCTION-0000": {
+			"id": "FUNCTION-0000",
+			"isProperty": false,
+			"title": "Ability Mod",
+			"inputNames": ["Ability Score"],
+			"outputNames": ["Modifier", "Output2", "Something3", "Another4"],
+			"graph": {
+				"input": {
+					"NODE-0000": [[0, 0]],
+					"NODE-0003": [[0, 0]]
+				},
+				"NODE-0000": {
+					"NODE-0001": [[0, 0]]
+				},
+				"NODE-0001": {
+					"NODE-0002": [[0, 0]]
+				},
+				"NODE-0002": {
+					"output": [[0, 0], [0, 1]]
+				},
+				"NODE-0003": {
+					"NODE-0004": [[0, 0]]
+				},
+				"NODE-0004": {
+					"output": [[0, 2]]
+				},
+				"NODE-0005": {
+					"output": [[0, 3]]
+				}
+			},
+			"layout": {
+				"NODE-0000": [2, 1],
+				"NODE-0001": [8, 1],
+				"NODE-0002": [14, 1],
+				"NODE-0003": [2, 6],
+				"NODE-0004": [8, 6],
+				"NODE-0005": [14, 8]
+			}
+		},
+		"FUNCTION-0001": {
+			"id": "FUNCTION-0001",
+			"isProperty": true,
+			"title": "Strength",
+			"inputNames": ["Score"],
+			"outputNames": ["Score", "Modifier"],
+			"graph": {
+				"input": {
+					"output": [[0, 0]],
+					"NODE-0006": [[0, 0]]
+				},
+				"NODE-0006": {
+					"output": [[0, 1]]
+				}
+			},
+			"layout": {
+				"NODE-0006": [2, 1]
+			}
 		}
-	]
+	}
 }

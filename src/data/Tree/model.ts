@@ -1,10 +1,7 @@
-import { Id } from 'common/types';
-
-
-interface TreeItem extends Id {
+interface TreeItem {
+	id: string;
 	children: TreeItem[];
 }
 
 
 export { TreeItem };
-export default TreeItem;

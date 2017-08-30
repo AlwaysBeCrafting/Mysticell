@@ -1,26 +1,27 @@
 import { combineReducers } from 'redux';
 
-import document from './Document';
-import DocumentAction from './Document/actions';
+import { reducer as document } from './Document';
+import { Action as DocumentAction } from './Document/actions';
 import { Document } from './Document/model';
 
-import ui from './UI';
-import UiAction from './UI/actions';
-import UiState from './UI/model';
+import { reducer as ui } from './UI';
+import { Action as UiAction } from './UI/actions';
+import { UiState } from './UI/model';
 
 
-export interface AppState {
+interface AppState {
 	document: Document;
 	ui: UiState;
 }
 
-
-export type Action =
+type Action =
 	DocumentAction |
 	UiAction;
 
-
-export default combineReducers<AppState>({
+const reducer = combineReducers<AppState>({
 	document,
 	ui,
 });
+
+export { AppState, Action };
+export { reducer };
