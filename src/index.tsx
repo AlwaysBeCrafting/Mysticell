@@ -1,29 +1,29 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { AppContainer } from 'react-hot-loader';
-import { Provider } from 'react-redux';
-import { createStore } from 'redux';
-import { devToolsEnhancer } from 'redux-devtools-extension';
+import React from "react";
+import ReactDOM from "react-dom";
+import { AppContainer } from "react-hot-loader";
+import { Provider } from "react-redux";
+import { createStore } from "redux";
+import { devToolsEnhancer } from "redux-devtools-extension";
 
-import { Editor } from 'components/pages';
+import { Editor } from "components/pages";
 
-import { AppState, reducer } from 'data';
-import { loadDocument } from 'data/Document/actions';
+import { AppState, reducer } from "data";
+import { loadDocument } from "data/Document/actions";
 
-import 'common/styles/normalize.scss';
-
-
-const store = createStore<AppState>( reducer, devToolsEnhancer( {} ));
-
-store.dispatch( loadDocument( require( 'common/assets/exampleDoc.json' )));
+import "common/styles/normalize.scss";
 
 
-const rootElem = document.querySelector( '.root' );
+const store = createStore<AppState>(reducer, devToolsEnhancer({}));
+
+store.dispatch(loadDocument(require("common/assets/exampleDoc.json")));
+
+
+const rootElem = document.querySelector(".root");
 
 const renderRoot = () => {
 	const editor = <Provider store={ store }><Editor /></Provider>;
 	ReactDOM.render(
-		( process.env.NODE_ENV === 'development' )
+		(process.env.NODE_ENV === "development")
 			? <AppContainer>{ editor }</AppContainer>
 			: editor,
 		rootElem,
@@ -32,6 +32,6 @@ const renderRoot = () => {
 
 renderRoot();
 
-if (( process.env.NODE_ENV === 'development' ) && module.hot ) {
-	module.hot.accept( 'components/pages', renderRoot );
+if ((process.env.NODE_ENV === "development") && module.hot) {
+	module.hot.accept("components/pages", renderRoot);
 }

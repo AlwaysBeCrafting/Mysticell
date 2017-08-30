@@ -1,11 +1,11 @@
-import { IdMap } from 'common/types';
+import { IdMap } from "common/types";
 
-import { Action, ActionTypes } from './actions';
-import { Node } from './model';
+import { Action, ActionTypes } from "./actions";
+import { Node } from "./model";
 
 
-export default ( state: IdMap<Node> = {}, action: Action ): IdMap<Node> => {
-	switch ( action.type ) {
+export default (state: IdMap<Node> = {}, action: Action): IdMap<Node> => {
+	switch (action.type) {
 		case ActionTypes.CREATE: {
 			return {
 				...state,

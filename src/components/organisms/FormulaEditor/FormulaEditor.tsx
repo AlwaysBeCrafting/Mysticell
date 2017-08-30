@@ -1,22 +1,22 @@
-import classNames from 'classnames';
-import React from 'react';
-import { connect } from 'react-redux';
-import { match as Match } from 'react-router';
+import classNames from "classnames";
+import React from "react";
+import { connect } from "react-redux";
+import { match as Match } from "react-router";
 
-import { IdMap } from 'common/types';
-import { connectedInputs, formulaLayoutWidth } from 'common/util';
+import { IdMap } from "common/types";
+import { connectedInputs, formulaLayoutWidth } from "common/util";
 
-import { Toolbar } from 'components/molecules';
+import { Toolbar } from "components/molecules";
 
-import { AppState } from 'data';
-import { Formula } from 'data/Formula/model';
-import { Node } from 'data/Node/model';
+import { AppState } from "data";
+import { Formula } from "data/Formula/model";
+import { Node } from "data/Node/model";
 
-import { NodeLayer } from './NodeLayer';
-import { Panel } from './Panel';
-import { WireLayer } from './WireLayer';
+import { NodeLayer } from "./NodeLayer";
+import { Panel } from "./Panel";
+import { WireLayer } from "./WireLayer";
 
-import './FormulaEditor.scss';
+import "./FormulaEditor.scss";
 
 
 interface RouteParams { id: string; }
@@ -36,32 +36,32 @@ interface PublicProps {
 
 type Props = StateProps & DispatchProps & PublicProps;
 
-const GraphEditor = ( props: Props ) => {
+const GraphEditor = (props: Props) => {
 	const { className, formula, formulas, nodes } = props;
 
 	return (
-		<div className={ classNames( 'formulaEditor', className ) }>
+		<div className={ classNames("formulaEditor", className) }>
 			<Toolbar title={ formula.name } className="formulaEditor-toolbar" />
 			<div className="formulaEditor-graph">
 				<Panel
 					type="input"
 					pinNames={ formula.inputNames }
-					connectedInputs={ connectedInputs( formula.graph, 'input' ) }
+					connectedInputs={ connectedInputs(formula.graph, "input") }
 				/>
-				{ renderGrid( formula, formulas, nodes ) }
+				{ renderGrid(formula, formulas, nodes) }
 				<Panel
 					type="output"
 					pinNames={ formula.outputNames }
-					connectedInputs={ connectedInputs( formula.graph, 'output' ) }
+					connectedInputs={ connectedInputs(formula.graph, "output") }
 				/>
 			</div>
 		</div>
 	);
 };
 
-const renderGrid = ( formula: Formula, formulas: IdMap<Formula>, nodes: IdMap<Node> ) => {
+const renderGrid = (formula: Formula, formulas: IdMap<Formula>, nodes: IdMap<Node>) => {
 
-	const gridStyle = { flexBasis: 40 * formulaLayoutWidth( formula.layout ) };
+	const gridStyle = { flexBasis: 40 * formulaLayoutWidth(formula.layout) };
 
 	return (
 		<div className="formulaEditor-graph-grid" style={ gridStyle }>
@@ -82,7 +82,7 @@ const renderGrid = ( formula: Formula, formulas: IdMap<Formula>, nodes: IdMap<No
 };
 
 const ConnectedGraphEditor = connect<StateProps, DispatchProps, PublicProps>(
-	( state: AppState, ownProps: PublicProps ) => {
+	(state: AppState, ownProps: PublicProps) => {
 		const formulaId = `FORMULA-${ ownProps && ownProps.match.params.id }`;
 		return {
 			formula: state.document.formulas[formulaId],
@@ -90,7 +90,7 @@ const ConnectedGraphEditor = connect<StateProps, DispatchProps, PublicProps>(
 			nodes: state.document.nodes,
 		};
 	},
-)( GraphEditor );
+)(GraphEditor);
 
 
 export { RouteParams };

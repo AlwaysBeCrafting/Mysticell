@@ -1,7 +1,7 @@
-import classNames from 'classnames';
-import React from 'react';
+import classNames from "classnames";
+import React from "react";
 
-import './Wire.scss';
+import "./Wire.scss";
 
 
 interface Props {
@@ -10,10 +10,10 @@ interface Props {
 	className?: string;
 }
 
-export default ({ srcPos, dstPos, className, ...attrs }: Props ) => {
+export default ({ srcPos, dstPos, className, ...attrs }: Props) => {
 	const center = [
-		( srcPos[0] + dstPos[0] ) / 2,
-		( srcPos[1] + dstPos[1] ) / 2,
+		(srcPos[0] + dstPos[0]) / 2,
+		(srcPos[1] + dstPos[1]) / 2,
 	];
 
 	const pathString = (
@@ -24,6 +24,6 @@ export default ({ srcPos, dstPos, className, ...attrs }: Props ) => {
 	);
 
 	return (
-		<path { ...attrs } className={ classNames( 'wire', className ) } d={ pathString }/>
+		<path { ...attrs } className={ classNames("wire", className) } d={ pathString }/>
 	);
 };

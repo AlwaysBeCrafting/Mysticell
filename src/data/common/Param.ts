@@ -1,26 +1,26 @@
 interface NumberParam {
-	type: 'number';
+	type: "number";
 	value: number;
 }
 
 interface StringParam {
-	type: 'string';
+	type: "string";
 	value: string;
 }
 
 interface EmptyParam {
-	type: 'empty';
+	type: "empty";
 	value: undefined;
 }
 
 interface ArrayParam {
-	type: 'array';
+	type: "array";
 	value: Param[];
 }
 
 interface ErrorParam {
-	type: 'error';
-	value: 'ERR';
+	type: "error";
+	value: "ERR";
 	message: string;
 }
 
@@ -32,25 +32,25 @@ type Param =
 	| ErrorParam;
 
 const params = {
-	number: ( value: number ): NumberParam => ({
-		type: 'number',
+	number: (value: number): NumberParam => ({
+		type: "number",
 		value,
 	}),
-	string: ( value: string ): StringParam => ({
-		type: 'string',
+	string: (value: string): StringParam => ({
+		type: "string",
 		value,
 	}),
 	empty: (): EmptyParam => ({
-		type: 'empty',
+		type: "empty",
 		value: undefined,
 	}),
-	array: ( value: Param[] ) => ({
-		type: 'array',
+	array: (value: Param[]) => ({
+		type: "array",
 		value,
 	}),
-	error: ( message: string ): ErrorParam => ({
-		type: 'error',
-		value: 'ERR',
+	error: (message: string): ErrorParam => ({
+		type: "error",
+		value: "ERR",
 		message,
 	}),
 };

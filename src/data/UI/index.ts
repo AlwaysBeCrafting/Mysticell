@@ -1,11 +1,11 @@
-import { Action } from './actions';
-import { UiState } from './model';
+import { Action } from "./actions";
+import { UiState } from "./model";
 
 
 const defaultState = {};
 
-const reducer = ( state: UiState = defaultState, action: Action ): UiState => {
-	switch ( action.type ) {
+const reducer = (state: UiState = defaultState, action: Action): UiState => {
+	switch (action.type) {
 		default: return state;
 	}
 };

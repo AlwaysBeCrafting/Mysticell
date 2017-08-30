@@ -1,7 +1,7 @@
-import classNames from 'classnames';
-import React from 'react';
+import classNames from "classnames";
+import React from "react";
 
-import './FAB.scss';
+import "./FAB.scss";
 
 
 interface Props extends React.HTMLAttributes<HTMLButtonElement> {
@@ -9,8 +9,8 @@ interface Props extends React.HTMLAttributes<HTMLButtonElement> {
 }
 
 
-export default ({ icon, className, ...attrs }: Props ) => (
-	<button { ...attrs } className={ classNames( 'fab', className ) }>
+export default ({ icon, className, ...attrs }: Props) => (
+	<button { ...attrs } className={ classNames("fab", className) }>
 		<span className="icon">{ icon }</span>
 	</button>
 );

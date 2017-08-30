@@ -1,18 +1,18 @@
-import React from 'react';
+import React from "react";
 
-import { params } from 'data/common';
+import { params } from "data/common";
 
-import { PinRow } from 'components/atoms/PinRow';
+import { PinRow } from "components/atoms/PinRow";
 
 
 interface Props {
 	pinNames: string[];
 	connectedInputs: number[];
-	type: 'input' | 'output';
+	type: "input" | "output";
 }
 
 
-const Panel = ( props: Props ) => {
+const Panel = (props: Props) => {
 	const { pinNames, connectedInputs, type } = props;
 
 	return (
@@ -20,13 +20,13 @@ const Panel = ( props: Props ) => {
 			<div className={ `formulaEditor-graph-panel-heading formulaEditor-graph-${ type }Panel-heading` }>
 				{ type }
 			</div>
-			{ pinNames.map(( name, index ) => (
-				type === 'input'
+			{ pinNames.map((name, index) => (
+				type === "input"
 					? (
 						<PinRow
 							type="src"
 							name={ name }
-							computedValue={ params.string( '' ) }
+							computedValue={ params.string("") }
 							key={ name }
 						/>
 					)
@@ -34,9 +34,9 @@ const Panel = ( props: Props ) => {
 						<PinRow
 							name={ name }
 							type="dst"
-							isConnected={ connectedInputs.indexOf( index ) > -1 }
+							isConnected={ connectedInputs.indexOf(index) > -1 }
 							param={ params.empty() }
-							userValue={ '' }
+							userValue={ "" }
 							key={ name }
 						/>
 					)

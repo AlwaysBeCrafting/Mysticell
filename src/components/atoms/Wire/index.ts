@@ -1,1 +1,1 @@
-export { default } from './Wire';
+export { default } from "./Wire";

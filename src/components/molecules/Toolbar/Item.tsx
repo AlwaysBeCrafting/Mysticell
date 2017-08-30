@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react";
 
-import { MenuItem } from 'data/common';
+import { MenuItem } from "data/common";
 
-import './Item.scss';
+import "./Item.scss";
 
 
 interface Props extends React.HTMLAttributes<HTMLButtonElement> {
@@ -13,7 +13,7 @@ interface Props extends React.HTMLAttributes<HTMLButtonElement> {
 }
 
 
-export const Item = ( props: Props ) => {
+export const Item = (props: Props) => {
 	const { menuItem } = props;
 	const iconElem = menuItem.icon && (
 		<img
@@ -23,8 +23,8 @@ export const Item = ( props: Props ) => {
 			/>
 	);
 
-	if ( menuItem.render ) {
-		return menuItem.render( menuItem );
+	if (menuItem.render) {
+		return menuItem.render(menuItem);
 
 	} else {
 		return (

@@ -1,1 +1,1 @@
-export { default, RouteParams as FormulaEditorRouteParams } from './FormulaEditor';
+export { default, RouteParams as FormulaEditorRouteParams } from "./FormulaEditor";

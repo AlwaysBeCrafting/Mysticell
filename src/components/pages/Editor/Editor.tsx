@@ -1,19 +1,19 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { BrowserRouter as Router, Route, RouteComponentProps } from 'react-router-dom';
-import { Dispatch } from 'redux';
+import React from "react";
+import { connect } from "react-redux";
+import { BrowserRouter as Router, Route, RouteComponentProps } from "react-router-dom";
+import { Dispatch } from "redux";
 
-import { Tree } from 'common/types';
-import { generate } from 'common/util';
+import { Tree } from "common/types";
+import { generate } from "common/util";
 
-import { MenuBar, Toolbar, TreeView } from 'components/molecules';
-import { FormulaEditor, FormulaEditorRouteParams } from 'components/organisms';
+import { MenuBar, Toolbar, TreeView } from "components/molecules";
+import { FormulaEditor, FormulaEditorRouteParams } from "components/organisms";
 
-import { Action, AppState } from 'data';
-import { MenuItem } from 'data/common';
-import { Formula } from 'data/Formula/model';
+import { Action, AppState } from "data";
+import { MenuItem } from "data/common";
+import { Formula } from "data/Formula/model";
 
-import './Editor.scss';
+import "./Editor.scss";
 
 
 interface StateProps {
@@ -31,33 +31,33 @@ type Props = StateProps & DispatchProps & PublicProps;
 
 
 const navItem: MenuItem = {
-	id: generate( 'MENU' ),
-	title: 'menu',
+	id: generate("MENU"),
+	title: "menu",
 };
 
 
-const renderGraphEditor = ( routeProps: RouteComponentProps<FormulaEditorRouteParams> ) => (
+const renderGraphEditor = (routeProps: RouteComponentProps<FormulaEditorRouteParams>) => (
 	<FormulaEditor className="editor-document-content" { ...routeProps } />
 );
 
 
 const demoMenuItems: MenuItem[] = [
-	{ id: 'MENU-file', title: 'File', childItems: [] },
-	{ id: 'MENU-edit', title: 'Edit', childItems: [] },
-	{ id: 'MENU-view', title: 'View', childItems: [] },
+	{ id: "MENU-file", title: "File", childItems: [] },
+	{ id: "MENU-edit", title: "Edit", childItems: [] },
+	{ id: "MENU-view", title: "View", childItems: [] },
 ];
 
 
 const toolbarItems: MenuItem[] = [
 	{
-		title: 'Menu',
-		id: 'app-menu',
-		render: ( item: MenuItem ) => <MenuBar items={ demoMenuItems } key={ item.id } />,
+		title: "Menu",
+		id: "app-menu",
+		render: (item: MenuItem) => <MenuBar items={ demoMenuItems } key={ item.id } />,
 	},
 ];
 
 
-const Editor = ( props: Props ) => {
+const Editor = (props: Props) => {
 	const { title, tree } = props;
 	return (
 		<Router>
@@ -79,9 +79,9 @@ const Editor = ( props: Props ) => {
 
 
 export default connect<StateProps, DispatchProps, PublicProps>(
-	({ document }: AppState ) => ({
+	({ document }: AppState) => ({
 		title: document.title,
 		tree: document.tree,
 	}),
-	( dispatch: Dispatch<Action> ) => ({ dispatch }),
-)( Editor );
+	(dispatch: Dispatch<Action>) => ({ dispatch }),
+)(Editor);

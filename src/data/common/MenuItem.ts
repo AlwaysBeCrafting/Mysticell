@@ -4,7 +4,7 @@ export interface MenuItem {
 	hint?: string;
 	icon?: string;
 	childItems?: MenuItem[];
-	render?: ( MenuItem ) => JSX.Element;
+	render?: (MenuItem) => JSX.Element;
 }
 
 export default MenuItem;
