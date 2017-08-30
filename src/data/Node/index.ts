@@ -4,7 +4,7 @@ import { Action, ActionTypes } from './actions';
 import { Node } from './model';
 
 
-export default ( state = {}, action: Action ): IdMap<Node> => {
+export default ( state: IdMap<Node> = {}, action: Action ): IdMap<Node> => {
 	switch ( action.type ) {
 		case ActionTypes.CREATE: {
 			return {
@@ -19,8 +19,8 @@ export default ( state = {}, action: Action ): IdMap<Node> => {
 		}
 		case ActionTypes.SET_INPUT_VALUE: {
 			const node = { ...state[action.payload.nodeId] };
-			node.inputValues = [ ...node.inputValues ];
-			node.inputValues[action.payload.index] = action.payload.value;
+			node.userValues = [ ...node.userValues ];
+			node.userValues[action.payload.index] = action.payload.value;
 			return {
 				...state,
 				[node.id]: node,

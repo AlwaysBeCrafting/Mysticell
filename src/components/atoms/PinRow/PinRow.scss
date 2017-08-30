@@ -6,7 +6,6 @@
 $row-height: $dimen-graph-cell-size;
 $pin-size: 14px;
 
-
 .pinRow {
 	position: relative;
 	display: flex;
@@ -47,14 +46,14 @@ $pin-size: 14px;
 		border-color: $color-brand-primary;
 	}
 
-.sourcePinRow {
+.srcPinRow {
 	flex-direction: row-reverse;
 }
 
-	.sourcePinRow-pin {
+	.srcPinRow-pin {
 		right: -$pin-size / 2;
 	}
 
-.destinationPinRow-pin {
+.dstPinRow-pin {
 	left: -$pin-size / 2;
 }

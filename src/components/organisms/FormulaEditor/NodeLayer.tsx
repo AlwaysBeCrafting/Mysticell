@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import React from 'react';
 
 import { IdMap } from 'common/types';
+import { connectedInputs } from 'common/util';
 
 import { NodeCard } from 'components/molecules';
 
@@ -32,6 +33,7 @@ const NodeLayer = ( props: Props ) => {
 
 const renderNode = ( props: Props ) => ( nodeId: string ) => {
 	const { formula, formulas, nodes } = props;
+	const { graph } = formula;
 	const node = nodes[nodeId];
 
 	if ( !node ) { throw new Error( `No node ${ nodeId } exists` ); }
@@ -46,6 +48,7 @@ const renderNode = ( props: Props ) => ( nodeId: string ) => {
 			node={ node }
 			position={ position }
 			nodeFunction={ nodeFunction }
+			connectedInputs={ connectedInputs( graph, nodeId ) }
 			key={ nodeId }
 		/>
 	);

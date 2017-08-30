@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { match as Match } from 'react-router';
 
 import { IdMap } from 'common/types';
-import { formulaLayoutWidth } from 'common/util';
+import { connectedInputs, formulaLayoutWidth } from 'common/util';
 
 import { Toolbar } from 'components/molecules';
 
@@ -43,9 +43,17 @@ const GraphEditor = ( props: Props ) => {
 		<div className={ classNames( 'formulaEditor', className ) }>
 			<Toolbar title={ formula.name } className="formulaEditor-toolbar" />
 			<div className="formulaEditor-graph">
-				<Panel type="input" pinNames={ formula.inputNames } />
+				<Panel
+					type="input"
+					pinNames={ formula.inputNames }
+					connectedInputs={ connectedInputs( formula.graph, 'input' ) }
+				/>
 				{ renderGrid( formula, formulas, nodes ) }
-				<Panel type="output" pinNames={ formula.outputNames } />
+				<Panel
+					type="output"
+					pinNames={ formula.outputNames }
+					connectedInputs={ connectedInputs( formula.graph, 'output' ) }
+				/>
 			</div>
 		</div>
 	);
