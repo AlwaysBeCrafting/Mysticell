@@ -1,82 +1,75 @@
 import classNames from 'classnames';
 import React from 'react';
 
-import { Position } from 'common/types';
-import { layoutGridWidth } from 'common/util';
-
 import { Wire } from 'components/atoms';
 
-import { Graph } from 'data/Graph/model';
-import { Node } from 'data/Node/model';
+import { Formula } from 'data/Formula/model';
 
 
+const nodeHeaderRows = 1;
 const panelHeaderRows = 2;
+const nodeWidth = 4;
 
+const formulaLayoutWidth = ( layout: {[nodeId: string]: [ number, number ]}) => (
+	Object.keys( layout )
+		.map(( key ) => layout[key] )
+		.reduce(( max, current ) => Math.max( current[0], max ), 2 )
+		+ 6
+);
 
 interface Props {
-	graph: Graph;
-	nodes: Map<string, Node>;
-	layout: Map<string, Position>;
+	formula: Formula;
 }
 
-
 const WireLayer = ( props: Props & React.HTMLAttributes<SVGElement> ) => {
-	const { graph, className } = props;
-
+	const { formula, className } = props;
+	const render = renderWithProps( props );
 	return (
 		<svg className={ classNames( 'wireLayer', className ) }>
-			{ graph.nodes.map(( nodeId ) => renderNodeWires( props, nodeId )) }
-			{ renderOutputWires( props ) }
+			{ Object.keys( formula.graph ).map( render ) }
 		</svg>
 	);
 };
 
-
-const renderNodeWires = ( props: Props, nodeId: string ) => {
-	const { nodes, layout } = props;
-	const node = nodes.get( nodeId );
-	const pos = layout.get( nodeId );
-
-	if ( !node || !pos ) { return; }
-
-	const indexOffset = 1 + node.outputs.length;
-
-	return node.inputs.map( mapSourceToWire( indexOffset, pos, layout, node.id ));
-};
-
-const renderOutputWires = ( props: Props ) => {
-	const { graph, layout } = props;
-	const position: Position = { x: layoutGridWidth( layout ), y: 0 };
-	return graph.outputs.map( mapSourceToWire( panelHeaderRows, position, layout, 'GRAPH' ));
-};
-
-const mapSourceToWire = ( indexOffset: number, pos: Position, layout: Map<string, Position>, key: string ) => (
-	( source, index ) => {
-		const startPos = { x: 0, y: 0 };
-		const endPos = {
-			x: pos.x,
-			y: pos.y + index + indexOffset,
-		};
-		switch ( source.type ) {
-			case 'graph':
-				startPos.x = 0;
-				startPos.y = source.index + panelHeaderRows;
-				break;
-
-			case 'node':
-				const sourcePosition = layout.get( source.id );
-				if ( !sourcePosition ) { return; }
-
-				startPos.x = sourcePosition.x + 4;
-				startPos.y = sourcePosition.y + source.index + 1;
-				break;
-
-			default: return;
-		}
-
-		return <Wire startPos={ startPos } endPos={ endPos } key={ `${ key }/${ index }` } />;
-	}
+const renderWithProps = ( props: Props ) => (
+	( srcId: string ) => renderFromSrc( props, srcId )
 );
+
+const renderFromSrc = ( props: Props, srcId: string ) => {
+	const render = ( dstId: string ) => renderToDst( props, srcId, dstId );
+	const src = props.formula.graph[srcId];
+	return Object.keys( src ).map( render );
+};
+
+const renderToDst = ( props: Props, srcId: string, dstId: string ) => {
+	const render = ( indices: [ number, number ]) => renderWire( props, srcId, dstId, indices );
+	const dst = props.formula.graph[srcId][dstId];
+	return dst.map( render );
+};
+
+const renderWire = ( props: Props, srcId: string, dstId: string, indices: [ number, number ] ) => {
+	const { layout } = props.formula;
+
+	const srcPos = layout[srcId] || [ 0, 0 ];
+	const dstPos = layout[dstId] || [ formulaLayoutWidth( layout ), 0 ];
+
+	if ( srcId === 'graph' ) {
+		srcPos[1] += panelHeaderRows;
+	} else {
+		srcPos[0] += nodeWidth;
+		srcPos[1] += nodeHeaderRows;
+	}
+	srcPos[1] += indices[0];
+	dstPos[1] += indices[1];
+
+	return (
+		<Wire
+			srcPos={ srcPos }
+			dstPos={ dstPos }
+			key={ `${ srcId }@${ indices[0] }-${ dstId }@${ indices[1] }` }
+		/>
+	);
+};
 
 
 export { WireLayer };
