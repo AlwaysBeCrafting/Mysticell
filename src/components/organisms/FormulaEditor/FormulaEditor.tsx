@@ -40,9 +40,9 @@ const GraphEditor = ( props: Props ) => {
 	const { className, formula, formulas, nodes } = props;
 
 	return (
-		<div className={ classNames( 'graphEditor', className ) }>
-			<Toolbar title={ formula.name } className="graphEditor-toolbar" />
-			<div className="graphEditor-graph">
+		<div className={ classNames( 'formulaEditor', className ) }>
+			<Toolbar title={ formula.name } className="formulaEditor-toolbar" />
+			<div className="formulaEditor-graph">
 				<Panel type="input" pinNames={ formula.inputNames } />
 				{ renderGrid( formula, formulas, nodes ) }
 				<Panel type="output" pinNames={ formula.outputNames } />
@@ -56,13 +56,15 @@ const renderGrid = ( formula: Formula, formulas: IdMap<Formula>, nodes: IdMap<No
 	const gridStyle = { flexBasis: 40 * formulaLayoutWidth( formula.layout ) };
 
 	return (
-		<div className="graphEditor-graph-grid" style={ gridStyle }>
+		<div className="formulaEditor-graph-grid" style={ gridStyle }>
 			<WireLayer
-				className="graphEditor-graph-grid-wires"
+				className="formulaEditor-graph-grid-wires"
 				formula={ formula }
+				formulas={ formulas }
+				nodes={ nodes }
 			/>
 			<NodeLayer
-				className="graphEditor-graph-grid-nodes"
+				className="formulaEditor-graph-grid-nodes"
 				formula={ formula }
 				formulas={ formulas }
 				nodes={ nodes }

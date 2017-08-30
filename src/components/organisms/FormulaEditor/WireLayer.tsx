@@ -1,11 +1,13 @@
 import classNames from 'classnames';
 import React from 'react';
 
+import { IdMap } from 'common/types';
 import { formulaLayoutWidth } from 'common/util';
 
 import { Wire } from 'components/atoms';
 
 import { Formula } from 'data/Formula/model';
+import { Node } from 'data/Node/model';
 
 
 const nodeHeaderRows = 1;
@@ -14,9 +16,12 @@ const nodeWidth = 4;
 
 interface Props {
 	formula: Formula;
+	formulas: IdMap<Formula>;
+	nodes: IdMap<Node>;
+	className?: string;
 }
 
-const WireLayer = ( props: Props & React.HTMLAttributes<SVGElement> ) => {
+const WireLayer = ( props: Props ) => {
 	const { formula, className } = props;
 	const render = renderWithProps( props );
 	return (
@@ -45,14 +50,31 @@ const renderToDst = ( props: Props, srcId: string, dstId: string ) => {
 const renderWire = ( props: Props, srcId: string, dstId: string, indices: [ number, number ] ) => {
 	const { layout } = props.formula;
 
-	const srcPos = layout[srcId] || [ 0, 0 ];
-	const dstPos = layout[dstId] || [ formulaLayoutWidth( layout ), 0 ];
+	const srcPos: [ number, number ] = [ 0, 0 ];
+	if ( layout[srcId] ) {
+		srcPos[0] += layout[srcId][0];
+		srcPos[1] += layout[srcId][1];
+	}
 
-	if ( srcId === 'graph' ) {
+	const dstPos: [ number, number ]  = [ 0, 0 ];
+	if ( layout[dstId] ) {
+		dstPos[0] = layout[dstId][0];
+		dstPos[1] = layout[dstId][1];
+	} else {
+		dstPos[0] = formulaLayoutWidth( layout );
+	}
+
+	if ( srcId === 'input' ) {
 		srcPos[1] += panelHeaderRows;
 	} else {
 		srcPos[0] += nodeWidth;
 		srcPos[1] += nodeHeaderRows;
+	}
+
+	if ( dstId === 'output' ) {
+		dstPos[1] += panelHeaderRows;
+	} else {
+		dstPos[1] += nodeHeaderRows;
 	}
 	srcPos[1] += indices[0];
 	dstPos[1] += indices[1];

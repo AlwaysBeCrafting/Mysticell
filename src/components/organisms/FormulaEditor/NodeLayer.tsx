@@ -36,18 +36,14 @@ const renderNode = ( props: Props ) => ( nodeId: string ) => {
 
 	if ( !node ) { throw new Error( `No node ${ nodeId } exists` ); }
 
-	const pos = formula.layout[nodeId] || [ 0, 0 ];
-
-	const nodeFunctions = {
-		...PRIMITIVES,
-		...formulas,
-	};
+	const position = formula.layout[nodeId] || [ 0, 0 ];
+	const nodeFunction = formulas[node.function] || PRIMITIVES[node.function];
 
 	return (
 		<NodeCard
 			node={ node }
-			position={ pos }
-			nodeFunction={ nodeFunctions[node.function] }
+			position={ position }
+			nodeFunction={ nodeFunction }
 			key={ nodeId }
 		/>
 	);
@@ -55,4 +51,3 @@ const renderNode = ( props: Props ) => ( nodeId: string ) => {
 
 
 export { NodeLayer };
-export default NodeLayer;

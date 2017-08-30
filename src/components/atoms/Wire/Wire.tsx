@@ -4,22 +4,23 @@ import React from 'react';
 import './Wire.scss';
 
 
-interface Props extends React.SVGAttributes<SVGPathElement> {
+interface Props {
 	srcPos: [ number, number ];
 	dstPos: [ number, number ];
+	className?: string;
 }
 
 export default ({ srcPos, dstPos, className, ...attrs }: Props ) => {
-	const center = {
-		x: ( srcPos[0] + dstPos[0] ) / 2,
-		y: ( srcPos[1] + dstPos[1] ) / 2,
-	};
+	const center = [
+		( srcPos[0] + dstPos[0] ) / 2,
+		( srcPos[1] + dstPos[1] ) / 2,
+	];
 
 	const pathString = (
-		`M ${ srcPos[0] * 40 },${ srcPos[1]  * 40 + 20 } ` +
-		`C ${ center[0] * 40 },${ srcPos[1]  * 40 + 20 } ` +
-		`  ${ center[0] * 40 },${ dstPos[1]  * 40 + 20 } ` +
-		`  ${ dstPos[0] * 40 },${ dstPos[1]  * 40 + 20 } `
+		`M ${ srcPos[0] * 40 },${ srcPos[1] * 40 + 20 } ` +
+		`C ${ center[0] * 40 },${ srcPos[1] * 40 + 20 } ` +
+		`  ${ center[0] * 40 },${ dstPos[1] * 40 + 20 } ` +
+		`  ${ dstPos[0] * 40 },${ dstPos[1] * 40 + 20 } `
 	);
 
 	return (
