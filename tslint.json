@@ -1,16 +1,16 @@
 {
 	"extends": "tslint:latest",
 	"rules": {
-		"indent": [true, "tabs"],
-		"no-var-requires": false,
-		"no-consecutive-blank-lines": [true, 2],
-		"interface-name": [true, "never-prefix"],
-		"object-literal-sort-keys": [false],
 		"align": [false],
 		"arrow-parens": [true, "ban-single-arg-parens"],
-		"quotemark": [true, "double", "jsx-double", "avoid-escape"],
-		"only-arrow-functions": [true],
 		"ban-types": false,
-		"no-submodule-imports": [true, "common", "components", "data"]
+		"indent": [true, "tabs"],
+		"interface-name": [true, "never-prefix"],
+		"no-consecutive-blank-lines": [true, 2],
+		"no-submodule-imports": [true, "common", "components", "data"],
+		"no-var-requires": false,
+		"object-literal-sort-keys": [false],
+		"only-arrow-functions": [true],
+		"quotemark": [true, "double", "jsx-double", "avoid-escape"]
 	}
 }
