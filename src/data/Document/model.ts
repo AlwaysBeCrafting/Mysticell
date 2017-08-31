@@ -1,9 +1,9 @@
-import { IdMap, Tree } from "common/types";
+import {IdMap, Tree} from "common/types";
 
-import { Cell } from "data/Cell/model";
-import { Formula } from "data/Formula/model";
-import { Node } from "data/Node/model";
-import { Sheet } from "data/Sheet/model";
+import {Cell} from "data/Cell/model";
+import {Formula} from "data/Formula/model";
+import {Node} from "data/Node/model";
+import {Sheet} from "data/Sheet/model";
 
 
 interface Document {
@@ -17,4 +17,4 @@ interface Document {
 }
 
 
-export { Document };
+export {Document};

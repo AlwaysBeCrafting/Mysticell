@@ -1,6 +1,6 @@
-import { Document } from "./model";
+import {Document} from "./model";
 
-import { Action, ActionTypes } from "./actions";
+import {Action, ActionTypes} from "./actions";
 
 
 const defaultState: Document = {
@@ -18,7 +18,7 @@ const defaultState: Document = {
 const reducer = (state: Document = defaultState, action: Action): Document => {
 	switch (action.type) {
 		case ActionTypes.LOAD_DOCUMENT:
-			return { ...defaultState, ...action.payload.documentJson };
+			return {...defaultState, ...action.payload.documentJson};
 
 		default:
 			return state;
@@ -26,4 +26,4 @@ const reducer = (state: Document = defaultState, action: Action): Document => {
 };
 
 
-export { reducer };
+export {reducer};

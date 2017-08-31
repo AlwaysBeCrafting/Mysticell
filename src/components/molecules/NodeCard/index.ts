@@ -1,1 +1,1 @@
-export { NodeCard } from "./NodeCard";
+export {NodeCard} from "./NodeCard";

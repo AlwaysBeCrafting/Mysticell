@@ -56,4 +56,4 @@ const params = {
 };
 
 
-export { Param, ErrorParam, params };
+export {Param, ErrorParam, params};

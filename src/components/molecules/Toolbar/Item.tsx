@@ -1,6 +1,6 @@
 import React from "react";
 
-import { MenuItem } from "data/common";
+import {MenuItem} from "data/common";
 
 import "./Item.scss";
 
@@ -13,12 +13,12 @@ interface Props extends React.HTMLAttributes<HTMLButtonElement> {
 }
 
 const Item = (props: Props) => {
-	const { menuItem } = props;
+	const {menuItem} = props;
 	const iconElem = menuItem.icon && (
 		<img
 			className="toolbar-item-icon"
-			title={ menuItem.title }
-			src={ menuItem.icon }
+			title={menuItem.title}
+			src={menuItem.icon}
 			/>
 	);
 
@@ -28,11 +28,11 @@ const Item = (props: Props) => {
 	} else {
 		return (
 			<button className="toolbar-item">
-				{ iconElem || menuItem.title }
+				{iconElem || menuItem.title}
 			</button>
 		);
 	}
 };
 
 
-export { Item };
+export {Item};

@@ -1,6 +1,6 @@
-import { ObjMap } from "common/types";
+import {ObjMap} from "common/types";
 
-import { NodeFunction } from "data/Node/model";
+import {NodeFunction} from "data/Node/model";
 
 
 interface Formula extends NodeFunction {
@@ -11,4 +11,4 @@ interface Formula extends NodeFunction {
 }
 
 
-export { Formula };
+export {Formula};

@@ -9,8 +9,8 @@ interface Props {
 }
 
 const SheetEditor = (props: Props) => (
-	<div className={ classNames("sheetEditor", props.className) } />
+	<div className={classNames("sheetEditor", props.className)} />
 );
 
 
-export { SheetEditor };
+export {SheetEditor};

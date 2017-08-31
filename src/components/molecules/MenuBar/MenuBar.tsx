@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import React from "react";
 
-import { MenuItem } from "data/common";
+import {MenuItem} from "data/common";
 
 import "./MenuBar.scss";
 
@@ -12,14 +12,14 @@ interface Props {
 }
 
 const MenuBar = (props: Props) => (
-	<div className={ classNames("menuBar", props.className) }>
-		{ props.items.map(item  => {
+	<div className={classNames("menuBar", props.className)}>
+		{props.items.map(item => {
 			if (item.render) {
 				return item.render(item);
 			} else {
 				return (
-					<button className="menuBar-item" key={ item.id }>
-						{ item.title }
+					<button className="menuBar-item" key={item.id}>
+						{item.title}
 					</button>
 				);
 			}
@@ -28,4 +28,4 @@ const MenuBar = (props: Props) => (
 );
 
 
-export { MenuBar };
+export {MenuBar};

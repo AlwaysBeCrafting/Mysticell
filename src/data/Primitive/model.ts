@@ -1,5 +1,5 @@
-import { Param } from "data/common";
-import { NodeFunction } from "data/Node/model";
+import {Param} from "data/common";
+import {NodeFunction} from "data/Node/model";
 
 
 interface Primitive extends NodeFunction {
@@ -8,4 +8,4 @@ interface Primitive extends NodeFunction {
 }
 
 
-export { Primitive };
+export {Primitive};

@@ -1,9 +1,9 @@
-const path = require( 'path' );
+const path = require('path');
 const autoprefixer = require('autoprefixer');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const paths = require( './paths' );
+const paths = require('./paths');
 const publicPath = '/';
 const publicUrl = '';
 
@@ -25,9 +25,9 @@ module.exports = {
 		publicPath,
 	},
 	resolve: {
-		extensions: [ '.ts', '.tsx', '.js', '.jsx', '.json' ],
+		extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
 		modules: [
-			path.resolve( __dirname, '../src' ),
+			path.resolve(__dirname, '../src'),
 			'node_modules',
 		],
 	},
@@ -92,7 +92,7 @@ module.exports = {
 			inject: true,
 			template: paths.appHtml,
 		}),
-		new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"development"' }),
+		new webpack.DefinePlugin({'process.env.NODE_ENV': '"development"'}),
 		new webpack.HotModuleReplacementPlugin(),
 		new webpack.NamedModulesPlugin(),
 		new webpack.NoEmitOnErrorsPlugin(),

@@ -1,8 +1,8 @@
-import { combineReducers } from "redux";
+import {combineReducers} from "redux";
 
-import { reducer as document } from "data/Document";
+import {reducer as document} from "data/Document";
 
-import { AppState } from "./model";
+import {AppState} from "./model";
 
 
 const reducer = combineReducers<AppState>({
@@ -10,4 +10,4 @@ const reducer = combineReducers<AppState>({
 });
 
 
-export { reducer };
+export {reducer};

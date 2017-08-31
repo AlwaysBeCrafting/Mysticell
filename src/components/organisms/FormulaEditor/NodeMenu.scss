@@ -5,7 +5,7 @@
 
 
 .nodeMenu {
-	@include elevation( 8px );
+	@include elevation(8px);
 
 	display: flex;
 	flex-flow: row nowrap;
@@ -34,7 +34,7 @@
 	}
 
 	.nodeMenu-toggle.is-open::before {
-		transform: rotate( 180deg );
+		transform: rotate(180deg);
 	}
 
 	.nodeMenu-body {

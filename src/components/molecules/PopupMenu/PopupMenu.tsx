@@ -1,11 +1,11 @@
 import classNames from "classnames";
 import React from "react";
 
-import { Anchor, Position } from "common/types";
+import {Anchor, Position} from "common/types";
 
-import { MenuItem } from "data/common";
+import {MenuItem} from "data/common";
 
-import { Item } from "./Item";
+import {Item} from "./Item";
 import "./PopupMenu.scss";
 
 
@@ -15,7 +15,7 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 	items: MenuItem[];
 }
 
-const PopupMenu = ({ position, anchor, items, ...attrs }: Props) => {
+const PopupMenu = ({position, anchor, items, ...attrs}: Props) => {
 	const style = {
 		left: position.x,
 		top: position.y,
@@ -32,11 +32,11 @@ const PopupMenu = ({ position, anchor, items, ...attrs }: Props) => {
 	);
 
 	return (
-		<div { ...attrs } className={ className } style={ style }>
-			{ items.map(item  => <Item item={ item } />) }
+		<div {...attrs} className={className} style={style}>
+			{items.map(item => <Item item={item} />)}
 		</div>
 	);
 };
 
 
-export { PopupMenu };
+export {PopupMenu};

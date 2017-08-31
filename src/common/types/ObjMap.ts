@@ -5,4 +5,4 @@ interface ObjMap<T> {
 type IdMap<T extends {id: string}> = ObjMap<T>;
 
 
-export { ObjMap, IdMap };
+export {ObjMap, IdMap};

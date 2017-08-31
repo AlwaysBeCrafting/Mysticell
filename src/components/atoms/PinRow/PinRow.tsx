@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import React from "react";
 
-import { Param } from "data/common";
+import {Param} from "data/common";
 
 import "./PinRow.scss";
 
@@ -26,22 +26,22 @@ interface DstProps extends AlwaysProps {
 type Props = SrcProps | DstProps;
 
 const PinRow = (props: Props) => {
-	const { name, type, className } = props;
+	const {name, type, className} = props;
 	return (
 		<div
-			className={ classNames(`pinRow ${ type }PinRow`, className) }
-			key={ name }
+			className={classNames(`pinRow ${type}PinRow`, className)}
+			key={name}
 		>
-			<div className={ `pinRow-pin ${ type }PinRow-pin` } />
-			<label className="pinRow-label">{ name }</label>
+			<div className={`pinRow-pin ${type}PinRow-pin`} />
+			<label className="pinRow-label">{name}</label>
 			{
 				props.type === "dst"
 					&& !props.isConnected
-					&& <input className="pinRow-value" value={ props.userValue } />
+					&& <input className="pinRow-value" value={props.userValue} />
 			}
 		</div>
 	);
 };
 
 
-export { PinRow };
+export {PinRow};

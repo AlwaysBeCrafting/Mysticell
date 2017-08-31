@@ -14,4 +14,4 @@ interface NodeFunction {
 }
 
 
-export { Node, NodeFunction };
+export {Node, NodeFunction};

@@ -1,4 +1,4 @@
-import { Document } from "data/Document";
+import {Document} from "data/Document";
 
 
 interface AppState {
@@ -6,4 +6,4 @@ interface AppState {
 }
 
 
-export { AppState };
+export {AppState};

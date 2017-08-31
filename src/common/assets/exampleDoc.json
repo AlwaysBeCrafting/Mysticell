@@ -108,9 +108,9 @@
 		}
 	},
 	"tree": [
-		{ "type": "parent", "name": "Abilities", "children": [
-			{ "type": "item", "name": "Ability Mod", "item": "FORMULA-0000" },
-			{ "type": "item", "name": "Strength", "item": "FORMULA-0001" }
+		{"type": "parent", "name": "Abilities", "children": [
+			{"type": "item", "name": "Ability Mod", "item": "FORMULA-0000"},
+			{"type": "item", "name": "Strength", "item": "FORMULA-0001"}
 		]}
 	]
 }

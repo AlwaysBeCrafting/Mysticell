@@ -8,4 +8,4 @@ interface MenuItem {
 }
 
 
-export { MenuItem };
+export {MenuItem};

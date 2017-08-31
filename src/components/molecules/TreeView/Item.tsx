@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import React from "react";
 
-import { ObjMap, TreeNode } from "common/types";
+import {ObjMap, TreeNode} from "common/types";
 
 import "./Item.scss";
 
@@ -13,7 +13,7 @@ interface Props<T> {
 }
 
 const Item = <T extends {}>(props: Props<T>) => {
-	const { treeNode, path, expandedItems } = props;
+	const {treeNode, path, expandedItems} = props;
 	const className = classNames(
 		"treeView-item",
 		{
@@ -25,12 +25,12 @@ const Item = <T extends {}>(props: Props<T>) => {
 	const childrenElem = treeNode.type === "parent" && (
 		<ul className="treeView-item-children">
 			{
-				treeNode.children.map(child  => (
+				treeNode.children.map(child => (
 					<Item
-						treeNode={ child }
-						path={ [ ...path, child.name ] }
-						expandedItems={ expandedItems }
-						key={ child.name }
+						treeNode={child}
+						path={[...path, child.name]}
+						expandedItems={expandedItems}
+						key={child.name}
 					/>
 				))
 			}
@@ -38,15 +38,15 @@ const Item = <T extends {}>(props: Props<T>) => {
 	);
 
 	return (
-		<li className={ className }>
+		<li className={className}>
 			<a className="treeView-item-body">
 				<span className="treeView-item-body-icon">arrow_drop_down</span>
-				<span className="treeView-item-body-title">{ treeNode.name }</span>
+				<span className="treeView-item-body-title">{treeNode.name}</span>
 			</a>
-			{ childrenElem }
+			{childrenElem}
 		</li>
 	);
 };
 
 
-export { Item };
+export {Item};

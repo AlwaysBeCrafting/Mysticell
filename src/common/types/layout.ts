@@ -9,4 +9,4 @@ interface Anchor {
 }
 
 
-export { Position, Anchor };
+export {Position, Anchor};

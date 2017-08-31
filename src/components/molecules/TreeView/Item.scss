@@ -25,7 +25,7 @@
 			font-size: $dimen-icon-size;
 			font-family: Material Icons;
 			color: $color-icon-active;
-			transform: rotate( -90deg );
+			transform: rotate(-90deg);
 		}
 
 		.treeView-item-body-title {
@@ -34,7 +34,7 @@
 		}
 
 		.treeView-item-body-icon + .treeView-item-body-title {
-			margin-left: $dimen-keyline-content - ( $dimen-keyline-padding + $dimen-icon-size );
+			margin-left: $dimen-keyline-content - ($dimen-keyline-padding + $dimen-icon-size);
 		}
 
 	.treeView-item-children {

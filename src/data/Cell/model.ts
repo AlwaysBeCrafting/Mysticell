@@ -5,4 +5,4 @@ interface Cell {
 }
 
 
-export { Cell };
+export {Cell};

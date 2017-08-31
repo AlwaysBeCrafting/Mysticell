@@ -3,7 +3,7 @@
 
 
 .popup {
-	@include elevation( 8px );
+	@include elevation(8px);
 
 	position: fixed;
 	background: white;
@@ -11,18 +11,18 @@
 	border-radius: 4px;
 
 	&.anchor-left {
-		&.anchor-top    { transform: translate( 0,    0  ); }
-		&.anchor-center { transform: translate( 0,  -50% ); }
-		&.anchor-bottom { transform: translate( 0, -100% ); }
+		&.anchor-top    {transform: translate(0,    0 );}
+		&.anchor-center {transform: translate(0,  -50%);}
+		&.anchor-bottom {transform: translate(0, -100%);}
 	}
 	&.anchor-center {
-		&.anchor-top    { transform: translate( -50%,    0  ); }
-		&.anchor-center { transform: translate( -50%,  -50% ); }
-		&.anchor-bottom { transform: translate( -50%, -100% ); }
+		&.anchor-top    {transform: translate(-50%,    0 );}
+		&.anchor-center {transform: translate(-50%,  -50%);}
+		&.anchor-bottom {transform: translate(-50%, -100%);}
 	}
 	&.anchor-right {
-		&.anchor-top    { transform: translate( -100%,    0  ); }
-		&.anchor-center { transform: translate( -100%,  -50% ); }
-		&.anchor-bottom { transform: translate( -100%, -100% ); }
+		&.anchor-top    {transform: translate(-100%,    0 );}
+		&.anchor-center {transform: translate(-100%,  -50%);}
+		&.anchor-bottom {transform: translate(-100%, -100%);}
 	}
 }

@@ -1,7 +1,7 @@
-import { IdMap } from "common/types";
+import {IdMap} from "common/types";
 
-import { Action, ActionTypes } from "./actions";
-import { Node } from "./model";
+import {Action, ActionTypes} from "./actions";
+import {Node} from "./model";
 
 
 const reducer = (state: IdMap<Node> = {}, action: Action): IdMap<Node> => {
@@ -13,13 +13,13 @@ const reducer = (state: IdMap<Node> = {}, action: Action): IdMap<Node> => {
 			};
 		}
 		case ActionTypes.DESTROY: {
-			const nodes = { ...state };
+			const nodes = {...state};
 			delete nodes[action.payload.nodeId];
 			return nodes;
 		}
 		case ActionTypes.SET_INPUT_VALUE: {
-			const node = { ...state[action.payload.nodeId] };
-			node.userValues = [ ...node.userValues ];
+			const node = {...state[action.payload.nodeId]};
+			node.userValues = [...node.userValues];
 			node.userValues[action.payload.index] = action.payload.value;
 			return {
 				...state,
@@ -31,4 +31,4 @@ const reducer = (state: IdMap<Node> = {}, action: Action): IdMap<Node> => {
 };
 
 
-export { reducer };
+export {reducer};

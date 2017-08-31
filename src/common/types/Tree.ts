@@ -15,4 +15,4 @@ interface TreeItem<T> {
 }
 
 
-export { Tree, TreeNode };
+export {Tree, TreeNode};
