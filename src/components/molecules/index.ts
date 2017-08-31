@@ -1,4 +1,3 @@
-export {PopupMenu} from "./PopupMenu";
 export {Toolbar} from "./Toolbar";
 export {TreeView} from "./TreeView";
 export {NodeCard} from "./NodeCard";
