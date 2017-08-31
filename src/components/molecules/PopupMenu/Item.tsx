@@ -10,7 +10,6 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 	item: MenuItem;
 }
 
-
 const Item = ({ item, className, ...attrs }: Props) => {
 	const descElem = item.title && (
 		<span className="menuItem-description">{ item.title || "" }</span>
@@ -28,5 +27,6 @@ const Item = ({ item, className, ...attrs }: Props) => {
 		</div>
 	);
 };
+
 
 export { Item };

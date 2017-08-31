@@ -11,11 +11,9 @@ interface Props {
 	onItemSelected: (item: string) => void;
 }
 
-
 interface State {
 	open: boolean;
 }
-
 
 class NodeMenu extends React.Component<Props, State> {
 	constructor(props: Props) {

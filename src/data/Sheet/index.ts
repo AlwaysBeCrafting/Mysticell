@@ -1,7 +1,2 @@
-import { Sheet } from "./model";
-
-
-const reducer = (state: Sheet) => state;
-
-
-export { reducer };
+export { Sheet } from "./model";
+export { reducer } from "./reducer";

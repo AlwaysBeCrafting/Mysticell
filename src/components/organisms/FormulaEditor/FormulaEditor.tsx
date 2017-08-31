@@ -8,7 +8,7 @@ import { connectedInputs, formulaLayoutWidth } from "common/util";
 
 import { Toolbar } from "components/molecules";
 
-import { AppState } from "data";
+import { AppState } from "data/AppState";
 import { Formula } from "data/Formula/model";
 import { Node } from "data/Node/model";
 

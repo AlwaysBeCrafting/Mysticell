@@ -15,7 +15,6 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 	items: MenuItem[];
 }
 
-
 const PopupMenu = ({ position, anchor, items, ...attrs }: Props) => {
 	const style = {
 		left: position.x,

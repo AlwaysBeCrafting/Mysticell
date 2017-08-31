@@ -9,7 +9,7 @@ import { generate } from "common/util";
 import { MenuBar, Toolbar, TreeView } from "components/molecules";
 import { FormulaEditor, FormulaEditorRouteParams } from "components/organisms";
 
-import { Action, AppState } from "data";
+import { Action, AppState } from "data/AppState";
 import { MenuItem } from "data/common";
 import { Formula } from "data/Formula/model";
 
@@ -27,24 +27,20 @@ interface DispatchProps {
 
 type Props = StateProps & DispatchProps;
 
-
 const navItem: MenuItem = {
 	id: generate("MENU"),
 	title: "menu",
 };
 
-
 const renderGraphEditor = (routeProps: RouteComponentProps<FormulaEditorRouteParams>) => (
 	<FormulaEditor className="editor-document-content" { ...routeProps } />
 );
-
 
 const demoMenuItems: MenuItem[] = [
 	{ id: "MENU-file", title: "File", childItems: [] },
 	{ id: "MENU-edit", title: "Edit", childItems: [] },
 	{ id: "MENU-view", title: "View", childItems: [] },
 ];
-
 
 const toolbarItems: MenuItem[] = [
 	{
@@ -53,7 +49,6 @@ const toolbarItems: MenuItem[] = [
 		render: (item: MenuItem) => <MenuBar items={ demoMenuItems } key={ item.id } />,
 	},
 ];
-
 
 const ProtoEditor = (props: Props) => {
 	const { title, tree } = props;
@@ -74,7 +69,6 @@ const ProtoEditor = (props: Props) => {
 		</Router>
 	);
 };
-
 
 const Editor = connect<StateProps, DispatchProps, {}>(
 	({ document }: AppState) => ({

@@ -12,7 +12,6 @@ interface Props extends React.HTMLAttributes<HTMLButtonElement> {
 	checked?: boolean;
 }
 
-
 const Item = (props: Props) => {
 	const { menuItem } = props;
 	const iconElem = menuItem.icon && (
@@ -34,5 +33,6 @@ const Item = (props: Props) => {
 		);
 	}
 };
+
 
 export { Item };

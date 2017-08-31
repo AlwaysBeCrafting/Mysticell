@@ -11,7 +11,6 @@ interface Props {
 	className?: string;
 }
 
-
 const MenuBar = (props: Props) => (
 	<div className={ classNames("menuBar", props.className) }>
 		{ props.items.map(item  => {

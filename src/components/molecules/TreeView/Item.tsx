@@ -12,7 +12,6 @@ interface Props<T> {
 	expandedItems: ObjMap<boolean>;
 }
 
-
 const Item = <T extends {}>(props: Props<T>) => {
 	const { treeNode, path, expandedItems } = props;
 	const className = classNames(
@@ -48,5 +47,6 @@ const Item = <T extends {}>(props: Props<T>) => {
 		</li>
 	);
 };
+
 
 export { Item };

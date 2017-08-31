@@ -8,7 +8,6 @@ interface Props {
 	className?: string;
 }
 
-
 const SheetEditor = (props: Props) => (
 	<div className={ classNames("sheetEditor", props.className) } />
 );

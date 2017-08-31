@@ -7,8 +7,8 @@ import { devToolsEnhancer } from "redux-devtools-extension";
 
 import { Editor } from "components/pages";
 
-import { AppState, reducer } from "data";
-import { loadDocument } from "data/Document/actions";
+import { AppState, reducer } from "data/AppState";
+import { loadDocument } from "data/Document";
 
 import "common/styles/normalize.scss";
 
@@ -16,7 +16,6 @@ import "common/styles/normalize.scss";
 const store = createStore<AppState>(reducer, devToolsEnhancer({}));
 
 store.dispatch(loadDocument(require("common/assets/exampleDoc.json")));
-
 
 const rootElem = document.querySelector(".root");
 

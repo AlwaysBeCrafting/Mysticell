@@ -13,7 +13,6 @@ interface Props extends React.HTMLAttributes<HTMLMenuElement> {
 	items?: MenuItem[];
 }
 
-
 const Toolbar = ({ title, navItem, items, className, ...attrs }: Props) => (
 	<menu type="toolbar" { ...attrs } className={ classNames("toolbar", className) }>
 		{ navItem && <Item menuItem={ navItem } /> }

@@ -11,7 +11,6 @@ interface Props {
 	type: "input" | "output";
 }
 
-
 const Panel = (props: Props) => {
 	const { pinNames, connectedInputs, type } = props;
 
