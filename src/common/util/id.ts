@@ -1,16 +1,13 @@
 import shortid from "shortid";
 
 
-const graphNamespace = "GRAPH";
-const primitiveNamespace = "PRIMITIVE";
+type IdNamespace =
+	| "DOCUMENT"
+	| "NODE"
+	| "FORMULA"
+	| "PRIMITIVE";
 
-const generate = (namespace: string) => `${namespace}-${shortid.generate()}`;
-const generateForGraph = () => generate(graphNamespace);
-const generateForPrimitive = (name: string) => {
-	const id = `${primitiveNamespace}-${name}`;
-	if (!shortid.isValid(id)) {throw new Error(`Not a valid shortid: ${id}`);}
-	return id;
-};
+const generateId = (namespace: IdNamespace) => `${namespace}-${shortid.generate()}`;
 
 
-export {generate, generateForGraph, generateForPrimitive};
+export {generateId};

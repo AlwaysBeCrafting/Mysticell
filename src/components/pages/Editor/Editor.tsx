@@ -4,7 +4,6 @@ import {BrowserRouter as Router, Route, RouteComponentProps} from "react-router-
 import {Dispatch} from "redux";
 
 import {Tree} from "common/types";
-import {generate} from "common/util";
 
 import {MenuBar, Toolbar, TreeView} from "components/molecules";
 import {FormulaEditor, FormulaEditorRouteParams} from "components/organisms";
@@ -28,8 +27,8 @@ interface DispatchProps {
 type Props = StateProps & DispatchProps;
 
 const navItem: MenuItem = {
-	id: generate("MENU"),
-	title: "menu",
+	id: "MENU-nav",
+	title: "Nav",
 };
 
 const renderGraphEditor = (routeProps: RouteComponentProps<FormulaEditorRouteParams>) => (
