@@ -7,7 +7,7 @@
 $row-height: $dimen-graph-cell-size;
 
 .nodeCard {
-	@include elevation( 2px );
+	@include elevation(2px);
 	@include font-body1;
 	line-height: $row-height;
 	display: grid;

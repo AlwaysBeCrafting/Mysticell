@@ -1,7 +1,7 @@
 @import '~common/styles/mixins';
 
 .fab {
-	@include elevation( 6px );
+	@include elevation(6px);
 
 	width: 56px;
 	height: 56px;
@@ -19,8 +19,8 @@
 	
 	border-width: 1px 0 1px;
 	
-	border-color: rgba( 255, 255, 255, 0.5 ) transparent rgba( 0, 0, 0, 0.3 );
+	border-color: rgba(255, 255, 255, 0.5) transparent rgba(0, 0, 0, 0.3);
 }
 	.fab.is-disabled {
-		color: rgba( 255, 255, 255, 0.5 );
+		color: rgba(255, 255, 255, 0.5);
 	}

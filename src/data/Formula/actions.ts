@@ -1,11 +1,11 @@
-import { Formula } from './model';
+import {Formula} from "./model";
 
 
 namespace ActionTypes {
-	export const CREATE      = '[Function] Create';
-	export const DESTROY     = '[Function] Destroy';
-	export const ADD_NODE    = '[Function] Add node';
-	export const REMOVE_NODE = '[Function] Remove node';
+	export const CREATE      = "[Function] Create";
+	export const DESTROY     = "[Function] Destroy";
+	export const ADD_NODE    = "[Function] Add node";
+	export const REMOVE_NODE = "[Function] Remove node";
 }
 type Action =
 	| CreateAction
@@ -15,40 +15,40 @@ type Action =
 
 interface CreateAction {
 	readonly type: typeof ActionTypes.CREATE;
-	payload: { fxn: Formula };
+	payload: {fxn: Formula};
 }
-const create = ( fxn: Formula ): CreateAction => ({
+const create = (fxn: Formula): CreateAction => ({
 	type: ActionTypes.CREATE,
-	payload: { fxn },
+	payload: {fxn},
 });
 
 interface DestroyAction {
 	readonly type: typeof ActionTypes.DESTROY;
-	payload: { fxnId: string };
+	payload: {fxnId: string};
 }
-const destroy = ( fxnId: string ): DestroyAction => ({
+const destroy = (fxnId: string): DestroyAction => ({
 	type: ActionTypes.DESTROY,
-	payload: { fxnId },
+	payload: {fxnId},
 });
 
 interface AddNodeAction {
 	readonly type: typeof ActionTypes.ADD_NODE;
-	payload: { functionId: string, nodeId: string };
+	payload: {functionId: string, nodeId: string};
 }
-const addNode = ( functionId: string, nodeId: string ): AddNodeAction => ({
+const addNode = (functionId: string, nodeId: string): AddNodeAction => ({
 	type: ActionTypes.ADD_NODE,
-	payload: { functionId, nodeId },
+	payload: {functionId, nodeId},
 });
 
 interface RemoveNodeAction {
 	readonly type: typeof ActionTypes.REMOVE_NODE;
-	payload: { functionId: string, nodeId: string };
+	payload: {functionId: string, nodeId: string};
 }
-const removeNode = ( functionId: string, nodeId: string ): RemoveNodeAction => ({
+const removeNode = (functionId: string, nodeId: string): RemoveNodeAction => ({
 	type: ActionTypes.REMOVE_NODE,
-	payload: { functionId, nodeId },
+	payload: {functionId, nodeId},
 });
 
 
-export { Action, ActionTypes };
-export { create, destroy, addNode, removeNode };
+export {Action, ActionTypes};
+export {create, destroy, addNode, removeNode};

@@ -1,1 +1,1 @@
-export * from './PinRow';
+export {PinRow} from "./PinRow";

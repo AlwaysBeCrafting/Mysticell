@@ -1,10 +1,8 @@
-interface Format {}
-
 interface Cell {
 	id: string;
 	property: string;
-	format?: Format;
+	format?: {};
 }
 
 
-export { Cell };
+export {Cell};

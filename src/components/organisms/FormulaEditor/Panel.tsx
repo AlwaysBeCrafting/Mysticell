@@ -1,43 +1,42 @@
-import React from 'react';
+import React from "react";
 
-import { params } from 'data/common';
+import {params} from "data/common";
 
-import { PinRow } from 'components/atoms/PinRow';
+import {PinRow} from "components/atoms/PinRow";
 
 
 interface Props {
 	pinNames: string[];
 	connectedInputs: number[];
-	type: 'input' | 'output';
+	type: "input" | "output";
 }
 
-
-const Panel = ( props: Props ) => {
-	const { pinNames, connectedInputs, type } = props;
+const Panel = (props: Props) => {
+	const {pinNames, connectedInputs, type} = props;
 
 	return (
-		<div className={ `formulaEditor-graph-panel formulaEditor-graph-${ type }Panel` }>
-			<div className={ `formulaEditor-graph-panel-heading formulaEditor-graph-${ type }Panel-heading` }>
-				{ type }
+		<div className={`formulaEditor-graph-panel formulaEditor-graph-${type}Panel`}>
+			<div className={`formulaEditor-graph-panel-heading formulaEditor-graph-${type}Panel-heading`}>
+				{type}
 			</div>
-			{ pinNames.map(( name, index ) => (
-				type === 'input'
+			{pinNames.map((name, index) => (
+				type === "input"
 					? (
 						<PinRow
 							type="src"
-							name={ name }
-							computedValue={ params.string( '' ) }
-							key={ name }
+							name={name}
+							computedValue={params.string("")}
+							key={name}
 						/>
 					)
 					: (
 						<PinRow
-							name={ name }
+							name={name}
 							type="dst"
-							isConnected={ connectedInputs.indexOf( index ) > -1 }
-							param={ params.empty() }
-							userValue={ '' }
-							key={ name }
+							isConnected={connectedInputs.indexOf(index) > -1}
+							param={params.empty()}
+							userValue={""}
+							key={name}
 						/>
 					)
 			))}
@@ -46,5 +45,4 @@ const Panel = ( props: Props ) => {
 };
 
 
-export { Panel };
-export default Panel;
+export {Panel};

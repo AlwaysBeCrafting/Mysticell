@@ -1,10 +1,10 @@
-import classNames from 'classnames';
-import React from 'react';
+import classNames from "classnames";
+import React from "react";
 
-import { ObjMap, Tree } from 'common/types';
+import {ObjMap, Tree} from "common/types";
 
-import Item from './Item';
-import './TreeView.scss';
+import {Item} from "./Item";
+import "./TreeView.scss";
 
 
 interface Props<T> {
@@ -13,15 +13,15 @@ interface Props<T> {
 	className?: string;
 }
 
-const TreeView = <T extends {}>({ tree, expandedItems, className }: Props<T> ) => (
-	<ul className={ classNames( 'treeView', className ) }>
+const TreeView = <T extends {}>({tree, expandedItems, className}: Props<T>) => (
+	<ul className={classNames("treeView", className)}>
 		{
-			tree.map(( treeNode ) => (
+			tree.map(treeNode => (
 				<Item
-					key={ treeNode.name }
-					treeNode={ treeNode }
-					path={ [ treeNode.name ] }
-					expandedItems={ expandedItems }
+					key={treeNode.name}
+					treeNode={treeNode}
+					path={[treeNode.name]}
+					expandedItems={expandedItems}
 				/>
 			))
 		}
@@ -29,4 +29,4 @@ const TreeView = <T extends {}>({ tree, expandedItems, className }: Props<T> ) =
 );
 
 
-export { TreeView };
+export {TreeView};

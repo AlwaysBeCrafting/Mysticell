@@ -7,11 +7,11 @@ interface Node {
 
 interface NodeFunction {
 	id: string;
-	type: 'formula' | 'primitive';
+	type: "formula" | "primitive";
 	name: string;
 	inputNames: string[];
 	outputNames: string[];
 }
 
 
-export { Node, NodeFunction };
+export {Node, NodeFunction};

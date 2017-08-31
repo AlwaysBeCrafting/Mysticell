@@ -2,7 +2,7 @@ interface ObjMap<T> {
 	[id: string]: T;
 }
 
-interface IdMap<T extends {id: string}> extends ObjMap<T> {}
+type IdMap<T extends {id: string}> = ObjMap<T>;
 
 
-export { ObjMap, IdMap };
+export {ObjMap, IdMap};

@@ -1,82 +1,82 @@
-import { Param, params } from 'data/common';
+import {Param, params} from "data/common";
 
-import { Primitive } from './model';
+import {Primitive} from "./model";
 
 
 const add: Primitive = {
-	id: 'PRIMITIVE-add',
-	type: 'primitive',
-	name: 'Add',
-	inputNames: [ 'A', 'B' ],
-	outputNames: [ 'Sum' ],
-	eval: ( a: Param, b: Param ) => {
-		if ( a.type === 'number' && b.type === 'number' ) {
-			return [{ type: 'number', value: a.value + b.value }];
+	id: "PRIMITIVE-add",
+	type: "primitive",
+	name: "Add",
+	inputNames: ["A", "B"],
+	outputNames: ["Sum"],
+	eval: (a: Param, b: Param) => {
+		if (a.type === "number" && b.type === "number") {
+			return [{type: "number", value: a.value + b.value}];
 		}
-		return [params.error( 'Both arguments to Add must be numbers' )];
+		return [params.error("Both arguments to Add must be numbers")];
 	},
 };
 
 const subtract: Primitive = {
-	id: 'PRIMITIVE-subtract',
-	type: 'primitive',
-	name: 'Subtract',
-	inputNames: [ 'A', 'B' ],
-	outputNames: [ 'Difference' ],
-	eval: ( a, b ) => {
-		if ( a.type === 'number' && b.type === 'number' ) {
-			return [{ type: 'number', value: a.value - b.value }];
+	id: "PRIMITIVE-subtract",
+	type: "primitive",
+	name: "Subtract",
+	inputNames: ["A", "B"],
+	outputNames: ["Difference"],
+	eval: (a, b) => {
+		if (a.type === "number" && b.type === "number") {
+			return [{type: "number", value: a.value - b.value}];
 		}
-		return [params.error( 'Both arguments to Subtract must be numbers' )];
+		return [params.error("Both arguments to Subtract must be numbers")];
 	},
 };
 
 const multiply: Primitive = {
-	id: 'PRIMITIVE-multiply',
-	type: 'primitive',
-	name: 'Multiply',
-	inputNames: [ 'A', 'B' ],
-	outputNames: [ 'Product' ],
-	eval: ( a, b ) => {
-		if ( a.type === 'number' && b.type === 'number' ) {
-			return [{ type: 'number', value: a.value * b.value }];
+	id: "PRIMITIVE-multiply",
+	type: "primitive",
+	name: "Multiply",
+	inputNames: ["A", "B"],
+	outputNames: ["Product"],
+	eval: (a, b) => {
+		if (a.type === "number" && b.type === "number") {
+			return [{type: "number", value: a.value * b.value}];
 		}
-		return [params.error( 'Both arguments to Multiply must be numbers' )];
+		return [params.error("Both arguments to Multiply must be numbers")];
 	},
 };
 
 const divide: Primitive = {
-	id: 'PRIMITIVE-divide',
-	type: 'primitive',
-	name: 'Divide',
-	inputNames: [ 'A', 'B' ],
-	outputNames: [ 'Quotient' ],
-	eval: ( a, b ) => {
-		if ( a.type === 'number' && b.type === 'number' ) {
-			return [{ type: 'number', value: a.value / b.value }];
+	id: "PRIMITIVE-divide",
+	type: "primitive",
+	name: "Divide",
+	inputNames: ["A", "B"],
+	outputNames: ["Quotient"],
+	eval: (a, b) => {
+		if (a.type === "number" && b.type === "number") {
+			return [{type: "number", value: a.value / b.value}];
 		}
-		return [params.error( 'Both arguments to Divide must be numbers' )];
+		return [params.error("Both arguments to Divide must be numbers")];
 	},
 };
 
 const floor: Primitive = {
-	id: 'PRIMITIVE-floor',
-	type: 'primitive',
-	name: 'Floor',
-	inputNames: [ 'Num' ],
-	outputNames: [ 'Floor' ],
-	eval: ( a ) => {
-		if ( a.type === 'number' ) {
-			return [{ type: 'number', value: Math.floor( a.value ) }];
+	id: "PRIMITIVE-floor",
+	type: "primitive",
+	name: "Floor",
+	inputNames: ["Num"],
+	outputNames: ["Floor"],
+	eval:  a => {
+		if (a.type === "number") {
+			return [{type: "number", value: Math.floor(a.value)}];
 		}
-		return [params.error( 'Argument to Floor must be a number' )];
+		return [params.error("Argument to Floor must be a number")];
 	},
 };
 
-const constants = { add, subtract, multiply, divide, floor };
+const constants = {add, subtract, multiply, divide, floor};
 
-const PRIMITIVES = Object.keys( constants ).reduce(
-	( map, key ) => ({
+const PRIMITIVES = Object.keys(constants).reduce(
+	(map, key) => ({
 		...map,
 		[constants[key].id]: constants[key],
 	}),
@@ -84,4 +84,4 @@ const PRIMITIVES = Object.keys( constants ).reduce(
 );
 
 
-export { PRIMITIVES };
+export {PRIMITIVES};

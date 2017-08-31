@@ -1,38 +1,36 @@
-import classNames from 'classnames';
-import React from 'react';
+import classNames from "classnames";
+import React from "react";
 
-import { Card } from 'components/atoms';
+import {Card} from "components/atoms";
 
-import './NodeMenu.scss';
+import "./NodeMenu.scss";
 
 
 interface Props {
 	className: string;
-	onItemSelected: ( item: string ) => void;
+	onItemSelected: (item: string) => void;
 }
-
 
 interface State {
 	open: boolean;
 }
 
-
 class NodeMenu extends React.Component<Props, State> {
-	constructor( props: Props ) {
-		super( props );
-		this.state = { open: false };
+	constructor(props: Props) {
+		super(props);
+		this.state = {open: false};
 	}
 
-	render() {
-		const { className } = this.props;
-		const { open } = this.state;
-		const openClass = { 'is-open': open };
+	public render() {
+		const {className} = this.props;
+		const {open} = this.state;
+		const openClass = {"is-open": open};
 		return (
-			<Card className={ classNames( 'nodeMenu', className ) }>
-				<button className={ classNames( 'nodeMenu-toggle', openClass ) } onClick={ this.toggleOpen }>
+			<Card className={classNames("nodeMenu", className)}>
+				<button className={classNames("nodeMenu-toggle", openClass)} onClick={this.toggleOpen}>
 					Add node
 				</button>
-				<div  className={ classNames( 'nodeMenu-body', openClass ) }>
+				<div  className={classNames("nodeMenu-body", openClass)}>
 					<div className="nodeMenu-body-categories">
 						<div className="nodeMenu-body-categories-category">
 							<button className="nodeMenu-body-categories-category-toggle">Math</button>
@@ -56,7 +54,7 @@ class NodeMenu extends React.Component<Props, State> {
 		);
 	}
 
-	toggleOpen = () => {
+	public toggleOpen = () => {
 		this.setState({
 			open: !this.state.open,
 		});
@@ -64,5 +62,4 @@ class NodeMenu extends React.Component<Props, State> {
 }
 
 
-export { NodeMenu };
-export default NodeMenu;
+export {NodeMenu};

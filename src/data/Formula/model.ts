@@ -1,14 +1,14 @@
-import { ObjMap } from 'common/types';
+import {ObjMap} from "common/types";
 
-import { NodeFunction } from 'data/Node/model';
+import {NodeFunction} from "data/Node/model";
 
 
 interface Formula extends NodeFunction {
-	type: 'formula';
+	type: "formula";
 	isProperty: boolean;
 	graph: ObjMap<ObjMap<Array<[number, number]>>>;
 	layout: ObjMap<[number, number]>;
 }
 
 
-export { Formula };
+export {Formula};

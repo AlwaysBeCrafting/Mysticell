@@ -1,9 +1,9 @@
-import classNames from 'classnames';
-import React from 'react';
+import classNames from "classnames";
+import React from "react";
 
-import { ObjMap, TreeNode } from 'common/types';
+import {ObjMap, TreeNode} from "common/types";
 
-import './Item.scss';
+import "./Item.scss";
 
 
 interface Props<T> {
@@ -12,26 +12,25 @@ interface Props<T> {
 	expandedItems: ObjMap<boolean>;
 }
 
-
-const Item = <T extends {}>( props: Props<T> ) => {
-	const { treeNode, path, expandedItems } = props;
+const Item = <T extends {}>(props: Props<T>) => {
+	const {treeNode, path, expandedItems} = props;
 	const className = classNames(
-		'treeView-item',
+		"treeView-item",
 		{
-			'is-expanded': expandedItems[treeNode.name],
-			'is-parent': treeNode.type === 'parent',
+			"is-expanded": expandedItems[treeNode.name],
+			"is-parent": treeNode.type === "parent",
 		},
 	);
 
-	const childrenElem = treeNode.type === 'parent' && (
+	const childrenElem = treeNode.type === "parent" && (
 		<ul className="treeView-item-children">
 			{
-				treeNode.children.map(( child ) => (
+				treeNode.children.map(child => (
 					<Item
-						treeNode={ child }
-						path={ [ ...path, child.name ] }
-						expandedItems={ expandedItems }
-						key={ child.name }
+						treeNode={child}
+						path={[...path, child.name]}
+						expandedItems={expandedItems}
+						key={child.name}
 					/>
 				))
 			}
@@ -39,14 +38,15 @@ const Item = <T extends {}>( props: Props<T> ) => {
 	);
 
 	return (
-		<li className={ className }>
+		<li className={className}>
 			<a className="treeView-item-body">
 				<span className="treeView-item-body-icon">arrow_drop_down</span>
-				<span className="treeView-item-body-title">{ treeNode.name }</span>
+				<span className="treeView-item-body-title">{treeNode.name}</span>
 			</a>
-			{ childrenElem }
+			{childrenElem}
 		</li>
 	);
 };
 
-export default Item;
+
+export {Item};

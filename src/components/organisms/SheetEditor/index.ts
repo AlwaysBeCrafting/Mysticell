@@ -1,1 +1,1 @@
-export { default } from './SheetEditor';
+export {SheetEditor} from "./SheetEditor";
