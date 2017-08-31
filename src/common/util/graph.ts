@@ -1,7 +1,7 @@
-import {ObjMap} from "common/types";
+import {Dict} from "common/types";
 
 
-type Graph = ObjMap<ObjMap<Array<[number, number]>>>;
+type Graph = Dict<Dict<Array<[number, number]>>>;
 
 const connectedInputs = (graph: Graph, nodeId: string) => (
 	Object.keys(graph)

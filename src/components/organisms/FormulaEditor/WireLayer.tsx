@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import React from "react";
 
-import {IdMap} from "common/types";
+import {Dict} from "common/types";
 import {formulaLayoutWidth} from "common/util";
 
 import {Wire} from "components/atoms";
@@ -17,8 +17,8 @@ const nodeWidth = 4;
 
 interface Props {
 	formula: Formula;
-	formulas: IdMap<Formula>;
-	nodes: IdMap<Node>;
+	formulas: Dict<Formula>;
+	nodes: Dict<Node>;
 	className?: string;
 }
 

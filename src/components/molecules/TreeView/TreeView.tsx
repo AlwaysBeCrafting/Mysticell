@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import React from "react";
 
-import {ObjMap, Tree} from "common/types";
+import {Dict, Tree} from "common/types";
 
 import {Item} from "./Item";
 import "./TreeView.scss";
@@ -9,7 +9,7 @@ import "./TreeView.scss";
 
 interface Props<T> {
 	tree: Tree<T>;
-	expandedItems: ObjMap<boolean>;
+	expandedItems: Dict<boolean>;
 	className?: string;
 }
 

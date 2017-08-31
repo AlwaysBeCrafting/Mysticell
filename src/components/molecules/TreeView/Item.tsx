@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import React from "react";
 
-import {ObjMap, TreeNode} from "common/types";
+import {Dict, TreeNode} from "common/types";
 
 import "./Item.scss";
 
@@ -9,7 +9,7 @@ import "./Item.scss";
 interface Props<T> {
 	treeNode: TreeNode<T>;
 	path: string[];
-	expandedItems: ObjMap<boolean>;
+	expandedItems: Dict<boolean>;
 }
 
 const Item = <T extends {}>(props: Props<T>) => {

@@ -3,7 +3,7 @@ import React from "react";
 import {connect} from "react-redux";
 import {match as Match} from "react-router";
 
-import {IdMap} from "common/types";
+import {Dict} from "common/types";
 import {connectedInputs, formulaLayoutWidth} from "common/util";
 
 import {Toolbar} from "components/molecules";
@@ -23,8 +23,8 @@ interface RouteParams {id: string;}
 
 interface StateProps {
 	formula: Formula;
-	formulas: IdMap<Formula>;
-	nodes: IdMap<Node>;
+	formulas: Dict<Formula>;
+	nodes: Dict<Node>;
 }
 
 interface PublicProps {
@@ -57,7 +57,7 @@ const ProtoFormulaEditor = (props: Props) => {
 	);
 };
 
-const renderGrid = (formula: Formula, formulas: IdMap<Formula>, nodes: IdMap<Node>) => {
+const renderGrid = (formula: Formula, formulas: Dict<Formula>, nodes: Dict<Node>) => {
 
 	const gridStyle = {flexBasis: 40 * formulaLayoutWidth(formula.layout)};
 

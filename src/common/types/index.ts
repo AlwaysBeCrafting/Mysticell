@@ -1,3 +1,3 @@
 export {Position, Anchor} from "./layout";
-export {ObjMap, IdMap} from "./ObjMap";
+export {Dict} from "./Dict";
 export {Tree, TreeNode} from "./Tree";

@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import React from "react";
 
-import {IdMap} from "common/types";
+import {Dict} from "common/types";
 import {connectedInputs} from "common/util";
 
 import {NodeCard} from "components/molecules";
@@ -15,8 +15,8 @@ import "./NodeLayer.scss";
 
 interface Props {
 	formula: Formula;
-	formulas: IdMap<Formula>;
-	nodes: IdMap<Node>;
+	formulas: Dict<Formula>;
+	nodes: Dict<Node>;
 	className?: string;
 }
 
