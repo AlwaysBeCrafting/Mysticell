@@ -2,9 +2,9 @@ import {Dict, Tree} from "common/types";
 
 import {Cell} from "data/Cell/model";
 import {Formula} from "data/Formula/model";
+import {NavItem} from "data/Nav";
 import {Node} from "data/Node/model";
 import {Sheet} from "data/Sheet/model";
-import {SidebarNode} from "data/SidebarNode";
 
 
 interface Document {
@@ -14,7 +14,7 @@ interface Document {
 	sheets: Dict<Sheet>;
 	nodes: Dict<Node>;
 	formulas: Dict<Formula>;
-	tree: Tree<SidebarNode>;
+	nav: Tree<NavItem>;
 }
 
 

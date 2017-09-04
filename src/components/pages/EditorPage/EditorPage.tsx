@@ -5,20 +5,20 @@ import {Dispatch} from "redux";
 
 import {Dict, Tree} from "common/types";
 
-import {MenuBar, Toolbar, TreeView} from "components/molecules";
-import {FormulaView} from "components/organisms";
+import {MenuBar, Toolbar} from "components/molecules";
+import {FormulaView, NavView} from "components/organisms";
 
 import {Action, AppState} from "data/AppState";
 import {MenuItem} from "data/common";
 import {Formula} from "data/Formula";
-import {SidebarNode} from "data/SidebarNode";
+import {NavItem} from "data/Nav";
 
 import "./EditorPage.scss";
 
 
 interface StateProps {
 	title: string;
-	tree: Tree<SidebarNode>;
+	nav: Tree<NavItem>;
 	formulas: Dict<Formula>;
 }
 
@@ -52,7 +52,7 @@ const toolbarItems: MenuItem[] = [
 ];
 
 const ProtoEditor = (props: Props) => {
-	const {title, tree, formulas} = props;
+	const {title, nav, formulas} = props;
 	return (
 		<Router>
 			<main className="editor">
@@ -63,11 +63,10 @@ const ProtoEditor = (props: Props) => {
 					items={toolbarItems}
 				/>
 				<div className="editor-document">
-					<TreeView
+					<NavView
 						className="editor-document-nav"
-						tree={tree}
-						getKey={item => (item.type === "dir" ? item.name : item.id)}
-						getName={item => (item.type === "dir" ? item.name : formulas[item.id].name)}
+						nav={ nav }
+						formulas={ formulas }
 					/>
 					<Route exact path="/formula/:id" render={renderFormula} />
 				</div>
@@ -79,7 +78,7 @@ const ProtoEditor = (props: Props) => {
 const EditorPage = connect<StateProps, DispatchProps, {}>(
 	({document}: AppState) => ({
 		title: document.title,
-		tree: document.tree,
+		nav: document.nav,
 		formulas: document.formulas,
 	}),
 	(dispatch: Dispatch<Action>) => ({dispatch}),

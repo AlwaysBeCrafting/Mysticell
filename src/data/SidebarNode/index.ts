@@ -1,1 +1,0 @@
-export {SidebarNode} from "./model";

@@ -107,7 +107,7 @@
 			}
 		}
 	},
-	"tree": [
+	"nav": [
 		{"item": {"type": "dir", "name": "Abilities"}, "children": [
 			{"item": {"type": "item", "id": "FORMULA-0000"}, "children": []},
 			{"item": {"type": "item", "id": "FORMULA-0001"}, "children": []}
