@@ -1,17 +1,8 @@
 type Tree<T> = Array<TreeNode<T>>;
 
-type TreeNode<T> = TreeParent<T> | TreeItem<T>;
-
-interface TreeParent<T> {
-	type: "parent";
-	name: string;
-	children: Array<TreeNode<T>>;
-}
-
-interface TreeItem<T> {
-	type: "item";
-	name: string;
+interface TreeNode<T> {
 	item: T;
+	children: Array<TreeNode<T>>;
 }
 
 
