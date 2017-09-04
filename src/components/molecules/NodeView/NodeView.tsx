@@ -5,7 +5,7 @@ import {Card, PinRow} from "components/atoms";
 import {params} from "data/common";
 import {Node, NodeFunction} from "data/Node/model";
 
-import "./NodeCard.scss";
+import "./NodeView.scss";
 
 
 interface Props {
@@ -15,14 +15,14 @@ interface Props {
 	nodeFunction: NodeFunction;
 }
 
-const NodeCard = (props: Props) => {
+const NodeView = (props: Props) => {
 	const {position, node, connectedInputs, nodeFunction} = props;
 	const name = node.label || nodeFunction.name;
 	const pinRowCount = nodeFunction.inputNames.length + nodeFunction.outputNames.length;
 	return (
-		<Card className="nodeCard" style={makeStyle(position, pinRowCount)}>
-			<header className="nodeCard-headerRow nodeCard-row">
-				<span className="nodeCard-headerRow-name">{name}</span>
+		<Card className="nodeView" style={makeStyle(position, pinRowCount)}>
+			<header className="nodeView-headerRow nodeView-row">
+				<span className="nodeView-headerRow-name">{name}</span>
 			</header>
 			{nodeFunction.outputNames.map(outputName => (
 				<PinRow
@@ -55,4 +55,4 @@ const makeStyle = (position: [number, number], pinRowCount: number) => ({
 });
 
 
-export {NodeCard};
+export {NodeView};

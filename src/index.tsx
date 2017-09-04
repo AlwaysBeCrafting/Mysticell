@@ -5,7 +5,7 @@ import {Provider} from "react-redux";
 import {createStore} from "redux";
 import {devToolsEnhancer} from "redux-devtools-extension";
 
-import {Editor} from "components/pages";
+import {EditorPage} from "components/pages";
 
 import {AppState, reducer} from "data/AppState";
 import {loadDocument} from "data/Document";
@@ -20,7 +20,7 @@ store.dispatch(loadDocument(require("common/assets/exampleDoc.json")));
 const rootElem = document.querySelector(".root");
 
 const renderRoot = () => {
-	const editor = <Provider store={store}><Editor /></Provider>;
+	const editor = <Provider store={store}><EditorPage /></Provider>;
 	ReactDOM.render(
 		(process.env.NODE_ENV === "development")
 			? <AppContainer>{editor}</AppContainer>

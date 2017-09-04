@@ -15,8 +15,8 @@ const Panel = (props: Props) => {
 	const {pinNames, connectedInputs, type} = props;
 
 	return (
-		<div className={`formulaEditor-graph-panel formulaEditor-graph-${type}Panel`}>
-			<div className={`formulaEditor-graph-panel-heading formulaEditor-graph-${type}Panel-heading`}>
+		<div className={`formulaView-graph-panel formulaView-graph-${type}Panel`}>
+			<div className={`formulaView-graph-panel-heading formulaView-graph-${type}Panel-heading`}>
 				{type}
 			</div>
 			{pinNames.map((name, index) => (

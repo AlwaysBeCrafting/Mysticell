@@ -6,13 +6,13 @@ import {Dispatch} from "redux";
 import {Tree} from "common/types";
 
 import {MenuBar, Toolbar, TreeView} from "components/molecules";
-import {FormulaEditor, FormulaEditorRouteParams} from "components/organisms";
+import {FormulaView} from "components/organisms";
 
 import {Action, AppState} from "data/AppState";
 import {MenuItem} from "data/common";
 import {Formula} from "data/Formula/model";
 
-import "./Editor.scss";
+import "./EditorPage.scss";
 
 
 interface StateProps {
@@ -31,8 +31,8 @@ const navItem: MenuItem = {
 	title: "Nav",
 };
 
-const renderGraphEditor = (routeProps: RouteComponentProps<FormulaEditorRouteParams>) => (
-	<FormulaEditor className="editor-document-content" {...routeProps} />
+const renderFormula = (routeProps: RouteComponentProps<{id: string}>) => (
+	<FormulaView className="editor-document-content" id={routeProps.match.params.id}/>
 );
 
 const demoMenuItems: MenuItem[] = [
@@ -62,14 +62,14 @@ const ProtoEditor = (props: Props) => {
 				/>
 				<div className="editor-document">
 					<TreeView className="editor-document-nav" tree={tree} expandedItems={{}} />
-					<Route exact path="/formula/:id" render={renderGraphEditor} />
+					<Route exact path="/formula/:id" render={renderFormula} />
 				</div>
 			</main>
 		</Router>
 	);
 };
 
-const Editor = connect<StateProps, DispatchProps, {}>(
+const EditorPage = connect<StateProps, DispatchProps, {}>(
 	({document}: AppState) => ({
 		title: document.title,
 		tree: document.tree,
@@ -78,4 +78,4 @@ const Editor = connect<StateProps, DispatchProps, {}>(
 )(ProtoEditor);
 
 
-export {Editor};
+export {EditorPage};

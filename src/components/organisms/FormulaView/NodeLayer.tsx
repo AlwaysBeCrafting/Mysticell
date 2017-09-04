@@ -4,7 +4,7 @@ import React from "react";
 import {Dict} from "common/types";
 import {connectedInputs} from "common/util";
 
-import {NodeCard} from "components/molecules";
+import {NodeView} from "components/molecules";
 
 import {Formula} from "data/Formula/model";
 import {Node} from "data/Node/model";
@@ -36,15 +36,19 @@ const renderNode = (props: Props) => (nodeId: string) => {
 	const {graph} = formula;
 	const node = nodes[nodeId];
 
-	if (!node) {throw new Error(`No node ${nodeId} exists`);}
+	if (!node) {
+		throw new Error(`No node ${nodeId} exists`);
+	}
 
 	const position = formula.layout[nodeId] || [0, 0];
 	const nodeFunction = formulas[node.function] || PRIMITIVES[node.function];
 
-	if (!nodeFunction) {throw new Error(`No function ${nodeFunction} exists`);}
+	if (!nodeFunction) {
+		throw new Error(`No function ${nodeFunction} exists`);
+	}
 
 	return (
-		<NodeCard
+		<NodeView
 			node={node}
 			position={position}
 			nodeFunction={nodeFunction}

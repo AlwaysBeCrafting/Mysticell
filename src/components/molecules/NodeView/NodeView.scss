@@ -6,7 +6,7 @@
 
 $row-height: $dimen-graph-cell-size;
 
-.nodeCard {
+.nodeView {
 	@include elevation(2px);
 	@include font-body1;
 	line-height: $row-height;
@@ -15,27 +15,19 @@ $row-height: $dimen-graph-cell-size;
 	grid-auto-rows: 40px;
 	flex-flow: column nowrap;
 }
-	.nodeCard-row {
+	.nodeView-row {
 		padding: 0 $dimen-keyline-padding / 2;
 		display: flex;
 		flex-flow: row nowrap;
 
 	}
 
-	.nodeCard-headerRow {
+	.nodeView-headerRow {
 		display: flex;
 		flex-flow: row nowrap;
 	}
-		.nodeCard-headerRow-name {
+
+		.nodeView-headerRow-name {
 			flex: 1 0 auto;
 			@include font-body2;
 		}
-
-.errorNodeCard {
-	border: solid 1px $color-red-700;
-	color: $color-red-900;
-}
-
-	.errorNodeCard-messageRow {
-		line-height: 1.4;
-	}

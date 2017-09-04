@@ -1,4 +1,4 @@
 export {Toolbar} from "./Toolbar";
 export {TreeView} from "./TreeView";
-export {NodeCard} from "./NodeCard";
+export {NodeView} from "./NodeView";
 export {MenuBar} from "./MenuBar";
