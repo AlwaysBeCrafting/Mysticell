@@ -3,19 +3,15 @@
 @import '~common/styles/mixins';
 
 
-$color-editor-background: $color-grey-100;
-$color-appbar-background: $color-brand-primary;
-
-
 .editor {
 	flex: 1 0 auto;
-	background: $color-editor-background;
+	background: $color-grey-200;
 	color: $color-text-primary;
 }
 	.editor-appbar {
 		@include elevation(4px);
 
-		background: $color-appbar-background;
+		background: $color-brand-primary;
 		z-index: 100;
 	}
 

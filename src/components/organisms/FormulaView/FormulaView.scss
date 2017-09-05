@@ -22,6 +22,7 @@ $color-gridLine: rgba($color-brand-primary, 0.2);
 }
 	.formulaView-toolbar {
 		flex: 0 0 $dimen-toolbar-size;
+		background: $color-grey-100;
 		border-bottom: solid 1px $color-divider;
 	}
 
