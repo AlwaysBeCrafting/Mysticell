@@ -19,7 +19,7 @@ interface Props {
 
 const NavView = (props: Props) => (
 	<TreeView
-		className={classnames("editor-document-nav", props.className)}
+		className={classnames("navView", props.className)}
 		tree={props.nav}
 		getKey={item => (item.type === "dir" ? item.name : item.id)}
 		getName={item => (item.type === "dir" ? item.name : props.formulas[item.id].name)}
