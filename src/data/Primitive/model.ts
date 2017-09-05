@@ -1,10 +1,10 @@
-import {Param} from "data/common";
-import {NodeFunction} from "data/Node/model";
+import {Param, ParamFunction} from "data/common";
+import {NodeFunction} from "data/Node";
 
 
 interface Primitive extends NodeFunction {
 	type: "primitive";
-	eval: (...params: Param[]) => Param[];
+	eval: ParamFunction;
 }
 
 
