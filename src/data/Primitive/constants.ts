@@ -1,4 +1,4 @@
-import {Param, params} from "data/common";
+import {params} from "data/common";
 
 import {Primitive} from "./model";
 
@@ -9,7 +9,7 @@ const add: Primitive = {
 	name: "Add",
 	inputNames: ["A", "B"],
 	outputNames: ["Sum"],
-	eval: (a: Param, b: Param) => {
+	exec: (a, b) => {
 		if (a.type === "number" && b.type === "number") {
 			return [{type: "number", value: a.value + b.value}];
 		}
@@ -23,7 +23,7 @@ const subtract: Primitive = {
 	name: "Subtract",
 	inputNames: ["A", "B"],
 	outputNames: ["Difference"],
-	eval: (a, b) => {
+	exec: (a, b) => {
 		if (a.type === "number" && b.type === "number") {
 			return [{type: "number", value: a.value - b.value}];
 		}
@@ -37,7 +37,7 @@ const multiply: Primitive = {
 	name: "Multiply",
 	inputNames: ["A", "B"],
 	outputNames: ["Product"],
-	eval: (a, b) => {
+	exec: (a, b) => {
 		if (a.type === "number" && b.type === "number") {
 			return [{type: "number", value: a.value * b.value}];
 		}
@@ -51,7 +51,7 @@ const divide: Primitive = {
 	name: "Divide",
 	inputNames: ["A", "B"],
 	outputNames: ["Quotient"],
-	eval: (a, b) => {
+	exec: (a, b) => {
 		if (a.type === "number" && b.type === "number") {
 			return [{type: "number", value: a.value / b.value}];
 		}
@@ -65,7 +65,7 @@ const floor: Primitive = {
 	name: "Floor",
 	inputNames: ["Num"],
 	outputNames: ["Floor"],
-	eval:  a => {
+	exec:  a => {
 		if (a.type === "number") {
 			return [{type: "number", value: Math.floor(a.value)}];
 		}
