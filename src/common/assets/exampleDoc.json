@@ -27,21 +27,6 @@
 			"userValues": [0]
 		},
 		"NODE-0003": {
-			"id": "NODE-0003",
-			"function": "PRIMITIVE-add",
-			"userValues": [0, 100]
-		},
-		"NODE-0004": {
-			"id": "NODE-0004",
-			"function": "PRIMITIVE-subtract",
-			"userValues": [0, 45]
-		},
-		"NODE-0005": {
-			"id": "NODE-0005",
-			"function": "PRIMITIVE-multiply",
-			"userValues": [0, 3.8]
-		},
-		"NODE-0006": {
 			"id": "NODE-0006",
 			"function": "FORMULA-0000",
 			"userValues": [10]
@@ -53,11 +38,10 @@
 			"isProperty": false,
 			"name": "Ability Mod",
 			"inputNames": ["Ability Score"],
-			"outputNames": ["Modifier", "Output2", "Something3", "Another4"],
+			"outputNames": ["Modifier"],
 			"graph": {
 				"input": {
-					"NODE-0000": [[0, 0]],
-					"NODE-0003": [[0, 0]]
+					"NODE-0000": [[0, 0]]
 				},
 				"NODE-0000": {
 					"NODE-0001": [[0, 0]]
@@ -66,44 +50,32 @@
 					"NODE-0002": [[0, 0]]
 				},
 				"NODE-0002": {
-					"output": [[0, 0], [0, 1]]
-				},
-				"NODE-0003": {
-					"NODE-0004": [[0, 0]]
-				},
-				"NODE-0004": {
-					"output": [[0, 2]]
-				},
-				"NODE-0005": {
-					"output": [[0, 3]]
+					"output": [[0, 0]]
 				}
 			},
 			"layout": {
 				"NODE-0000": [2, 1],
 				"NODE-0001": [8, 1],
-				"NODE-0002": [14, 1],
-				"NODE-0003": [2, 6],
-				"NODE-0004": [8, 6],
-				"NODE-0005": [14, 8]
+				"NODE-0002": [14, 1]
 			}
 		},
 		"FORMULA-0001": {
 			"id": "FORMULA-0001",
 			"isProperty": true,
 			"name": "Strength",
-			"inputNames": ["Score"],
-			"outputNames": ["Score", "Modifier"],
+			"inputNames": ["Strength"],
+			"outputNames": ["Strength", "Str Mod"],
 			"graph": {
 				"input": {
 					"output": [[0, 0]],
-					"NODE-0006": [[0, 0]]
+					"NODE-0003": [[0, 0]]
 				},
-				"NODE-0006": {
+				"NODE-0003": {
 					"output": [[0, 1]]
 				}
 			},
 			"layout": {
-				"NODE-0006": [2, 3]
+				"NODE-0003": [2, 3]
 			}
 		}
 	},
