@@ -2,13 +2,13 @@ import classNames from "classnames";
 import React from "react";
 
 import {Dict} from "common/types";
-import {connectedInputs} from "common/util";
 
 import {NodeView} from "components/molecules";
 
 import {Formula} from "data/Formula/model";
 import {Node} from "data/Node/model";
 import {PRIMITIVES} from "data/Primitive/constants";
+import {connectedInputs} from "data/utils";
 
 import "./NodeLayer.scss";
 

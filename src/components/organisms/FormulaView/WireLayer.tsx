@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import React from "react";
 
-import {Dict} from "common/types";
+import {Dict, DiEdge} from "common/types";
 import {formulaLayoutWidth} from "common/util";
 
 import {Wire} from "components/atoms";
@@ -27,56 +27,41 @@ const WireLayer = (props: Props) => {
 	const render = renderWithProps(props);
 	return (
 		<svg className={classNames("wireLayer", className)}>
-			{Object.keys(formula.graph).map(render)}
+			{formula.graph.map(render)}
 		</svg>
 	);
 };
 
-const renderWithProps = (props: Props) => (
-	(srcId: string) => renderFromSrc(props, srcId)
-);
-
-const renderFromSrc = (props: Props, srcId: string) => {
-	const render = (dstId: string) => renderToDst(props, srcId, dstId);
-	const src = props.formula.graph[srcId];
-	return Object.keys(src).map(render);
-};
-
-const renderToDst = (props: Props, srcId: string, dstId: string) => {
-	const render = (indices: [number, number]) => renderWire(props, srcId, dstId, indices);
-	const dst = props.formula.graph[srcId][dstId];
-	return dst.map(render);
-};
-
-const renderWire = (props: Props, srcId: string, dstId: string, indices: [number, number]) => {
+const renderWithProps = (props: Props) => (edge: DiEdge<string, [number, number]>) => {
 	const {layout} = props.formula;
+	const {source, target, edge: indices} = edge;
 
 	const srcPos: [number, number] = [0, 0];
-	if (layout[srcId]) {
-		srcPos[0] += layout[srcId][0];
-		srcPos[1] += layout[srcId][1];
+	if (layout[source]) {
+		srcPos[0] += layout[source][0];
+		srcPos[1] += layout[source][1];
 	}
 
 	const dstPos: [number, number]  = [0, 0];
-	if (layout[dstId]) {
-		dstPos[0] = layout[dstId][0];
-		dstPos[1] = layout[dstId][1];
+	if (layout[target]) {
+		dstPos[0] = layout[target][0];
+		dstPos[1] = layout[target][1];
 	} else {
 		dstPos[0] = formulaLayoutWidth(layout);
 	}
 
-	if (srcId === "input") {
+	if (source === "input") {
 		srcPos[1] += panelHeaderRows;
 	} else {
 		srcPos[0] += nodeWidth;
 		srcPos[1] += nodeHeaderRows;
 	}
 
-	if (dstId === "output") {
+	if (target === "output") {
 		dstPos[1] += panelHeaderRows;
 	} else {
 		dstPos[1] += nodeHeaderRows;
-		const dstFunc = props.nodes[dstId].function;
+		const dstFunc = props.nodes[target].function;
 		dstPos[1] += (props.formulas[dstFunc] || PRIMITIVES[dstFunc]).outputNames.length;
 	}
 	srcPos[1] += indices[0];
@@ -86,7 +71,7 @@ const renderWire = (props: Props, srcId: string, dstId: string, indices: [number
 		<Wire
 			srcPos={srcPos}
 			dstPos={dstPos}
-			key={`${srcId}@${indices[0]}-${dstId}@${indices[1]}`}
+			key={`${source}@${indices[0]}-${target}@${indices[1]}`}
 		/>
 	);
 };

@@ -39,20 +39,12 @@
 			"name": "Ability Mod",
 			"inputNames": ["Ability Score"],
 			"outputNames": ["Modifier"],
-			"graph": {
-				"input": {
-					"NODE-0000": [[0, 0]]
-				},
-				"NODE-0000": {
-					"NODE-0001": [[0, 0]]
-				},
-				"NODE-0001": {
-					"NODE-0002": [[0, 0]]
-				},
-				"NODE-0002": {
-					"output": [[0, 0]]
-				}
-			},
+			"graph": [
+				{"source": "input", "target": "NODE-0000", "edge": [0, 0]},
+				{"source": "NODE-0000", "target": "NODE-0001", "edge": [0, 0]},
+				{"source": "NODE-0001", "target": "NODE-0002", "edge": [0, 0]},
+				{"source": "NODE-0002", "target": "output", "edge": [0, 0]}
+			],
 			"layout": {
 				"NODE-0000": [2, 1],
 				"NODE-0001": [8, 1],
@@ -65,15 +57,11 @@
 			"name": "Strength",
 			"inputNames": ["Strength"],
 			"outputNames": ["Strength", "Str Mod"],
-			"graph": {
-				"input": {
-					"output": [[0, 0]],
-					"NODE-0003": [[0, 0]]
-				},
-				"NODE-0003": {
-					"output": [[0, 1]]
-				}
-			},
+			"graph": [
+				{"source": "input", "target": "output", "edge": [0, 0]},
+				{"source": "input", "target": "NODE-0003", "edge": [0, 0]},
+				{"source": "NODE-0003", "target": "output", "edge": [0, 0]}
+			],
 			"layout": {
 				"NODE-0003": [2, 3]
 			}

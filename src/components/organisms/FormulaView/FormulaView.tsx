@@ -3,13 +3,14 @@ import React from "react";
 import {connect} from "react-redux";
 
 import {Dict} from "common/types";
-import {connectedInputs, formulaLayoutWidth} from "common/util";
+import {formulaLayoutWidth} from "common/util";
 
 import {Toolbar} from "components/molecules";
 
 import {AppState} from "data/AppState";
 import {Formula} from "data/Formula/model";
 import {Node} from "data/Node/model";
+import {connectedInputs} from "data/utils";
 
 import {NodeLayer} from "./NodeLayer";
 import {Panel} from "./Panel";

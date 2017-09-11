@@ -1,12 +1,13 @@
 import {Dict} from "common/types";
 
+import {FormulaGraph} from "data/common";
 import {NodeFunction} from "data/Node/model";
 
 
 interface Formula extends NodeFunction {
 	type: "formula";
 	isProperty: boolean;
-	graph: Dict<Dict<Array<[number, number]>>>;
+	graph: FormulaGraph;
 	layout: Dict<[number, number]>;
 }
 
