@@ -31,7 +31,7 @@ type Param =
 	| ArrayParam
 	| ErrorParam;
 
-const params = {
+const PARAMS = {
 	number: (value: number): NumberParam => ({
 		type: "number",
 		value,
@@ -58,4 +58,4 @@ const params = {
 type ParamFunction = (...params: Param[]) => Param[];
 
 
-export {Param, ErrorParam, params, ParamFunction};
+export {Param, ErrorParam, PARAMS, ParamFunction};

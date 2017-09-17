@@ -2,7 +2,7 @@ import React from "react";
 
 import {Card, PinRow} from "components/atoms";
 
-import {params} from "data/common";
+import {PARAMS} from "data/common";
 import {Node, NodeFunction} from "data/Node/model";
 
 import "./NodeView.scss";
@@ -28,7 +28,7 @@ const NodeView = (props: Props) => {
 				<PinRow
 					type="src"
 					name={outputName}
-					computedValue={params.string("")}
+					computedValue={PARAMS.string("")}
 					key={outputName}
 				/>
 			))}
@@ -40,7 +40,7 @@ const NodeView = (props: Props) => {
 						name={inputName}
 						isConnected={isConnected}
 						userValue={node.userValues[index]}
-						param={params.empty()}
+						param={PARAMS.empty()}
 						key={inputName}
 					/>
 				);

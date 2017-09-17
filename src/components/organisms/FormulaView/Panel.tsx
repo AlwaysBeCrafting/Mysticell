@@ -1,6 +1,6 @@
 import React from "react";
 
-import {params} from "data/common";
+import {PARAMS} from "data/common";
 
 import {PinRow} from "components/atoms/PinRow";
 
@@ -25,7 +25,7 @@ const Panel = (props: Props) => {
 						<PinRow
 							type="src"
 							name={name}
-							computedValue={params.string("")}
+							computedValue={PARAMS.string("")}
 							key={name}
 						/>
 					)
@@ -34,7 +34,7 @@ const Panel = (props: Props) => {
 							name={name}
 							type="dst"
 							isConnected={connectedInputs.indexOf(index) > -1}
-							param={params.empty()}
+							param={PARAMS.empty()}
 							userValue={""}
 							key={name}
 						/>

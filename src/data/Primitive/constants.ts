@@ -1,4 +1,6 @@
-import {params} from "data/common";
+import {Dict} from "common/types";
+
+import {PARAMS} from "data/common";
 
 import {Primitive} from "./model";
 
@@ -13,7 +15,7 @@ const add: Primitive = {
 		if (a.type === "number" && b.type === "number") {
 			return [{type: "number", value: a.value + b.value}];
 		}
-		return [params.error("Both arguments to Add must be numbers")];
+		return [PARAMS.error("Both arguments to Add must be numbers")];
 	},
 };
 
@@ -27,7 +29,7 @@ const subtract: Primitive = {
 		if (a.type === "number" && b.type === "number") {
 			return [{type: "number", value: a.value - b.value}];
 		}
-		return [params.error("Both arguments to Subtract must be numbers")];
+		return [PARAMS.error("Both arguments to Subtract must be numbers")];
 	},
 };
 
@@ -41,7 +43,7 @@ const multiply: Primitive = {
 		if (a.type === "number" && b.type === "number") {
 			return [{type: "number", value: a.value * b.value}];
 		}
-		return [params.error("Both arguments to Multiply must be numbers")];
+		return [PARAMS.error("Both arguments to Multiply must be numbers")];
 	},
 };
 
@@ -55,7 +57,7 @@ const divide: Primitive = {
 		if (a.type === "number" && b.type === "number") {
 			return [{type: "number", value: a.value / b.value}];
 		}
-		return [params.error("Both arguments to Divide must be numbers")];
+		return [PARAMS.error("Both arguments to Divide must be numbers")];
 	},
 };
 
@@ -69,15 +71,15 @@ const floor: Primitive = {
 		if (a.type === "number") {
 			return [{type: "number", value: Math.floor(a.value)}];
 		}
-		return [params.error("Argument to Floor must be a number")];
+		return [PARAMS.error("Argument to Floor must be a number")];
 	},
 };
 
 const constants = {add, subtract, multiply, divide, floor};
 
-const PRIMITIVES = Object.keys(constants).reduce(
-	(map, key) => ({
-		...map,
+const PRIMITIVES: Dict<Primitive> = Object.keys(constants).reduce(
+	(prior, key) => ({
+		...prior,
 		[constants[key].id]: constants[key],
 	}),
 	{},
