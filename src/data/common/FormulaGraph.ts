@@ -1,8 +1,7 @@
 import {DiGraph} from "common/types";
 
 
-type EdgeIndices = [number, number];
-type FormulaGraph = DiGraph<string, EdgeIndices>;
+type FormulaGraph = DiGraph<string, [number, number]>;
 
 
 export {FormulaGraph};

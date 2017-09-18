@@ -1,10 +1,10 @@
-interface DiEdge<N, E> {
+interface DiEdge<N, D> {
 	source: N;
 	target: N;
-	edge: E;
+	data: D;
 }
 
-type DiGraph<N, E> = Array<DiEdge<N, E>>;
+type DiGraph<N, D = void> = Array<DiEdge<N, D>>;
 
 
 export {DiEdge, DiGraph};

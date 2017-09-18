@@ -34,7 +34,7 @@ const WireLayer = (props: Props) => {
 
 const renderWithProps = (props: Props) => (edge: DiEdge<string, [number, number]>) => {
 	const {layout} = props.formula;
-	const {source, target, edge: indices} = edge;
+	const {source, target, data: indices} = edge;
 
 	const srcPos: [number, number] = [0, 0];
 	if (layout[source]) {
