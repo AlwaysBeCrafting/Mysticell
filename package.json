@@ -3,9 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "cross-env NODE_ENV=development webpack-dev-server --progress --watch --color --config ./config/webpack.config.dev.js"
+    "start": "cross-env NODE_ENV=development webpack-dev-server --progress --watch --color --config ./config/webpack.config.dev.js",
+    "test": "jest"
   },
   "devDependencies": {
+    "@types/jest": "^20.0.8",
     "@types/node": "^8.0.25",
     "@types/react": "^16.0.5",
     "@types/react-dom": "^15.5.4",
@@ -20,12 +22,14 @@
     "extract-text-webpack-plugin": "^3.0.0",
     "file-loader": "^0.11.2",
     "html-webpack-plugin": "^2.30.1",
+    "jest": "^21.1.0",
     "json-loader": "^0.5.7",
     "node-sass": "^4.5.3",
     "react-hot-loader": "next",
     "rimraf": "^2.6.1",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.18.2",
+    "ts-jest": "^21.0.1",
     "tslint": "^5.7.0",
     "typescript": "^2.4.2",
     "url-loader": "^0.5.9",
@@ -44,5 +48,21 @@
     "redux": "^3.7.2",
     "redux-devtools-extension": "^2.13.2",
     "shortid": "^2.2.8"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.tsx?$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json"
+    ],
+    "modulePaths": [
+      "<rootDir>/src/"
+    ]
   }
 }
