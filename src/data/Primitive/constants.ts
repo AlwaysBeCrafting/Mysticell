@@ -1,9 +1,51 @@
 import {Dict} from "common/types";
 
-import {PARAMS} from "data/common";
+import {Param, PARAMS} from "data/common";
 
 import {Primitive} from "./model";
 
+
+const padEmpty = (params: Param[], length: number) => (
+	params
+		.map(p => p || PARAMS.empty())
+		.concat(Array(length - params.length).fill(PARAMS.empty()))
+);
+
+const paramToNumber = (identity: number) => (param: Param): Param => {
+	switch (param.type) {
+		case "array": {
+			return PARAMS.error("Number expected");
+		}
+		case "empty": {
+			return PARAMS.number(identity);
+		}
+		case "string": {
+			const converted = +param.value;
+			if (Number.isNaN(converted)) {
+				return PARAMS.error("Number expected");
+			} else {
+				return PARAMS.number(converted);
+			}
+		}
+		case "error":
+		case "number": {
+			return param;
+		}
+	}
+};
+
+type NumberReducer = (prior: number, param: number) => number;
+
+const verifyAndReduce = (params: Param[], identity: number, reducer: NumberReducer): Param[] => {
+	const convParams = params.map(paramToNumber(identity));
+	const error = convParams.find(param => param.type === "error");
+	if (error) { return [error]; }
+	return [PARAMS.number(
+		convParams
+			.map(param => param.value as number)
+			.reduce(reducer, identity),
+	)];
+};
 
 const add: Primitive = {
 	id: "PRIMITIVE-add",
@@ -11,12 +53,13 @@ const add: Primitive = {
 	name: "Add",
 	inputNames: ["A", "B"],
 	outputNames: ["Sum"],
-	exec: (a, b) => {
-		if (a.type === "number" && b.type === "number") {
-			return [{type: "number", value: a.value + b.value}];
-		}
-		return [PARAMS.error("Both arguments to Add must be numbers")];
-	},
+	exec: (a, b) => (
+		verifyAndReduce(
+			padEmpty([a, b], 2),
+			0,
+			(prior: number, param: number) => prior + param,
+		)
+	),
 };
 
 const subtract: Primitive = {
@@ -25,12 +68,13 @@ const subtract: Primitive = {
 	name: "Subtract",
 	inputNames: ["A", "B"],
 	outputNames: ["Difference"],
-	exec: (a, b) => {
-		if (a.type === "number" && b.type === "number") {
-			return [{type: "number", value: a.value - b.value}];
-		}
-		return [PARAMS.error("Both arguments to Subtract must be numbers")];
-	},
+	exec: (a, b) => (
+		verifyAndReduce(
+			padEmpty([a, b], 2),
+			0,
+			(prior: number, param: number) => prior - param,
+		)
+	),
 };
 
 const multiply: Primitive = {
@@ -39,12 +83,13 @@ const multiply: Primitive = {
 	name: "Multiply",
 	inputNames: ["A", "B"],
 	outputNames: ["Product"],
-	exec: (a, b) => {
-		if (a.type === "number" && b.type === "number") {
-			return [{type: "number", value: a.value * b.value}];
-		}
-		return [PARAMS.error("Both arguments to Multiply must be numbers")];
-	},
+	exec: (a, b) => (
+		verifyAndReduce(
+			padEmpty([a, b], 2),
+			1,
+			(prior: number, param: number) => prior * param,
+		)
+	),
 };
 
 const divide: Primitive = {
@@ -53,12 +98,13 @@ const divide: Primitive = {
 	name: "Divide",
 	inputNames: ["A", "B"],
 	outputNames: ["Quotient"],
-	exec: (a, b) => {
-		if (a.type === "number" && b.type === "number") {
-			return [{type: "number", value: a.value / b.value}];
-		}
-		return [PARAMS.error("Both arguments to Divide must be numbers")];
-	},
+	exec: (a, b) => (
+		verifyAndReduce(
+			padEmpty([a, b], 2),
+			1,
+			(prior: number, param: number) => prior / param,
+		)
+	),
 };
 
 const floor: Primitive = {
@@ -67,12 +113,13 @@ const floor: Primitive = {
 	name: "Floor",
 	inputNames: ["Num"],
 	outputNames: ["Floor"],
-	exec:  a => {
-		if (a.type === "number") {
-			return [{type: "number", value: Math.floor(a.value)}];
-		}
-		return [PARAMS.error("Argument to Floor must be a number")];
-	},
+	exec: a => (
+		verifyAndReduce(
+			padEmpty([a], 1),
+			0,
+			(_: number, param: number) => Math.floor(param),
+		)
+	),
 };
 
 const constants = {add, subtract, multiply, divide, floor};
@@ -86,4 +133,4 @@ const PRIMITIVES: Dict<Primitive> = Object.keys(constants).reduce(
 );
 
 
-export {PRIMITIVES};
+export {constants, PRIMITIVES};

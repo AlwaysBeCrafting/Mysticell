@@ -44,7 +44,7 @@ const PARAMS = {
 		type: "empty",
 		value: undefined,
 	}),
-	array: (value: Param[]) => ({
+	array: (value: Param[]): ArrayParam => ({
 		type: "array",
 		value,
 	}),
@@ -59,3 +59,4 @@ type ParamFunction = (...params: Param[]) => Param[];
 
 
 export {Param, ErrorParam, PARAMS, ParamFunction};
+export {NumberParam};
