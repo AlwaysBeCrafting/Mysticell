@@ -14,22 +14,22 @@
 		"NODE-0000": {
 			"id": "NODE-0000",
 			"function": "PRIMITIVE-subtract",
-			"userValues": [0, 10]
+			"userValues": ["0", "10"]
 		},
 		"NODE-0001": {
 			"id": "NODE-0001",
 			"function": "PRIMITIVE-divide",
-			"userValues": [0, 2]
+			"userValues": ["0", "2"]
 		},
 		"NODE-0002": {
 			"id": "NODE-0002",
 			"function": "PRIMITIVE-floor",
-			"userValues": [0]
+			"userValues": ["0"]
 		},
 		"NODE-0003": {
 			"id": "NODE-0006",
 			"function": "FORMULA-0000",
-			"userValues": [10]
+			"userValues": ["10"]
 		}
 	},
 	"formulas": {
