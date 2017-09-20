@@ -34,17 +34,14 @@ const paramToNumber = (identity: number) => (param: Param): Param => {
 	}
 };
 
-type NumberReducer = (prior: number, param: number) => number;
+type Operator = (...nums: number[]) => number;
 
-const verifyAndReduce = (params: Param[], identity: number, reducer: NumberReducer): Param[] => {
+const verifyAndReduce = (params: Param[], identity: number, op: Operator): Param[] => {
 	const convParams = params.map(paramToNumber(identity));
 	const error = convParams.find(param => param.type === "error");
 	if (error) { return [error]; }
-	return [PARAMS.number(
-		convParams
-			.map(param => param.value as number)
-			.reduce(reducer, identity),
-	)];
+	const result = op(...convParams.map(param => param.value as number));
+	return [PARAMS.number(result)];
 };
 
 const add: Primitive = {
@@ -57,7 +54,7 @@ const add: Primitive = {
 		verifyAndReduce(
 			padEmpty([a, b], 2),
 			0,
-			(prior: number, param: number) => prior + param,
+			(x, y) => x + y,
 		)
 	),
 };
@@ -72,7 +69,7 @@ const subtract: Primitive = {
 		verifyAndReduce(
 			padEmpty([a, b], 2),
 			0,
-			(prior: number, param: number) => prior - param,
+			(x, y) => x - y,
 		)
 	),
 };
@@ -87,7 +84,7 @@ const multiply: Primitive = {
 		verifyAndReduce(
 			padEmpty([a, b], 2),
 			1,
-			(prior: number, param: number) => prior * param,
+			(x, y) => x * y,
 		)
 	),
 };
@@ -102,7 +99,7 @@ const divide: Primitive = {
 		verifyAndReduce(
 			padEmpty([a, b], 2),
 			1,
-			(prior: number, param: number) => prior / param,
+			(x, y) => x / y,
 		)
 	),
 };
@@ -117,7 +114,7 @@ const floor: Primitive = {
 		verifyAndReduce(
 			padEmpty([a], 1),
 			0,
-			(_: number, param: number) => Math.floor(param),
+			Math.floor,
 		)
 	),
 };
