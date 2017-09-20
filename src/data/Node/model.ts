@@ -1,3 +1,7 @@
+import {Formula} from "data/Formula";
+import {Primitive} from "data/Primitive";
+
+
 interface Node {
 	id: string;
 	function: string;
@@ -5,13 +9,7 @@ interface Node {
 	userValues: string[];
 }
 
-interface NodeFunction {
-	id: string;
-	type: "formula" | "primitive";
-	name: string;
-	inputNames: string[];
-	outputNames: string[];
-}
+type NodeFunction = Formula | Primitive;
 
 
 export {Node, NodeFunction};

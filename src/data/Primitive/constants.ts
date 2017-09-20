@@ -49,7 +49,6 @@ const verifyAndReduce = (params: Param[], identity: number, op: Operator): Param
 
 const add: Primitive = {
 	id: "PRIMITIVE-add",
-	type: "primitive",
 	name: "Add",
 	inputNames: ["A", "B"],
 	outputNames: ["Sum"],
@@ -64,7 +63,6 @@ const add: Primitive = {
 
 const subtract: Primitive = {
 	id: "PRIMITIVE-subtract",
-	type: "primitive",
 	name: "Subtract",
 	inputNames: ["A", "B"],
 	outputNames: ["Difference"],
@@ -79,7 +77,6 @@ const subtract: Primitive = {
 
 const multiply: Primitive = {
 	id: "PRIMITIVE-multiply",
-	type: "primitive",
 	name: "Multiply",
 	inputNames: ["A", "B"],
 	outputNames: ["Product"],
@@ -94,7 +91,6 @@ const multiply: Primitive = {
 
 const divide: Primitive = {
 	id: "PRIMITIVE-divide",
-	type: "primitive",
 	name: "Divide",
 	inputNames: ["A", "B"],
 	outputNames: ["Quotient"],
@@ -109,7 +105,6 @@ const divide: Primitive = {
 
 const floor: Primitive = {
 	id: "PRIMITIVE-floor",
-	type: "primitive",
 	name: "Floor",
 	inputNames: ["Num"],
 	outputNames: ["Floor"],
