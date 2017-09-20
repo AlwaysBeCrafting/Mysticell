@@ -20,6 +20,9 @@ const paramToNumber = (identity: number) => (param: Param): Param => {
 			return PARAMS.number(identity);
 		}
 		case "string": {
+			if (!param.value.trim().length) {
+				return PARAMS.number(identity);
+			}
 			const converted = +param.value;
 			if (Number.isNaN(converted)) {
 				return PARAMS.error("Number expected");
