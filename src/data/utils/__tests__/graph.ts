@@ -1,18 +1,54 @@
 import {PARAMS} from "data/common";
-
-import exampleDoc from "common/assets/exampleDoc.json";
+import {Document} from "data/Document";
 
 import {execFormula} from "../graph";
 
 
-test("ability score of 10 has modifier 0", () => {
-	const result = execFormula(exampleDoc, "FORMULA-0000", PARAMS.number(10))[0];
-	expect(result).toHaveProperty("type", "number");
-	expect(result).toHaveProperty("value", 0);
-});
+const testDoc: Document = {
+	id: "DOCUMENT-test",
+	title: "Test Document",
+	cells: {},
+	sheets: {},
+	nodes: {
+		"NODE-cycleA": {
+			id: "NODE-cycleA",
+			function: "PRIMITIVE-add",
+			label: "Cycling node A",
+			userValues: ["0", "0"],
+		},
+		"NODE-cycleB": {
+			id: "NODE-cycleB",
+			function: "PRIMITIVE-add",
+			label: "Cycling node B",
+			userValues: ["0", "0"],
+		},
+	},
+	formulas: {
+		"FORMULA-cyclic": {
+			id: "FORMULA-cyclic",
+			name: "Cyclic Formula",
+			inputNames: ["Input number"],
+			outputNames: ["Output error"],
+			isProperty: false,
+			graph: [
+				{ source: "input", target: "NODE-cycleA", data: [0, 0] },
+				{ source: "input", target: "NODE-cycleB", data: [0, 0] },
+				{ source: "NODE-cycleA", target: "NODE-cycleB", data: [0, 1] },
+				{ source: "NODE-cycleB", target: "NODE-cycleA", data: [0, 1] },
+				{ source: "NODE-cycleB", target: "output", data: [0, 0] },
+			],
+			layout: {},
+		},
+	},
+	nav: [],
+};
 
-test("ability score of 15 has modifier 2", () => {
-	const result = execFormula(exampleDoc, "FORMULA-0000", PARAMS.number(15))[0];
-	expect(result).toHaveProperty("type", "number");
-	expect(result).toHaveProperty("value", 2);
+describe("graph resolver", () => {
+	it("returns an error when its contents loop", () => {
+		const result = execFormula(testDoc, "FORMULA-cyclic", PARAMS.number(10));
+		expect(result)
+			.toHaveLength(testDoc.formulas["FORMULA-cyclic"].outputNames.length);
+		expect(result[0])
+			.toHaveProperty("type", "error");
+	});
 });

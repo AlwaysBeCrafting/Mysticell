@@ -123,7 +123,11 @@ const execFormula = (doc: Document, formulaId: string, ...params: Param[]) => {
 		});
 		delete state.readyNodeOutputs[currentNodeId];
 	}
-	return state.readyNodeInputs.output;
+	if (state.readyNodeInputs.output.length === state.nodeInputs.output) {
+		return state.readyNodeInputs.output;
+	} else {
+		return [PARAMS.error("Could not resolve function")];
+	}
 };
 
 
