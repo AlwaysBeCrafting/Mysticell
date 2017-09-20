@@ -106,7 +106,8 @@ const mergeGraphs = (base: FormulaGraph, subgraph: FormulaGraph, nodeId: string)
 
 const execFormula = (doc: Document, formulaId: string, ...params: Param[]) => {
 	const {nodes, formulas} = doc;
-	const {graph} = formulas[formulaId];
+	const formula = formulas[formulaId];
+	const {graph} = formula;
 	const state = createExecState(nodes, graph, params);
 
 	while (!execIsFinished(state)) {
@@ -126,7 +127,8 @@ const execFormula = (doc: Document, formulaId: string, ...params: Param[]) => {
 	if (state.readyNodeInputs.output.length === state.nodeInputs.output) {
 		return state.readyNodeInputs.output;
 	} else {
-		return [PARAMS.error("Could not resolve function")];
+		return Array(formula.outputNames.length)
+			.fill(PARAMS.error("Could not resolve function"));
 	}
 };
 

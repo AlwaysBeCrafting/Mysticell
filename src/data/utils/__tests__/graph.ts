@@ -28,7 +28,7 @@ const testDoc: Document = {
 			id: "FORMULA-cyclic",
 			name: "Cyclic Formula",
 			inputNames: ["Input number"],
-			outputNames: ["Output error"],
+			outputNames: ["Output error", "Output another error"],
 			isProperty: false,
 			graph: [
 				{ source: "input", target: "NODE-cycleA", data: [0, 0] },
