@@ -60,7 +60,7 @@
 			"graph": [
 				{"source": "input", "target": "output", "data": [0, 0]},
 				{"source": "input", "target": "NODE-0003", "data": [0, 0]},
-				{"source": "NODE-0003", "target": "output", "data": [0, 0]}
+				{"source": "NODE-0003", "target": "output", "data": [0, 1]}
 			],
 			"layout": {
 				"NODE-0003": [2, 3]
