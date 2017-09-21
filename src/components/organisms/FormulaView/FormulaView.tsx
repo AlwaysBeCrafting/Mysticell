@@ -3,7 +3,7 @@ import React from "react";
 import {connect} from "react-redux";
 
 import {Dict} from "common/types";
-import {formulaLayoutWidth} from "common/util";
+import {formulaLayoutWidth} from "common/utils";
 
 import {Toolbar} from "components/molecules";
 

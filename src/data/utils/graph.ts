@@ -1,5 +1,5 @@
 import {Dict} from "common/types";
-import {patchArray} from "common/util";
+import {patchArray} from "common/utils";
 
 import {FormulaGraph, Param, PARAMS} from "data/common";
 import {Document} from "data/Document";

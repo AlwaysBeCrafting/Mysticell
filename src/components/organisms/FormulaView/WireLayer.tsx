@@ -2,7 +2,7 @@ import classNames from "classnames";
 import React from "react";
 
 import {Dict, DiEdge} from "common/types";
-import {formulaLayoutWidth} from "common/util";
+import {formulaLayoutWidth} from "common/utils";
 
 import {Wire} from "components/atoms";
 
