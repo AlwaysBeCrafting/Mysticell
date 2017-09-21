@@ -10,39 +10,8 @@
 	@include font-body1;
 }
 	.treeView-item-body {
-		flex: 0 0 $dimen-listItem-size;
-		display: flex;
-		flex-flow: row nowrap;
-		padding: 0 $dimen-keyline-padding;
-		align-items: center
+		flex: 0 0 auto;
 	}
-
-	.treeView-item-body:hover {
-		background: $color-black-alpha-12;
-	}
-		.treeView-item-body-icon {
-			flex: 0 0 $dimen-icon-size;
-			font-size: $dimen-icon-size;
-			font-family: Material Icons;
-			opacity: 0.8;
-		}
-
-		.treeView-item-body-icon.mod-dropdown {
-			transform: rotate(-90deg);
-		}
-
-		.treeView-item-body-icon.mod-dropdown.is-expanded {
-			transform: none;
-		}
-
-		.treeView-item-body-title {
-			margin-left: $dimen-keyline-content;
-			flex: 1 0 auto;
-		}
-
-		.treeView-item-body-icon + .treeView-item-body-title {
-			margin-left: $dimen-keyline-content - ($dimen-keyline-padding + $dimen-icon-size);
-		}
 
 	.treeView-item-children {
 		padding-left: $dimen-keyline-padding;

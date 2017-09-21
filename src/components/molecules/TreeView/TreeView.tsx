@@ -8,10 +8,9 @@ import "./TreeView.scss";
 
 
 interface ItemFunctions<T> {
-	getName: (item: T) => string;
 	getKey: (item: T) => string;
-	getIcon: (item: T) => string | undefined;
-	isExpanded?: (item: T) => boolean;
+	renderItem: (item: T) => JSX.Element;
+	shouldRenderChildren?: (item: T) => boolean;
 }
 
 interface Props<T> extends ItemFunctions<T> {
@@ -31,9 +30,8 @@ const TreeView = <T extends {}>(props: Props<T>) => (
 					key={props.getKey(treeNode.item)}
 					treeNode={treeNode}
 					getKey={props.getKey}
-					getName={props.getName}
-					getIcon={props.getIcon}
-					isExpanded={props.isExpanded}
+					renderItem={props.renderItem}
+					shouldRenderChildren={props.shouldRenderChildren}
 				/>
 			))
 		}
@@ -42,13 +40,13 @@ const TreeView = <T extends {}>(props: Props<T>) => (
 
 class Item<T> extends React.PureComponent<ItemProps<T>> {
 	public render() {
-		const {treeNode, getKey, getName, getIcon, isExpanded} = this.props;
+		const {treeNode, getKey, renderItem} = this.props;
+		const itemIsParent = this.props.shouldRenderChildren || (_ => true);
 		const classMod = classnames({
-			"is-expanded": isExpanded ? isExpanded(treeNode.item) : true,
+			"is-expanded": itemIsParent(treeNode.item),
 			"is-parent": treeNode.children.length > 0,
 		});
-
-		const childrenElem = treeNode.children.length > 0 && (
+		const childrenElem = itemIsParent(treeNode.item) && (
 			<ul className="treeView-item-children">
 				{
 					treeNode.children.map(child => (
@@ -56,25 +54,18 @@ class Item<T> extends React.PureComponent<ItemProps<T>> {
 							key={getKey(child.item)}
 							treeNode={child}
 							getKey={getKey}
-							getName={getName}
-							getIcon={getIcon}
-							isExpanded={isExpanded}
+							renderItem={renderItem}
+							shouldRenderChildren={itemIsParent}
 						/>
 					))
 				}
 			</ul>
 		);
-		const iconUrl = this.props.getIcon(treeNode.item);
 		return (
 			<li className={classnames("treeView-item", classMod)}>
-				<a className="treeView-item-body">
-					{
-						iconUrl
-							? <img className="treeView-item-body-icon"src={iconUrl} />
-							: <span className="treeView-item-body-icon mod-dropdown">arrow_drop_down</span>
-					}
-					<span className="treeView-item-body-title">{this.props.getName(treeNode.item)}</span>
-				</a>
+				<span className="treeView-item-body">
+					{renderItem(treeNode.item)}
+				</span>
 				{childrenElem}
 			</li>
 		);

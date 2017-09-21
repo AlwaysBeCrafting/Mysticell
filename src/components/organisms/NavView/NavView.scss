@@ -1,7 +1,44 @@
 @import "~common/styles/colors";
+@import '~common/styles/dimensions';
 
 
 .navView {
 	background: white;
 	border-right: solid thin $color-divider;
 }
+
+	.navView-item {
+		height: $dimen-listItem-size;
+		display: flex;
+		flex-flow: row nowrap;
+		padding: 0 $dimen-keyline-padding;
+		align-items: center;
+	}
+
+	.navView-item:hover {
+		background: $color-black-alpha-12;
+	}
+
+		.navView-item-icon {
+			flex: 0 0 $dimen-icon-size;
+			font-size: $dimen-icon-size;
+			font-family: Material Icons;
+			opacity: 0.8;
+		}
+
+		.navView-item-icon.mod-dropdown {
+			transform: rotate(-90deg);
+		}
+
+		.navView-item-icon.mod-dropdown.is-expanded {
+			transform: none;
+		}
+
+		.navView-item-title {
+			margin-left: $dimen-keyline-content;
+			flex: 1 0 auto;
+		}
+
+		.navView-item-icon + .navView-item-title {
+			margin-left: $dimen-keyline-content - ($dimen-keyline-padding + $dimen-icon-size);
+		}
