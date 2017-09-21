@@ -8,8 +8,8 @@ import "./TreeView.scss";
 
 
 interface ItemFunctions<B, L> {
-	getKey: (item: B | L) => string;
-	renderItem: (item: B | L) => JSX.Element;
+	getKey: (tree: Tree<B, L>) => string;
+	renderItem: (tree: Tree<B, L>) => JSX.Element;
 }
 
 interface Props<B, L> extends ItemFunctions<B, L> {
@@ -26,7 +26,7 @@ const TreeView = <B, L = B>(props: Props<B, L>) => (
 		{
 			props.tree.map(tree => (
 				<Item
-					key={props.getKey(tree.value)}
+					key={props.getKey(tree)}
 					tree={tree}
 					getKey={props.getKey}
 					renderItem={props.renderItem}
@@ -44,7 +44,7 @@ class Item<B, L> extends React.PureComponent<ItemProps<B, L>> {
 				{
 					tree.children.map(child => (
 						<Item
-							key={getKey(child.value)}
+							key={getKey(child)}
 							tree={child}
 							getKey={getKey}
 							renderItem={renderItem}
@@ -56,7 +56,7 @@ class Item<B, L> extends React.PureComponent<ItemProps<B, L>> {
 		return (
 			<li className="treeView-item">
 				<span className="treeView-item-body">
-					{renderItem(tree.value)}
+					{renderItem(tree)}
 				</span>
 				{childrenElem}
 			</li>

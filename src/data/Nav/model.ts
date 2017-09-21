@@ -1,16 +1,7 @@
-interface NavEndpoint {
-	type: "end";
-	id: string;
-}
-
-interface NavDirectory {
-	type: "dir";
-	name: string;
-}
-
-type NavItem =
-	| NavDirectory
-	| NavEndpoint;
+import {Tree} from "common/types";
 
 
-export {NavItem};
+type Nav = Array<Tree<string>>;
+
+
+export {Nav};

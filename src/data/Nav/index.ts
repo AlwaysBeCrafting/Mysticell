@@ -1,1 +1,1 @@
-export {NavItem} from "./model";
+export {Nav} from "./model";

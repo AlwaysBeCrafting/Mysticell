@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import {BrowserRouter as Router, Route, RouteComponentProps} from "react-router-dom";
 import {Dispatch} from "redux";
 
-import {Dict, Tree} from "common/types";
+import {Dict} from "common/types";
 
 import {MenuBar, Toolbar} from "components/molecules";
 import {FormulaView, NavView} from "components/organisms";
@@ -11,14 +11,14 @@ import {FormulaView, NavView} from "components/organisms";
 import {Action, AppState} from "data/AppState";
 import {MenuItem} from "data/common";
 import {Formula} from "data/Formula";
-import {NavItem} from "data/Nav";
+import {Nav} from "data/Nav";
 
 import "./EditorPage.scss";
 
 
 interface StateProps {
 	title: string;
-	nav: Array<Tree<NavItem>>;
+	nav: Nav;
 	formulas: Dict<Formula>;
 }
 

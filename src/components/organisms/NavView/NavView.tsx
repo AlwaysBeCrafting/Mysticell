@@ -2,12 +2,12 @@ import classnames from "classnames";
 import React from "react";
 import {Link} from "react-router-dom";
 
-import {Dict, Tree} from "common/types";
+import {Dict, isBranch, Tree} from "common/types";
 
 import {TreeView} from "components/molecules";
 
 import {Formula} from "data/Formula";
-import {NavItem} from "data/Nav";
+import {Nav} from "data/Nav";
 
 import functionIcon from "./assets/icon-function.svg";
 import "./NavView.scss";
@@ -16,22 +16,22 @@ import "./NavView.scss";
 interface Props {
 	className?: string;
 	formulas: Dict<Formula>;
-	nav: Array<Tree<NavItem>>;
+	nav: Nav;
 }
 
 const NavView = (props: Props) => (
 	<TreeView
 		className={classnames("navView", props.className)}
 		tree={props.nav}
-		getKey={item => item.type === "dir" ? item.name : item.id}
+		getKey={tree => isBranch(tree) ? tree.value : tree.value}
 		renderItem={renderItem(props.formulas)}
 	/>
 );
 
-const renderItem = (formulas: Dict<Formula>) => (item: NavItem) => (
-	item.type === "dir"
-		? renderDirItem(item.name)
-		: renderEndItem(formulas[item.id])
+const renderItem = (formulas: Dict<Formula>) => (tree: Tree<string>) => (
+	isBranch(tree)
+		? renderDirItem(tree.value)
+		: renderEndItem(formulas[tree.value])
 );
 
 const renderDirItem = (name: string) => (
