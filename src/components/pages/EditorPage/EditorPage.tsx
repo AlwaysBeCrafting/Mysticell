@@ -20,6 +20,7 @@ interface StateProps {
 	title: string;
 	nav: Nav;
 	formulas: Dict<Formula>;
+	expandedNavItems: Set<string>;
 }
 
 interface DispatchProps {
@@ -52,7 +53,7 @@ const toolbarItems: MenuItem[] = [
 ];
 
 const ProtoEditor = (props: Props) => {
-	const {title, nav, formulas} = props;
+	const {title, nav, formulas, expandedNavItems} = props;
 	return (
 		<Router>
 			<main className="editor">
@@ -67,6 +68,7 @@ const ProtoEditor = (props: Props) => {
 						className="editor-document-nav"
 						nav={ nav }
 						formulas={ formulas }
+						expandedNavItems={ expandedNavItems }
 					/>
 					<Route exact path="/formula/:id" render={renderFormula} />
 				</div>
@@ -76,10 +78,11 @@ const ProtoEditor = (props: Props) => {
 };
 
 const EditorPage = connect<StateProps, DispatchProps, {}>(
-	({document}: AppState) => ({
-		title: document.title,
-		nav: document.nav,
-		formulas: document.formulas,
+	(state: AppState) => ({
+		title: state.document.title,
+		nav: state.document.nav,
+		formulas: state.document.formulas,
+		expandedNavItems: state.uiState.expandedNavItems,
 	}),
 	(dispatch: Dispatch<Action>) => ({dispatch}),
 )(ProtoEditor);

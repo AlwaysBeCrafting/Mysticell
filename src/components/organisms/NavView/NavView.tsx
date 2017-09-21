@@ -17,6 +17,7 @@ interface Props {
 	className?: string;
 	formulas: Dict<Formula>;
 	nav: Nav;
+	expandedNavItems: Set<string>;
 }
 
 const NavView = (props: Props) => (
@@ -28,11 +29,12 @@ const NavView = (props: Props) => (
 	/>
 );
 
-const renderItem = (formulas: Dict<Formula>) => (tree: Tree<string>) => (
-	isBranch(tree)
-		? renderDirItem(tree.value)
-		: renderEndItem(formulas[tree.value])
-);
+const renderItem = (formulas: Dict<Formula>) => (tree: Tree<string>) => {
+	const tail = tree.value.substring(tree.value.lastIndexOf("/") + 1);
+	return isBranch(tree)
+		? renderDirItem(tail)
+		: renderEndItem(formulas[tail]);
+};
 
 const renderDirItem = (name: string) => (
 	<div className="navView-item">
