@@ -16,7 +16,7 @@ import "./NavView.scss";
 interface Props {
 	className?: string;
 	formulas: Dict<Formula>;
-	nav: Tree<NavItem>;
+	nav: Array<Tree<NavItem>>;
 }
 
 const NavView = (props: Props) => (
@@ -25,7 +25,6 @@ const NavView = (props: Props) => (
 		tree={props.nav}
 		getKey={item => item.type === "dir" ? item.name : item.id}
 		renderItem={renderItem(props.formulas)}
-		shouldRenderChildren={_ => true}
 	/>
 );
 

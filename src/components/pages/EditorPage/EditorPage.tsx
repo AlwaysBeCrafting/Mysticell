@@ -18,7 +18,7 @@ import "./EditorPage.scss";
 
 interface StateProps {
 	title: string;
-	nav: Tree<NavItem>;
+	nav: Array<Tree<NavItem>>;
 	formulas: Dict<Formula>;
 }
 

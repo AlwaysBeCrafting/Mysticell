@@ -1,70 +1,62 @@
 import classnames from "classnames";
 import React from "react";
 
-import {Tree, TreeNode} from "common/types";
+import {isBranch, Tree} from "common/types";
 
 import "./Item.scss";
 import "./TreeView.scss";
 
 
-interface ItemFunctions<T> {
-	getKey: (item: T) => string;
-	renderItem: (item: T) => JSX.Element;
-	shouldRenderChildren?: (item: T) => boolean;
+interface ItemFunctions<B, L> {
+	getKey: (item: B | L) => string;
+	renderItem: (item: B | L) => JSX.Element;
 }
 
-interface Props<T> extends ItemFunctions<T> {
-	tree: Tree<T>;
+interface Props<B, L> extends ItemFunctions<B, L> {
+	tree: Array<Tree<B, L>>;
 	className?: string;
 }
 
-interface ItemProps<T> extends ItemFunctions<T> {
-	treeNode: TreeNode<T>;
+interface ItemProps<B, L> extends ItemFunctions<B, L> {
+	tree: Tree<B, L>;
 }
 
-const TreeView = <T extends {}>(props: Props<T>) => (
+const TreeView = <B, L = B>(props: Props<B, L>) => (
 	<ul className={classnames("treeView", props.className)}>
 		{
-			props.tree.map(treeNode => (
+			props.tree.map(tree => (
 				<Item
-					key={props.getKey(treeNode.item)}
-					treeNode={treeNode}
+					key={props.getKey(tree.value)}
+					tree={tree}
 					getKey={props.getKey}
 					renderItem={props.renderItem}
-					shouldRenderChildren={props.shouldRenderChildren}
 				/>
 			))
 		}
 	</ul>
 );
 
-class Item<T> extends React.PureComponent<ItemProps<T>> {
+class Item<B, L> extends React.PureComponent<ItemProps<B, L>> {
 	public render() {
-		const {treeNode, getKey, renderItem} = this.props;
-		const itemIsParent = this.props.shouldRenderChildren || (_ => true);
-		const classMod = classnames({
-			"is-expanded": itemIsParent(treeNode.item),
-			"is-parent": treeNode.children.length > 0,
-		});
-		const childrenElem = itemIsParent(treeNode.item) && (
+		const {tree, getKey, renderItem} = this.props;
+		const childrenElem = isBranch(tree) && (
 			<ul className="treeView-item-children">
 				{
-					treeNode.children.map(child => (
+					tree.children.map(child => (
 						<Item
-							key={getKey(child.item)}
-							treeNode={child}
+							key={getKey(child.value)}
+							tree={child}
 							getKey={getKey}
 							renderItem={renderItem}
-							shouldRenderChildren={itemIsParent}
 						/>
 					))
 				}
 			</ul>
 		);
 		return (
-			<li className={classnames("treeView-item", classMod)}>
+			<li className="treeView-item">
 				<span className="treeView-item-body">
-					{renderItem(treeNode.item)}
+					{renderItem(tree.value)}
 				</span>
 				{childrenElem}
 			</li>

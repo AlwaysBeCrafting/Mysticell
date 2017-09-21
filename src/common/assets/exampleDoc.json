@@ -68,9 +68,9 @@
 		}
 	},
 	"nav": [
-		{"item": {"type": "dir", "name": "Abilities"}, "children": [
-			{"item": {"type": "end", "id": "FORMULA-0000"}, "children": []},
-			{"item": {"type": "end", "id": "FORMULA-0001"}, "children": []}
+		{"value": {"type": "dir", "name": "Abilities"}, "children": [
+			{"value": {"type": "end", "id": "FORMULA-0000"}, "children": []},
+			{"value": {"type": "end", "id": "FORMULA-0001"}, "children": []}
 		]}
 	]
 }

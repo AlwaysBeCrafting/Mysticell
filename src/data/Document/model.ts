@@ -14,7 +14,7 @@ interface Document {
 	sheets: Dict<Sheet>;
 	nodes: Dict<Node>;
 	formulas: Dict<Formula>;
-	nav: Tree<NavItem>;
+	nav: Array<Tree<NavItem>>;
 }
 
 
