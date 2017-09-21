@@ -24,8 +24,15 @@
 			flex: 0 0 $dimen-icon-size;
 			font-size: $dimen-icon-size;
 			font-family: Material Icons;
-			color: $color-icon-active;
+			opacity: 0.8;
+		}
+
+		.treeView-item-body-icon.mod-dropdown {
 			transform: rotate(-90deg);
+		}
+
+		.treeView-item-body-icon.mod-dropdown.is-expanded {
+			transform: none;
 		}
 
 		.treeView-item-body-title {
