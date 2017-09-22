@@ -1,6 +1,6 @@
 import {isBranch, Tree} from "common/types";
 
-type TrimFunc = <B, L>(tree: Tree<B, L>) => boolean;
+type TrimFunc = (tree: Tree<any>) => boolean;
 
 const trim = <B, L>(tree: Tree<B, L>, shouldKeep: TrimFunc): Tree<B, L> => {
 	if (isBranch(tree)) {
@@ -8,7 +8,7 @@ const trim = <B, L>(tree: Tree<B, L>, shouldKeep: TrimFunc): Tree<B, L> => {
 			value: tree.value,
 			children: tree.children
 				.filter(shouldKeep)
-				.map((child: Tree<B, L>) => trim(child, shouldKeep)),
+				.map(child => trim(child, shouldKeep)),
 		};
 	}
 	return tree;
