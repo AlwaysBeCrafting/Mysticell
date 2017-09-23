@@ -40,7 +40,7 @@ const testDoc: Document = {
 			layout: {},
 		},
 	},
-	nav: [],
+	nav: { value: "root" },
 };
 
 describe("graph resolver", () => {

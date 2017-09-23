@@ -13,7 +13,7 @@ interface ItemFunctions<B, L> {
 }
 
 interface Props<B, L> extends ItemFunctions<B, L> {
-	tree: Array<Tree<B, L>>;
+	tree: Tree<B, L>;
 	className?: string;
 }
 
@@ -24,7 +24,7 @@ interface ItemProps<B, L> extends ItemFunctions<B, L> {
 const TreeView = <B, L = B>(props: Props<B, L>) => (
 	<ul className={classnames("treeView", props.className)}>
 		{
-			props.tree.map(tree => (
+			isBranch(props.tree) && props.tree.children.map(tree => (
 				<Item
 					key={props.getKey(tree)}
 					tree={tree}

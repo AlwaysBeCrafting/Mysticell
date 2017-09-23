@@ -67,10 +67,10 @@
 			}
 		}
 	},
-	"nav": [
-		{"value": "/Abilities", "children": [
-			{"value": "/Abilities/FORMULA-0000"},
-			{"value": "/Abilities/FORMULA-0001"}
+	"nav": {"value": "root", "children": [
+		{"value": "Abilities", "children": [
+			{"value": "FORMULA-0000"},
+			{"value": "FORMULA-0001"}
 		]}
-	]
+	]}
 }

@@ -30,8 +30,7 @@ const NavView = (props: Props) => {
 		<TreeView
 			className={classnames("navView", props.className)}
 			tree={
-				props.nav
-					.map(tree => trim(tree, isVisible))
+				trim(props.nav, isVisible)
 			}
 			getKey={tree => isBranch(tree) ? tree.value : tree.value}
 			renderItem={renderItem(props.formulas)}

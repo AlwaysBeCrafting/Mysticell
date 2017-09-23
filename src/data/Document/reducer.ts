@@ -12,7 +12,7 @@ const defaultState: Document = {
 	nodes: {},
 	formulas: {},
 
-	nav: [],
+	nav: { value: "root" },
 };
 
 const reducer = (state: Document = defaultState, action: Action): Document => {

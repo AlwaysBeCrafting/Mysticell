@@ -1,7 +1,7 @@
 import {Tree} from "common/types";
 
 
-type Nav = Array<Tree<string>>;
+type Nav = Tree<string>;
 
 
 export {Nav};
