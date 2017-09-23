@@ -11,7 +11,7 @@ const pathToFormula = (formulas: Dict<Formula>, nav: Nav, path: string[]) => {
 
 	if (!isBranch(formulaBranch)) { return undefined; }
 	const formulaLeaf = formulaBranch.children
-		.find(child => formulas[child.value].name === formulaName);
+		.find(child => formulas[child.value] && formulas[child.value].name === formulaName);
 
 	if (!isLeaf(formulaLeaf)) { return undefined; }
 
