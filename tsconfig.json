@@ -8,14 +8,13 @@
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
 
+        "strict": true,
         "allowUnreachableCode": false,
         "forceConsistentCasingInFileNames": true,
         "noFallthroughCasesInSwitch": true,
-        "noImplicitAny": false,
         "noImplicitReturns": true,
         "noUnusedLocals": true,
         "noUnusedParameters": true,
-        "strictNullChecks": true,
 
         "removeComments": true,
         "sourceMap": true,
@@ -23,6 +22,13 @@
         "rootDirs": [
             ".",
             "./src"
+        ],
+        "plugins": [
+            { "name": "tslint-language-service" }
+        ],
+        "lib": [
+            "dom",
+            "es2017"
         ]
     },
     "exclude": [

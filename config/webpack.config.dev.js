@@ -2,6 +2,8 @@ const path = require('path');
 const autoprefixer = require('autoprefixer');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ForkTsCheckerPlugin = require("fork-ts-checker-webpack-plugin");
+const FriendlyErrorsPlugin = require("friendly-errors-webpack-plugin");
 
 const paths = require('./paths');
 const publicPath = '/';
@@ -13,7 +15,7 @@ module.exports = {
 		app: [
 			'react-hot-loader/patch',
 			'webpack-dev-server/client?http://localhost:3000',
-			'webpack/hot/dev-server',
+			'webpack/hot/only-dev-server',
 			paths.appIndex,
 		],
 	},
@@ -39,7 +41,12 @@ module.exports = {
 				include: paths.appSrc,
 				use: [
 					'react-hot-loader/webpack',
-					'awesome-typescript-loader',
+					{
+						loader: 'ts-loader',
+						options: {
+							transpileOnly: true,
+						},
+					},
 				],
 			},
 			{
@@ -82,6 +89,7 @@ module.exports = {
 	devServer: {
 		hot: true,
 		inline: false,
+		quiet: true,
 		port: 3000,
 		historyApiFallback: true,
 		publicPath,
@@ -94,7 +102,16 @@ module.exports = {
 		}),
 		new webpack.DefinePlugin({'process.env.NODE_ENV': '"development"'}),
 		new webpack.HotModuleReplacementPlugin(),
-		new webpack.NamedModulesPlugin(),
 		new webpack.NoEmitOnErrorsPlugin(),
+		new webpack.NamedModulesPlugin(),
+		new ForkTsCheckerPlugin({
+			tslint: true,
+			async: false,
+		}),
+		new FriendlyErrorsPlugin({
+			compilationSuccessInfo: {
+				messages: ['Dev server running at http://localhost:3000'],
+			},
+		}),
 	],
 };

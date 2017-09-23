@@ -29,14 +29,14 @@ const connectedInputs = (graph: FormulaGraph, nodeId: string) => (
 );
 
 const createExecState = (nodes: Dict<Node>, graph: FormulaGraph, params: Param[]): ExecState => ({
-	nodeInputs: graph.reduce(
+	nodeInputs: graph.reduce<Dict<number>>(
 		(prior, edge) => {
 			prior[edge.target] = (prior[edge.target] || 0) + 1;
 			return prior;
 		},
 		{},
 	),
-	nodeUserValues: graph.reduce(
+	nodeUserValues: graph.reduce<Dict<Param[]>>(
 		(prior, edge) => {
 			if (edge.target === "output") { return prior; }
 			prior[edge.target] = prior[edge.target] ||
@@ -46,7 +46,7 @@ const createExecState = (nodes: Dict<Node>, graph: FormulaGraph, params: Param[]
 		},
 		{},
 	),
-	readyNodeInputs: graph.reduce(
+	readyNodeInputs: graph.reduce<Dict<Param[]>>(
 		(prior, edge) => {
 			prior[edge.target] = [];
 			return prior;

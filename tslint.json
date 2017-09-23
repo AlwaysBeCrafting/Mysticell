@@ -1,5 +1,6 @@
 {
 	"extends": "tslint:latest",
+	"defaultSeverity": "warning",
 	"rules": {
 		"align": [false],
 		"arrow-parens": [true, "ban-single-arg-parens"],

@@ -37,9 +37,9 @@ const TreeView = <B, L = B>(props: Props<B, L>) => (
 );
 
 class Item<B, L> extends React.PureComponent<ItemProps<B, L>> {
-	public render() {
+	public render(): JSX.Element {
 		const {tree, getKey, renderItem} = this.props;
-		const childrenElem = isBranch(tree) && (
+		const childrenElem: boolean | JSX.Element = isBranch(tree) && (
 			<ul className="treeView-item-children">
 				{
 					tree.children.map(child => (
