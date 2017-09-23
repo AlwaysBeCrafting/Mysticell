@@ -40,5 +40,20 @@ const mapLeaves = <B, L, Lm>(tree: Tree<B, L>, mapFunc: (x: L) => Lm): Tree<B, L
 	map(tree, ident, mapFunc)
 );
 
+type Comparator = <T, U>(t: T, u: U) => boolean;
+const eq: Comparator = (t, p) => t as any === p;
+const resolvePath = <B, L, P>(tree: Tree<B, L>, path: P[], compare = eq): Tree<B, L> => {
+	if (!path.length) {
+		return tree;
+	}
+	if (isBranch(tree)) {
+		const child = tree.children.find(ch => compare(ch.value, path[0]));
+		if (child) {
+			return resolvePath(child, path.slice(1), compare);
+		}
+	}
+	throw new Error(`Path ${path} does not exist in tree ${tree}`);
+};
 
-export {trim, map, mapBranches, mapLeaves};
+
+export {trim, map, mapBranches, mapLeaves, resolvePath};

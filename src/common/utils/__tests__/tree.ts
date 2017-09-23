@@ -1,6 +1,6 @@
 import {Tree} from "common/types";
 
-import {map, mapBranches, mapLeaves, trim} from "../tree";
+import {map, mapBranches, mapLeaves, resolvePath, trim} from "../tree";
 
 
 const testTree: Readonly<Tree<string>> = {
@@ -14,8 +14,8 @@ const testTree: Readonly<Tree<string>> = {
 				{
 					value: "childB2",
 					children: [
-						{ value: "childB1a" },
-						{ value: "childB1b" },
+						{ value: "childB2a" },
+						{ value: "childB2b" },
 					],
 				},
 			],
@@ -94,5 +94,21 @@ describe("mapLeaves(tree, mapLeaf)", () => {
 		expect(mapLeaf)
 			.not
 			.toHaveBeenCalledWith("childB");
+	});
+});
+
+describe("resolvePath(tree, path, compare)", () => {
+	it("checks for === equality when compare isn't given", () => {
+		const path = ["childB", "childB2", "childB2b"];
+		expect(resolvePath(testTree, path))
+			.toEqual({ value: "childB2b" });
+	});
+	it("returns the whole tree when the path is empty", () => {
+		expect(resolvePath(testTree, []))
+			.toEqual(testTree);
+	});
+	it("throws an exception when the path doesn't exist", () => {
+		expect(() => resolvePath(testTree, ["wrongNode"]))
+			.toThrow();
 	});
 });
