@@ -20,14 +20,13 @@ import "./FormulaView.scss";
 
 
 interface StateProps {
-	formula: Formula;
 	formulas: Dict<Formula>;
 	nodes: Dict<Node>;
 }
 
 interface PublicProps {
 	className?: string;
-	id: string;
+	formula: Formula;
 }
 
 type Props = StateProps & PublicProps;
@@ -78,10 +77,8 @@ const renderGrid = (formula: Formula, formulas: Dict<Formula>, nodes: Dict<Node>
 };
 
 const FormulaView = connect<StateProps, {}, PublicProps>(
-	(state: AppState, ownProps: PublicProps) => {
-		const formulaId = `FORMULA-${ownProps.id}`;
+	(state: AppState) => {
 		return {
-			formula: state.document.formulas[formulaId],
 			formulas: state.document.formulas,
 			nodes: state.document.nodes,
 		};

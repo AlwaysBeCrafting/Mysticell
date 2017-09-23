@@ -11,7 +11,7 @@ import {FormulaView, NavView} from "components/organisms";
 import {Action, AppState} from "data/AppState";
 import {MenuItem} from "data/common";
 import {Formula} from "data/Formula";
-import {Nav} from "data/Nav";
+import {Nav, pathToFormula} from "data/Nav";
 
 import "./EditorPage.scss";
 
@@ -34,8 +34,23 @@ const navItem: MenuItem = {
 	title: "Nav",
 };
 
-const renderFormula = (routeProps: RouteComponentProps<{id: string}>) => (
-	<FormulaView className="editor-document-content" id={routeProps.match.params.id}/>
+const renderFormula = (formulas: Dict<Formula>, nav: Nav) => (
+	(routeProps: RouteComponentProps<{path: string}>) => {
+		const segments = routeProps.match.params.path.split("/");
+		const formula = pathToFormula(formulas, nav, segments);
+		return formula
+			? (
+				<FormulaView
+					className="editor-document-content"
+					formula={formula}
+				/>
+			)
+			: (
+				<div className="editor-document-error">
+					No formula exists at /{routeProps.match.params.path}.
+				</div>
+			);
+	}
 );
 
 const demoMenuItems: MenuItem[] = [
@@ -70,7 +85,7 @@ const ProtoEditor = (props: Props) => {
 						formulas={ formulas }
 						expandedNavItems={ expandedNavItems }
 					/>
-					<Route exact path="/formula/:id" render={renderFormula} />
+					<Route exact path="/:path+" render={renderFormula(formulas, nav)} />
 				</div>
 			</main>
 		</Router>
