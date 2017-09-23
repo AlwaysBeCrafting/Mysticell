@@ -1,8 +1,7 @@
 import {isBranch, Tree} from "common/types";
 
-type TrimFunc = (tree: Tree<any>) => boolean;
 
-const ident = x => x;
+type TrimFunc = (tree: Tree<any>) => boolean;
 
 const trim = <B, L>(tree: Tree<B, L>, shouldKeep: TrimFunc): Tree<B, L> => {
 	if (isBranch(tree)) {
@@ -33,11 +32,11 @@ const map = <B, L, Bm, Lm>(
 );
 
 const mapBranches = <B, L, Bm>(tree: Tree<B, L>, mapFunc: (x: B) => Bm): Tree<Bm, L> => (
-	map(tree, mapFunc, ident)
+	map(tree, mapFunc, x => x)
 );
 
 const mapLeaves = <B, L, Lm>(tree: Tree<B, L>, mapFunc: (x: L) => Lm): Tree<B, Lm> => (
-	map(tree, ident, mapFunc)
+	map(tree, x => x, mapFunc)
 );
 
 type Comparator = <T, U>(t: T, u: U) => boolean;
