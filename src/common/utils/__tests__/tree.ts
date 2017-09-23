@@ -1,6 +1,6 @@
 import {Tree} from "common/types";
 
-import {trim} from "../tree";
+import {map, mapBranches, mapLeaves, trim} from "../tree";
 
 
 const testTree: Readonly<Tree<string>> = {
@@ -49,5 +49,50 @@ describe("trim(tree, predicate)", () => {
 			expect.anything(),
 			expect.anything(),
 		);
+	});
+});
+
+describe("map(tree, mapBranch, mapLeaf)", () => {
+	it("calls mapBranch only on branch nodes", () => {
+		const mapBranch = jest.fn(_ => "mapped branch");
+		const mapLeaf = jest.fn(_ => "mapped leaf");
+		map(testTree, mapBranch, mapLeaf);
+		expect(mapBranch)
+			.toHaveBeenCalledWith("root");
+		expect(mapBranch)
+			.toHaveBeenCalledWith("childB2");
+		expect(mapBranch)
+			.not
+			.toHaveBeenCalledWith("childB1");
+	});
+	it("calls mapLeaf only on branch nodes", () => {
+		const mapBranch = jest.fn(_ => "mapped branch");
+		const mapLeaf = jest.fn(_ => "mapped leaf");
+		map(testTree, mapBranch, mapLeaf);
+		expect(mapLeaf)
+			.toHaveBeenCalledWith("childA");
+		expect(mapLeaf)
+			.not
+			.toHaveBeenCalledWith("childB");
+	});
+});
+
+describe("mapBranches(tree, mapBranch)", () => {
+	it("doesn't touch leaf nodes", () => {
+		const mapBranch = jest.fn(_ => "mapped branch");
+		mapBranches(testTree, mapBranch);
+		expect(mapBranch)
+			.not
+			.toHaveBeenCalledWith("childA");
+	});
+});
+
+describe("mapLeaves(tree, mapLeaf)", () => {
+	it("doesn't touch branch nodes", () => {
+		const mapLeaf = jest.fn(_ => "mapped leaf");
+		mapLeaves(testTree, mapLeaf);
+		expect(mapLeaf)
+			.not
+			.toHaveBeenCalledWith("childB");
 	});
 });
