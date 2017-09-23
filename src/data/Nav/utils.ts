@@ -6,12 +6,21 @@ import {Nav} from "data/Nav";
 
 
 const pathToFormula = (formulas: Dict<Formula>, nav: Nav, path: string[]) => {
-	const formulaBranch = resolvePath(nav, path.slice(0, -1));
+	const formulaBranch = resolvePath(
+		nav,
+		path.slice(0, -1),
+		(tree, segment) => (
+			(isBranch(tree) ? tree.value.name : tree.value) === segment
+		),
+	);
 	const [formulaName] = path.slice(-1);
 
 	if (!isBranch(formulaBranch)) { return undefined; }
-	const formulaLeaf = formulaBranch.children
-		.find(child => formulas[child.value] && formulas[child.value].name === formulaName);
+	const formulaLeaf = formulaBranch.children.find(child => (
+		isLeaf(child) &&
+		formulas[child.value] &&
+		formulas[child.value].name === formulaName
+	));
 
 	if (!isLeaf(formulaLeaf)) { return undefined; }
 

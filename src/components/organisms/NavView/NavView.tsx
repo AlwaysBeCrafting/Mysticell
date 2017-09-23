@@ -2,8 +2,8 @@ import classnames from "classnames";
 import React from "react";
 import {Link} from "react-router-dom";
 
-import {Dict, isBranch, Tree} from "common/types";
-import {tail, trim} from "common/utils";
+import {Dict, isBranch} from "common/types";
+import {collapse} from "common/utils";
 
 import {TreeView} from "components/molecules";
 
@@ -23,27 +23,25 @@ interface Props {
 
 
 const NavView = (props: Props) => {
-	const isVisible = (tree: Tree<string>) => (
-		props.expandedNavItems.has(tree.value.substr(0, tree.value.lastIndexOf("/")))
+	const isExpanded = (tree: Nav) => (
+		tree === props.nav ||
+		(isBranch(tree) && props.expandedNavItems.has(tree.value.id))
 	);
 	return (
 		<TreeView
 			className={classnames("navView", props.className)}
-			tree={
-				trim(props.nav, isVisible)
-			}
-			getKey={tree => isBranch(tree) ? tree.value : tree.value}
+			tree={collapse(props.nav, isExpanded)}
+			getKey={tree => isBranch(tree) ? tree.value.id : tree.value}
 			renderItem={renderItem(props.formulas)}
 		/>
 	);
 };
 
-const renderItem = (formulas: Dict<Formula>) => (tree: Tree<string>) => {
-	const nodeName = tail(tree.value, "/");
-	return isBranch(tree)
-		? renderDirItem(nodeName)
-		: renderEndItem(formulas[nodeName]);
-};
+const renderItem = (formulas: Dict<Formula>) => (tree: Nav) => (
+	isBranch(tree)
+		? renderDirItem(tree.value.name)
+		: renderEndItem(formulas[tree.value])
+);
 
 const renderDirItem = (name: string) => (
 	<div className="navView-item">

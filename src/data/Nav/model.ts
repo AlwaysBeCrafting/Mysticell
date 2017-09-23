@@ -1,7 +1,11 @@
 import {Tree} from "common/types";
 
 
-type Nav = Tree<string>;
+interface NavBranch {
+	id: string;
+	name: string;
+}
+type Nav = Tree<NavBranch, string>;
 
 
-export {Nav};
+export {Nav, NavBranch};

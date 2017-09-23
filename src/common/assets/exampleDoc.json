@@ -67,8 +67,8 @@
 			}
 		}
 	},
-	"nav": {"value": "root", "children": [
-		{"value": "Abilities", "children": [
+	"nav": {"value": {"id": "NAV-0000", "name": "root"}, "children": [
+		{"value": {"id": "NAV-0001", "name": "Abilities"}, "children": [
 			{"value": "FORMULA-0000"},
 			{"value": "FORMULA-0001"}
 		]}

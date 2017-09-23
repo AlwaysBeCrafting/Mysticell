@@ -1,19 +1,27 @@
-import {isBranch, Tree} from "common/types";
+import {isBranch, Predicate, Tree} from "common/types";
 
 
-type TrimFunc = (tree: Tree<any>) => boolean;
-
-const trim = <B, L>(tree: Tree<B, L>, shouldKeep: TrimFunc): Tree<B, L> => {
-	if (isBranch(tree)) {
-		return {
+const trim = <B, L>(tree: Tree<B, L>, shouldKeep: Predicate<Tree<B, L>>): Tree<B, L> => (
+	isBranch(tree)
+		? {
 			value: tree.value,
 			children: tree.children
 				.filter(shouldKeep)
 				.map(child => trim(child, shouldKeep)),
-		};
-	}
-	return tree;
-};
+		}
+		: tree
+);
+
+const collapse = <B, L>(tree: Tree<B, L>, isExpanded: Predicate<Tree<B, L>>): Tree<B, L> => (
+	isBranch(tree)
+		? {
+			value: tree.value,
+			children: isExpanded(tree)
+				? tree.children.map(child => collapse(child, isExpanded))
+				: [],
+		}
+		: tree
+);
 
 const map = <B, L, Bm, Lm>(
 	tree: Tree<B, L>,
@@ -39,14 +47,15 @@ const mapLeaves = <B, L, Lm>(tree: Tree<B, L>, mapFunc: (x: L) => Lm): Tree<B, L
 	map(tree, x => x, mapFunc)
 );
 
-type Comparator = <T, U>(t: T, u: U) => boolean;
-const eq: Comparator = (t, p) => t as any === p;
-const resolvePath = <B, L, P>(tree: Tree<B, L>, path: P[], compare = eq): Tree<B, L> => {
+type Comparator<T, U> = (t: T, u: U) => boolean;
+type TreeComparator<B, L, P> = Comparator<Tree<B, L>, P>;
+const eq: TreeComparator<any, any, any> = (t, p) => t.value === p;
+const resolvePath = <B, L, P>(tree: Tree<B, L>, path: P[], compare: TreeComparator<B, L, P> = eq): Tree<B, L> => {
 	if (!path.length) {
 		return tree;
 	}
 	if (isBranch(tree)) {
-		const child = tree.children.find(ch => compare(ch.value, path[0]));
+		const child = tree.children.find(ch => compare(ch, path[0]));
 		if (child) {
 			return resolvePath(child, path.slice(1), compare);
 		}
@@ -55,4 +64,4 @@ const resolvePath = <B, L, P>(tree: Tree<B, L>, path: P[], compare = eq): Tree<B
 };
 
 
-export {trim, map, mapBranches, mapLeaves, resolvePath};
+export {collapse, map, mapBranches, mapLeaves, resolvePath, trim};
