@@ -79,9 +79,8 @@ const renderGrid = (formula: Formula, formulas: Dict<Formula>, nodes: Dict<Node>
 
 const FormulaView = connect<StateProps, {}, PublicProps>(
 	(state: AppState, ownProps: PublicProps) => {
-		const formulaId = `FORMULA-${ownProps.id}`;
 		return {
-			formula: state.document.formulas[formulaId],
+			formula: state.document.formulas[ownProps.id],
 			formulas: state.document.formulas,
 			nodes: state.document.nodes,
 		};

@@ -10,7 +10,7 @@
 		"no-default-export": true,
 		"no-namespace": [false],
 		"no-submodule-imports": [true, "common", "components", "data"],
-		"no-var-requires": false,
+		"no-var-requires": true,
 		"object-literal-sort-keys": [false],
 		"only-arrow-functions": [true],
 		"quotemark": [true, "double", "jsx-double", "avoid-escape"]
