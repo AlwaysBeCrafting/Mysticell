@@ -1,14 +1,14 @@
 import {Param} from "data/common";
 
 
-namespace ActionTypes {
-	export const UPDATE_OUTPUT_VALUES = "[PropertyCache] Update output values";
+const enum ActionTypes {
+	UPDATE_OUTPUT_VALUES = "[PropertyCache] Update output values",
 }
 type Action =
 	| UpdateOutputValuesAction;
 
 interface UpdateOutputValuesAction {
-	readonly type: typeof ActionTypes.UPDATE_OUTPUT_VALUES;
+	readonly type: ActionTypes.UPDATE_OUTPUT_VALUES;
 	payload: {nodeId: string, outputValues: Param[]};
 }
 const updateOutputValues = (nodeId: string, outputValues: Param[]) => ({

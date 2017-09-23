@@ -1,11 +1,11 @@
 import {Formula} from "./model";
 
 
-namespace ActionTypes {
-	export const CREATE      = "[Function] Create";
-	export const DESTROY     = "[Function] Destroy";
-	export const ADD_NODE    = "[Function] Add node";
-	export const REMOVE_NODE = "[Function] Remove node";
+const enum ActionTypes {
+	CREATE      = "[Function] Create",
+	DESTROY     = "[Function] Destroy",
+	ADD_NODE    = "[Function] Add node",
+	REMOVE_NODE = "[Function] Remove node",
 }
 type Action =
 	| CreateAction
@@ -14,7 +14,7 @@ type Action =
 	| RemoveNodeAction;
 
 interface CreateAction {
-	readonly type: typeof ActionTypes.CREATE;
+	readonly type: ActionTypes.CREATE;
 	payload: {fxn: Formula};
 }
 const create = (fxn: Formula): CreateAction => ({
@@ -23,7 +23,7 @@ const create = (fxn: Formula): CreateAction => ({
 });
 
 interface DestroyAction {
-	readonly type: typeof ActionTypes.DESTROY;
+	readonly type: ActionTypes.DESTROY;
 	payload: {fxnId: string};
 }
 const destroy = (fxnId: string): DestroyAction => ({
@@ -32,7 +32,7 @@ const destroy = (fxnId: string): DestroyAction => ({
 });
 
 interface AddNodeAction {
-	readonly type: typeof ActionTypes.ADD_NODE;
+	readonly type: ActionTypes.ADD_NODE;
 	payload: {functionId: string, nodeId: string};
 }
 const addNode = (functionId: string, nodeId: string): AddNodeAction => ({
@@ -41,7 +41,7 @@ const addNode = (functionId: string, nodeId: string): AddNodeAction => ({
 });
 
 interface RemoveNodeAction {
-	readonly type: typeof ActionTypes.REMOVE_NODE;
+	readonly type: ActionTypes.REMOVE_NODE;
 	payload: {functionId: string, nodeId: string};
 }
 const removeNode = (functionId: string, nodeId: string): RemoveNodeAction => ({
