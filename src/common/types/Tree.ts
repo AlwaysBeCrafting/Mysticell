@@ -10,7 +10,7 @@ interface Leaf<L> {
 type Tree<B, L = B> = Branch<B, L> | Leaf<L>;
 
 const isLeaf = <B, L>(tree?: Tree<B, L>): tree is Leaf<L> => (
-	!!(tree && isBranch(tree))
+	!!(tree && !isBranch(tree))
 );
 
 const isBranch = <B, L>(tree?: Tree<B, L>): tree is Branch<B, L> => (
