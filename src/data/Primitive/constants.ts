@@ -119,10 +119,10 @@ const floor: Primitive = {
 
 const constants = {add, subtract, multiply, divide, floor};
 
-const PRIMITIVES: Dict<Primitive> = Object.keys(constants).reduce(
-	(prior, key) => ({
+const PRIMITIVES: Dict<Primitive> = Object.values(constants).reduce(
+	(prior, value) => ({
 		...prior,
-		[constants[key].id]: constants[key],
+		[value.id]: value,
 	}),
 	{},
 );

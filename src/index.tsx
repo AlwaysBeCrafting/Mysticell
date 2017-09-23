@@ -10,12 +10,13 @@ import {EditorPage} from "components/pages";
 import {AppState, reducer} from "data/AppState";
 import {loadDocument} from "data/Document";
 
+import exampleDoc from "common/assets/exampleDoc.json";
 import "common/styles/normalize.scss";
 
 
 const store = createStore<AppState>(reducer, devToolsEnhancer({}));
 
-store.dispatch(loadDocument(require("common/assets/exampleDoc.json")));
+store.dispatch(loadDocument(exampleDoc));
 
 const rootElem = document.querySelector(".root");
 
