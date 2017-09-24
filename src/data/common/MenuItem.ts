@@ -4,7 +4,7 @@ interface MenuItem {
 	hint?: string;
 	icon?: string;
 	childItems?: MenuItem[];
-	render?: (MenuItem) => JSX.Element;
+	render?: (item: MenuItem) => JSX.Element;
 }
 
 
