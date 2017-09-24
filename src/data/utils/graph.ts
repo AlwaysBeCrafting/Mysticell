@@ -8,10 +8,10 @@ import {PRIMITIVES} from "data/Primitive";
 
 
 interface ExecState {
-	nodeInputs: Dict<number>;
-	nodeUserValues: Dict<Param[]>;
-	readyNodeInputs: Dict<Param[]>;
-	readyNodeOutputs: Dict<Param[]>;
+	nodeInputs: Map<string, number>;
+	nodeUserValues: Map<string, Param[]>;
+	readyNodeInputs: Map<string, Param[]>;
+	readyNodeOutputs: Map<string, Param[]>;
 	compositeGraph: FormulaGraph;
 }
 
@@ -29,49 +29,52 @@ const connectedInputs = (graph: FormulaGraph, nodeId: string) => (
 );
 
 const createExecState = (nodes: Dict<Node>, graph: FormulaGraph, params: Param[]): ExecState => ({
-	nodeInputs: graph.reduce<Dict<number>>(
-		(prior, edge) => {
-			prior[edge.target] = (prior[edge.target] || 0) + 1;
+	nodeInputs: graph.reduce(
+		(prior: Map<string, number>, edge) => {
+			prior.set(edge.target, (prior.get(edge.target) || 0) + 1);
 			return prior;
 		},
-		{},
+		new Map(),
 	),
-	nodeUserValues: graph.reduce<Dict<Param[]>>(
-		(prior, edge) => {
-			if (edge.target === "output") { return prior; }
-			prior[edge.target] = prior[edge.target] ||
-				nodes[edge.target].userValues
-					.map(val => PARAMS.string(val));
-			return prior;
-		},
-		{},
+	nodeUserValues: graph.reduce(
+		(prior: Map<string, Param[]>, edge) => (
+			edge.target === "output" || prior.has(edge.target)
+				? prior
+				: prior.set(
+					edge.target,
+					nodes[edge.target].userValues
+						.map(val => PARAMS.string(val)),
+				)
+		),
+		new Map(),
 	),
-	readyNodeInputs: graph.reduce<Dict<Param[]>>(
-		(prior, edge) => {
-			prior[edge.target] = [];
-			return prior;
-		},
-		{},
+	readyNodeInputs: graph.reduce(
+		(prior: Map<string, Param[]>, edge) => prior.set(edge.target, []),
+		new Map(),
 	),
-	readyNodeOutputs: {input: params},
+	readyNodeOutputs: new Map().set("input", params),
 	compositeGraph: [...graph],
 });
 
 const nodeHasAllInputs = (state: ExecState, nodeId: string): boolean => (
-	state.readyNodeInputs[nodeId].length >= state.nodeInputs[nodeId]
+	(state.readyNodeInputs.get(nodeId) || []).length >= (state.nodeInputs.get(nodeId) || 0)
 );
 
 const execIsFinished = (state: ExecState): boolean => (
 	nodeHasAllInputs(state, "output") ||
-	Object.keys(state.readyNodeOutputs).length === 0
+		Object.keys(state.readyNodeOutputs).length === 0
 );
 
 const finalizeNode = (state: ExecState, doc: Document, node: Node) => {
 	const primitive = PRIMITIVES[node.function];
 	const formula = doc.formulas[node.function];
 	if (primitive) {
-		state.readyNodeOutputs[node.id] = primitive.exec(
-			...patchArray(state.nodeUserValues[node.id], state.readyNodeInputs[node.id]),
+		state.readyNodeOutputs.set(
+			node.id,
+			primitive.exec(...patchArray(
+				state.nodeUserValues.get(node.id) || [],
+				state.readyNodeInputs.get(node.id) || [],
+			)),
 		);
 	} else {
 		if (formula) {
@@ -81,7 +84,7 @@ const finalizeNode = (state: ExecState, doc: Document, node: Node) => {
 				node.id,
 			);
 		} else {
-			state.readyNodeOutputs[node.id] = state.readyNodeInputs[node.id];
+			state.readyNodeOutputs.set(node.id, state.readyNodeInputs.get(node.id) || []);
 		}
 	}
 };
@@ -104,7 +107,7 @@ const mergeGraphs = (base: FormulaGraph, subgraph: FormulaGraph, nodeId: string)
 	return {...mergedBase, ...mergedSub};
 };
 
-const execFormula = (doc: Document, formulaId: string, ...params: Param[]) => {
+const execFormula = (doc: Document, formulaId: string, ...params: Param[]): Param[] => {
 	const {nodes, formulas} = doc;
 	const formula = formulas[formulaId];
 	const {graph} = formula;
@@ -115,17 +118,20 @@ const execFormula = (doc: Document, formulaId: string, ...params: Param[]) => {
 		if (!currentNodeId) { break; }
 		state.compositeGraph.map(edge => {
 			if (edge.source !== currentNodeId) { return; }
-			state.readyNodeInputs[edge.target][edge.data[1]] = (
-				state.readyNodeOutputs[edge.source][edge.data[0]]
-			);
+			const {source, target} = edge;
+			const [srcIndex, tgtIndex] = edge.data;
+			const outputs = state.readyNodeOutputs.get(source) || [];
+			const inputs = state.readyNodeInputs.get(target) || [];
+			inputs[tgtIndex] = outputs[srcIndex];
+			state.readyNodeInputs.set(target, inputs);
 			if (edge.target !== "output" && nodeHasAllInputs(state, edge.target)) {
 				finalizeNode(state, doc, doc.nodes[edge.target]);
 			}
 		});
-		delete state.readyNodeOutputs[currentNodeId];
+		state.readyNodeOutputs.delete(currentNodeId);
 	}
-	if (state.readyNodeInputs.output.length === state.nodeInputs.output) {
-		return state.readyNodeInputs.output;
+	if ((state.readyNodeInputs.get("output") || []).length === state.nodeInputs.get("output") || 0) {
+		return state.readyNodeInputs.get("output") || [];
 	} else {
 		return Array(formula.outputNames.length)
 			.fill(PARAMS.error("Could not resolve function"));
