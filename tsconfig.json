@@ -17,6 +17,7 @@
         "noUnusedParameters": true,
 
         "removeComments": true,
+        "preserveConstEnums": true,
         "sourceMap": true,
         "baseUrl": "./src",
         "rootDirs": [

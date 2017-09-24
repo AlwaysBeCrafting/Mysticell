@@ -17,11 +17,11 @@ const defaultState: Document = {
 
 const reducer = (state: Document = defaultState, action: Action): Document => {
 	switch (action.type) {
-		case ActionTypes.LOAD_DOCUMENT:
+		case ActionTypes.LOAD_DOCUMENT: {
 			return {...defaultState, ...action.payload.documentJson};
+		}
 
-		default:
-			return state;
+		default: return state;
 	}
 };
 

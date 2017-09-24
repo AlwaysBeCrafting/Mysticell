@@ -16,5 +16,5 @@ const loadDocument = (documentJson: Document): LoadDocumentAction => ({
 });
 
 
-export {loadDocument};
 export {Action, ActionTypes};
+export {loadDocument};
