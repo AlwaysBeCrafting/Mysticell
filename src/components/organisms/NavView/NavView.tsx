@@ -22,26 +22,42 @@ interface Props {
 }
 
 
-const NavView = (props: Props) => {
-	const isExpanded = (tree: Nav) => (
-		tree === props.nav ||
-		(isBranch(tree) && props.expandedNavItems.has(tree.value.id))
-	);
-	return (
-		<TreeView
-			className={classnames("navView", props.className)}
-			tree={collapse(props.nav, isExpanded)}
-			getKey={tree => isBranch(tree) ? tree.value.id : tree.value}
-			renderItem={renderItem(props.formulas)}
-		/>
-	);
-};
+const getItemKey = (tree: Nav) => isBranch(tree) ? tree.value.id : tree.value;
 
-const renderItem = (formulas: Dict<Formula>) => (tree: Nav) => (
-	isBranch(tree)
-		? renderDirItem(tree.value.name)
-		: renderEndItem(formulas[tree.value])
-);
+class NavView extends React.PureComponent<Props> {
+	private collapsedNav: Nav;
+
+	public componentWillReceiveProps(nextProps: Props) {
+		const {nav, expandedNavItems} = this.props;
+		if (nav !== nextProps.nav || expandedNavItems !== nextProps.expandedNavItems) {
+			this.collapsedNav = collapse(nextProps.nav, this.isExpanded);
+		}
+	}
+
+	public render() {
+		const props = this.props;
+		return (
+			<TreeView
+				className={classnames("navView", props.className)}
+				tree={this.collapsedNav}
+				getKey={getItemKey}
+				renderItem={this.renderItem}
+			/>
+		);
+	}
+
+	private renderItem = (tree: Nav) => (
+		isBranch(tree)
+			? renderDirItem(tree.value.name)
+			: renderEndItem(this.props.formulas[tree.value])
+	)
+
+	private isExpanded = (tree: Nav) => (
+		tree === this.props.nav ||
+		(isBranch(tree) && this.props.expandedNavItems.has(tree.value.id))
+	) || true
+}
+
 
 const renderDirItem = (name: string) => (
 	<div className="navView-item">
