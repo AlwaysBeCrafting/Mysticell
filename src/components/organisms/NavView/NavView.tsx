@@ -27,10 +27,14 @@ const getItemKey = (tree: Nav) => isBranch(tree) ? tree.value.id : tree.value;
 class NavView extends React.PureComponent<Props> {
 	private collapsedNav: Nav;
 
+	public componentWillMount() {
+		this.collapsedNav = this.collapseNav(this.props);
+	}
+
 	public componentWillReceiveProps(nextProps: Props) {
 		const {nav, expandedNavItems} = this.props;
 		if (nav !== nextProps.nav || expandedNavItems !== nextProps.expandedNavItems) {
-			this.collapsedNav = collapse(nextProps.nav, this.isExpanded);
+			this.collapsedNav = this.collapseNav(nextProps);
 		}
 	}
 
@@ -52,10 +56,10 @@ class NavView extends React.PureComponent<Props> {
 			: renderEndItem(this.props.formulas[tree.value])
 	)
 
-	private isExpanded = (tree: Nav) => (
-		tree === this.props.nav ||
-		(isBranch(tree) && this.props.expandedNavItems.has(tree.value.id))
-	) || true
+	private collapseNav = (props: Props): Nav => (
+		collapse(props.nav, branch => branch === props.nav ||
+		(isBranch(branch) && props.expandedNavItems.has(branch.value.id)))
+	)
 }
 
 
