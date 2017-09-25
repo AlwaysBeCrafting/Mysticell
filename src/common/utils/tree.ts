@@ -23,21 +23,26 @@ const collapse = <B, L>(tree: Tree<B, L>, isExpanded: Predicate<Tree<B, L>>): Tr
 		: tree
 );
 
+
 const map = <B, L, Bm, Lm>(
 	tree: Tree<B, L>,
-	mapBranch: (x: B) => Bm,
-	mapLeaf: (x: L) => Lm,
-): Tree<Bm, Lm> => (
-	isBranch(tree)
-		? {
-			value: mapBranch(tree.value),
+	mapBranch: (branch: B, path: B[]) => Bm,
+	mapLeaf: (leaf: L, path: B[]) => Lm,
+	path: B[] = [],
+): Tree<Bm, Lm> => {
+	if (isBranch(tree)) {
+		const compositeMap = [...path, tree.value];
+		return {
+			value: mapBranch(tree.value, path),
 			children: tree.children
-				.map(child => map(child, mapBranch, mapLeaf)),
-		}
-		: {
-			value: mapLeaf(tree.value),
-		}
-);
+				.map(child => map(child, mapBranch, mapLeaf, compositeMap)),
+		};
+	} else {
+		return {
+			value: mapLeaf(tree.value, path),
+		};
+	}
+};
 
 const mapBranches = <B, L, Bm>(tree: Tree<B, L>, mapFunc: (x: B) => Bm): Tree<Bm, L> => (
 	map(tree, mapFunc, x => x)

@@ -53,27 +53,36 @@ describe("trim(tree, predicate)", () => {
 });
 
 describe("map(tree, mapBranch, mapLeaf)", () => {
+	const mapBranch = jest.fn(_ => "mapped branch");
+	const mapLeaf = jest.fn(_ => "mapped leaf");
+	beforeEach(() => {
+		mapBranch.mockClear();
+		mapLeaf.mockClear();
+	});
 	it("calls mapBranch only on branch nodes", () => {
-		const mapBranch = jest.fn(_ => "mapped branch");
-		const mapLeaf = jest.fn(_ => "mapped leaf");
 		map(testTree, mapBranch, mapLeaf);
 		expect(mapBranch)
-			.toHaveBeenCalledWith("root");
+			.toHaveBeenCalledWith("root", expect.anything());
 		expect(mapBranch)
-			.toHaveBeenCalledWith("childB2");
+			.toHaveBeenCalledWith("childB2", expect.anything());
 		expect(mapBranch)
 			.not
-			.toHaveBeenCalledWith("childB1");
+			.toHaveBeenCalledWith("childB1", expect.anything());
 	});
 	it("calls mapLeaf only on branch nodes", () => {
-		const mapBranch = jest.fn(_ => "mapped branch");
-		const mapLeaf = jest.fn(_ => "mapped leaf");
 		map(testTree, mapBranch, mapLeaf);
 		expect(mapLeaf)
-			.toHaveBeenCalledWith("childA");
+			.toHaveBeenCalledWith("childA", expect.anything());
 		expect(mapLeaf)
 			.not
-			.toHaveBeenCalledWith("childB");
+			.toHaveBeenCalledWith("childB", expect.anything());
+	});
+	it("gives a complete path to both callbacks", () => {
+		map(testTree, mapBranch, mapLeaf);
+		expect(mapBranch)
+			.toHaveBeenCalledWith("childB2", ["root", "childB"]);
+		expect(mapLeaf)
+			.toHaveBeenCalledWith("childB2a", ["root", "childB", "childB2"]);
 	});
 });
 
@@ -83,7 +92,7 @@ describe("mapBranches(tree, mapBranch)", () => {
 		mapBranches(testTree, mapBranch);
 		expect(mapBranch)
 			.not
-			.toHaveBeenCalledWith("childA");
+			.toHaveBeenCalledWith("childA", expect.anything());
 	});
 });
 
@@ -93,7 +102,7 @@ describe("mapLeaves(tree, mapLeaf)", () => {
 		mapLeaves(testTree, mapLeaf);
 		expect(mapLeaf)
 			.not
-			.toHaveBeenCalledWith("childB");
+			.toHaveBeenCalledWith("childB", expect.anything());
 	});
 });
 
