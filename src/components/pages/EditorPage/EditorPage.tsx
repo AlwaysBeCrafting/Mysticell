@@ -81,9 +81,9 @@ const ProtoEditor = (props: Props) => {
 				<div className="editor-document">
 					<NavView
 						className="editor-document-nav"
-						nav={ nav }
-						formulas={ formulas }
-						expandedNavItems={ expandedNavItems }
+						nav={nav}
+						formulas={formulas}
+						expandedNavItems={expandedNavItems}
 					/>
 					<Route exact path="/:path+" render={renderFormula(formulas, nav)} />
 				</div>

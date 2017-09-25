@@ -19,7 +19,7 @@ const Item = (props: Props) => {
 			className="toolbar-item-icon"
 			title={menuItem.title}
 			src={menuItem.icon}
-			/>
+		/>
 	);
 
 	if (menuItem.render) {

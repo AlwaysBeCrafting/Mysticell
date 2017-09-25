@@ -38,6 +38,7 @@
     "ts-loader": "^2.3.7",
     "tslint": "^5.7.0",
     "tslint-language-service": "^0.9.6",
+    "tslint-react": "^3.2.0",
     "typescript": "^2.4.2",
     "url-loader": "^0.5.9",
     "webpack": "^3.5.5",

@@ -1,5 +1,5 @@
 {
-	"extends": "tslint:latest",
+	"extends": ["tslint:latest", "tslint-react"],
 	"defaultSeverity": "warning",
 	"rules": {
 		"align": [false],
@@ -12,6 +12,8 @@
 		"no-var-requires": true,
 		"object-literal-sort-keys": [false],
 		"only-arrow-functions": [true],
-		"quotemark": [true, "double", "jsx-double", "avoid-escape"]
+		"quotemark": [true, "double", "jsx-double", "avoid-escape"],
+		"jsx-no-multiline-js": false,
+		"jsx-boolean-value": [true, "never"]
 	}
 }
