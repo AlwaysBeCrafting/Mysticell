@@ -34,4 +34,5 @@ renderRoot();
 
 if ((process.env.NODE_ENV === "development") && module.hot) {
 	module.hot.accept("components/pages", renderRoot);
+	module.hot.accept("data/AppState", () => store.replaceReducer(reducer));
 }
