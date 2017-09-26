@@ -50,10 +50,10 @@ class NavView extends React.PureComponent<Props> {
 		);
 	}
 
-	private renderItem = (tree: Nav) => (
+	private renderItem = (tree: Nav, path: string[]) => (
 		isBranch(tree)
 			? renderDirItem(tree.value)
-			: renderEndItem(this.props.formulas[tree.value])
+			: renderEndItem(this.props.formulas[tree.value], path)
 	)
 
 	private collapseNav = (props: Props): Nav => (
@@ -72,10 +72,10 @@ const renderDirItem = (name: string) => (
 	</div>
 );
 
-const renderEndItem = (formula: Formula) => (
+const renderEndItem = (formula: Formula, path: string[]) => (
 	<div className="navView-item">
 		<img className="navView-item-icon icon" src={functionIcon} />
-		<Link className="navView-item-title" to={`/formula/${formula.id}`}>{formula.name}</Link>
+		<Link className="navView-item-title" to={`/${path.slice(1).join("/")}/${formula.name}`}>{formula.name}</Link>
 	</div>
 );
 

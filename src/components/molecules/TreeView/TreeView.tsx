@@ -9,7 +9,7 @@ import "./TreeView.scss";
 
 interface ItemFunctions<B, L> {
 	getKey: (tree: Tree<B, L>) => string;
-	renderItem: (tree: Tree<B, L>) => JSX.Element;
+	renderItem: (tree: Tree<B, L>, path: B[]) => JSX.Element;
 }
 
 interface Props<B, L> extends ItemFunctions<B, L> {
@@ -19,6 +19,7 @@ interface Props<B, L> extends ItemFunctions<B, L> {
 
 interface ItemProps<B, L> extends ItemFunctions<B, L> {
 	tree: Tree<B, L>;
+	path: B[];
 }
 
 const TreeView = <B, L = B>(props: Props<B, L>) => (
@@ -30,6 +31,7 @@ const TreeView = <B, L = B>(props: Props<B, L>) => (
 					tree={tree}
 					getKey={props.getKey}
 					renderItem={props.renderItem}
+					path={["root"]}
 				/>
 			))
 		}
@@ -38,7 +40,7 @@ const TreeView = <B, L = B>(props: Props<B, L>) => (
 
 class Item<B, L> extends React.PureComponent<ItemProps<B, L>> {
 	public render(): JSX.Element {
-		const {tree, getKey, renderItem} = this.props;
+		const {tree, path, getKey, renderItem} = this.props;
 		const childrenElem: boolean | JSX.Element = isBranch(tree) && (
 			<ul className="treeView-item-children">
 				{
@@ -48,6 +50,7 @@ class Item<B, L> extends React.PureComponent<ItemProps<B, L>> {
 							tree={child}
 							getKey={getKey}
 							renderItem={renderItem}
+							path={[...path, tree.value]}
 						/>
 					))
 				}
@@ -56,7 +59,7 @@ class Item<B, L> extends React.PureComponent<ItemProps<B, L>> {
 		return (
 			<li className="treeView-item">
 				<span className="treeView-item-body">
-					{renderItem(tree)}
+					{renderItem(tree, path)}
 				</span>
 				{childrenElem}
 			</li>
