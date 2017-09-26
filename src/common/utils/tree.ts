@@ -1,27 +1,20 @@
-import {isBranch, Predicate, Tree} from "common/types";
+import {isBranch, isLeaf, Tree} from "common/types";
 
 
-const trim = <B, L>(tree: Tree<B, L>, shouldKeep: Predicate<Tree<B, L>>): Tree<B, L> => (
-	isBranch(tree)
-		? {
-			value: tree.value,
-			children: tree.children
-				.filter(shouldKeep)
-				.map(child => trim(child, shouldKeep)),
-		}
-		: tree
-);
+type CollapseCallback = <B, L>(tree: Tree<B, L>, path: B[]) => boolean;
 
-const collapse = <B, L>(tree: Tree<B, L>, isExpanded: Predicate<Tree<B, L>>): Tree<B, L> => (
-	isBranch(tree)
-		? {
-			value: tree.value,
-			children: isExpanded(tree)
-				? tree.children.map(child => collapse(child, isExpanded))
-				: [],
-		}
-		: tree
-);
+const collapse = <B, L>(tree: Tree<B, L>, isExpanded: CollapseCallback, path: B[] = []): Tree<B, L> => {
+	if (isLeaf(tree)) { return tree; }
+	const collapseChild = (child: Tree<B, L>): Tree<B, L> => (
+		collapse(child, isExpanded, [...path, tree.value])
+	);
+	return {
+		value: tree.value,
+		children: isExpanded(tree, path)
+			? tree.children.map(collapseChild)
+			: [],
+	};
+};
 
 
 const map = <B, L, Bm, Lm>(
@@ -69,4 +62,4 @@ const resolvePath = <B, L, P>(tree: Tree<B, L>, path: P[], compare: TreeComparat
 };
 
 
-export {collapse, map, mapBranches, mapLeaves, resolvePath, trim};
+export {collapse, map, mapBranches, mapLeaves, resolvePath};
