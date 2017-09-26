@@ -34,39 +34,6 @@ const navItem: MenuItem = {
 	title: "Nav",
 };
 
-const renderNav = (nav: Nav, formulas: Dict<Formula>, expandedNavItems: Set<string>) => (
-	(routeProps: RouteComponentProps<{path: string}>) => {
-		return (
-			<NavView
-				className="editor-document-nav"
-				nav={nav}
-				formulas={formulas}
-				expandedNavItems={expandedNavItems}
-				selectedNavItem={`root/${routeProps.match.params.path}`}
-			/>
-		);
-	}
-);
-
-const renderFormula = (formulas: Dict<Formula>, nav: Nav) => (
-	(routeProps: RouteComponentProps<{path: string}>) => {
-		const segments = routeProps.match.params.path.split("/");
-		const formula = pathToFormula(formulas, nav, segments);
-		return formula
-			? (
-				<FormulaView
-					className="editor-document-content"
-					formula={formula}
-				/>
-			)
-			: (
-				<div className="editor-document-error">
-					No formula exists at /{routeProps.match.params.path}.
-				</div>
-			);
-	}
-);
-
 const demoMenuItems: MenuItem[] = [
 	{id: "MENU-file", title: "File", childItems: []},
 	{id: "MENU-edit", title: "Edit", childItems: []},
@@ -81,25 +48,54 @@ const toolbarItems: MenuItem[] = [
 	},
 ];
 
-const ProtoEditor = (props: Props) => {
-	const {title, nav, formulas, expandedNavItems} = props;
-	return (
-		<Router>
-			<main className="editor">
-				<Toolbar
-					title={title}
-					className="editor-appbar mod-inverted"
-					navItem={navItem}
-					items={toolbarItems}
+class ProtoEditor extends React.PureComponent<Props> {
+	public render() {
+		const {title} = this.props;
+		return (
+			<Router>
+				<main className="editor">
+					<Toolbar
+						title={title}
+						className="editor-appbar mod-inverted"
+						navItem={navItem}
+						items={toolbarItems}
+					/>
+					<div className="editor-document">
+						<Route exact path="/:path+" render={this.renderNav} />
+						<Route exact path="/:path+" render={this.renderFormula} />
+					</div>
+				</main>
+			</Router>
+		);
+	}
+
+	private renderNav = (routeProps: RouteComponentProps<{path: string}>) =>  (
+		<NavView
+			className="editor-document-nav"
+			nav={this.props.nav}
+			formulas={this.props.formulas}
+			expandedNavItems={this.props.expandedNavItems}
+			selectedNavItem={`root/${routeProps.match.params.path}`}
+		/>
+	)
+
+	private renderFormula = (routeProps: RouteComponentProps<{path: string}>) => {
+		const segments = routeProps.match.params.path.split("/");
+		const formula = pathToFormula(this.props.formulas, this.props.nav, segments);
+		return formula
+			? (
+				<FormulaView
+					className="editor-document-content"
+					formula={formula}
 				/>
-				<div className="editor-document">
-					<Route exact path="/:path+" render={renderNav(nav, formulas, expandedNavItems)} />
-					<Route exact path="/:path+" render={renderFormula(formulas, nav)} />
+			)
+			: (
+				<div className="editor-document-error">
+					No formula exists at /{routeProps.match.params.path}.
 				</div>
-			</main>
-		</Router>
-	);
-};
+			);
+	}
+}
 
 const EditorPage = connect<StateProps, DispatchProps, {}>(
 	(state: AppState) => ({
