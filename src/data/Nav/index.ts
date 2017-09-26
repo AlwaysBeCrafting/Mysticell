@@ -1,2 +1,2 @@
-export {Nav, NavBranch} from "./model";
+export {Nav} from "./model";
 export {pathToFormula} from "./utils";

@@ -22,7 +22,7 @@ interface Props {
 }
 
 
-const getItemKey = (tree: Nav) => isBranch(tree) ? tree.value.id : tree.value;
+const getItemKey = (tree: Nav) => tree.value;
 
 class NavView extends React.PureComponent<Props> {
 	private collapsedNav: Nav;
@@ -52,13 +52,15 @@ class NavView extends React.PureComponent<Props> {
 
 	private renderItem = (tree: Nav) => (
 		isBranch(tree)
-			? renderDirItem(tree.value.name)
+			? renderDirItem(tree.value)
 			: renderEndItem(this.props.formulas[tree.value])
 	)
 
 	private collapseNav = (props: Props): Nav => (
-		collapse(props.nav, branch => branch === props.nav ||
-		(isBranch(branch) && props.expandedNavItems.has(branch.value.id)))
+		collapse(props.nav, (branch, path) => (
+			branch === props.nav ||
+			props.expandedNavItems.has(`${path.join("/")}/${branch.value}`)
+		))
 	)
 }
 

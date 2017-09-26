@@ -4,7 +4,7 @@ import {UiState} from "./model";
 type Action = any;
 
 const defaultState: UiState = {
-	expandedNavItems: new Set(["NAV-0001"]),
+	expandedNavItems: new Set(["root/Abilities"]),
 };
 
 const reducer = (state: UiState = defaultState, action: Action): UiState => {

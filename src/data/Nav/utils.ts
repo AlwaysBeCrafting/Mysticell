@@ -9,9 +9,7 @@ const pathToFormula = (formulas: Dict<Formula>, nav: Nav, path: string[]): Formu
 	const formulaBranch = resolvePath(
 		nav,
 		path.slice(0, -1),
-		(tree, segment) => (
-			(isBranch(tree) ? tree.value.name : tree.value) === segment
-		),
+		(tree, segment) => tree.value === segment,
 	);
 	const [formulaName] = path.slice(-1);
 
