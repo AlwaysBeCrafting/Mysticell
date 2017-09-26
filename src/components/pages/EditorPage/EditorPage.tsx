@@ -34,6 +34,20 @@ const navItem: MenuItem = {
 	title: "Nav",
 };
 
+const renderNav = (nav: Nav, formulas: Dict<Formula>, expandedNavItems: Set<string>) => (
+	(routeProps: RouteComponentProps<{path: string}>) => {
+		return (
+			<NavView
+				className="editor-document-nav"
+				nav={nav}
+				formulas={formulas}
+				expandedNavItems={expandedNavItems}
+				selectedNavItem={`root/${routeProps.match.params.path}`}
+			/>
+		);
+	}
+);
+
 const renderFormula = (formulas: Dict<Formula>, nav: Nav) => (
 	(routeProps: RouteComponentProps<{path: string}>) => {
 		const segments = routeProps.match.params.path.split("/");
@@ -79,12 +93,7 @@ const ProtoEditor = (props: Props) => {
 					items={toolbarItems}
 				/>
 				<div className="editor-document">
-					<NavView
-						className="editor-document-nav"
-						nav={nav}
-						formulas={formulas}
-						expandedNavItems={expandedNavItems}
-					/>
+					<Route exact path="/:path+" render={renderNav(nav, formulas, expandedNavItems)} />
 					<Route exact path="/:path+" render={renderFormula(formulas, nav)} />
 				</div>
 			</main>

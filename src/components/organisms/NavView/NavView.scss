@@ -13,6 +13,12 @@
 		flex-flow: row nowrap;
 		padding: 0 $dimen-keyline-padding;
 		align-items: center;
+		color: inherit;
+		text-decoration: inherit;
+	}
+
+	.navView-item.is-selected {
+		font-weight: bold;
 	}
 
 	.navView-item:hover {

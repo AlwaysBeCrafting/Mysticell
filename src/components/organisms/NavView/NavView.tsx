@@ -19,6 +19,7 @@ interface Props {
 	formulas: Dict<Formula>;
 	nav: Nav;
 	expandedNavItems: Set<string>;
+	selectedNavItem: string;
 }
 
 
@@ -53,7 +54,11 @@ class NavView extends React.PureComponent<Props> {
 	private renderItem = (tree: Nav, path: string[]) => (
 		isBranch(tree)
 			? renderDirItem(tree.value)
-			: renderEndItem(this.props.formulas[tree.value], path)
+			: renderEndItem(
+				this.props.formulas[tree.value],
+				path,
+				this.props.selectedNavItem === `${path.join("/")}/${this.props.formulas[tree.value].name}`,
+			)
 	)
 
 	private collapseNav = (props: Props): Nav => (
@@ -64,7 +69,6 @@ class NavView extends React.PureComponent<Props> {
 	)
 }
 
-
 const renderDirItem = (name: string) => (
 	<div className="navView-item">
 		<span className="navView-item-icon icon">arrow_drop_down</span>
@@ -72,11 +76,17 @@ const renderDirItem = (name: string) => (
 	</div>
 );
 
-const renderEndItem = (formula: Formula, path: string[]) => (
-	<div className="navView-item">
+const renderEndItem = (formula: Formula, path: string[], isSelected: boolean) => (
+	<Link
+		className={classnames({
+			"navView-item": true,
+			"is-selected": isSelected,
+		})}
+		to={`/${path.slice(1).join("/")}/${formula.name}`}
+	>
 		<img className="navView-item-icon icon" src={functionIcon} />
-		<Link className="navView-item-title" to={`/${path.slice(1).join("/")}/${formula.name}`}>{formula.name}</Link>
-	</div>
+		<div className="navView-item-title">{formula.name}</div>
+	</Link>
 );
 
 
