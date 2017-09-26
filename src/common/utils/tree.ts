@@ -1,9 +1,9 @@
 import {isBranch, isLeaf, Tree} from "common/types";
 
 
-type CollapseCallback = <B, L>(tree: Tree<B, L>, path: B[]) => boolean;
+type CollapseCallback<B, L> = (tree: Tree<B, L>, path: B[]) => boolean;
 
-const collapse = <B, L>(tree: Tree<B, L>, isExpanded: CollapseCallback, path: B[] = []): Tree<B, L> => {
+const collapse = <B, L>(tree: Tree<B, L>, isExpanded: CollapseCallback<B, L>, path: B[] = []): Tree<B, L> => {
 	if (isLeaf(tree)) { return tree; }
 	const collapseChild = (child: Tree<B, L>): Tree<B, L> => (
 		collapse(child, isExpanded, [...path, tree.value])

@@ -5,7 +5,7 @@ import {Formula} from "data/Formula";
 import {Nav} from "data/Nav";
 
 
-const pathToFormula = (formulas: Dict<Formula>, nav: Nav, path: string[]) => {
+const pathToFormula = (formulas: Dict<Formula>, nav: Nav, path: string[]): Formula | undefined => {
 	const formulaBranch = resolvePath(
 		nav,
 		path.slice(0, -1),
