@@ -38,6 +38,7 @@
 
 		.navView-item-icon.mod-dropdown {
 			transform: rotate(-90deg);
+			transition: transform 120ms;
 		}
 
 		.navView-item-icon.mod-dropdown.is-expanded {

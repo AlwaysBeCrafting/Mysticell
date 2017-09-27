@@ -1,21 +1,29 @@
 import classnames from "classnames";
 import React from "react";
+import {connect} from "react-redux";
 import {Link} from "react-router-dom";
+import {Dispatch} from "redux";
 
 import {Dict, isBranch} from "common/types";
 import {collapse} from "common/utils";
 
 import {TreeView} from "components/molecules";
 
+import {Action} from "data/AppState";
 import {Formula} from "data/Formula";
 import {Nav} from "data/Nav";
+import {toggleNavItem} from "data/UiState";
 
 import functionIcon from "./assets/icon-function.svg";
 import propertyIcon from "./assets/icon-property.svg";
 import "./NavView.scss";
 
 
-interface Props {
+interface DispatchProps {
+	dispatch: Dispatch<Action>;
+}
+
+interface OwnProps {
 	className?: string;
 	formulas: Dict<Formula>;
 	nav: Nav;
@@ -23,10 +31,14 @@ interface Props {
 	selectedNavItem: string;
 }
 
+type Props =
+	& DispatchProps
+	& OwnProps;
+
 
 const getItemKey = (tree: Nav) => tree.value;
 
-class NavView extends React.PureComponent<Props> {
+class ProtoNavView extends React.PureComponent<Props> {
 	private collapsedNav: Nav;
 
 	public componentWillMount() {
@@ -54,8 +66,8 @@ class NavView extends React.PureComponent<Props> {
 
 	private renderItem = (tree: Nav, path: string[]) => (
 		isBranch(tree)
-			? renderDirItem(tree.value)
-			: renderEndItem(
+			? this.renderDirItem(tree.value, path)
+			: this.renderEndItem(
 				this.props.formulas[tree.value],
 				path,
 				this.props.selectedNavItem === `${path.join("/")}/${this.props.formulas[tree.value].name}`,
@@ -68,33 +80,58 @@ class NavView extends React.PureComponent<Props> {
 			props.expandedNavItems.has(`${path.join("/")}/${branch.value}`)
 		))
 	)
-}
 
-const renderDirItem = (name: string) => (
-	<div className="navView-item">
-		<span className="navView-item-icon icon">arrow_drop_down</span>
-		<span className="navView-item-title">{name}</span>
-	</div>
-);
+	private toggleBranchItemExpanded = (event: React.MouseEvent<HTMLDivElement>) => {
+		const path = event.currentTarget.getAttribute("data-path");
+		const name = event.currentTarget.getAttribute("data-name");
+		this.props.dispatch(toggleNavItem(`${path}/${name}`));
+	}
 
-const renderEndItem = (formula: Formula, path: string[], isSelected: boolean) => (
-	<Link
-		className={classnames(
-			"navView-item",
-			{ "is-selected": isSelected },
-		)}
-		to={`/${path.slice(1).join("/")}/${formula.name}`}
-	>
-		<img
+	private renderDirItem = (name: string, path: string[]) => (
+		<div
+			className="navView-item"
+			data-path={path.join("/")}
+			data-name={name}
+			onClick={this.toggleBranchItemExpanded}
+		>
+			<span
+				className={classnames(
+					"navView-item-icon",
+					"icon",
+					"mod-dropdown",
+					{ "is-expanded": this.props.expandedNavItems.has(`${path.join("/")}/${name}`) })}
+			>
+				arrow_drop_down
+			</span>
+			<span className="navView-item-title">{name}</span>
+		</div>
+	)
+
+	private renderEndItem = (formula: Formula, path: string[], isSelected: boolean) => (
+		<Link
 			className={classnames(
-				"navView-item-icon icon",
+				"navView-item",
 				{ "is-selected": isSelected },
 			)}
-			src={formula.isProperty ? propertyIcon : functionIcon}
-		/>
-		<div className="navView-item-title">{formula.name}</div>
-	</Link>
-);
+			to={`/${path.slice(1).join("/")}/${formula.name}`}
+		>
+			<img
+				className={classnames(
+					"navView-item-icon icon",
+					{ "is-selected": isSelected },
+				)}
+				src={formula.isProperty ? propertyIcon : functionIcon}
+			/>
+			<div className="navView-item-title">{formula.name}</div>
+		</Link>
+	)
+}
+
+
+const NavView = connect<{}, DispatchProps, OwnProps>(
+	() => ({}),
+	(dispatch: Dispatch<Action>) => ({ dispatch }),
+)(ProtoNavView);
 
 
 export {NavView};
