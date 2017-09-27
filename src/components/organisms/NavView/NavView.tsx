@@ -11,6 +11,7 @@ import {Formula} from "data/Formula";
 import {Nav} from "data/Nav";
 
 import functionIcon from "./assets/icon-function.svg";
+import propertyIcon from "./assets/icon-property.svg";
 import "./NavView.scss";
 
 
@@ -78,13 +79,19 @@ const renderDirItem = (name: string) => (
 
 const renderEndItem = (formula: Formula, path: string[], isSelected: boolean) => (
 	<Link
-		className={classnames({
-			"navView-item": true,
-			"is-selected": isSelected,
-		})}
+		className={classnames(
+			"navView-item",
+			{ "is-selected": isSelected },
+		)}
 		to={`/${path.slice(1).join("/")}/${formula.name}`}
 	>
-		<img className="navView-item-icon icon" src={functionIcon} />
+		<img
+			className={classnames(
+				"navView-item-icon icon",
+				{ "is-selected": isSelected },
+			)}
+			src={formula.isProperty ? propertyIcon : functionIcon}
+		/>
 		<div className="navView-item-title">{formula.name}</div>
 	</Link>
 );

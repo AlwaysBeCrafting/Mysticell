@@ -29,8 +29,12 @@
 			flex: 0 0 $dimen-icon-size;
 			font-size: $dimen-icon-size;
 			font-family: Material Icons;
-			opacity: 0.8;
+			opacity: 0.6;
 		}
+
+			.navView-item-icon.is-selected {
+				opacity: 0.8;
+			}
 
 		.navView-item-icon.mod-dropdown {
 			transform: rotate(-90deg);
