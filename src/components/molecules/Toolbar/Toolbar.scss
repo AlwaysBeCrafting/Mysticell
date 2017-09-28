@@ -9,7 +9,6 @@ $dimen-title-margin-afterNav: $dimen-keyline-content - ($dimen-toolbar-size + $d
 
 
 .toolbar {
-	flex: 0 0 $dimen-toolbar-size;
 	display: flex;
 	flex-flow: row nowrap;
 	justify-content: flex-start;

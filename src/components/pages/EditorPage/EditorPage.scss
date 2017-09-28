@@ -9,6 +9,7 @@
 	color: $color-text-primary;
 }
 	.editor-appbar {
+		flex: 0 0 $dimen-toolbar-size;
 		@include elevation(4px);
 
 		background: $color-brand-primary;
