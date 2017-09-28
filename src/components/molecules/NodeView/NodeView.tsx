@@ -13,41 +13,50 @@ interface Props {
 	node: Node;
 	connectedInputs: number[];
 	nodeFunction: NodeFunction;
+	onUserValueChange: (nodeId: string, index: number, value: string) => void;
 }
 
-const NodeView = (props: Props) => {
-	const {position, node, connectedInputs, nodeFunction} = props;
-	const name = node.label || nodeFunction.name;
-	const pinRowCount = nodeFunction.inputNames.length + nodeFunction.outputNames.length;
-	return (
-		<Card className="nodeView" style={makeStyle(position, pinRowCount)}>
-			<header className="nodeView-headerRow nodeView-row">
-				<span className="nodeView-headerRow-name">{name}</span>
-			</header>
-			{nodeFunction.outputNames.map(outputName => (
-				<PinRow
-					type="src"
-					name={outputName}
-					computedValue={PARAMS.string("")}
-					key={outputName}
-				/>
-			))}
-			{nodeFunction.inputNames.map((inputName, index) => {
-				const isConnected = connectedInputs.indexOf(index) > -1;
-				return (
+class NodeView extends React.PureComponent<Props> {
+	public render() {
+		const {position, node, connectedInputs, nodeFunction} = this.props;
+		const name = node.label || nodeFunction.name;
+		const pinRowCount = nodeFunction.inputNames.length + nodeFunction.outputNames.length;
+		return (
+			<Card className="nodeView" style={makeStyle(position, pinRowCount)}>
+				<header className="nodeView-headerRow nodeView-row">
+					<span className="nodeView-headerRow-name">{name}</span>
+				</header>
+				{nodeFunction.outputNames.map(outputName => (
 					<PinRow
-						type="dst"
-						name={inputName}
-						isConnected={isConnected}
-						userValue={node.userValues[index]}
-						param={PARAMS.empty()}
-						key={inputName}
+						type="src"
+						name={outputName}
+						computedValue={PARAMS.string("")}
+						key={outputName}
 					/>
-				);
-			})}
-		</Card>
-	);
-};
+				))}
+				{nodeFunction.inputNames.map((inputName, index) => {
+					const isConnected = connectedInputs.indexOf(index) > -1;
+					return (
+						<PinRow
+							type="dst"
+							name={inputName}
+							isConnected={isConnected}
+							userValue={node.userValues[index]}
+							param={PARAMS.empty()}
+							index={index}
+							key={inputName}
+							onChange={this.onUserValueChange}
+						/>
+					);
+				})}
+			</Card>
+		);
+	}
+
+	private onUserValueChange = (index: number, value: string) => {
+		this.props.onUserValueChange(this.props.node.id, index, value);
+	}
+}
 
 const makeStyle = (position: [number, number], pinRowCount: number) => ({
 	gridRow: `${position[1] + 1} / span ${pinRowCount + 1}`,

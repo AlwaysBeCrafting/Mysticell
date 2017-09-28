@@ -21,27 +21,41 @@ interface DstProps extends AlwaysProps {
 	isConnected: boolean;
 	param: Param;
 	userValue: string;
+	index: number;
+	onChange?: (index: number, value: string) => void;
 }
 
 type Props = SrcProps | DstProps;
 
-const PinRow = (props: Props) => {
-	const {name, type, className} = props;
-	return (
-		<div
-			className={classNames(`pinRow ${type}PinRow`, className)}
-			key={name}
-		>
-			<div className={`pinRow-pin ${type}PinRow-pin`} />
-			<label className="pinRow-label">{name}</label>
-			{
-				props.type === "dst"
-					&& !props.isConnected
-					&& <input className="pinRow-value" value={props.userValue} />
-			}
-		</div>
-	);
-};
+class PinRow extends React.PureComponent<Props> {
+	public render() {
+		const {name, type, className} = this.props;
+		return (
+			<div
+				className={classNames(`pinRow ${type}PinRow`, className)}
+				key={name}
+			>
+				<div className={`pinRow-pin ${type}PinRow-pin`} />
+				<label className="pinRow-label">{name}</label>
+				{
+					this.props.type === "dst"
+						&& !this.props.isConnected
+						&& <input
+							className="pinRow-value"
+							value={this.props.userValue}
+							onChange={this.onChange}
+						/>
+				}
+			</div>
+		);
+	}
+
+	private onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		if (this.props.type === "dst" && this.props.onChange) {
+			this.props.onChange(this.props.index, event.currentTarget.value);
+		}
+	}
+}
 
 
 export {PinRow};

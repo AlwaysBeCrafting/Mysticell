@@ -36,6 +36,7 @@ const Panel = (props: Props) => {
 							isConnected={connectedInputs.indexOf(index) > -1}
 							param={PARAMS.empty()}
 							userValue={""}
+							index={index}
 							key={name}
 						/>
 					)

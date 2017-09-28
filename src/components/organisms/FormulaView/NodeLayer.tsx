@@ -1,62 +1,83 @@
 import classNames from "classnames";
 import React from "react";
+import {connect} from "react-redux";
 
 import {Dict} from "common/types";
 
 import {NodeView} from "components/molecules";
 
-import {Formula} from "data/Formula/model";
-import {Node} from "data/Node/model";
-import {PRIMITIVES} from "data/Primitive/constants";
+import {Formula} from "data/Formula";
+import {Node, setUserValue} from "data/Node";
+import {PRIMITIVES} from "data/Primitive";
 import {connectedInputs} from "data/utils";
 
 import "./NodeLayer.scss";
 
 
-interface Props {
+interface DispatchProps {
+	changeUserValue: (nodeId: string, index: number, value: string) => void;
+}
+
+interface OwnProps {
 	formula: Formula;
 	formulas: Dict<Formula>;
 	nodes: Dict<Node>;
 	className?: string;
 }
 
-const NodeLayer = (props: Props) => {
-	const {formula, className} = props;
-	const formulaNodes = Object.keys(formula.layout);
+type Props =
+	& DispatchProps
+	& OwnProps;
 
-	return (
-		<div className={classNames("nodeLayer", className)}>
-			{formulaNodes.map(renderNode(props))}
-		</div>
-	);
-};
+class ProtoNodeLayer extends React.PureComponent<Props> {
+	public render() {
+		const {formula, className} = this.props;
+		const formulaNodes = Object.keys(formula.layout);
 
-const renderNode = (props: Props) => (nodeId: string) => {
-	const {formula, formulas, nodes} = props;
-	const {graph} = formula;
-	const node = nodes[nodeId];
-
-	if (!node) {
-		throw new Error(`No node ${nodeId} exists`);
+		return (
+			<div className={classNames("nodeLayer", className)}>
+				{formulaNodes.map(this.renderNode)}
+			</div>
+		);
 	}
 
-	const position = formula.layout[nodeId] || [0, 0];
-	const nodeFunction = formulas[node.function] || PRIMITIVES[node.function];
+	public renderNode = (nodeId: string) => {
+		const {formula, formulas, nodes} = this.props;
+		const {graph} = formula;
+		const node = nodes[nodeId];
 
-	if (!nodeFunction) {
-		throw new Error(`No function ${nodeFunction} exists`);
+		if (!node) {
+			throw new Error(`No node ${nodeId} exists`);
+		}
+
+		const position = formula.layout[nodeId] || [0, 0];
+		const nodeFunction = formulas[node.function] || PRIMITIVES[node.function];
+
+		if (!nodeFunction) {
+			throw new Error(`No function ${nodeFunction} exists`);
+		}
+
+		return (
+			<NodeView
+				node={node}
+				position={position}
+				nodeFunction={nodeFunction}
+				connectedInputs={connectedInputs(graph, nodeId)}
+				key={nodeId}
+				onUserValueChange={this.props.changeUserValue}
+			/>
+		);
 	}
+}
 
-	return (
-		<NodeView
-			node={node}
-			position={position}
-			nodeFunction={nodeFunction}
-			connectedInputs={connectedInputs(graph, nodeId)}
-			key={nodeId}
-		/>
-	);
-};
+const NodeLayer = connect<{}, DispatchProps, OwnProps>(
+	() => ({}),
+	dispatch => ({
+		changeUserValue: (nodeId: string, index: number, value: string) => {
+			dispatch(setUserValue(nodeId, index, value));
+		},
+	}),
+)(ProtoNodeLayer);
 
 
 export {NodeLayer};

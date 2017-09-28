@@ -17,7 +17,7 @@ const reducer = (state: Dict<Node> = {}, action: Action): Dict<Node> => {
 			delete nodes[action.payload.nodeId];
 			return nodes;
 		}
-		case ActionTypes.SET_INPUT_VALUE: {
+		case ActionTypes.SET_USER_VALUE: {
 			const node = {...state[action.payload.nodeId]};
 			node.userValues = [...node.userValues];
 			node.userValues[action.payload.index] = action.payload.value;

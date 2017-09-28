@@ -2,14 +2,14 @@ import {Node} from "./model";
 
 
 const enum ActionTypes {
-	CREATE          = "[Node] Create",
-	DESTROY         = "[Node] Destroy",
-	SET_INPUT_VALUE = "[Node] Set input value",
+	CREATE         = "[Node] Create",
+	DESTROY        = "[Node] Destroy",
+	SET_USER_VALUE = "[Node] Set user value",
 }
 type Action =
 	| CreateAction
 	| DestroyAction
-	| SetInputValueAction;
+	| SetUserValueAction;
 
 interface CreateAction {
 	readonly type: ActionTypes.CREATE;
@@ -29,15 +29,15 @@ const destroy = (nodeId: string): DestroyAction => ({
 	payload: {nodeId},
 });
 
-interface SetInputValueAction {
-	readonly type: ActionTypes.SET_INPUT_VALUE;
+interface SetUserValueAction {
+	readonly type: ActionTypes.SET_USER_VALUE;
 	payload: {nodeId: string, index: number, value: string};
 }
-const setInputValue = (nodeId: string, index: number, value: string): SetInputValueAction => ({
-	type: ActionTypes.SET_INPUT_VALUE,
+const setUserValue = (nodeId: string, index: number, value: string): SetUserValueAction => ({
+	type: ActionTypes.SET_USER_VALUE,
 	payload: {nodeId, index, value},
 });
 
 
 export {Action, ActionTypes};
-export {create, destroy, setInputValue};
+export {create, destroy, setUserValue};
