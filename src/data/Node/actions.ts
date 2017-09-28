@@ -1,3 +1,5 @@
+import {TypedAction} from "data/common";
+
 import {Node} from "./model";
 
 
@@ -15,38 +17,34 @@ type Action =
 
 	| SetUserValueAsyncAction;
 
-interface CreateAction {
-	readonly type: ActionTypes.CREATE;
+interface CreateAction extends TypedAction<ActionTypes.CREATE> {
 	payload: {node: Node};
 }
-const create = (node: Node): CreateAction => ({
+const create = (node: Node): Action => ({
 	type: ActionTypes.CREATE,
 	payload: {node},
 });
 
-interface DestroyAction {
-	readonly type: ActionTypes.DESTROY;
+interface DestroyAction extends TypedAction<ActionTypes.DESTROY> {
 	payload: {nodeId: string};
 }
-const destroy = (nodeId: string): DestroyAction => ({
+const destroy = (nodeId: string): Action => ({
 	type: ActionTypes.DESTROY,
 	payload: {nodeId},
 });
 
-interface SetUserValueAction {
-	readonly type: ActionTypes.SET_USER_VALUE;
+interface SetUserValueAction extends TypedAction<ActionTypes.SET_USER_VALUE> {
 	payload: {nodeId: string, index: number, value: string};
 }
-const setUserValue = (nodeId: string, index: number, value: string): SetUserValueAction => ({
+const setUserValue = (nodeId: string, index: number, value: string): Action => ({
 	type: ActionTypes.SET_USER_VALUE,
 	payload: {nodeId, index, value},
 });
 
-interface SetUserValueAsyncAction {
-	readonly type: ActionTypes.SET_USER_VALUE_ASYNC;
+interface SetUserValueAsyncAction extends TypedAction<ActionTypes.SET_USER_VALUE_ASYNC> {
 	payload: {nodeId: string, index: number, value: string};
 }
-const setUserValueAsync = (nodeId: string, index: number, value: string): SetUserValueAsyncAction => ({
+const setUserValueAsync = (nodeId: string, index: number, value: string): Action => ({
 	type: ActionTypes.SET_USER_VALUE_ASYNC,
 	payload: {nodeId, index, value},
 });

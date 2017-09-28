@@ -1,4 +1,4 @@
-import {Param} from "data/common";
+import {Param, TypedAction} from "data/common";
 
 
 const enum ActionTypes {
@@ -7,11 +7,10 @@ const enum ActionTypes {
 type Action =
 	| UpdateOutputValuesAction;
 
-interface UpdateOutputValuesAction {
-	readonly type: ActionTypes.UPDATE_OUTPUT_VALUES;
+interface UpdateOutputValuesAction extends TypedAction<ActionTypes.UPDATE_OUTPUT_VALUES> {
 	payload: {nodeId: string, outputValues: Param[]};
 }
-const updateOutputValues = (nodeId: string, outputValues: Param[]) => ({
+const updateOutputValues = (nodeId: string, outputValues: Param[]): Action => ({
 	type: ActionTypes.UPDATE_OUTPUT_VALUES,
 	payload: {nodeId, outputValues},
 });

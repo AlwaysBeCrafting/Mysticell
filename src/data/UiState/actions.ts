@@ -1,3 +1,6 @@
+import {TypedAction} from "data/common";
+
+
 const enum ActionTypes {
 	COLLAPSE_ALL_NAV_ITEMS = "[Nav View] Collapse all",
 	EXPAND_NAV_ITEM        = "[Nav View] Expand item",
@@ -8,27 +11,23 @@ type Action =
 	| ExpandNavItemAction
 	| ToggleNavItemAction;
 
-interface CollapseAllNavItemsAction {
-	readonly type: ActionTypes.COLLAPSE_ALL_NAV_ITEMS;
-}
-const collapseAllNavItems = (): CollapseAllNavItemsAction => ({
+interface CollapseAllNavItemsAction extends TypedAction<ActionTypes.COLLAPSE_ALL_NAV_ITEMS> {}
+const collapseAllNavItems = (): Action => ({
 	type: ActionTypes.COLLAPSE_ALL_NAV_ITEMS,
 });
 
-interface ExpandNavItemAction {
-	readonly type: ActionTypes.EXPAND_NAV_ITEM;
+interface ExpandNavItemAction extends TypedAction<ActionTypes.EXPAND_NAV_ITEM> {
 	payload: { path: string };
 }
-const expandNavItem = (path: string): ExpandNavItemAction => ({
+const expandNavItem = (path: string): Action => ({
 	type: ActionTypes.EXPAND_NAV_ITEM,
 	payload: { path },
 });
 
-interface ToggleNavItemAction {
-	readonly type: ActionTypes.TOGGLE_NAV_ITEM;
+interface ToggleNavItemAction extends TypedAction<ActionTypes.TOGGLE_NAV_ITEM> {
 	payload: { path: string };
 }
-const toggleNavItem = (path: string): ToggleNavItemAction => ({
+const toggleNavItem = (path: string): Action => ({
 	type: ActionTypes.TOGGLE_NAV_ITEM,
 	payload: { path },
 });

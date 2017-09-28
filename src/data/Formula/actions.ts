@@ -1,3 +1,5 @@
+import {TypedAction} from "data/common";
+
 import {Formula} from "./model";
 
 
@@ -13,38 +15,34 @@ type Action =
 	| AddNodeAction
 	| RemoveNodeAction;
 
-interface CreateAction {
-	readonly type: ActionTypes.CREATE;
+interface CreateAction extends TypedAction<ActionTypes.CREATE> {
 	payload: {fxn: Formula};
 }
-const create = (fxn: Formula): CreateAction => ({
+const create = (fxn: Formula): Action => ({
 	type: ActionTypes.CREATE,
 	payload: {fxn},
 });
 
-interface DestroyAction {
-	readonly type: ActionTypes.DESTROY;
+interface DestroyAction extends TypedAction<ActionTypes.DESTROY> {
 	payload: {fxnId: string};
 }
-const destroy = (fxnId: string): DestroyAction => ({
+const destroy = (fxnId: string): Action => ({
 	type: ActionTypes.DESTROY,
 	payload: {fxnId},
 });
 
-interface AddNodeAction {
-	readonly type: ActionTypes.ADD_NODE;
+interface AddNodeAction extends TypedAction<ActionTypes.ADD_NODE> {
 	payload: {functionId: string, nodeId: string};
 }
-const addNode = (functionId: string, nodeId: string): AddNodeAction => ({
+const addNode = (functionId: string, nodeId: string): Action => ({
 	type: ActionTypes.ADD_NODE,
 	payload: {functionId, nodeId},
 });
 
-interface RemoveNodeAction {
-	readonly type: ActionTypes.REMOVE_NODE;
+interface RemoveNodeAction extends TypedAction<ActionTypes.REMOVE_NODE> {
 	payload: {functionId: string, nodeId: string};
 }
-const removeNode = (functionId: string, nodeId: string): RemoveNodeAction => ({
+const removeNode = (functionId: string, nodeId: string): Action => ({
 	type: ActionTypes.REMOVE_NODE,
 	payload: {functionId, nodeId},
 });

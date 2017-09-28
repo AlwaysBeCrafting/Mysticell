@@ -1,3 +1,5 @@
+import {TypedAction} from "data/common";
+
 import {Document} from "./model";
 
 
@@ -6,11 +8,10 @@ const enum ActionTypes {
 }
 type Action = LoadDocumentAction;
 
-interface LoadDocumentAction {
-	readonly type: ActionTypes.LOAD_DOCUMENT;
+interface LoadDocumentAction extends TypedAction<ActionTypes.LOAD_DOCUMENT> {
 	payload: {documentJson: Document};
 }
-const loadDocument = (documentJson: Document): LoadDocumentAction => ({
+const loadDocument = (documentJson: Document): Action => ({
 	type: ActionTypes.LOAD_DOCUMENT,
 	payload: {documentJson},
 });

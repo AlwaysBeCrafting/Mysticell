@@ -8,6 +8,7 @@
 		"interface-name": [true, "never-prefix"],
 		"no-consecutive-blank-lines": [true, 2],
 		"no-default-export": true,
+		"no-empty-interface": false,
 		"no-submodule-imports": [true, "common", "components", "data", "rxjs"],
 		"no-var-requires": true,
 		"object-literal-sort-keys": [false],
