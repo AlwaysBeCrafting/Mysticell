@@ -1,7 +1,10 @@
+import {Size2d} from "common/types";
+
+
 interface Sheet {
 	id: string;
 	title: string;
-	size: [number, number];
+	size: Size2d;
 	layout: {[cellId: string]: [number, number, number, number]};
 }
 

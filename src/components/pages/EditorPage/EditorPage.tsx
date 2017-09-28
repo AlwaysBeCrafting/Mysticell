@@ -12,6 +12,7 @@ import {Action, AppState} from "data/AppState";
 import {MenuItem} from "data/common";
 import {Formula} from "data/Formula";
 import {Nav, pathToFormula} from "data/Nav";
+import {Sheet} from "data/Sheet";
 
 import "./EditorPage.scss";
 
@@ -20,6 +21,7 @@ interface StateProps {
 	title: string;
 	nav: Nav;
 	formulas: Dict<Formula>;
+	sheets: Dict<Sheet>;
 	expandedNavItems: Set<string>;
 }
 
@@ -98,7 +100,7 @@ class ProtoEditor extends React.PureComponent<Props> {
 	}
 
 	private renderSheetView = () => {
-		return <SheetWrapper className="editor-document-content" />;
+		return <SheetWrapper className="editor-document-content" sheets={this.props.sheets} />;
 	}
 }
 
@@ -107,6 +109,7 @@ const EditorPage = connect<StateProps, DispatchProps, {}>(
 		title: state.document.title,
 		nav: state.document.nav,
 		formulas: state.document.formulas,
+		sheets: state.document.sheets,
 		expandedNavItems: state.uiState.expandedNavItems,
 	}),
 	(dispatch: Dispatch<Action>) => ({dispatch}),

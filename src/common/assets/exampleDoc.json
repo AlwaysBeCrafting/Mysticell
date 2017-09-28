@@ -6,7 +6,7 @@
 		"SHEET-0000": {
 			"id": "SHEET-0000",
 			"title": "Sheet 1",
-			"size": [16, 22],
+			"size": {"width": 16, "height": 20},
 			"layout": {}
 		}
 	},
