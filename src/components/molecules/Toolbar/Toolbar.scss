@@ -13,9 +13,7 @@ $dimen-title-margin-afterNav: $dimen-keyline-content - ($dimen-toolbar-size + $d
 	flex-flow: row nowrap;
 	justify-content: flex-start;
 	align-items: stretch;
-	background: #fafafa;
 	padding: 0 $dimen-toolbar-padding;
-	color: $color-text-primary;
 	@include font-button;
 }
 
