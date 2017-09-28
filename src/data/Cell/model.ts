@@ -1,6 +1,10 @@
 interface Cell {
 	id: string;
-	property: string;
+	property: {
+		id: string;
+		type: "input" | "output";
+		index: number;
+	};
 	format?: {};
 }
 

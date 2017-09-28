@@ -1,13 +1,42 @@
 {
 	"id": "DOCUMENT-0000",
 	"title": "Example Document",
-	"cells": {},
+	"cells": {
+		"CELL-0000": {
+			"id": "CELL-0000",
+			"property": {
+				"id": "FORMULA-0001",
+				"type": "input",
+				"index": 0
+			}
+		},
+		"CELL-0001": {
+			"id": "CELL-0001",
+			"property": {
+				"id": "FORMULA-0001",
+				"type": "output",
+				"index": 0
+			}
+		},
+		"CELL-0002": {
+			"id": "CELL-0002",
+			"property": {
+				"id": "FORMULA-0001",
+				"type": "output",
+				"index": 1
+			}
+		}
+	},
 	"sheets": {
 		"SHEET-0000": {
 			"id": "SHEET-0000",
 			"title": "Sheet 1",
 			"size": {"width": 16, "height": 20},
-			"layout": {}
+			"layout": {
+				"CELL-0000": {"left": 0, "top": 0, "right": 2, "bottom": 1},
+				"CELL-0001": {"left": 2, "top": 0, "right": 4, "bottom": 1},
+				"CELL-0002": {"left": 2, "top": 1, "right": 4, "bottom": 2}
+			}
 		}
 	},
 	"nodes": {
