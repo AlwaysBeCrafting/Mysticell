@@ -5,11 +5,15 @@ const enum ActionTypes {
 	CREATE         = "[Node] Create",
 	DESTROY        = "[Node] Destroy",
 	SET_USER_VALUE = "[Node] Set user value",
+
+	SET_USER_VALUE_ASYNC = "[Node/Async] Set user value",
 }
 type Action =
 	| CreateAction
 	| DestroyAction
-	| SetUserValueAction;
+	| SetUserValueAction
+
+	| SetUserValueAsyncAction;
 
 interface CreateAction {
 	readonly type: ActionTypes.CREATE;
@@ -38,6 +42,16 @@ const setUserValue = (nodeId: string, index: number, value: string): SetUserValu
 	payload: {nodeId, index, value},
 });
 
+interface SetUserValueAsyncAction {
+	readonly type: ActionTypes.SET_USER_VALUE_ASYNC;
+	payload: {nodeId: string, index: number, value: string};
+}
+const setUserValueAsync = (nodeId: string, index: number, value: string): SetUserValueAsyncAction => ({
+	type: ActionTypes.SET_USER_VALUE_ASYNC,
+	payload: {nodeId, index, value},
+});
+
 
 export {Action, ActionTypes};
 export {create, destroy, setUserValue};
+export {setUserValueAsync};

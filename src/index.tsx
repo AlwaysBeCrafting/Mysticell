@@ -2,19 +2,26 @@ import React from "react";
 import ReactDOM from "react-dom";
 import {AppContainer} from "react-hot-loader";
 import {Provider} from "react-redux";
-import {createStore} from "redux";
-import {devToolsEnhancer} from "redux-devtools-extension";
+import {applyMiddleware, createStore} from "redux";
+import {composeWithDevTools} from "redux-devtools-extension";
+import {createEpicMiddleware} from "redux-observable";
 
 import {EditorPage} from "components/pages";
 
-import {AppState, reducer} from "data/AppState";
+import {AppState, appStateEpic, reducer} from "data/AppState";
 import {loadDocument} from "data/Document";
 
 import exampleDoc from "common/assets/exampleDoc.json";
 import "common/styles/normalize.scss";
 
 
-const store = createStore<AppState>(reducer, devToolsEnhancer({}));
+const epicMiddleware = createEpicMiddleware(appStateEpic);
+const enhancers = composeWithDevTools(applyMiddleware(epicMiddleware));
+
+const store = createStore<AppState>(
+	reducer,
+	enhancers,
+);
 
 store.dispatch(loadDocument(exampleDoc));
 
