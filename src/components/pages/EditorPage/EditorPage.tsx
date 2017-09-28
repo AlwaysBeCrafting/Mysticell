@@ -6,7 +6,7 @@ import {Dispatch} from "redux";
 import {Dict} from "common/types";
 
 import {MenuBar, Toolbar} from "components/molecules";
-import {FormulaView, NavView} from "components/organisms";
+import {FormulaView, NavView, SheetWrapper} from "components/organisms";
 
 import {Action, AppState} from "data/AppState";
 import {MenuItem} from "data/common";
@@ -61,15 +61,16 @@ class ProtoEditor extends React.PureComponent<Props> {
 						items={toolbarItems}
 					/>
 					<div className="editor-document">
-						<Route exact path="/:path+" render={this.renderNav} />
-						<Route exact path="/:path+" render={this.renderFormula} />
+						<Route exact path="/:path*" render={this.renderNavView} />
+						<Route exact path="/" render={this.renderSheetView} />
+						<Route exact path="/:path+" render={this.renderFormulaView} />
 					</div>
 				</main>
 			</Router>
 		);
 	}
 
-	private renderNav = (routeProps: RouteComponentProps<{path: string}>) =>  (
+	private renderNavView = (routeProps: RouteComponentProps<{path: string}>) =>  (
 		<NavView
 			className="editor-document-nav"
 			nav={this.props.nav}
@@ -79,7 +80,7 @@ class ProtoEditor extends React.PureComponent<Props> {
 		/>
 	)
 
-	private renderFormula = (routeProps: RouteComponentProps<{path: string}>) => {
+	private renderFormulaView = (routeProps: RouteComponentProps<{path: string}>) => {
 		const segments = routeProps.match.params.path.split("/");
 		const formula = pathToFormula(this.props.formulas, this.props.nav, segments);
 		return formula
@@ -94,6 +95,10 @@ class ProtoEditor extends React.PureComponent<Props> {
 					No formula exists at /{routeProps.match.params.path}.
 				</div>
 			);
+	}
+
+	private renderSheetView = () => {
+		return <SheetWrapper className="editor-document-content" />;
 	}
 }
 
