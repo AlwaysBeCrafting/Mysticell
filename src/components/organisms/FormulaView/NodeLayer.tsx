@@ -7,7 +7,7 @@ import {Dict} from "common/types";
 import {NodeView} from "components/molecules";
 
 import {Formula} from "data/Formula";
-import {Node, setUserValue} from "data/Node";
+import {Node, setUserValueAsync} from "data/Node";
 import {PRIMITIVES} from "data/Primitive";
 import {connectedInputs} from "data/utils";
 
@@ -74,7 +74,7 @@ const NodeLayer = connect<{}, DispatchProps, OwnProps>(
 	() => ({}),
 	dispatch => ({
 		changeUserValue: (nodeId: string, index: number, value: string) => {
-			dispatch(setUserValue(nodeId, index, value));
+			dispatch(setUserValueAsync(nodeId, index, value));
 		},
 	}),
 )(ProtoNodeLayer);

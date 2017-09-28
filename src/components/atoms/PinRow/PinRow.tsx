@@ -42,7 +42,7 @@ class PinRow extends React.PureComponent<Props> {
 						&& !this.props.isConnected
 						&& <input
 							className="pinRow-value"
-							value={this.props.userValue}
+							defaultValue={this.props.userValue}
 							onChange={this.onChange}
 						/>
 				}
