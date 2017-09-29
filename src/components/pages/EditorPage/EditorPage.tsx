@@ -9,6 +9,7 @@ import {MenuBar, Toolbar} from "components/molecules";
 import {FormulaView, NavView, SheetWrapper} from "components/organisms";
 
 import {Action, AppState} from "data/AppState";
+import { Cell } from "data/Cell";
 import {MenuItem} from "data/common";
 import {Formula} from "data/Formula";
 import {Nav, pathToFormula} from "data/Nav";
@@ -22,6 +23,7 @@ interface StateProps {
 	nav: Nav;
 	formulas: Dict<Formula>;
 	sheets: Dict<Sheet>;
+	cells: Dict<Cell>;
 	expandedNavItems: Set<string>;
 }
 
@@ -100,7 +102,13 @@ class ProtoEditor extends React.PureComponent<Props> {
 	}
 
 	private renderSheetView = () => {
-		return <SheetWrapper className="editor-document-content" sheets={this.props.sheets} />;
+		return (
+			<SheetWrapper
+				className="editor-document-content"
+				sheets={this.props.sheets}
+				cells={this.props.cells}
+			/>
+		);
 	}
 }
 
@@ -110,6 +118,7 @@ const EditorPage = connect<StateProps, DispatchProps, {}>(
 		nav: state.document.nav,
 		formulas: state.document.formulas,
 		sheets: state.document.sheets,
+		cells: state.document.cells,
 		expandedNavItems: state.uiState.expandedNavItems,
 	}),
 	(dispatch: Dispatch<Action>) => ({dispatch}),

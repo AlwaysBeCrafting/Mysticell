@@ -19,3 +19,11 @@
 		grid-auto-columns: 40px;
 		grid-auto-rows: 40px;
 	}
+
+		.sheetView-grid-cell {
+			outline: solid thin red;
+		}
+
+		.sheetView-grid-cell.mod-input {
+			border-bottom: solid 4px blue;
+		}
