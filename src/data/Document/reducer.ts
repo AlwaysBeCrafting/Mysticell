@@ -39,6 +39,7 @@ const subReducers = combineReducers<Document>({
 	sheets: identity,
 	nodes,
 	formulas: identity,
+	propertyInputs: identity,
 
 	nav: identity,
 });
