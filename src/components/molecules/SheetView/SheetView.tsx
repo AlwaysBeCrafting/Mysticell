@@ -32,6 +32,7 @@ const SheetView = (props: Props) => {
 							<CellView
 								cell={cell}
 								key={cell.id}
+								rect={sheet.layout[cell.id]}
 								className="sheetView-grid-cell"
 							/>
 						))
