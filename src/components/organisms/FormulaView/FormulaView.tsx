@@ -36,7 +36,7 @@ const ProtoFormulaView = (props: Props) => {
 
 	return (
 		<div className={classNames("formulaView", className)}>
-			<Toolbar title={formula.name} className="formulaView-toolbar" />
+			<Toolbar className="formulaView-toolbar" title={formula.name} />
 			<div className="formulaView-graph">
 				<Panel
 					type="input"

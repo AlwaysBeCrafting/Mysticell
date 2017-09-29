@@ -2,7 +2,7 @@
 @import '~common/styles/dimensions';
 
 
-.toolbar-item {
+.toolButton {
 	flex: 0 0 $dimen-toolbar-size;
 	user-select: none;
 	font-size: 24px;
@@ -10,14 +10,14 @@
 	color: $color-text-primary;
 }
 
-.toolbar-item.is-disabled {
+.toolButton.is-disabled {
 	color: $color-text-disabled;
 }
 
-.mod-inverted .toolbar-item {
+.mod-inverted .toolButton {
 	color: $color-text-primary-inverted;
 }
 
-.mod-inverted .toolbar-item.is-disabled {
+.mod-inverted .toolButton {
 	color: $color-text-disabled-inverted;
 }
