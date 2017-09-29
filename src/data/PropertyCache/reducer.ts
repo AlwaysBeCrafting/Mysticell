@@ -1,5 +1,5 @@
-import {Action, ActionTypes} from "./actions";
-import {PropertyCache} from "./model";
+import { Action, ActionTypes } from "./actions";
+import { PropertyCache } from "./model";
 
 
 const reducer = (state: PropertyCache = {}, action: Action) => {

@@ -1,6 +1,6 @@
-import {Dict} from "common/types";
+import { Dict } from "common/types";
 
-import {Param} from "data/common";
+import { Param } from "data/common";
 
 
 interface CacheEntry {

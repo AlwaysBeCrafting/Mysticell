@@ -1,6 +1,6 @@
-import {PARAMS as P} from "data/common";
+import {PARAMS as P } from "data/common";
 
-import {constants} from "../../constants";
+import { constants } from "../../constants";
 
 
 const divide = constants.divide.exec;

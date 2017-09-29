@@ -1,20 +1,20 @@
 import React from "react";
-import {connect} from "react-redux";
-import {BrowserRouter as Router, Route, RouteComponentProps} from "react-router-dom";
-import {Dispatch} from "redux";
+import { connect } from "react-redux";
+import {BrowserRouter as Router, Route, RouteComponentProps } from "react-router-dom";
+import { Dispatch } from "redux";
 
-import {Dict} from "common/types";
+import { Dict } from "common/types";
 
-import {MenuBar, Toolbar} from "components/molecules";
-import {FormulaView, NavView, SheetWrapper} from "components/organisms";
+import { MenuBar, Toolbar } from "components/molecules";
+import { FormulaView, NavView, SheetWrapper } from "components/organisms";
 
-import {Action, AppState} from "data/AppState";
+import { Action, AppState } from "data/AppState";
 import { Cell } from "data/Cell";
-import {MenuItem} from "data/common";
-import {Formula} from "data/Formula";
-import {Nav, pathToFormula} from "data/Nav";
+import { MenuItem } from "data/common";
+import { Formula } from "data/Formula";
+import { Nav, pathToFormula } from "data/Nav";
 import { PropertyCache } from "data/PropertyCache";
-import {Sheet} from "data/Sheet";
+import { Sheet } from "data/Sheet";
 
 import "./EditorPage.scss";
 

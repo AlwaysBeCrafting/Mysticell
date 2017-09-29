@@ -1,9 +1,9 @@
 import React from "react";
 
-import {Card, PinRow} from "components/atoms";
+import { Card, PinRow } from "components/atoms";
 
-import {PARAMS} from "data/common";
-import {Node, NodeFunction} from "data/Node/model";
+import { PARAMS } from "data/common";
+import { Node, NodeFunction } from "data/Node/model";
 
 import "./NodeView.scss";
 

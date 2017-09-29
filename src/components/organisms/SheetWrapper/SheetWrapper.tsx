@@ -1,13 +1,13 @@
 import classNames from "classnames";
 import React from "react";
 
-import {Dict} from "common/types";
+import { Dict } from "common/types";
 
-import {SheetView} from "components/molecules";
+import { SheetView } from "components/molecules";
 
-import {Cell} from "data/Cell";
+import { Cell } from "data/Cell";
 import { PropertyCache } from "data/PropertyCache";
-import {Sheet} from "data/Sheet";
+import { Sheet } from "data/Sheet";
 
 import "./SheetWrapper.scss";
 

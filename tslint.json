@@ -14,6 +14,7 @@
 		"object-literal-sort-keys": [false],
 		"only-arrow-functions": [true],
 		"quotemark": [true, "double", "jsx-double", "avoid-escape"],
+		"whitespace": [true, "check-module"],
 		"jsx-no-multiline-js": false,
 		"jsx-boolean-value": [true, "never"]
 	}

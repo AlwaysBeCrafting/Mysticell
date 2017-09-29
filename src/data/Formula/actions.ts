@@ -1,6 +1,6 @@
-import {TypedAction} from "data/common";
+import { TypedAction } from "data/common";
 
-import {Formula} from "./model";
+import { Formula } from "./model";
 
 
 const enum ActionTypes {

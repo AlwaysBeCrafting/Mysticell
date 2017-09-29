@@ -1,4 +1,4 @@
-import {Sheet} from "./model";
+import { Sheet } from "./model";
 
 
 const reducer = (state: Sheet) => state;

@@ -1,6 +1,6 @@
-import {combineEpics} from "redux-observable";
+import { combineEpics } from "redux-observable";
 
-import {userValueEpic} from "data/Node";
+import { userValueEpic } from "data/Node";
 
 
 const appStateEpic = combineEpics(

@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import React from "react";
 
-import {MenuItem} from "data/common";
+import { MenuItem } from "data/common";
 
 import "./MenuBar.scss";
 

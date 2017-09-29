@@ -1,4 +1,4 @@
-import {ParamFunction} from "data/common";
+import { ParamFunction } from "data/common";
 
 
 interface Primitive {

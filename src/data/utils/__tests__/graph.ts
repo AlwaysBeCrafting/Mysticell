@@ -1,7 +1,7 @@
-import {PARAMS} from "data/common";
-import {Document} from "data/Document";
+import { PARAMS } from "data/common";
+import { Document } from "data/Document";
 
-import {execFormula} from "../graph";
+import { execFormula } from "../graph";
 
 
 const testDoc: Document = {

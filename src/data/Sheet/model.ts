@@ -1,4 +1,4 @@
-import {Rect2d, Size2d} from "common/types";
+import { Rect2d, Size2d } from "common/types";
 
 
 interface Sheet {

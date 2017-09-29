@@ -1,7 +1,7 @@
 import classnames from "classnames";
 import React from "react";
 
-import {isBranch, Tree} from "common/types";
+import { isBranch, Tree } from "common/types";
 
 import "./Item.scss";
 import "./TreeView.scss";

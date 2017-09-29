@@ -1,7 +1,7 @@
-import {Dict} from "common/types";
+import { Dict } from "common/types";
 
-import {Action, ActionTypes} from "./actions";
-import {Node} from "./model";
+import { Action, ActionTypes } from "./actions";
+import { Node } from "./model";
 
 
 const reducer = (state: Dict<Node> = {}, action: Action): Dict<Node> => {

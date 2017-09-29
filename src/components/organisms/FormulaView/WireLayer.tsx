@@ -1,14 +1,14 @@
 import classNames from "classnames";
 import React from "react";
 
-import {Dict, DiEdge} from "common/types";
-import {formulaLayoutWidth} from "common/utils";
+import { Dict, DiEdge } from "common/types";
+import { formulaLayoutWidth } from "common/utils";
 
-import {Wire} from "components/atoms";
+import { Wire } from "components/atoms";
 
-import {Formula} from "data/Formula/model";
-import {Node} from "data/Node/model";
-import {PRIMITIVES} from "data/Primitive/constants";
+import { Formula } from "data/Formula/model";
+import { Node } from "data/Node/model";
+import { PRIMITIVES } from "data/Primitive/constants";
 
 
 const nodeHeaderRows = 1;

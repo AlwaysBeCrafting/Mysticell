@@ -1,6 +1,6 @@
-import {Tree} from "common/types";
+import { Tree } from "common/types";
 
-import {collapse, map, mapBranches, mapLeaves, resolvePath} from "../tree";
+import { collapse, map, mapBranches, mapLeaves, resolvePath } from "../tree";
 
 
 const testTree: Readonly<Tree<string>> = {

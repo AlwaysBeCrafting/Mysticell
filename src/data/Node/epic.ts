@@ -1,8 +1,8 @@
-import {ActionsObservable} from "redux-observable";
+import { ActionsObservable } from "redux-observable";
 
 import "common/rxjs";
 
-import {Action, ActionTypes, setUserValue} from "./actions";
+import { Action, ActionTypes, setUserValue } from "./actions";
 
 
 const userValueEpic = (action$: ActionsObservable<Action>) => action$

@@ -1,10 +1,10 @@
-import {Dict} from "common/types";
-import {patchArray} from "common/utils";
+import { Dict } from "common/types";
+import { patchArray } from "common/utils";
 
-import {FormulaGraph, Param, PARAMS} from "data/common";
-import {Document} from "data/Document";
-import {Node} from "data/Node";
-import {PRIMITIVES} from "data/Primitive";
+import { FormulaGraph, Param, PARAMS } from "data/common";
+import { Document } from "data/Document";
+import { Node } from "data/Node";
+import { PRIMITIVES } from "data/Primitive";
 
 
 interface ExecState {

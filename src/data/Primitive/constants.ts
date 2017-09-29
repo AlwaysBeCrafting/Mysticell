@@ -1,8 +1,8 @@
-import {Dict} from "common/types";
+import { Dict } from "common/types";
 
-import {Param, PARAMS} from "data/common";
+import { Param, PARAMS } from "data/common";
 
-import {Primitive} from "./model";
+import { Primitive } from "./model";
 
 
 const padEmpty = (params: Param[], length: number) => (

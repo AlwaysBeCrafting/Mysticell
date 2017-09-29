@@ -1,15 +1,15 @@
 import classNames from "classnames";
 import React from "react";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 
-import {Dict} from "common/types";
+import { Dict } from "common/types";
 
-import {NodeView} from "components/molecules";
+import { NodeView } from "components/molecules";
 
-import {Formula} from "data/Formula";
-import {Node, setUserValueAsync} from "data/Node";
-import {PRIMITIVES} from "data/Primitive";
-import {connectedInputs} from "data/utils";
+import { Formula } from "data/Formula";
+import { Node, setUserValueAsync } from "data/Node";
+import { PRIMITIVES } from "data/Primitive";
+import { connectedInputs } from "data/utils";
 
 import "./NodeLayer.scss";
 

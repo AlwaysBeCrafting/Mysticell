@@ -1,8 +1,8 @@
-import {Dict, isBranch, isLeaf} from "common/types";
-import {resolvePath} from "common/utils";
+import { Dict, isBranch, isLeaf } from "common/types";
+import { resolvePath } from "common/utils";
 
-import {Formula} from "data/Formula";
-import {Nav} from "data/Nav";
+import { Formula } from "data/Formula";
+import { Nav } from "data/Nav";
 
 
 const pathToFormula = (formulas: Dict<Formula>, nav: Nav, path: string[]): Formula | undefined => {

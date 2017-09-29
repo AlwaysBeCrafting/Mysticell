@@ -1,18 +1,18 @@
 import classnames from "classnames";
 import React from "react";
-import {connect} from "react-redux";
-import {Link} from "react-router-dom";
-import {Dispatch} from "redux";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+import { Dispatch } from "redux";
 
-import {Dict, isBranch} from "common/types";
-import {collapse} from "common/utils";
+import { Dict, isBranch } from "common/types";
+import { collapse } from "common/utils";
 
-import {TreeView} from "components/molecules";
+import { TreeView } from "components/molecules";
 
-import {Action} from "data/AppState";
-import {Formula} from "data/Formula";
-import {Nav} from "data/Nav";
-import {toggleNavItem} from "data/UiState";
+import { Action } from "data/AppState";
+import { Formula } from "data/Formula";
+import { Nav } from "data/Nav";
+import { toggleNavItem } from "data/UiState";
 
 import functionIcon from "./assets/icon-function.svg";
 import propertyIcon from "./assets/icon-property.svg";

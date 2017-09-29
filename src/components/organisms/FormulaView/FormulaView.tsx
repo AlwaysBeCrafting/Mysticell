@@ -1,20 +1,20 @@
 import classNames from "classnames";
 import React from "react";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 
-import {Dict} from "common/types";
-import {formulaLayoutWidth} from "common/utils";
+import { Dict } from "common/types";
+import { formulaLayoutWidth } from "common/utils";
 
-import {Toolbar} from "components/molecules";
+import { Toolbar } from "components/molecules";
 
-import {AppState} from "data/AppState";
-import {Formula} from "data/Formula/model";
-import {Node} from "data/Node/model";
-import {connectedInputs} from "data/utils";
+import { AppState } from "data/AppState";
+import { Formula } from "data/Formula/model";
+import { Node } from "data/Node/model";
+import { connectedInputs } from "data/utils";
 
-import {NodeLayer} from "./NodeLayer";
-import {Panel} from "./Panel";
-import {WireLayer} from "./WireLayer";
+import { NodeLayer } from "./NodeLayer";
+import { Panel } from "./Panel";
+import { WireLayer } from "./WireLayer";
 
 import "./FormulaView.scss";
 

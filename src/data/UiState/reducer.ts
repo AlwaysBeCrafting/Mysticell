@@ -1,5 +1,5 @@
 import { Action, ActionTypes } from "./actions";
-import {UiState} from "./model";
+import { UiState } from "./model";
 
 
 const defaultState: UiState = {

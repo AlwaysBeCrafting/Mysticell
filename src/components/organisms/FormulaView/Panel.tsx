@@ -1,8 +1,8 @@
 import React from "react";
 
-import {PARAMS} from "data/common";
+import { PARAMS } from "data/common";
 
-import {PinRow} from "components/atoms/PinRow";
+import { PinRow } from "components/atoms/PinRow";
 
 
 interface Props {

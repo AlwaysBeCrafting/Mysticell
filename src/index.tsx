@@ -1,13 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import {AppContainer} from "react-hot-loader";
-import {Provider} from "react-redux";
+import { AppContainer } from "react-hot-loader";
+import { Provider } from "react-redux";
 
-import {EditorPage} from "components/pages";
+import { EditorPage } from "components/pages";
 
-import {loadDocument} from "data/Document";
+import { loadDocument } from "data/Document";
 
-import {configureStore} from "store";
+import { configureStore } from "store";
 
 import exampleDoc from "common/assets/exampleDoc.json";
 import "common/styles/normalize.scss";

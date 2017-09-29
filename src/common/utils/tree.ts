@@ -1,4 +1,4 @@
-import {isBranch, isLeaf, Tree} from "common/types";
+import { isBranch, isLeaf, Tree } from "common/types";
 
 
 type CollapseCallback<B, L> = (tree: Tree<B, L>, path: B[]) => boolean;

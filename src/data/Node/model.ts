@@ -1,5 +1,5 @@
-import {Formula} from "data/Formula";
-import {Primitive} from "data/Primitive";
+import { Formula } from "data/Formula";
+import { Primitive } from "data/Primitive";
 
 
 interface Node {

@@ -1,6 +1,6 @@
 import React from "react";
 
-import {MenuItem} from "data/common";
+import { MenuItem } from "data/common";
 
 import "./Item.scss";
 

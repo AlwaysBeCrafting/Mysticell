@@ -2,8 +2,8 @@ import React from "react";
 
 import { Dict } from "common/types";
 
-import {CellView} from "components/atoms";
-import {Toolbar} from "components/molecules";
+import { CellView } from "components/atoms";
+import { Toolbar } from "components/molecules";
 
 import { Cell } from "data/Cell";
 import { PropertyCache } from "data/PropertyCache";

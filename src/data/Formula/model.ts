@@ -1,6 +1,6 @@
-import {Dict} from "common/types";
+import { Dict } from "common/types";
 
-import {FormulaGraph} from "data/common";
+import { FormulaGraph } from "data/common";
 
 
 interface Formula {

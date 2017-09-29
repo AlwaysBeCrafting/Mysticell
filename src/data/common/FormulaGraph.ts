@@ -1,4 +1,4 @@
-import {DiGraph} from "common/types";
+import { DiGraph } from "common/types";
 
 
 type FormulaGraph = DiGraph<string, [number, number]>;

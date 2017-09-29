@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import React from "react";
 
-import {Param} from "data/common";
+import { Param } from "data/common";
 
 import "./PinRow.scss";
 

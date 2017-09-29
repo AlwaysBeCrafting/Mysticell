@@ -1,4 +1,4 @@
-import {Tree} from "common/types";
+import { Tree } from "common/types";
 
 
 type Nav = Tree<string>;

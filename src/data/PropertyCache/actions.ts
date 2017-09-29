@@ -1,4 +1,4 @@
-import {Param, TypedAction} from "data/common";
+import { Param, TypedAction } from "data/common";
 
 
 const enum ActionTypes {
