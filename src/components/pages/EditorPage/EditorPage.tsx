@@ -5,12 +5,10 @@ import { Dispatch } from "redux";
 
 import { Dict } from "common/types";
 
-import { MenuBar, Toolbar } from "components/molecules";
 import { FormulaView, NavView, SheetWrapper } from "components/organisms";
 
 import { Action, AppState } from "data/AppState";
 import { Cell } from "data/Cell";
-import { MenuItem } from "data/common";
 import { Formula } from "data/Formula";
 import { Nav, pathToFormula } from "data/Nav";
 import { PropertyCache } from "data/PropertyCache";
@@ -20,7 +18,6 @@ import "./EditorPage.scss";
 
 
 interface StateProps {
-	title: string;
 	nav: Nav;
 	formulas: Dict<Formula>;
 	sheets: Dict<Sheet>;
@@ -29,44 +26,18 @@ interface StateProps {
 	propertyInputs: Dict<string[]>;
 	propertyCache: PropertyCache;
 }
-
 interface DispatchProps {
 	dispatch: Dispatch<Action>;
 }
-
-type Props = StateProps & DispatchProps;
-
-const navItem: MenuItem = {
-	id: "MENU-nav",
-	title: "Nav",
-};
-
-const demoMenuItems: MenuItem[] = [
-	{id: "MENU-file", title: "File", childItems: []},
-	{id: "MENU-edit", title: "Edit", childItems: []},
-	{id: "MENU-view", title: "View", childItems: []},
-];
-
-const toolbarItems: MenuItem[] = [
-	{
-		title: "Menu",
-		id: "app-menu",
-		render: (item: MenuItem) => <MenuBar items={demoMenuItems} key={item.id} />,
-	},
-];
+type Props =
+	& StateProps
+	& DispatchProps;
 
 class ProtoEditor extends React.PureComponent<Props> {
 	public render() {
-		const {title} = this.props;
 		return (
 			<Router>
 				<main className="editor">
-					<Toolbar
-						title={title}
-						className="editor-appbar mod-inverted"
-						navItem={navItem}
-						items={toolbarItems}
-					/>
 					<div className="editor-document">
 						<Route exact path="/:path*" render={this.renderNavView} />
 						<Route exact path="/" render={this.renderSheetView} />
