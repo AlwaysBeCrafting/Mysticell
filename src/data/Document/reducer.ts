@@ -16,6 +16,7 @@ const defaultState: Document = {
 	sheets: {},
 	nodes: {},
 	formulas: {},
+	propertyInputs: {},
 
 	nav: { value: "root" },
 };

@@ -13,6 +13,7 @@ import { Cell } from "data/Cell";
 import {MenuItem} from "data/common";
 import {Formula} from "data/Formula";
 import {Nav, pathToFormula} from "data/Nav";
+import { PropertyCache } from "data/PropertyCache";
 import {Sheet} from "data/Sheet";
 
 import "./EditorPage.scss";
@@ -25,6 +26,8 @@ interface StateProps {
 	sheets: Dict<Sheet>;
 	cells: Dict<Cell>;
 	expandedNavItems: Set<string>;
+	propertyInputs: Dict<string[]>;
+	propertyCache: PropertyCache;
 }
 
 interface DispatchProps {
@@ -105,6 +108,8 @@ class ProtoEditor extends React.PureComponent<Props> {
 		return (
 			<SheetWrapper
 				className="editor-document-content"
+				propertyInputs={this.props.propertyInputs}
+				propertyCache={this.props.propertyCache}
 				sheets={this.props.sheets}
 				cells={this.props.cells}
 			/>
@@ -120,6 +125,8 @@ const EditorPage = connect<StateProps, DispatchProps, {}>(
 		sheets: state.document.sheets,
 		cells: state.document.cells,
 		expandedNavItems: state.uiState.expandedNavItems,
+		propertyInputs: state.document.propertyInputs,
+		propertyCache: state.propertyCache,
 	}),
 	(dispatch: Dispatch<Action>) => ({dispatch}),
 )(ProtoEditor);

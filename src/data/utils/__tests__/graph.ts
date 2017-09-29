@@ -41,6 +41,7 @@ const testDoc: Document = {
 		},
 	},
 	nav: { value: "root" },
+	propertyInputs: {},
 };
 
 describe("graph resolver", () => {

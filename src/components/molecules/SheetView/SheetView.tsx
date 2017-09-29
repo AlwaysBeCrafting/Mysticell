@@ -6,6 +6,7 @@ import {CellView} from "components/atoms";
 import {Toolbar} from "components/molecules";
 
 import { Cell } from "data/Cell";
+import { PropertyCache } from "data/PropertyCache";
 import { Sheet } from "data/Sheet";
 
 import "./SheetView.scss";
@@ -13,6 +14,8 @@ import "./SheetView.scss";
 
 interface Props {
 	sheet: Sheet;
+	propertyInputs: Dict<string[]>;
+	propertyCache: PropertyCache;
 	cells: Dict<Cell>;
 }
 const SheetView = (props: Props) => {
@@ -30,7 +33,7 @@ const SheetView = (props: Props) => {
 						.filter(cell => !!cell)
 						.map(cell => (
 							<CellView
-								cell={cell}
+								value={0}
 								key={cell.id}
 								rect={sheet.layout[cell.id]}
 								className="sheetView-grid-cell"

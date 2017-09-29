@@ -3,16 +3,14 @@ import React from "react";
 
 import { Rect2d } from "common/types";
 
-import { Cell } from "data/Cell";
-
 
 interface Props {
-	cell: Cell;
+	value: string | number;
 	rect?: Rect2d;
 	className?: string;
 }
 const CellView = (props: Props) => {
-	const {cell, rect, className} = props;
+	const {value, rect, className} = props;
 	const style = {} as any;
 	if (rect) {
 		style.gridArea = [rect.top, rect.left, rect.bottom, rect.right]
@@ -21,7 +19,7 @@ const CellView = (props: Props) => {
 	}
 	return (
 		<div style={style} className={classnames("cellView", className)}>
-			{cell.id}
+			{value}
 		</div>
 	);
 };

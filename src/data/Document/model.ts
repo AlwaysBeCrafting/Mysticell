@@ -14,6 +14,7 @@ interface Document {
 	sheets: Dict<Sheet>;
 	nodes: Dict<Node>;
 	formulas: Dict<Formula>;
+	propertyInputs: Dict<string[]>;
 	nav: Nav;
 }
 
