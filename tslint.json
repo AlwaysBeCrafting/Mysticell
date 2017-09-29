@@ -16,6 +16,7 @@
 		"quotemark": [true, "double", "jsx-double", "avoid-escape"],
 		"whitespace": [true, "check-module"],
 		"jsx-no-multiline-js": false,
-		"jsx-boolean-value": [true, "never"]
+		"jsx-boolean-value": [true, "never"],
+		"jsx-curly-spacing": [true, "never"]
 	}
 }
