@@ -65,6 +65,7 @@ class ProtoEditor extends React.PureComponent<Props> {
 			? (
 				<FormulaView
 					className="editor-document-content"
+					path={segments}
 					formula={formula}
 				/>
 			)

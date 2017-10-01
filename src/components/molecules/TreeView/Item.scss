@@ -9,12 +9,13 @@
 	align-items: stretch;
 	@include font-body1;
 }
+
 	.treeView-item-body {
 		flex: 0 0 auto;
 	}
 
 	.treeView-item-children {
-		padding-left: $dimen-keyline-padding;
+		padding-left: 16px;
 		display: flex;
 		flex-flow: column nowrap;
 	}

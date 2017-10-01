@@ -24,22 +24,22 @@ interface StateProps {
 	formulas: Dict<Formula>;
 	nodes: Dict<Node>;
 }
-
-interface PublicProps {
+interface OwnProps {
 	className?: string;
+	path: string[];
 	formula: Formula;
 }
-
-type Props = StateProps & PublicProps;
+type Props =
+	& StateProps
+	& OwnProps;
 
 const ProtoFormulaView = (props: Props) => {
-	const {className, formula, formulas, nodes} = props;
-
+	const { className, path, formula, formulas, nodes } = props;
 	return (
 		<div className={classNames("formulaView", className)}>
 			<Toolbar className="formulaView-toolbar">
 				<ToolButton link to="/"><Icon name="close" /></ToolButton>
-				{formula.name}
+				{path.join(" / ")}
 			</Toolbar>
 			<div className="formulaView-graph">
 				<Panel
@@ -59,9 +59,7 @@ const ProtoFormulaView = (props: Props) => {
 };
 
 const renderGrid = (formula: Formula, formulas: Dict<Formula>, nodes: Dict<Node>) => {
-
 	const gridStyle = {flexBasis: 40 * formulaLayoutWidth(formula.layout)};
-
 	return (
 		<div className="formulaView-graph-grid" style={gridStyle}>
 			<WireLayer
@@ -80,13 +78,11 @@ const renderGrid = (formula: Formula, formulas: Dict<Formula>, nodes: Dict<Node>
 	);
 };
 
-const FormulaView = connect<StateProps, {}, PublicProps>(
-	(state: AppState) => {
-		return {
-			formulas: state.document.formulas,
-			nodes: state.document.nodes,
-		};
-	},
+const FormulaView = connect<StateProps, {}, OwnProps>(
+	(state: AppState) => ({
+		formulas: state.document.formulas,
+		nodes: state.document.nodes,
+	}),
 )(ProtoFormulaView);
 
 

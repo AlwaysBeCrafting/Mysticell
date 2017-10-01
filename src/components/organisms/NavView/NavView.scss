@@ -11,7 +11,7 @@
 		height: $dimen-listItem-size;
 		display: flex;
 		flex-flow: row nowrap;
-		padding: 0 $dimen-keyline-padding;
+		padding: 0 12px;
 		align-items: center;
 		color: inherit;
 		text-decoration: inherit;
@@ -46,10 +46,6 @@
 		}
 
 		.navView-item-title {
-			margin-left: $dimen-keyline-content;
 			flex: 1 0 auto;
-		}
-
-		.navView-item-icon + .navView-item-title {
-			margin-left: $dimen-keyline-content - ($dimen-keyline-padding + $dimen-icon-size);
+			margin-left: 12px;
 		}
