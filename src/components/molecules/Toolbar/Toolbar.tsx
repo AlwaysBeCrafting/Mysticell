@@ -5,7 +5,7 @@ import "./Toolbar.scss";
 
 
 interface Props {
-	children?: React.ReactChild | React.ReactChild[];
+	children?: {};
 	className?: string;
 }
 const Toolbar = (props: Props) => (

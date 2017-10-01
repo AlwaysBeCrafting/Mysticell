@@ -26,6 +26,31 @@ $color-gridLine: rgba($color-brand-primary, 0.2);
 		border-bottom: solid 1px $color-divider;
 	}
 
+		.formulaView-toolbar-path-segment {
+			color: $color-text-secondary;
+			display: flex;
+			flex-flow: row nowrap;
+			align-items: center;
+		}
+
+			.formulaView-toolbar-path-segment:first-of-type {
+				padding-left: 8px;
+			}
+
+			.formulaView-toolbar-path-segment::after {
+				content: "chevron_right";
+				font-family: "Material Icons";
+				font-size: 24px;
+			}
+
+		.formulaView-toolbar-path-segment.mod-final {
+			color: $color-text-primary;
+		}
+
+			.formulaView-toolbar-path-segment.mod-final::after {
+				content: none;
+			}
+
 	.formulaView-graph {
 		flex: 1 0 auto;
 		display: flex;

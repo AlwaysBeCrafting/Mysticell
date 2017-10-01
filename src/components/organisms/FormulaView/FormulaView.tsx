@@ -1,4 +1,4 @@
-import classNames from "classnames";
+import classnames from "classnames";
 import React from "react";
 import { connect } from "react-redux";
 
@@ -36,10 +36,11 @@ type Props =
 const ProtoFormulaView = (props: Props) => {
 	const { className, path, formula, formulas, nodes } = props;
 	return (
-		<div className={classNames("formulaView", className)}>
+		<div className={classnames("formulaView", className)}>
 			<Toolbar className="formulaView-toolbar">
 				<ToolButton link to="/"><Icon name="close" /></ToolButton>
-				{path.join(" / ")}
+				{path.slice(0, -1).map(renderPathSegment(false))}
+				{renderPathSegment(true)(path.slice(-1)[0])}
 			</Toolbar>
 			<div className="formulaView-graph">
 				<Panel
@@ -57,6 +58,17 @@ const ProtoFormulaView = (props: Props) => {
 		</div>
 	);
 };
+
+const renderPathSegment = (final: boolean) => (segment: string) => (
+	<span
+		className={classnames(
+			"formulaView-toolbar-path-segment",
+			{ "mod-final": final },
+		)}
+	>
+		{segment}
+	</span>
+);
 
 const renderGrid = (formula: Formula, formulas: Dict<Formula>, nodes: Dict<Node>) => {
 	const gridStyle = {flexBasis: 40 * formulaLayoutWidth(formula.layout)};
