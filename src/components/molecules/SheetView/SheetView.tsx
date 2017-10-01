@@ -25,7 +25,9 @@ const SheetView = (props: Props) => {
 	};
 	return (
 		<div className="sheetView" style={style}>
-			<Toolbar title={sheet.title} className="sheetView-header" />
+			<Toolbar className="sheetView-header">
+				{sheet.title}
+			</Toolbar>
 			<div className="sheetView-grid">
 				{
 					Object.keys(sheet.layout)

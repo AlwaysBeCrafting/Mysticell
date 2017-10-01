@@ -12,7 +12,7 @@ $dimen-title-margin-afterNav: $dimen-keyline-content - ($dimen-toolbar-size + $d
 	display: flex;
 	flex-flow: row nowrap;
 	justify-content: flex-start;
-	align-items: stretch;
+	align-items: center;
 	padding: 0 $dimen-toolbar-padding;
 	@include font-button;
 }
@@ -20,9 +20,6 @@ $dimen-title-margin-afterNav: $dimen-keyline-content - ($dimen-toolbar-size + $d
 .toolbar.mod-inverted {
 	color: $color-text-primary-inverted;
 }
-	.toolbar-nav {
-		margin-right: $dimen-keyline-content - $dimen-toolbar-size;
-	}
 
 	.toolbar-title {
 		flex: 1 0 auto;

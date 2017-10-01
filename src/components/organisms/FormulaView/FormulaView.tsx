@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { Dict } from "common/types";
 import { formulaLayoutWidth } from "common/utils";
 
+import { Icon, ToolButton } from "components/atoms";
 import { Toolbar } from "components/molecules";
 
 import { AppState } from "data/AppState";
@@ -36,7 +37,10 @@ const ProtoFormulaView = (props: Props) => {
 
 	return (
 		<div className={classNames("formulaView", className)}>
-			<Toolbar className="formulaView-toolbar" title={formula.name} />
+			<Toolbar className="formulaView-toolbar">
+				<ToolButton link to="/"><Icon name="close" /></ToolButton>
+				{formula.name}
+			</Toolbar>
 			<div className="formulaView-graph">
 				<Panel
 					type="input"

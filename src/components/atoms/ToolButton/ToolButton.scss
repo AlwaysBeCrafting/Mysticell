@@ -4,10 +4,19 @@
 
 .toolButton {
 	flex: 0 0 $dimen-toolbar-size;
+	align-self: stretch;
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: center;
+	align-items: center;
 	user-select: none;
-	font-size: 24px;
-	font-family: Material Icons;
+	font-size: 14px;
+	font-weight: 500;
 	color: $color-text-primary;
+}
+
+.toolButton.mod-link {
+	text-decoration: inherit;
 }
 
 .toolButton.is-disabled {
@@ -18,6 +27,6 @@
 	color: $color-text-primary-inverted;
 }
 
-.mod-inverted .toolButton {
+.mod-inverted .toolButton.is-disabled {
 	color: $color-text-disabled-inverted;
 }
