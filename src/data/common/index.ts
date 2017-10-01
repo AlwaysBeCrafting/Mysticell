@@ -1,4 +1,4 @@
-export {FormulaGraph} from "./FormulaGraph";
-export {MenuItem} from "./MenuItem";
-export {Param, ErrorParam, PARAMS, ParamFunction} from "./Param";
-export {TypedAction} from "./TypedAction";
+export { FormulaGraph } from "./FormulaGraph";
+export { MenuItem } from "./MenuItem";
+export { Param, ErrorParam, PARAMS, ParamFunction } from "./Param";
+export { TypedAction } from "./TypedAction";

@@ -3,4 +3,4 @@ const tail = (str: string, delim: string): string => (
 );
 
 
-export {tail};
+export { tail };

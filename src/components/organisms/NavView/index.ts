@@ -1,1 +1,1 @@
-export {NavView} from "./NavView";
+export { NavView } from "./NavView";

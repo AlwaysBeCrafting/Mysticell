@@ -10,4 +10,4 @@ interface Primitive {
 }
 
 
-export {Primitive};
+export { Primitive };

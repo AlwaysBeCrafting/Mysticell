@@ -1,1 +1,1 @@
-export {connectedInputs} from "./graph";
+export { connectedInputs } from "./graph";

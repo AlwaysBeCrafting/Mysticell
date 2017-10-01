@@ -1,1 +1,1 @@
-export {CellView} from "./CellView";
+export { CellView } from "./CellView";

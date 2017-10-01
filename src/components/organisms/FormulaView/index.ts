@@ -1,1 +1,1 @@
-export {FormulaView} from "./FormulaView";
+export { FormulaView } from "./FormulaView";

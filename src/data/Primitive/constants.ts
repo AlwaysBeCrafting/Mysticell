@@ -128,4 +128,4 @@ const PRIMITIVES: Dict<Primitive> = Object.values(constants).reduce(
 );
 
 
-export {constants, PRIMITIVES};
+export { constants, PRIMITIVES };

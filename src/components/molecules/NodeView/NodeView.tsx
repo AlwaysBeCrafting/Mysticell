@@ -64,4 +64,4 @@ const makeStyle = (position: [number, number], pinRowCount: number) => ({
 });
 
 
-export {NodeView};
+export { NodeView };

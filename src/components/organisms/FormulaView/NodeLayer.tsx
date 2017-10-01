@@ -80,4 +80,4 @@ const NodeLayer = connect<{}, DispatchProps, OwnProps>(
 )(ProtoNodeLayer);
 
 
-export {NodeLayer};
+export { NodeLayer };

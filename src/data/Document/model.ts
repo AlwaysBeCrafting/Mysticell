@@ -19,4 +19,4 @@ interface Document {
 }
 
 
-export {Document};
+export { Document };

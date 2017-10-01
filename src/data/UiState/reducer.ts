@@ -39,4 +39,4 @@ const reducer = (state: UiState = defaultState, action: Action): UiState => {
 };
 
 
-export {reducer};
+export { reducer };

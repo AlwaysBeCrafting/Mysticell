@@ -50,6 +50,6 @@ const setUserValueAsync = (nodeId: string, index: number, value: string): Action
 });
 
 
-export {Action, ActionTypes};
-export {create, destroy, setUserValue};
-export {setUserValueAsync};
+export { Action, ActionTypes };
+export { create, destroy, setUserValue };
+export { setUserValueAsync };

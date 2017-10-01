@@ -46,4 +46,4 @@ const subReducers = combineReducers<Document>({
 const reducer = composeReducers(documentReducer, subReducers);
 
 
-export {reducer};
+export { reducer };

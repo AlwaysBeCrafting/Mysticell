@@ -46,4 +46,4 @@ const Panel = (props: Props) => {
 };
 
 
-export {Panel};
+export { Panel };

@@ -14,4 +14,4 @@ interface Formula {
 }
 
 
-export {Formula};
+export { Formula };

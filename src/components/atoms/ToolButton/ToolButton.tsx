@@ -29,4 +29,4 @@ const ToolButton = (props: Props) => {
 };
 
 
-export {ToolButton};
+export { ToolButton };

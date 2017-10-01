@@ -1,2 +1,2 @@
-export {Sheet} from "./model";
-export {reducer} from "./reducer";
+export { Sheet } from "./model";
+export { reducer } from "./reducer";

@@ -12,4 +12,4 @@ interface Node {
 type NodeFunction = Formula | Primitive;
 
 
-export {Node, NodeFunction};
+export { Node, NodeFunction };

@@ -68,4 +68,4 @@ class Item<B, L> extends React.PureComponent<ItemProps<B, L>> {
 }
 
 
-export {TreeView};
+export { TreeView };

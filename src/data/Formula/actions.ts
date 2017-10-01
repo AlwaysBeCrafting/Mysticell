@@ -48,5 +48,5 @@ const removeNode = (functionId: string, nodeId: string): Action => ({
 });
 
 
-export {Action, ActionTypes};
-export {create, destroy, addNode, removeNode};
+export { Action, ActionTypes };
+export { create, destroy, addNode, removeNode };

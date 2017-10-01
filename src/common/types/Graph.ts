@@ -7,4 +7,4 @@ interface DiEdge<N, D> {
 type DiGraph<N, D = void> = Array<DiEdge<N, D>>;
 
 
-export {DiEdge, DiGraph};
+export { DiEdge, DiGraph };

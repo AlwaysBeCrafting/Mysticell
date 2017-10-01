@@ -103,4 +103,4 @@ const EditorPage = connect<StateProps, DispatchProps, {}>(
 )(ProtoEditor);
 
 
-export {EditorPage};
+export { EditorPage };

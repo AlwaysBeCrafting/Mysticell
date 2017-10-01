@@ -3,4 +3,4 @@ interface Dict<T> {
 }
 
 
-export {Dict};
+export { Dict };

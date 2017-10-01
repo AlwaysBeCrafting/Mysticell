@@ -12,4 +12,4 @@ const reducer = combineReducers<AppState>({
 });
 
 
-export {reducer};
+export { reducer };

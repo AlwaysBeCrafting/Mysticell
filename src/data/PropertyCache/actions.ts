@@ -16,5 +16,5 @@ const updateOutputValues = (nodeId: string, outputValues: Param[]): Action => ({
 });
 
 
-export {Action, ActionTypes};
-export {updateOutputValues};
+export { Action, ActionTypes };
+export { updateOutputValues };

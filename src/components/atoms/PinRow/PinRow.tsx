@@ -58,4 +58,4 @@ class PinRow extends React.PureComponent<Props> {
 }
 
 
-export {PinRow};
+export { PinRow };

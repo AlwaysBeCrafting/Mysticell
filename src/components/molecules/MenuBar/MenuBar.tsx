@@ -28,4 +28,4 @@ const MenuBar = (props: Props) => (
 );
 
 
-export {MenuBar};
+export { MenuBar };

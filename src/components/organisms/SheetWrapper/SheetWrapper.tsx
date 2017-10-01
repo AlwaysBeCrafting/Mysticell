@@ -37,4 +37,4 @@ const SheetWrapper = (props: Props) => (
 );
 
 
-export {SheetWrapper};
+export { SheetWrapper };

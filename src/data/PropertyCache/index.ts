@@ -1,3 +1,3 @@
-export {Action} from "./actions";
-export {PropertyCache} from "./model";
-export {reducer} from "./reducer";
+export { Action } from "./actions";
+export { PropertyCache } from "./model";
+export { reducer } from "./reducer";

@@ -23,4 +23,4 @@ const configureStore = (initialState?: AppState) => {
 };
 
 
-export {configureStore};
+export { configureStore };

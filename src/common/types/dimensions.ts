@@ -11,4 +11,4 @@ interface Size2d {
 }
 
 
-export {Rect2d, Size2d};
+export { Rect2d, Size2d };

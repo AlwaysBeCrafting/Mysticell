@@ -139,4 +139,4 @@ const execFormula = (doc: Document, formulaId: string, ...params: Param[]): Para
 };
 
 
-export {connectedInputs, execFormula};
+export { connectedInputs, execFormula };

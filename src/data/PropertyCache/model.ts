@@ -10,4 +10,4 @@ interface CacheEntry {
 type PropertyCache = Dict<CacheEntry>;
 
 
-export {PropertyCache};
+export { PropertyCache };

@@ -30,4 +30,4 @@ const Toolbar = ({title, navItem, items, className, ...attrs}: Props) => (
 );
 
 
-export {Toolbar};
+export { Toolbar };

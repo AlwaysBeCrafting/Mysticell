@@ -1,1 +1,1 @@
-export {Cell} from "./model";
+export { Cell } from "./model";

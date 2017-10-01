@@ -4,4 +4,4 @@ interface TypedAction<T> {
 }
 
 
-export {TypedAction};
+export { TypedAction };

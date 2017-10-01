@@ -86,4 +86,4 @@ const FormulaView = connect<StateProps, {}, PublicProps>(
 )(ProtoFormulaView);
 
 
-export {FormulaView};
+export { FormulaView };

@@ -58,5 +58,5 @@ const PARAMS = {
 type ParamFunction = (...params: Param[]) => Param[];
 
 
-export {Param, ErrorParam, PARAMS, ParamFunction};
-export {NumberParam};
+export { Param, ErrorParam, PARAMS, ParamFunction };
+export { NumberParam };

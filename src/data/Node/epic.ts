@@ -18,4 +18,4 @@ const userValueEpic = (action$: ActionsObservable<Action>) => action$
 	);
 
 
-export {userValueEpic};
+export { userValueEpic };

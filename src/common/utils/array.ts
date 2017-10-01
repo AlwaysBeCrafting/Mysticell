@@ -8,4 +8,4 @@ const patchArray = <A, B>(a: A[], b: B[]): Array<A | B> => (
 );
 
 
-export {patchArray};
+export { patchArray };

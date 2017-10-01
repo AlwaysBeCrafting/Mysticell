@@ -3,4 +3,4 @@ interface UiState {
 }
 
 
-export {UiState};
+export { UiState };

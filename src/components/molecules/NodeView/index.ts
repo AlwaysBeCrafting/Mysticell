@@ -1,1 +1,1 @@
-export {NodeView} from "./NodeView";
+export { NodeView } from "./NodeView";

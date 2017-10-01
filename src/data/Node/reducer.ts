@@ -31,4 +31,4 @@ const reducer = (state: Dict<Node> = {}, action: Action): Dict<Node> => {
 };
 
 
-export {reducer};
+export { reducer };

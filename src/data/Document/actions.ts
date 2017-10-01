@@ -17,5 +17,5 @@ const loadDocument = (documentJson: Document): Action => ({
 });
 
 
-export {Action, ActionTypes};
-export {loadDocument};
+export { Action, ActionTypes };
+export { loadDocument };

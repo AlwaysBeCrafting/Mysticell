@@ -18,4 +18,4 @@ const isBranch = <B, L>(tree?: Tree<B, L>): tree is Branch<B, L> => (
 );
 
 
-export {Tree, isLeaf, isBranch};
+export { Tree, isLeaf, isBranch };

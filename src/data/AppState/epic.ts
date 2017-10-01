@@ -8,4 +8,4 @@ const appStateEpic = combineEpics(
 );
 
 
-export {appStateEpic};
+export { appStateEpic };

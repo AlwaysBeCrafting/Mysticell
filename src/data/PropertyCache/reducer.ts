@@ -12,4 +12,4 @@ const reducer = (state: PropertyCache = {}, action: Action) => {
 };
 
 
-export {reducer};
+export { reducer };

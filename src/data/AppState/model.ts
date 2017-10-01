@@ -10,4 +10,4 @@ interface AppState {
 }
 
 
-export {AppState};
+export { AppState };

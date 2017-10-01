@@ -11,4 +11,4 @@ const composeReducers = <T>(...reducers: Array<Reducer<T>>): Reducer<T> => (
 );
 
 
-export {composeReducers};
+export { composeReducers };

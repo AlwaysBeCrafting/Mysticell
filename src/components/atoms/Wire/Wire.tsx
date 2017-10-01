@@ -29,4 +29,4 @@ const Wire = ({srcPos, dstPos, className, ...attrs}: Props) => {
 };
 
 
-export {Wire};
+export { Wire };

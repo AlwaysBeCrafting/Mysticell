@@ -77,4 +77,4 @@ const renderWithProps = (props: Props) => (edge: DiEdge<string, [number, number]
 };
 
 
-export {WireLayer};
+export { WireLayer };

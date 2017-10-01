@@ -25,4 +25,4 @@ const CellView = (props: Props) => {
 };
 
 
-export {CellView};
+export { CellView };

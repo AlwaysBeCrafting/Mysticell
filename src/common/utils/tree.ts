@@ -62,4 +62,4 @@ const resolvePath = <B, L, P>(tree: Tree<B, L>, path: P[], compare: TreeComparat
 };
 
 
-export {collapse, map, mapBranches, mapLeaves, resolvePath};
+export { collapse, map, mapBranches, mapLeaves, resolvePath };

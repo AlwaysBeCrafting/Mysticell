@@ -10,4 +10,4 @@ type IdNamespace =
 const generateId = (namespace: IdNamespace) => `${namespace}-${shortid.generate()}`;
 
 
-export {generateId};
+export { generateId };

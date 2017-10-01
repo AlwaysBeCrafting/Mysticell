@@ -133,4 +133,4 @@ const NavView = connect<{}, DispatchProps, OwnProps>(
 )(ProtoNavView);
 
 
-export {NavView};
+export { NavView };

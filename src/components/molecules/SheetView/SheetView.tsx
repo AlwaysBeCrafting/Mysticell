@@ -46,4 +46,4 @@ const SheetView = (props: Props) => {
 };
 
 
-export {SheetView};
+export { SheetView };

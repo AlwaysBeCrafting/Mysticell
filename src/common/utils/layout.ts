@@ -6,4 +6,4 @@ const formulaLayoutWidth = (layout: {[nodeId: string]: [number, number]}) => (
 );
 
 
-export {formulaLayoutWidth};
+export { formulaLayoutWidth };

@@ -1,1 +1,1 @@
-export {EditorPage} from "./EditorPage";
+export { EditorPage } from "./EditorPage";

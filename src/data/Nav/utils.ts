@@ -26,4 +26,4 @@ const pathToFormula = (formulas: Dict<Formula>, nav: Nav, path: string[]): Formu
 };
 
 
-export {pathToFormula};
+export { pathToFormula };

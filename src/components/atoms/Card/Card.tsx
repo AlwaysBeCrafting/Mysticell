@@ -15,4 +15,4 @@ const Card = ({className, children, ...attrs}: Props) => (
 );
 
 
-export {Card};
+export { Card };
