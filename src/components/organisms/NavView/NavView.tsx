@@ -7,6 +7,7 @@ import { Dispatch } from "redux";
 import { Dict, isBranch } from "common/types";
 import { collapse } from "common/utils";
 
+import { Icon } from "components/atoms";
 import { TreeView } from "components/molecules";
 
 import { Action } from "data/AppState";
@@ -94,15 +95,13 @@ class ProtoNavView extends React.PureComponent<Props> {
 			data-name={name}
 			onClick={this.toggleBranchItemExpanded}
 		>
-			<span
+			<Icon
 				className={classnames(
 					"navView-item-icon",
-					"icon",
 					"mod-dropdown",
 					{ "is-expanded": this.props.expandedNavItems.has(`${path.join("/")}/${name}`) })}
-			>
-				arrow_drop_down
-			</span>
+				name="arrow_drop_down"
+			/>
 			<span className="navView-item-title">{name}</span>
 		</div>
 	)
@@ -115,9 +114,9 @@ class ProtoNavView extends React.PureComponent<Props> {
 			)}
 			to={`/${path.slice(1).join("/")}/${formula.name}`}
 		>
-			<img
+			<Icon
 				className={classnames(
-					"navView-item-icon icon",
+					"navView-item-icon",
 					{ "is-selected": isSelected },
 				)}
 				src={formula.isProperty ? propertyIcon : functionIcon}
