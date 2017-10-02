@@ -1,11 +1,15 @@
 .errorBoundary {
+	display: flex;
+	flex-flow: column nowrap;
 	overflow-y: scroll;
 	overflow-wrap: break-word;
+	white-space: pre;
 	background: white;
 	color: #a21;
-	white-space: pre-wrap;
 	outline: solid 4px #a21;
 	padding: 1em;
+	min-width: 16em;
+	min-height: 6em;
 }
 
 	.errorBoundary-heading {
