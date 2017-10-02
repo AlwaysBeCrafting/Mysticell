@@ -101,5 +101,8 @@
 			{"value": "FORMULA-0000"},
 			{"value": "FORMULA-0001"}
 		]}
-	]}
+	]},
+	"propertyInputs": {
+		"FORMULA-0001": [15]
+	}
 }

@@ -15,7 +15,7 @@
    version="1.1"
    id="svg8"
    inkscape:version="0.92.2 5c3e80d, 2017-08-06"
-   sodipodi:docname="icon-property.svg">
+   sodipodi:docname="icon-node.svg">
   <defs
      id="defs2" />
   <sodipodi:namedview
@@ -25,11 +25,11 @@
      borderopacity="1"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="29.769233"
-     inkscape:cx="13.336113"
-     inkscape:cy="12.548475"
+     inkscape:zoom="21.045032"
+     inkscape:cx="10.931846"
+     inkscape:cy="12.180414"
      inkscape:document-units="px"
-     inkscape:current-layer="layer4"
+     inkscape:current-layer="g4582"
      showgrid="false"
      units="px"
      inkscape:pagecheckerboard="false"
@@ -78,7 +78,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -138,9 +138,9 @@
      id="g4582"
      inkscape:groupmode="layer">
     <path
-       sodipodi:nodetypes="ccccccccsssssssss"
+       sodipodi:nodetypes="csssccccsssscccc"
        inkscape:connector-curvature="0"
-       d="M 20,6 H 7 v 3 2 2 2 5 H 20 M 6,2 h 12 c 1.108,0 2,0.892 2,2 v 16 c 0,1.108 -0.892,2 -2,2 H 6 C 4.892,22 4,21.108 4,20 V 4 C 4,2.892 4.892,2 6,2 Z"
+       d="m 20,14 v 6 c 0,1.108 -0.892,2 -2,2 H 6 C 4.892,22 4,21.108 4,20 H 17 V 14 M 4,12 V 4 C 4,2.892 4.892,2 6,2 h 12 c 1.108,0 2,0.892 2,2 V 6 H 7 v 6 z"
        style="opacity:1;vector-effect:none;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:11.99999905;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        id="path4580" />
     <circle
@@ -152,7 +152,7 @@
     <circle
        r="2"
        cy="16"
-       cx="19"
+       cx="5"
        id="circle4586"
        style="opacity:1;vector-effect:none;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:12;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
   </g>

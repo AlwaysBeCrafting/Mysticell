@@ -3,7 +3,7 @@ import React from "react";
 
 import { Dict } from "common/types";
 
-import { SheetView } from "components/molecules";
+import { ErrorBoundary, SheetView } from "components/molecules";
 
 import { Cell } from "data/Cell";
 import { PropertyCache } from "data/PropertyCache";
@@ -24,13 +24,14 @@ const SheetWrapper = (props: Props) => (
 	<div className={classNames("sheetWrapper", props.className)}>
 		{
 			Object.values(props.sheets).map(sheet => (
-				<SheetView
-					propertyInputs={props.propertyInputs}
-					propertyCache={props.propertyCache}
-					sheet={sheet}
-					cells={props.cells}
-					key={sheet.id}
-				/>
+				<ErrorBoundary key={sheet.id}>
+					<SheetView
+						propertyInputs={props.propertyInputs}
+						propertyCache={props.propertyCache}
+						sheet={sheet}
+						cells={props.cells}
+					/>
+				</ErrorBoundary>
 			))
 		}
 	</div>

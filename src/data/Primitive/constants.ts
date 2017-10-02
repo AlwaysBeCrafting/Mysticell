@@ -13,9 +13,6 @@ const padEmpty = (params: Param[], length: number) => (
 
 const paramToNumber = (identity: number) => (param: Param): Param => {
 	switch (param.type) {
-		case "array": {
-			return PARAMS.error("Number expected");
-		}
 		case "empty": {
 			return PARAMS.number(identity);
 		}
@@ -24,17 +21,17 @@ const paramToNumber = (identity: number) => (param: Param): Param => {
 				return PARAMS.number(identity);
 			}
 			const converted = +param.value;
-			if (Number.isNaN(converted)) {
-				return PARAMS.error("Number expected");
-			} else {
+			if (!Number.isNaN(converted)) {
 				return PARAMS.number(converted);
 			}
+			break;
 		}
 		case "error":
 		case "number": {
 			return param;
 		}
 	}
+	return PARAMS.error("TYPE", `Number expected, got ${param.type}`);
 };
 
 type Operator = (...nums: number[]) => number;

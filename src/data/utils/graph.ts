@@ -134,7 +134,7 @@ const execFormula = (doc: Document, formulaId: string, ...params: Param[]): Para
 		return state.readyNodeInputs.get("output") || [];
 	} else {
 		return Array(formula.outputNames.length)
-			.fill(PARAMS.error("Could not resolve function"));
+			.fill(PARAMS.error("FUNC", "Could not resolve function"));
 	}
 };
 

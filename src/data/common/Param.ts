@@ -20,7 +20,7 @@ interface ArrayParam {
 
 interface ErrorParam {
 	type: "error";
-	value: "ERR";
+	value: string;
 	message: string;
 }
 
@@ -48,9 +48,9 @@ const PARAMS = {
 		type: "array",
 		value,
 	}),
-	error: (message: string): ErrorParam => ({
+	error: (value: string, message: string): ErrorParam => ({
 		type: "error",
-		value: "ERR",
+		value,
 		message,
 	}),
 };
