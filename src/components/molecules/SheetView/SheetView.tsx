@@ -19,55 +19,64 @@ interface Props {
 	propertyInputs: Dict<string[]>;
 	propertyCache: PropertyCache;
 }
-const SheetView = (props: Props) => {
-	const { cells, sheet } = props;
-	const style = {
-		gridArea: `span ${sheet.size.height + 1} / span ${sheet.size.width}`,
-	};
-	return (
-		<div className="sheetView" style={style}>
-			<Toolbar className="sheetView-header">
-				{sheet.title}
-			</Toolbar>
-			<div className="sheetView-grid">
-				{
-					Object.keys(sheet.layout)
-						.map(cellId => cells[cellId])
-						.filter(cell => !!cell)
-						.map(renderCell(props))
-				}
+class SheetView extends React.PureComponent<Props> {
+	public render() {
+		const { cells, sheet } = this.props;
+		const style = {
+			gridArea: `span ${sheet.size.height + 1} / span ${sheet.size.width}`,
+		};
+		return (
+			<div className="sheetView" style={style}>
+				<Toolbar className="sheetView-header">
+					{sheet.title}
+				</Toolbar>
+				<div className="sheetView-grid">
+					{
+						Object.keys(sheet.layout)
+							.map(cellId => cells[cellId])
+							.filter(cell => !!cell)
+							.map(this.renderCell)
+					}
+				</div>
 			</div>
-		</div>
-	);
-};
-
-const renderCell = (props: Props) => (cell: Cell) => {
-	const { sheet } = props;
-	if (cell.property.type === "input") {
-		const param = PARAMS.string(props.propertyInputs[cell.property.id][cell.property.index]);
-		return (
-			<CellView
-				param={param}
-				key={cell.id}
-				rect={sheet.layout[cell.id]}
-				className="sheetView-grid-cell"
-			/>
-		);
-	} else {
-		const cached = props.propertyCache[cell.property.id];
-		const param = cached
-			? cached.outputValues[cell.property.index]
-			: PARAMS.error("…", "Value has changed. Loading the new value now.");
-		return (
-			<CellView
-				param={param}
-				key={cell.id}
-				rect={sheet.layout[cell.id]}
-				className="sheetView-grid-cell"
-			/>
 		);
 	}
-};
+
+	private renderCell = (cell: Cell) => {
+		const { sheet, propertyInputs, propertyCache } = this.props;
+		if (cell.property.type === "input") {
+			const param = PARAMS.string(propertyInputs[cell.property.id][cell.property.index]);
+			return (
+				<CellView
+					className="sheetView-grid-cell"
+					param={param}
+					key={cell.id}
+					rect={sheet.layout[cell.id]}
+					cell={cell}
+					onChange={this.onCellChange}
+				/>
+			);
+		} else {
+			const cached = propertyCache[cell.property.id];
+			const param = cached
+				? cached.outputValues[cell.property.index]
+				: PARAMS.error("…", "Value has changed. Loading the new value now.");
+			return (
+				<CellView
+					className="sheetView-grid-cell"
+					param={param}
+					key={cell.id}
+					rect={sheet.layout[cell.id]}
+					cell={cell}
+				/>
+			);
+		}
+	}
+
+	private onCellChange = (_: Cell) => {
+		return;
+	}
+}
 
 
 export { SheetView };

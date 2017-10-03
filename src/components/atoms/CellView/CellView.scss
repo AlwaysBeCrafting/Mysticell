@@ -1,0 +1,22 @@
+@import "~common/styles/colors";
+
+
+.cellView {
+	padding: 4px;
+	display: flex;
+	flex-flow: row nowrap;
+	align-items: center;
+}
+
+	.cellView-content {
+		background: $color-black-alpha-12;
+		align-self: stretch;
+		flex: 1 0 0;
+		text-align: right;
+		padding: 0 2px;
+	}
+
+	.cellView-content.mod-input {
+		background: none;
+		border-bottom: solid 2px $color-brand-primary;
+	}

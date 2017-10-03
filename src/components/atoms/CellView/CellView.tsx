@@ -3,37 +3,54 @@ import React from "react";
 
 import { Rect2d } from "common/types";
 
+import { Cell } from "data/Cell";
 import { Param } from "data/common";
+
+import "./CellView.scss";
 
 
 interface Props {
 	className?: string;
+	cell: Cell;
 	param: Param;
 	rect: Rect2d;
-	onChange?: React.ChangeEventHandler<HTMLInputElement>;
+	onChange?: (cell: Cell) => void;
 }
-const CellView = (props: Props) => {
-	const { className, param, rect, onChange } = props;
-	const style = {
-		gridArea: [rect.top, rect.left, rect.bottom, rect.right]
-			.map(val => val + 1)
-			.join(" / "),
-	};
-	return onChange
-		? (
-			<input
+class CellView extends React.PureComponent<Props> {
+	public render() {
+		const { className, param, rect, onChange } = this.props;
+		const style = {
+			gridArea: [rect.top, rect.left, rect.bottom, rect.right]
+				.map(val => val + 1)
+				.join(" / "),
+		};
+		const content = onChange
+			? (
+				<input
+					className="cellView-content mod-input"
+					value={`${param.value}`}
+					onChange={this.onChange}
+				/>
+			)
+			: (
+				<div className="cellView-content">
+					{param.value}
+				</div>
+			);
+		return (
+			<div
 				style={style}
-				className={classnames("cellView", className, "mod-input")}
-				value={`${param.value}`}
-				onChange={onChange}
-			/>
-		)
-		: (
-			<div style={style} className={classnames("cellView", className)}>
-				{param.value}
+				className={classnames("cellView", className)}
+			>
+				{content}
 			</div>
 		);
-};
+	}
+
+	private onChange = (..._: any[]) => {
+		if (this.props.onChange) { this.props.onChange(this.props.cell); }
+	}
+}
 
 
 export { CellView };
