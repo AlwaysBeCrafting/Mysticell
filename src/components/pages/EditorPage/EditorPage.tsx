@@ -12,6 +12,7 @@ import { Cell } from "data/Cell";
 import { Formula } from "data/Formula";
 import { Nav, pathToFormula } from "data/Nav";
 import { PropertyCache } from "data/PropertyCache";
+import { PropertyInputs } from "data/PropertyInputs";
 import { Sheet } from "data/Sheet";
 
 import "./EditorPage.scss";
@@ -23,7 +24,7 @@ interface StateProps {
 	sheets: Dict<Sheet>;
 	cells: Dict<Cell>;
 	expandedNavItems: Set<string>;
-	propertyInputs: Dict<string[]>;
+	propertyInputs: PropertyInputs;
 	propertyCache: PropertyCache;
 }
 interface DispatchProps {

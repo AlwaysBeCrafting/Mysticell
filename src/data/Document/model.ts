@@ -1,10 +1,11 @@
 import { Dict } from "common/types";
 
-import { Cell } from "data/Cell/model";
-import { Formula } from "data/Formula/model";
+import { Cell } from "data/Cell";
+import { Formula } from "data/Formula";
 import { Nav } from "data/Nav";
-import { Node } from "data/Node/model";
-import { Sheet } from "data/Sheet/model";
+import { Node } from "data/Node";
+import { PropertyInputs } from "data/PropertyInputs";
+import { Sheet } from "data/Sheet";
 
 
 interface Document {
@@ -14,7 +15,7 @@ interface Document {
 	sheets: Dict<Sheet>;
 	nodes: Dict<Node>;
 	formulas: Dict<Formula>;
-	propertyInputs: Dict<string[]>;
+	propertyInputs: PropertyInputs;
 	nav: Nav;
 }
 

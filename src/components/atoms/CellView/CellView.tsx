@@ -14,7 +14,7 @@ interface Props {
 	cell: Cell;
 	param: Param;
 	rect: Rect2d;
-	onChange?: (cell: Cell) => void;
+	onChange?: (cell: Cell, newValue: string) => void;
 }
 class CellView extends React.PureComponent<Props> {
 	public render() {
@@ -28,7 +28,7 @@ class CellView extends React.PureComponent<Props> {
 			? (
 				<input
 					className="cellView-content mod-input"
-					value={`${param.value}`}
+					defaultValue={`${param.value}`}
 					onChange={this.onChange}
 				/>
 			)
@@ -47,8 +47,10 @@ class CellView extends React.PureComponent<Props> {
 		);
 	}
 
-	private onChange = (..._: any[]) => {
-		if (this.props.onChange) { this.props.onChange(this.props.cell); }
+	private onChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
+		if (this.props.onChange) {
+			this.props.onChange(this.props.cell, ev.target.value);
+		}
 	}
 }
 

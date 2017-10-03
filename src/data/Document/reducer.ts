@@ -2,7 +2,8 @@ import { combineReducers } from "redux";
 
 import { composeReducers } from "common/utils";
 
-import {reducer as nodes } from "data/Node";
+import { reducer as nodes } from "data/Node";
+import { reducer as propertyInputs } from "data/PropertyInputs";
 
 import { Action, ActionTypes } from "./actions";
 import { Document } from "./model";
@@ -39,7 +40,7 @@ const subReducers = combineReducers<Document>({
 	sheets: identity,
 	nodes,
 	formulas: identity,
-	propertyInputs: identity,
+	propertyInputs,
 
 	nav: identity,
 });

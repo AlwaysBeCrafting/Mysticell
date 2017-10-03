@@ -1,4 +1,4 @@
-import {Action as DocumentAction } from "data/Document";
+import { Action as DocumentAction } from "data/Document";
 
 
 type Action = DocumentAction;

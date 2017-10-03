@@ -8,6 +8,7 @@ import { Toolbar } from "components/molecules";
 import { Cell } from "data/Cell";
 import { PARAMS } from "data/common";
 import { PropertyCache } from "data/PropertyCache";
+import { PropertyInputs } from "data/PropertyInputs";
 import { Sheet } from "data/Sheet";
 
 import "./SheetView.scss";
@@ -16,8 +17,9 @@ import "./SheetView.scss";
 interface Props {
 	sheet: Sheet;
 	cells: Dict<Cell>;
-	propertyInputs: Dict<string[]>;
+	propertyInputs: PropertyInputs;
 	propertyCache: PropertyCache;
+	onCellChange: (cell: Cell, newValue: string) => void;
 }
 class SheetView extends React.PureComponent<Props> {
 	public render() {
@@ -43,7 +45,12 @@ class SheetView extends React.PureComponent<Props> {
 	}
 
 	private renderCell = (cell: Cell) => {
-		const { sheet, propertyInputs, propertyCache } = this.props;
+		const {
+			sheet,
+			propertyInputs,
+			propertyCache,
+			onCellChange,
+		} = this.props;
 		if (cell.property.type === "input") {
 			const param = PARAMS.string(propertyInputs[cell.property.id][cell.property.index]);
 			return (
@@ -53,7 +60,7 @@ class SheetView extends React.PureComponent<Props> {
 					key={cell.id}
 					rect={sheet.layout[cell.id]}
 					cell={cell}
-					onChange={this.onCellChange}
+					onChange={onCellChange}
 				/>
 			);
 		} else {
@@ -71,10 +78,6 @@ class SheetView extends React.PureComponent<Props> {
 				/>
 			);
 		}
-	}
-
-	private onCellChange = (_: Cell) => {
-		return;
 	}
 }
 
