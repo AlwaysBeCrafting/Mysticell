@@ -50,6 +50,8 @@ input, button {
 	-webkit-appearance: none;
 	color: inherit;
 	font: inherit;
+	min-width: 0;
+	border: none;
 }
 
 ul, ol {
