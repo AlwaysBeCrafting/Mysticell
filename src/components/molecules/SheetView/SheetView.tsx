@@ -70,7 +70,7 @@ class SheetView extends React.PureComponent<Props> {
 		} else {
 			const cached = propertyCache[cell.property.id];
 			const param = cached
-				? cached.outputValues[cell.property.index]
+				? cached[cell.property.index]
 				: PARAMS.error("…", "Value has changed. Loading the new value now.");
 			return (
 				<CellView
