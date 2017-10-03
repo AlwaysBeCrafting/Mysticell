@@ -2,7 +2,7 @@ import React from "react";
 
 import { Dict } from "common/types";
 
-import { CellView } from "components/atoms";
+import { CellView, Icon, ToolButton } from "components/atoms";
 import { Toolbar } from "components/molecules";
 
 import { Cell } from "data/Cell";
@@ -31,6 +31,10 @@ class SheetView extends React.PureComponent<Props> {
 			<div className="sheetView" style={style}>
 				<Toolbar className="sheetView-header">
 					{sheet.title}
+					<div style={{ flexGrow: 1}} />
+					<ToolButton link to="">
+						<Icon size={16} name="more_vert" />
+					</ToolButton>
 				</Toolbar>
 				<div className="sheetView-grid">
 					{

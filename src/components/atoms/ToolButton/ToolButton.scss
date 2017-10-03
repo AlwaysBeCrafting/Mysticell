@@ -3,7 +3,8 @@
 
 
 .toolButton {
-	flex: 0 0 $dimen-toolbar-size;
+	flex: 0 0 auto;
+	padding: 8px;
 	align-self: stretch;
 	display: flex;
 	flex-flow: row nowrap;
