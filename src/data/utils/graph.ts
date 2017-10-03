@@ -107,7 +107,7 @@ const mergeGraphs = (base: FormulaGraph, subgraph: FormulaGraph, nodeId: string)
 	return {...mergedBase, ...mergedSub};
 };
 
-const execFormula = (doc: Document, formulaId: string, ...params: Param[]): Param[] => {
+const execFormula = async (doc: Document, formulaId: string, ...params: Param[]): Promise<Param[]> => {
 	const {nodes, formulas} = doc;
 	const formula = formulas[formulaId];
 	const {graph} = formula;

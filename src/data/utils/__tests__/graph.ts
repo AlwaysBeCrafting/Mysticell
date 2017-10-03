@@ -45,8 +45,8 @@ const testDoc: Document = {
 };
 
 describe("graph resolver", () => {
-	it("returns an error when its contents loop", () => {
-		const result = execFormula(testDoc, "FORMULA-cyclic", PARAMS.number(10));
+	it("returns an error when its contents loop", async () => {
+		const result = await execFormula(testDoc, "FORMULA-cyclic", PARAMS.number(10));
 		expect(result)
 			.toHaveLength(testDoc.formulas["FORMULA-cyclic"].outputNames.length);
 		expect(result[0])
