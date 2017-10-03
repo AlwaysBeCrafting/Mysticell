@@ -2,19 +2,19 @@ import { Param, TypedAction } from "data/common";
 
 
 const enum ActionTypes {
-	UPDATE_OUTPUT_VALUES = "[PropertyCache] Update output values",
+	SET_PARAMS = "[PropertyCache] Set params",
 }
 type Action =
-	| UpdateOutputValuesAction;
+	| SetParamsAction;
 
-interface UpdateOutputValuesAction extends TypedAction<ActionTypes.UPDATE_OUTPUT_VALUES> {
-	payload: {nodeId: string, outputValues: Param[]};
+interface SetParamsAction extends TypedAction<ActionTypes.SET_PARAMS> {
+	payload: { propertyId: string, params: Param[] };
 }
-const updateOutputValues = (nodeId: string, outputValues: Param[]): Action => ({
-	type: ActionTypes.UPDATE_OUTPUT_VALUES,
-	payload: {nodeId, outputValues},
+const setParams = (propertyId: string, params: Param[]): Action => ({
+	type: ActionTypes.SET_PARAMS,
+	payload: { propertyId, params },
 });
 
 
 export { Action, ActionTypes };
-export { updateOutputValues };
+export { setParams };

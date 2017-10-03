@@ -2,7 +2,7 @@ import { Action } from "redux";
 import { combineEpics } from "redux-observable";
 
 import { userValueEpic } from "data/Node";
-import { setPropertyInputEpic } from "data/PropertyInputs";
+import { setPropertyInputEpic, updatePropertyCacheEpic } from "data/PropertyInputs";
 
 import { AppState } from "./model";
 
@@ -10,6 +10,7 @@ import { AppState } from "./model";
 const appStateEpic = combineEpics<Action, AppState>(
 	userValueEpic,
 	setPropertyInputEpic,
+	updatePropertyCacheEpic,
 );
 
 
