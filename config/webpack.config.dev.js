@@ -45,6 +45,7 @@ module.exports = {
 						loader: 'ts-loader',
 						options: {
 							transpileOnly: true,
+							configFile: "tsconfig.app.json"
 						},
 					},
 				],
@@ -105,6 +106,7 @@ module.exports = {
 		new webpack.NoEmitOnErrorsPlugin(),
 		new webpack.NamedModulesPlugin(),
 		new ForkTsCheckerPlugin({
+			tsconfig: path.resolve(paths.appRoot, "tsconfig.app.json"),
 			tslint: true,
 			async: false,
 		}),
