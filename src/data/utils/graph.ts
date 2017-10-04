@@ -107,10 +107,13 @@ const mergeGraphs = (base: FormulaGraph, subgraph: FormulaGraph, nodeId: string)
 	return {...mergedBase, ...mergedSub};
 };
 
-const execFormula = async (doc: Document, formulaId: string): Promise<Param[]> => {
+const resolveProperty = async (doc: Document, propertyId: string): Promise<Param[]> => {
 	const {nodes, formulas, propertyInputs} = doc;
-	const params = propertyInputs[formulaId].map(input => PARAMS.string(input));
-	const formula = formulas[formulaId];
+	const params = propertyInputs[propertyId].map(input => PARAMS.string(input));
+	const formula = formulas[propertyId];
+	if (!formula.isProperty) {
+		throw new Error("Cannot resolveProperty() with a non-property function");
+	}
 	const {graph} = formula;
 	const state = createExecState(nodes, graph, params);
 
@@ -140,4 +143,4 @@ const execFormula = async (doc: Document, formulaId: string): Promise<Param[]> =
 };
 
 
-export { connectedInputs, execFormula };
+export { connectedInputs, resolveProperty };

@@ -4,7 +4,7 @@ import { ActionsObservable } from "redux-observable";
 import { AppState } from "data/AppState";
 import { PARAMS } from "data/common";
 import { setParams } from "data/PropertyCache";
-import { execFormula } from "data/utils";
+import { resolveProperty } from "data/utils";
 
 import { Action, ActionTypes, setValue } from "./actions";
 
@@ -30,7 +30,7 @@ const updatePropertyCacheEpic = (action$: ActionsObservable<Action>, store: Redu
 			const { document } = store.getState();
 			const inputs = store.getState().document.propertyInputs[action.payload.propertyId];
 			return (
-				execFormula(
+				resolveProperty(
 					document,
 					action.payload.propertyId,
 					...inputs.map(input => PARAMS.string(input)),

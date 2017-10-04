@@ -1,1 +1,1 @@
-export { connectedInputs, execFormula } from "./graph";
+export { connectedInputs, resolveProperty } from "./graph";

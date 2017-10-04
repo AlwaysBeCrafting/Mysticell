@@ -1,7 +1,7 @@
 import { PARAMS } from "data/common";
 import { Document } from "data/Document";
 
-import { execFormula } from "../graph";
+import { resolveProperty } from "../graph";
 
 
 const testDoc: Document = {
@@ -29,7 +29,7 @@ const testDoc: Document = {
 			name: "Cyclic Formula",
 			inputNames: ["Input number"],
 			outputNames: ["Output error", "Output another error"],
-			isProperty: false,
+			isProperty: true,
 			graph: [
 				{ source: "input", target: "NODE-cycleA", data: [0, 0] },
 				{ source: "input", target: "NODE-cycleB", data: [0, 0] },
@@ -48,7 +48,7 @@ const testDoc: Document = {
 
 describe("graph resolver", () => {
 	it("returns an error when its contents loop", async () => {
-		const result = await execFormula(testDoc, "FORMULA-cyclic");
+		const result = await resolveProperty(testDoc, "FORMULA-cyclic");
 		expect(result)
 			.toHaveLength(testDoc.formulas["FORMULA-cyclic"].outputNames.length);
 		expect(result[0])
