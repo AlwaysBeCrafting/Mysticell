@@ -10,6 +10,18 @@ const testDoc: Document = {
 	cells: {},
 	sheets: {},
 	nodes: {
+		"NODE-addA": {
+			id: "NODE-addA",
+			function: "PRIMITIVE-add",
+			label: "Adding node A",
+			userValues: ["0", "0"],
+		},
+		"NODE-addB": {
+			id: "NODE-addB",
+			function: "PRIMITIVE-add",
+			label: "Adding node B",
+			userValues: ["0", "0"],
+		},
 		"NODE-cycleA": {
 			id: "NODE-cycleA",
 			function: "PRIMITIVE-add",
@@ -24,6 +36,22 @@ const testDoc: Document = {
 		},
 	},
 	formulas: {
+		"FORMULA-addTwice": {
+			id: "FORMULA-addTwice",
+			name: "Formula Adding Twice",
+			inputNames: ["Input number A", "Input number B"],
+			outputNames: ["Output number A", "Output number B"],
+			isProperty: true,
+			graph: [
+				{ source: "input", target: "NODE-addA", data: [0, 0] },
+				{ source: "input", target: "NODE-addA", data: [1, 1] },
+				{ source: "input", target: "NODE-addB", data: [0, 0] },
+				{ source: "input", target: "NODE-addB", data: [1, 1] },
+				{ source: "NODE-addA", target: "output", data: [0, 0] },
+				{ source: "NODE-addB", target: "output", data: [0, 1] },
+			],
+			layout: {},
+		},
 		"FORMULA-cyclic": {
 			id: "FORMULA-cyclic",
 			name: "Cyclic Formula",
@@ -42,11 +70,19 @@ const testDoc: Document = {
 	},
 	nav: { value: "root" },
 	propertyInputs: {
+		"FORMULA-addTwice": ["2", "5"],
 		"FORMULA-cyclic": ["10"],
 	},
 };
 
 describe("graph resolver", () => {
+	it("resolves a correct graph without errors", async () => {
+		const result = await resolveProperty(testDoc, "FORMULA-addTwice");
+		expect(result)
+			.toHaveLength(testDoc.formulas["FORMULA-addTwice"].outputNames.length);
+		expect(result)
+			.toEqual([PARAMS.number(7), PARAMS.number(7)]);
+	});
 	it("returns an error when its contents loop", async () => {
 		const result = await resolveProperty(testDoc, "FORMULA-cyclic");
 		expect(result)
