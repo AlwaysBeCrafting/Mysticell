@@ -107,8 +107,9 @@ const mergeGraphs = (base: FormulaGraph, subgraph: FormulaGraph, nodeId: string)
 	return {...mergedBase, ...mergedSub};
 };
 
-const execFormula = async (doc: Document, formulaId: string, ...params: Param[]): Promise<Param[]> => {
-	const {nodes, formulas} = doc;
+const execFormula = async (doc: Document, formulaId: string): Promise<Param[]> => {
+	const {nodes, formulas, propertyInputs} = doc;
+	const params = propertyInputs[formulaId].map(input => PARAMS.string(input));
 	const formula = formulas[formulaId];
 	const {graph} = formula;
 	const state = createExecState(nodes, graph, params);

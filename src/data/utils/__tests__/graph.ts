@@ -41,12 +41,14 @@ const testDoc: Document = {
 		},
 	},
 	nav: { value: "root" },
-	propertyInputs: {},
+	propertyInputs: {
+		"FORMULA-cyclic": ["10"],
+	},
 };
 
 describe("graph resolver", () => {
 	it("returns an error when its contents loop", async () => {
-		const result = await execFormula(testDoc, "FORMULA-cyclic", PARAMS.number(10));
+		const result = await execFormula(testDoc, "FORMULA-cyclic");
 		expect(result)
 			.toHaveLength(testDoc.formulas["FORMULA-cyclic"].outputNames.length);
 		expect(result[0])
