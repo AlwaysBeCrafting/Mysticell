@@ -2,16 +2,44 @@ import { Dict } from "common/types";
 
 import { FormulaGraph, Param, PARAMS } from "data/common";
 import { Document } from "data/Document";
+import { Node } from "data/Node";
 import { PRIMITIVES } from "data/Primitive";
 
 
 const resolveProperty = async (doc: Document, propertyId: string): Promise<Param[]> => {
-	const { nodes } = doc;
-	const graph = doc.formulas[propertyId].graph;
+	const { formulas, nodes } = doc;
 	const dependencyQueue = ["output"];
 	const resolutionQueue: string[] = [];
 	const visited: Set<string> = new Set();
 	const outputParams: Dict<Param[]> = {};
+
+	let graph = [...doc.formulas[propertyId].graph];
+
+	let hasTranscluded = false;
+	do {
+		// tslint:disable-next-line:no-console
+		console.log("loop start");
+		hasTranscluded = false;
+		const formulaNodes: Set<Node> = new Set(
+			graph
+				.filter(edge => (
+					!!nodes[edge.source] &&
+					!!formulas[nodes[edge.source].function]
+				))
+				.map(edge => nodes[edge.source]),
+		);
+		formulaNodes
+			.forEach(node => {
+				graph = transclude(
+					graph,
+					formulas[node.function].graph,
+					node.id,
+				);
+				hasTranscluded = true;
+			});
+			// tslint:disable-next-line:no-console
+			console.log("loop end");
+	} while (hasTranscluded);
 
 	while (dependencyQueue.length > 0) {
 		const nodeId = dependencyQueue.shift() as string;
@@ -48,9 +76,14 @@ const resolveProperty = async (doc: Document, propertyId: string): Promise<Param
 				}
 				default: {
 					const dependedParams = getDependedParams(graph, outputParams, nodeId);
-					const primitive = PRIMITIVES[nodes[nodeId].function];
-					const params = primitive.exec(...dependedParams);
-					outputParams[nodeId] = params;
+					const node = nodes[nodeId];
+					if (node) {
+						const primitive = PRIMITIVES[nodes[nodeId].function];
+						const params = primitive.exec(...dependedParams);
+						outputParams[nodeId] = params;
+					} else {
+						outputParams[nodeId] = dependedParams;
+					}
 					break;
 				}
 			}
@@ -78,6 +111,31 @@ const multiSplice = <T>(array: T[], indices: number[]) => {
 	indices
 		.sort((a, b) => a - b)
 		.forEach((index, i) => array.splice(index - i, 1));
+};
+
+const transclude = (baseGraph: FormulaGraph, subGraph: FormulaGraph, nodeId: string): FormulaGraph => {
+	// tslint:disable-next-line:no-console
+	console.log(`transcluding node ${nodeId}`);
+	const baseInputs = baseGraph
+		.filter(edge => edge.target === nodeId)
+		.map(edge => ({...edge, target: `PROXY-IN-${nodeId}`}));
+	const baseOutputs = baseGraph
+		.filter(edge => edge.source === nodeId)
+		.map(edge => ({...edge, source: `PROXY-OUT-${nodeId}`}));
+	const subInputs = subGraph
+		.filter(edge => edge.source === "input")
+		.map(edge => ({...edge, source: `PROXY-IN-${nodeId}`}));
+	const subOutputs = subGraph
+		.filter(edge => edge.target === "output")
+		.map(edge => ({...edge, target: `PROXY-OUT-${nodeId}`}));
+	return [
+		...baseGraph.filter(edge => !(edge.source === nodeId || edge.target === nodeId)),
+		...baseInputs,
+		...baseOutputs,
+		...subGraph.filter(edge => !(edge.source === "input" || edge.source === "output")),
+		...subInputs,
+		...subOutputs,
+	];
 };
 
 

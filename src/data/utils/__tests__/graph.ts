@@ -97,7 +97,7 @@ const testDoc: Document = {
 };
 
 describe("graph resolver", () => {
-	it("resolves a correct graph", async () => {
+	it("resolves a correct graph with only primitives", async () => {
 		const result = await resolveProperty(testDoc, "FORMULA-addTwice");
 		expect(result)
 			.toHaveLength(testDoc.formulas["FORMULA-addTwice"].outputNames.length);
