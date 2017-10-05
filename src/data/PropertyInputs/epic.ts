@@ -35,7 +35,7 @@ const updatePropertyCacheEpic = (action$: ActionsObservable<Action>, store: Redu
 					action.payload.propertyId,
 					...inputs.map(input => PARAMS.string(input)),
 				)
-				.then(params => setParams(action.payload.propertyId, params))
+					.then(params => setParams(action.payload.propertyId, params))
 			);
 		}
 		return [];

@@ -20,7 +20,7 @@ const testDoc: Document = {
 			id: "NODE-addB",
 			function: "PRIMITIVE-add",
 			label: "Adding node B",
-			userValues: ["0", "0"],
+			userValues: ["1", "8"],
 		},
 		"NODE-includeA": {
 			id: "NODE-includeA",
@@ -51,8 +51,6 @@ const testDoc: Document = {
 			graph: [
 				{ source: "input", target: "NODE-addA", data: [0, 0] },
 				{ source: "input", target: "NODE-addA", data: [1, 1] },
-				{ source: "input", target: "NODE-addB", data: [0, 0] },
-				{ source: "input", target: "NODE-addB", data: [1, 1] },
 				{ source: "NODE-addA", target: "output", data: [0, 0] },
 				{ source: "NODE-addB", target: "output", data: [0, 1] },
 			],
@@ -67,8 +65,8 @@ const testDoc: Document = {
 			graph: [
 				{ source: "input", target: "NODE-includeA", data: [0, 0] },
 				{ source: "input", target: "NODE-includeA", data: [1, 1] },
-				{ source: "NODE-includeA", target: "output", data: [0, 0] },
-				{ source: "NODE-includeA", target: "output", data: [1, 1] },
+				{ source: "input", target: "output", data: [0, 0] },
+				{ source: "NODE-includeA", target: "output", data: [0, 1] },
 			],
 			layout: {},
 		},
@@ -97,21 +95,21 @@ const testDoc: Document = {
 };
 
 describe("graph resolver", () => {
-	it("resolves a correct graph with only primitives", async () => {
+	it("resolves a graph with only primitives", async () => {
 		const result = await resolveProperty(testDoc, "FORMULA-addTwice");
 		expect(result)
 			.toHaveLength(testDoc.formulas["FORMULA-addTwice"].outputNames.length);
 		expect(result)
-			.toEqual([PARAMS.number(7), PARAMS.number(7)]);
+			.toEqual([PARAMS.number(7), PARAMS.number(9)]);
 	});
-	it("resolves a correct graph that includes another one", async () => {
+	it("resolves a graph that includes another one", async () => {
 		const result = await resolveProperty(testDoc, "FORMULA-include");
 		expect(result)
 			.toHaveLength(testDoc.formulas["FORMULA-include"].outputNames.length);
 		expect(result)
-			.toEqual([PARAMS.number(7), PARAMS.number(7)]);
+			.toEqual([PARAMS.number(2), PARAMS.number(7)]);
 	});
-	it("returns an error when its contents loop", async () => {
+	it("returns an error when the graph's contents loop", async () => {
 		const result = await resolveProperty(testDoc, "FORMULA-cyclic");
 		expect(result)
 			.toHaveLength(testDoc.formulas["FORMULA-cyclic"].outputNames.length);
