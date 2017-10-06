@@ -127,7 +127,7 @@ const transclude = (baseGraph: FormulaGraph, subGraph: FormulaGraph, nodeId: str
 		...baseGraph.filter(edge => !(edge.source === nodeId || edge.target === nodeId)),
 		...baseInputs,
 		...baseOutputs,
-		...subGraph.filter(edge => !(edge.source === "input" || edge.source === "output")),
+		...subGraph.filter(edge => !(edge.source === "input" || edge.target === "output")),
 		...subInputs,
 		...subOutputs,
 	];

@@ -107,7 +107,7 @@ describe("graph resolver", () => {
 		expect(result)
 			.toHaveLength(testDoc.formulas["FORMULA-include"].outputNames.length);
 		expect(result)
-			.toEqual([PARAMS.number(2), PARAMS.number(7)]);
+			.toEqual([PARAMS.string("2"), PARAMS.number(7)]);
 	});
 	it("returns an error when the graph's contents loop", async () => {
 		const result = await resolveProperty(testDoc, "FORMULA-cyclic");
