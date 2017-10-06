@@ -13,11 +13,6 @@ interface EmptyParam {
 	value: undefined;
 }
 
-interface ArrayParam {
-	type: "array";
-	value: Param[];
-}
-
 interface ErrorParam {
 	type: "error";
 	value: string;
@@ -28,7 +23,6 @@ type Param =
 	| NumberParam
 	| StringParam
 	| EmptyParam
-	| ArrayParam
 	| ErrorParam;
 
 const PARAMS = {
@@ -43,10 +37,6 @@ const PARAMS = {
 	empty: (): EmptyParam => ({
 		type: "empty",
 		value: undefined,
-	}),
-	array: (value: Param[]): ArrayParam => ({
-		type: "array",
-		value,
 	}),
 	error: (value: string, message: string): ErrorParam => ({
 		type: "error",
