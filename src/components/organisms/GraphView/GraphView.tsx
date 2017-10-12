@@ -38,8 +38,7 @@ const PartialGraphView = (props: Props) => {
 		<div className={classnames("graphView", className)}>
 			<Toolbar className="graphView-toolbar">
 				<ToolButton link to="/"><Icon name="close" /></ToolButton>
-				{path.slice(0, -1).map(renderPathSegment(false))}
-				{renderPathSegment(true)(path.slice(-1)[0])}
+				{path.map((_, i) => renderPathSegment(path, i))}
 			</Toolbar>
 			<div className="graphView-graph">
 				<Panel
@@ -58,14 +57,15 @@ const PartialGraphView = (props: Props) => {
 	);
 };
 
-const renderPathSegment = (final: boolean) => (segment: string) => (
+const renderPathSegment = (path: string[], index: number) => (
 	<span
+		key={`${index}:${path[index]}`}
 		className={classnames(
 			"graphView-toolbar-path-segment",
-			{ "mod-final": final },
+			{ "mod-final": index === path.length - 1 },
 		)}
 	>
-		{segment}
+		{path[index]}
 	</span>
 );
 
