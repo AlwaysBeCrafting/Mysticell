@@ -7,8 +7,8 @@ import { Toolbar } from "components/molecules";
 
 import { Cell } from "data/Cell";
 import { PARAMS } from "data/common";
+import { isProperty, NodePrototype } from "data/NodePrototype";
 import { PropertyCache } from "data/PropertyCache";
-import { PropertyInputs } from "data/PropertyInputs";
 import { Sheet } from "data/Sheet";
 
 import "./SheetView.scss";
@@ -16,14 +16,13 @@ import "./SheetView.scss";
 
 interface Props {
 	sheet: Sheet;
-	cells: Dict<Cell>;
-	propertyInputs: PropertyInputs;
+	nodePrototypes: Dict<NodePrototype>;
 	propertyCache: PropertyCache;
 	onCellChange: (cell: Cell, newValue: string) => void;
 }
 class SheetView extends React.PureComponent<Props> {
 	public render() {
-		const { cells, sheet } = this.props;
+		const { sheet } = this.props;
 		const style = {
 			gridArea: `span ${sheet.size.height + 1} / span ${sheet.size.width}`,
 		};
@@ -38,10 +37,7 @@ class SheetView extends React.PureComponent<Props> {
 				</Toolbar>
 				<div className="sheetView-grid">
 					{
-						Object.keys(sheet.layout)
-							.map(cellId => cells[cellId])
-							.filter(cell => !!cell)
-							.map(this.renderCell)
+						Object.values(sheet.cells).map(this.renderCell)
 					}
 				</div>
 			</div>
@@ -51,12 +47,16 @@ class SheetView extends React.PureComponent<Props> {
 	private renderCell = (cell: Cell) => {
 		const {
 			sheet,
-			propertyInputs,
 			propertyCache,
 			onCellChange,
+			nodePrototypes,
 		} = this.props;
 		if (cell.property.type === "input") {
-			const param = PARAMS.string(propertyInputs[cell.property.id][cell.property.index]);
+			const cellPrototype = nodePrototypes[cell.property.id];
+			const cellValue = isProperty(cellPrototype)
+				? cellPrototype.inputValues[cell.property.index]
+				: "";
+			const param = PARAMS.string(cellValue);
 			return (
 				<CellView
 					className="sheetView-grid-cell"

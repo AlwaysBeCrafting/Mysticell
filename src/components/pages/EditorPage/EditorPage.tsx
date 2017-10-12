@@ -5,26 +5,23 @@ import { Dispatch } from "redux";
 
 import { Dict } from "common/types";
 
-import { FormulaView, NavView, SheetWrapper } from "components/organisms";
+import { GraphView, NavView, SheetWrapper } from "components/organisms";
 
 import { Action, AppState } from "data/AppState";
-import { Cell } from "data/Cell";
-import { Formula } from "data/Formula";
-import { Nav, pathToFormula } from "data/Nav";
+import { Nav, pathToNodePrototype } from "data/Nav";
+import { isGraph, NodePrototype } from "data/NodePrototype";
 import { PropertyCache } from "data/PropertyCache";
-import { PropertyInputs } from "data/PropertyInputs";
 import { Sheet } from "data/Sheet";
 
 import "./EditorPage.scss";
 
 
 interface StateProps {
+	title: string;
 	nav: Nav;
-	formulas: Dict<Formula>;
+	nodePrototypes: Dict<NodePrototype>;
 	sheets: Dict<Sheet>;
-	cells: Dict<Cell>;
 	expandedNavItems: Set<string>;
-	propertyInputs: PropertyInputs;
 	propertyCache: PropertyCache;
 }
 interface DispatchProps {
@@ -42,7 +39,7 @@ class ProtoEditor extends React.PureComponent<Props> {
 					<div className="editor-document">
 						<Route exact path="/:path*" render={this.renderNavView} />
 						<Route exact path="/" render={this.renderSheetView} />
-						<Route exact path="/:path+" render={this.renderFormulaView} />
+						<Route exact path="/:path+" render={this.renderGraphView} />
 					</div>
 				</main>
 			</Router>
@@ -53,39 +50,35 @@ class ProtoEditor extends React.PureComponent<Props> {
 		<NavView
 			className="editor-document-nav"
 			nav={this.props.nav}
-			formulas={this.props.formulas}
+			nodePrototypes={this.props.nodePrototypes}
 			expandedNavItems={this.props.expandedNavItems}
 			selectedNavItem={`root/${routeProps.match.params.path}`}
 		/>
 	)
 
-	private renderFormulaView = (routeProps: RouteComponentProps<{path: string}>) => {
+	private renderGraphView = (routeProps: RouteComponentProps<{path: string}>) => {
 		const segments = routeProps.match.params.path.split("/");
-		const formula = pathToFormula(this.props.formulas, this.props.nav, segments);
-		return formula
-			? (
-				<FormulaView
+		const prototype = pathToNodePrototype(this.props.nodePrototypes, this.props.nav, segments);
+		if (prototype && isGraph(prototype)) {
+			return (
+				<GraphView
 					className="editor-document-content"
 					path={segments}
-					formula={formula}
+					prototype={prototype}
 				/>
-			)
-			: (
+			);
+		} else {
+			return (
 				<div className="editor-document-error">
 					No formula exists at /{routeProps.match.params.path}.
 				</div>
 			);
+		}
 	}
 
 	private renderSheetView = () => {
 		return (
-			<SheetWrapper
-				className="editor-document-content"
-				propertyInputs={this.props.propertyInputs}
-				propertyCache={this.props.propertyCache}
-				sheets={this.props.sheets}
-				cells={this.props.cells}
-			/>
+			<SheetWrapper className="editor-document-content" />
 		);
 	}
 }
@@ -94,11 +87,9 @@ const EditorPage = connect<StateProps, DispatchProps, {}>(
 	(state: AppState) => ({
 		title: state.document.title,
 		nav: state.document.nav,
-		formulas: state.document.formulas,
+		nodePrototypes: state.document.nodePrototypes,
 		sheets: state.document.sheets,
-		cells: state.document.cells,
 		expandedNavItems: state.uiState.expandedNavItems,
-		propertyInputs: state.document.propertyInputs,
 		propertyCache: state.propertyCache,
 	}),
 	(dispatch: Dispatch<Action>) => ({dispatch}),

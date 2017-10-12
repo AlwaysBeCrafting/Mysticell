@@ -3,52 +3,52 @@ import React from "react";
 import { Card, PinRow } from "components/atoms";
 
 import { PARAMS } from "data/common";
-import { Node, NodeFunction } from "data/Node/model";
+import { InnerNode } from "data/Graph";
+import { NodePrototype } from "data/NodePrototype";
 
 import "./NodeView.scss";
 
 
 interface Props {
+	node: InnerNode;
+	prototype: NodePrototype;
 	position: [number, number];
-	node: Node;
-	connectedInputs: number[];
-	nodeFunction: NodeFunction;
+	isInputConnected: (index: number) => boolean;
 	onUserValueChange: (nodeId: string, index: number, value: string) => void;
 }
 
 class NodeView extends React.PureComponent<Props> {
 	public render() {
-		const {position, node, connectedInputs, nodeFunction} = this.props;
-		const name = node.label || nodeFunction.name;
-		const pinRowCount = nodeFunction.inputNames.length + nodeFunction.outputNames.length;
+		const { isInputConnected, node, position, prototype } = this.props;
+		const name = node.label || prototype.name;
+		const pinRowCount = prototype.inputNames.length + prototype.outputNames.length;
 		return (
 			<Card className="nodeView" style={makeStyle(position, pinRowCount)}>
 				<header className="nodeView-headerRow nodeView-row">
 					<span className="nodeView-headerRow-name">{name}</span>
 				</header>
-				{nodeFunction.outputNames.map(outputName => (
+				{prototype.outputNames.map((outputName, i) => (
 					<PinRow
-						type="src"
-						name={outputName}
-						computedValue={PARAMS.string("")}
+						source
 						key={outputName}
+						name={outputName}
+						takesInput={false}
+						param={PARAMS.string("")}
+						index={i}
 					/>
 				))}
-				{nodeFunction.inputNames.map((inputName, index) => {
-					const isConnected = connectedInputs.indexOf(index) > -1;
-					return (
-						<PinRow
-							type="dst"
-							name={inputName}
-							isConnected={isConnected}
-							userValue={node.userValues[index]}
-							param={PARAMS.empty()}
-							index={index}
-							key={inputName}
-							onChange={this.onUserValueChange}
-						/>
-					);
-				})}
+				{prototype.inputNames.map((inputName, index) => (
+					<PinRow
+						target
+						key={inputName}
+						name={inputName}
+						takesInput={isInputConnected(index)}
+						userValue={node.constants[index]}
+						param={PARAMS.empty()}
+						index={index}
+						onChange={this.onUserValueChange}
+					/>
+				))}
 			</Card>
 		);
 	}

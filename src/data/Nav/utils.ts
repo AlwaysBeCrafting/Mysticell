@@ -1,29 +1,33 @@
 import { Dict, isBranch, isLeaf } from "common/types";
 import { resolvePath } from "common/utils";
 
-import { Formula } from "data/Formula";
 import { Nav } from "data/Nav";
+import { NodePrototype } from "data/NodePrototype";
 
 
-const pathToFormula = (formulas: Dict<Formula>, nav: Nav, path: string[]): Formula | undefined => {
-	const formulaBranch = resolvePath(
+const pathToNodePrototype = (
+	prototypes: Dict<NodePrototype>,
+	nav: Nav,
+	path: string[],
+): NodePrototype | undefined => {
+	const branch = resolvePath(
 		nav,
 		path.slice(0, -1),
 		(tree, segment) => tree.value === segment,
 	);
-	const [formulaName] = path.slice(-1);
+	const [name] = path.slice(-1);
 
-	if (!isBranch(formulaBranch)) { return undefined; }
-	const formulaLeaf = formulaBranch.children.find(child => (
+	if (!isBranch(branch)) { return undefined; }
+	const leaf = branch.children.find(child => (
 		isLeaf(child) &&
-		formulas[child.value] &&
-		formulas[child.value].name === formulaName
+		prototypes[child.value] &&
+		prototypes[child.value].name === name
 	));
 
-	if (!isLeaf(formulaLeaf)) { return undefined; }
-
-	return formulas[formulaLeaf.value];
+	return isLeaf(leaf)
+		? prototypes[leaf.value]
+		: undefined;
 };
 
 
-export { pathToFormula };
+export { pathToNodePrototype };

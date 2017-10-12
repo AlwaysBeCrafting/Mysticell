@@ -1,108 +1,100 @@
 {
 	"id": "DOCUMENT-0000",
 	"title": "Example Document",
-	"cells": {
-		"CELL-0000": {
-			"id": "CELL-0000",
-			"property": {
-				"id": "FORMULA-0001",
-				"type": "input",
-				"index": 0
-			}
-		},
-		"CELL-0001": {
-			"id": "CELL-0001",
-			"property": {
-				"id": "FORMULA-0001",
-				"type": "output",
-				"index": 0
-			}
-		},
-		"CELL-0002": {
-			"id": "CELL-0002",
-			"property": {
-				"id": "FORMULA-0001",
-				"type": "output",
-				"index": 1
-			}
-		}
-	},
+	"version": 0,
+	"include": [],
 	"sheets": {
-		"SHEET-0000": {
-			"id": "SHEET-0000",
+		"sheet.0000": {
+			"id": "sheet.0000",
 			"title": "Sheet 1",
-			"size": {"width": 16, "height": 20},
+			"size": { "width": 16, "height": 20 },
+			"cells": {
+				"cell.0000": {
+					"id": "cell.0000",
+					"property": { "id": "property.0001", "type": "input", "index": 0 }
+				},
+				"cell.0001": {
+					"id": "cell.0001",
+					"property": { "id": "property.0001", "type": "output", "index": 0 }
+				},
+				"cell.0002": {
+					"id": "cell.0002",
+					"property": { "id": "property.0001", "type": "output", "index": 1 }
+				}
+			},
 			"layout": {
-				"CELL-0000": {"left": 0, "top": 0, "right": 2, "bottom": 1},
-				"CELL-0001": {"left": 2, "top": 0, "right": 4, "bottom": 1},
-				"CELL-0002": {"left": 2, "top": 1, "right": 4, "bottom": 2}
+				"cell.0000": {"left": 0, "top": 0, "right": 2, "bottom": 1},
+				"cell.0001": {"left": 2, "top": 0, "right": 4, "bottom": 1},
+				"cell.0002": {"left": 2, "top": 1, "right": 4, "bottom": 2}
 			}
 		}
 	},
-	"nodes": {
-		"NODE-0000": {
-			"id": "NODE-0000",
-			"function": "PRIMITIVE-subtract",
-			"userValues": ["0", "10"]
-		},
-		"NODE-0001": {
-			"id": "NODE-0001",
-			"function": "PRIMITIVE-divide",
-			"userValues": ["0", "2"]
-		},
-		"NODE-0002": {
-			"id": "NODE-0002",
-			"function": "PRIMITIVE-floor",
-			"userValues": ["0"]
-		},
-		"NODE-0003": {
-			"id": "NODE-0006",
-			"function": "FORMULA-0000",
-			"userValues": ["10"]
-		}
-	},
-	"formulas": {
-		"FORMULA-0000": {
-			"id": "FORMULA-0000",
-			"isProperty": false,
+	"nodePrototypes": {
+		"function.0000": {
+			"id": "function.0000",
 			"name": "Ability Mod",
 			"inputNames": ["Ability Score"],
 			"outputNames": ["Modifier"],
-			"graph": [
-				{"source": "input", "target": "NODE-0000", "data": [0, 0]},
-				{"source": "NODE-0000", "target": "NODE-0001", "data": [0, 0]},
-				{"source": "NODE-0001", "target": "NODE-0002", "data": [0, 0]},
-				{"source": "NODE-0002", "target": "output", "data": [0, 0]}
-			],
+			"graph": {
+				"input": {
+					"id": "input",
+					"edges": [{ "target": "node.0000", "data": [0, 0] }]
+				},
+				"node.0000": {
+					"id": "node.0000",
+					"constants": ["0", "10"],
+					"prototype": "primitive.subtract",
+					"edges": [{ "target": "node.0001", "data": [0, 0] }]
+				},
+				"node.0001": {
+					"id": "node.0001",
+					"constants": ["0", "2"],
+					"prototype": "primitive.divide",
+					"edges": [{ "target": "node.0002", "data": [0, 0] }]
+				},
+				"node.0002": {
+					"id": "node.0002",
+					"constants": ["0"],
+					"prototype": "primitive.floor",
+					"edges": [{ "target": "output", "data": [0, 0] }]
+				}
+			},
 			"layout": {
-				"NODE-0000": [2, 1],
-				"NODE-0001": [8, 1],
-				"NODE-0002": [14, 1]
+				"node.0000": [2, 1],
+				"node.0001": [8, 1],
+				"node.0002": [14, 1]
 			}
 		},
-		"FORMULA-0001": {
-			"id": "FORMULA-0001",
-			"isProperty": true,
+		"property.0001": {
+			"id": "property.0001",
 			"name": "Strength",
 			"inputNames": ["Strength"],
 			"outputNames": ["Strength", "Str Mod"],
-			"graph": [
-				{"source": "input", "target": "output", "data": [0, 0]},
-				{"source": "input", "target": "NODE-0003", "data": [0, 0]},
-				{"source": "NODE-0003", "target": "output", "data": [0, 1]}
-			],
+			"inputValues": ["15"],
+			"graph": {
+				"input": {
+					"id": "input",
+					"edges": [
+						{ "target": "output", "data": [0, 0] },
+						{ "target": "node.0003", "data": [0, 0] }
+					]
+				},
+				"node.0003": {
+					"id": "node.0003",
+					"constants": ["0"],
+					"prototype": "function.0000",
+					"edges": [{ "target": "output", "data": [0, 1] }]
+				}
+			},
 			"layout": {
-				"NODE-0003": [2, 3]
+				"node.0003": [2, 3]
 			}
 		}
 	},
 	"nav": {"value": "root", "children": [
 		{"value": "Abilities", "children": [
-			{"value": "FORMULA-0000"},
-			{"value": "FORMULA-0001"}
+			{"value": "function.0000"},
+			{"value": "property.0001"}
 		]}
-	]},
-	"propertyInputs": {
-		"FORMULA-0001": ["15"]
-	}
+	]}
 }

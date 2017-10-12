@@ -6,30 +6,32 @@ import { Param } from "data/common";
 import "./PinRow.scss";
 
 
-interface AlwaysProps {
+interface CommonProps {
 	name: string;
 	className?: string;
-}
-
-interface SrcProps extends AlwaysProps {
-	type: "src";
-	computedValue: Param;
-}
-
-interface DstProps extends AlwaysProps {
-	type: "dst";
-	isConnected: boolean;
-	param: Param;
-	userValue: string;
-	index: number;
+	takesInput?: boolean;
+	userValue?: string;
 	onChange?: (index: number, value: string) => void;
+	index: number;
+	param: Param;
+}
+
+interface SrcProps extends CommonProps {
+	source: true;
+	target?: undefined;
+}
+
+interface DstProps extends CommonProps {
+	source?: undefined;
+	target: true;
 }
 
 type Props = SrcProps | DstProps;
 
 class PinRow extends React.PureComponent<Props> {
 	public render() {
-		const {name, type, className} = this.props;
+		const { className, name, source, takesInput } = this.props;
+		const type = source ? "source" : "target";
 		return (
 			<div
 				className={classNames(`pinRow ${type}PinRow`, className)}
@@ -38,20 +40,19 @@ class PinRow extends React.PureComponent<Props> {
 				<div className={`pinRow-pin ${type}PinRow-pin`} />
 				<label className="pinRow-label">{name}</label>
 				{
-					this.props.type === "dst"
-						&& !this.props.isConnected
-						&& <input
-							className="pinRow-value"
-							defaultValue={this.props.userValue}
-							onChange={this.onChange}
-						/>
+					!source && takesInput &&
+					<input
+						className="pinRow-value"
+						defaultValue={this.props.userValue}
+						onChange={this.onChange}
+					/>
 				}
 			</div>
 		);
 	}
 
 	private onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		if (this.props.type === "dst" && this.props.onChange) {
+		if (this.props.onChange) {
 			this.props.onChange(this.props.index, event.currentTarget.value);
 		}
 	}

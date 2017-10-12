@@ -11,8 +11,8 @@ import { Icon } from "components/atoms";
 import { TreeView } from "components/molecules";
 
 import { Action } from "data/AppState";
-import { Formula } from "data/Formula";
 import { Nav } from "data/Nav";
+import { isProperty, NodePrototype } from "data/NodePrototype";
 import { toggleNavItem } from "data/UiState";
 
 import functionIcon from "./assets/icon-function.svg";
@@ -26,7 +26,7 @@ interface DispatchProps {
 
 interface OwnProps {
 	className?: string;
-	formulas: Dict<Formula>;
+	nodePrototypes: Dict<NodePrototype>;
 	nav: Nav;
 	expandedNavItems: Set<string>;
 	selectedNavItem: string;
@@ -69,9 +69,9 @@ class ProtoNavView extends React.PureComponent<Props> {
 		isBranch(tree)
 			? this.renderDirItem(tree.value, path)
 			: this.renderEndItem(
-				this.props.formulas[tree.value],
+				this.props.nodePrototypes[tree.value],
 				path,
-				this.props.selectedNavItem === `${path.join("/")}/${this.props.formulas[tree.value].name}`,
+				this.props.selectedNavItem === `${path.join("/")}/${this.props.nodePrototypes[tree.value].name}`,
 			)
 	)
 
@@ -106,22 +106,22 @@ class ProtoNavView extends React.PureComponent<Props> {
 		</div>
 	)
 
-	private renderEndItem = (formula: Formula, path: string[], isSelected: boolean) => (
+	private renderEndItem = (prototype: NodePrototype, path: string[], isSelected: boolean) => (
 		<Link
 			className={classnames(
 				"navView-item",
 				{ "is-selected": isSelected },
 			)}
-			to={`/${path.slice(1).join("/")}/${formula.name}`}
+			to={`/${path.slice(1).join("/")}/${prototype.name}`}
 		>
 			<Icon
 				className={classnames(
 					"navView-item-icon",
 					{ "is-selected": isSelected },
 				)}
-				src={formula.isProperty ? propertyIcon : functionIcon}
+				src={isProperty(prototype) ? propertyIcon : functionIcon}
 			/>
-			<div className="navView-item-title">{formula.name}</div>
+			<div className="navView-item-title">{prototype.name}</div>
 		</Link>
 	)
 }

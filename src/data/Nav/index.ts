@@ -1,2 +1,2 @@
 export { Nav } from "./model";
-export { pathToFormula } from "./utils";
+export { pathToNodePrototype } from "./utils";
