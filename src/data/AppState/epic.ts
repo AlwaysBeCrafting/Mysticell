@@ -1,13 +1,12 @@
-import { Action } from "redux";
 import { combineEpics } from "redux-observable";
 
 import { initPropertyCacheEpic } from "data/Document";
+import { epic as nodePrototypeEpic } from "data/NodePrototype";
 
-import { AppState } from "./model";
 
-
-const appStateEpic = combineEpics<Action, AppState>(
+const appStateEpic = combineEpics(
 	initPropertyCacheEpic,
+	nodePrototypeEpic,
 );
 
 

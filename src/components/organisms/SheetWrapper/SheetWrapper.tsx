@@ -9,7 +9,7 @@ import { ErrorBoundary, SheetView } from "components/molecules";
 
 import { AppState } from "data/AppState";
 import { Cell } from "data/Cell";
-import { NodePrototype } from "data/NodePrototype";
+import { changePropertyInputValueAsync, NodePrototype } from "data/NodePrototype";
 import { PropertyCache } from "data/PropertyCache";
 import { Sheet } from "data/Sheet";
 
@@ -48,7 +48,7 @@ class PartialSheetWrapper extends React.PureComponent<Props> {
 								propertyCache={propertyCache}
 								nodePrototypes={nodePrototypes}
 								sheet={sheet}
-								onCellChange={this.onCellChange}
+								onCellInput={this.onCellInput}
 							/>
 						</ErrorBoundary>
 					))
@@ -57,9 +57,12 @@ class PartialSheetWrapper extends React.PureComponent<Props> {
 		);
 	}
 
-	private onCellChange = (cell: Cell, newValue: string) => {
-		// tslint:disable-next-line:no-console
-		console.log(cell, newValue);
+	private onCellInput = (cell: Cell, newValue: string) => {
+		this.props.dispatch(changePropertyInputValueAsync(
+			cell.property.id,
+			cell.property.index,
+			newValue,
+		));
 	}
 }
 

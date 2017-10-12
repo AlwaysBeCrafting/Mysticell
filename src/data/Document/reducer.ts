@@ -2,6 +2,8 @@ import { combineReducers } from "redux";
 
 import { composeReducers } from "common/utils";
 
+import { reducer as nodePrototypes } from "data/NodePrototype";
+
 import { Action, ActionTypes } from "./actions";
 import { Document } from "./model";
 
@@ -35,7 +37,7 @@ const subReducers = combineReducers<Document>({
 	include: identity,
 
 	sheets: identity,
-	nodePrototypes: identity,
+	nodePrototypes,
 
 	nav: identity,
 });

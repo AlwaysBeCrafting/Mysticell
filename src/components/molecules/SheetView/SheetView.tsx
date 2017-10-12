@@ -18,7 +18,7 @@ interface Props {
 	sheet: Sheet;
 	nodePrototypes: Dict<NodePrototype>;
 	propertyCache: PropertyCache;
-	onCellChange: (cell: Cell, newValue: string) => void;
+	onCellInput: (cell: Cell, newValue: string) => void;
 }
 class SheetView extends React.PureComponent<Props> {
 	public render() {
@@ -48,7 +48,6 @@ class SheetView extends React.PureComponent<Props> {
 		const {
 			sheet,
 			propertyCache,
-			onCellChange,
 			nodePrototypes,
 		} = this.props;
 		if (cell.property.type === "input") {
@@ -64,7 +63,7 @@ class SheetView extends React.PureComponent<Props> {
 					key={cell.id}
 					rect={sheet.layout[cell.id]}
 					cell={cell}
-					onChange={onCellChange}
+					onChange={this.onCellInput}
 				/>
 			);
 		} else {
@@ -82,6 +81,10 @@ class SheetView extends React.PureComponent<Props> {
 				/>
 			);
 		}
+	}
+
+	private onCellInput = (cell: Cell, newValue: string) => {
+		this.props.onCellInput(cell, newValue);
 	}
 }
 
