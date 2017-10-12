@@ -70,7 +70,11 @@ const constructEvaluationGraph = (
 ) => {
 	const { graph } = prototype;
 	const evalGraph: Dict<EvalNode> = {
-		input: makeBoundaryNode("input", inputParams),
+		input: makeBoundaryNode(
+			"input",
+			inputParams,
+			graph.input.edges as any as EvalEdge[],
+		),
 		output: makeBoundaryNode(
 			"output",
 			Array(prototype.outputNames.length).fill(undefined),
@@ -88,10 +92,7 @@ const constructEvaluationGraph = (
 			evalGraph[edge.target] = targetEvalNode;
 
 			for (const srcEdge of graph[sourceEvalNode.id].edges) {
-				const extendedEdge = extendGraphEdge(srcEdge, targetEvalNode);
-				if (sourceEvalNode.id === "input") {
-					sourceEvalNode.edges.push(extendedEdge);
-				}
+				extendGraphEdge(srcEdge, targetEvalNode);
 			}
 		}
 	}
