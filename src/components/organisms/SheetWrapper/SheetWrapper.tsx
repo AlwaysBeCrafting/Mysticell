@@ -7,34 +7,36 @@ import { Dict } from "common/types";
 
 import { ErrorBoundary, SheetView } from "components/molecules";
 
+import { AppState } from "data/AppState";
 import { Cell } from "data/Cell";
+import { NodePrototype } from "data/NodePrototype";
 import { PropertyCache } from "data/PropertyCache";
-import { PropertyInputs, setValueAsync } from "data/PropertyInputs";
 import { Sheet } from "data/Sheet";
 
 import "./SheetWrapper.scss";
 
 
+interface StateProps {
+	sheets: Dict<Sheet>;
+	propertyCache: PropertyCache;
+	nodePrototypes: Dict<NodePrototype>;
+}
 interface DispatchProps {
 	dispatch: (action: Redux.Action) => void;
 }
 interface OwnProps {
-	sheets: Dict<Sheet>;
-	cells: Dict<Cell>;
 	className?: string;
-	propertyInputs: PropertyInputs;
-	propertyCache: PropertyCache;
 }
 type Props =
+	& StateProps
 	& DispatchProps
 	& OwnProps;
-class ProtoSheetWrapper extends React.PureComponent<Props> {
+class PartialSheetWrapper extends React.PureComponent<Props> {
 	public render() {
 		const {
 			className,
+			nodePrototypes,
 			sheets,
-			cells,
-			propertyInputs,
 			propertyCache,
 		} = this.props;
 		return (
@@ -43,10 +45,9 @@ class ProtoSheetWrapper extends React.PureComponent<Props> {
 					Object.values(sheets).map(sheet => (
 						<ErrorBoundary key={sheet.id}>
 							<SheetView
-								propertyInputs={propertyInputs}
 								propertyCache={propertyCache}
+								nodePrototypes={nodePrototypes}
 								sheet={sheet}
-								cells={cells}
 								onCellChange={this.onCellChange}
 							/>
 						</ErrorBoundary>
@@ -57,18 +58,19 @@ class ProtoSheetWrapper extends React.PureComponent<Props> {
 	}
 
 	private onCellChange = (cell: Cell, newValue: string) => {
-		this.props.dispatch(setValueAsync(
-			cell.property.id,
-			cell.property.index,
-			newValue,
-		));
+		// tslint:disable-next-line:no-console
+		console.log(cell, newValue);
 	}
 }
 
-const SheetWrapper = connect<{}, DispatchProps>(
-	undefined,
+const SheetWrapper = connect<StateProps, DispatchProps, OwnProps>(
+	(state: AppState) => ({
+		sheets: state.document.sheets,
+		nodePrototypes: state.document.nodePrototypes,
+		propertyCache: state.propertyCache,
+	}),
 	dispatch => ({ dispatch }),
-)(ProtoSheetWrapper);
+)(PartialSheetWrapper);
 
 
 export { SheetWrapper };

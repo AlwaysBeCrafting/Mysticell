@@ -1,9 +1,9 @@
 import {PARAMS as P } from "data/common";
 
-import { constants } from "../constants";
+import { primitives } from "../primitives";
 
 
-const add = constants.add.exec;
+const add = primitives.add.exec;
 
 describe("add function", () => {
 	it("returns exactly one value", () => {
@@ -48,7 +48,7 @@ describe("add function", () => {
 	});
 });
 
-const subtract = constants.subtract.exec;
+const subtract = primitives.subtract.exec;
 
 describe("subtract primitive", () => {
 	it("returns exactly one value", () => {
@@ -93,7 +93,7 @@ describe("subtract primitive", () => {
 	});
 });
 
-const multiply = constants.multiply.exec;
+const multiply = primitives.multiply.exec;
 
 describe("multiply primitive", () => {
 	it("returns exactly one value", () => {
@@ -138,7 +138,7 @@ describe("multiply primitive", () => {
 	});
 });
 
-const divide = constants.divide.exec;
+const divide = primitives.divide.exec;
 
 describe("divide primitive", () => {
 	it("returns exactly one value", () => {
@@ -183,7 +183,7 @@ describe("divide primitive", () => {
 	});
 });
 
-const floor = constants.floor.exec;
+const floor = primitives.floor.exec;
 
 describe("floor primitive", () => {
 	it("returns exactly one value", () => {

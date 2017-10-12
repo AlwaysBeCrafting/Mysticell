@@ -1,8 +1,7 @@
 import { Dict } from "common/types";
 
 import { Param, PARAMS } from "data/common";
-
-import { Primitive } from "./model";
+import { PrimitiveNodePrototype } from "data/NodePrototype";
 
 
 const padEmpty = (params: Param[], length: number) => (
@@ -44,12 +43,12 @@ const verifyAndReduce = (params: Param[], identity: number, op: Operator): Param
 	return [PARAMS.number(result)];
 };
 
-const add: Primitive = {
-	id: "PRIMITIVE-add",
+const add: PrimitiveNodePrototype = {
+	id: "primitive.add",
 	name: "Add",
 	inputNames: ["A", "B"],
 	outputNames: ["Sum"],
-	exec: (a, b) => (
+	evaluate: (a, b) => (
 		verifyAndReduce(
 			padEmpty([a, b], 2),
 			0,
@@ -58,12 +57,12 @@ const add: Primitive = {
 	),
 };
 
-const subtract: Primitive = {
-	id: "PRIMITIVE-subtract",
+const subtract: PrimitiveNodePrototype = {
+	id: "primitive.subtract",
 	name: "Subtract",
 	inputNames: ["A", "B"],
 	outputNames: ["Difference"],
-	exec: (a, b) => (
+	evaluate: (a, b) => (
 		verifyAndReduce(
 			padEmpty([a, b], 2),
 			0,
@@ -72,12 +71,12 @@ const subtract: Primitive = {
 	),
 };
 
-const multiply: Primitive = {
-	id: "PRIMITIVE-multiply",
+const multiply: PrimitiveNodePrototype = {
+	id: "primitive.multiply",
 	name: "Multiply",
 	inputNames: ["A", "B"],
 	outputNames: ["Product"],
-	exec: (a, b) => (
+	evaluate: (a, b) => (
 		verifyAndReduce(
 			padEmpty([a, b], 2),
 			1,
@@ -86,12 +85,12 @@ const multiply: Primitive = {
 	),
 };
 
-const divide: Primitive = {
-	id: "PRIMITIVE-divide",
+const divide: PrimitiveNodePrototype = {
+	id: "primitive.divide",
 	name: "Divide",
 	inputNames: ["A", "B"],
 	outputNames: ["Quotient"],
-	exec: (a, b) => (
+	evaluate: (a, b) => (
 		verifyAndReduce(
 			padEmpty([a, b], 2),
 			1,
@@ -100,12 +99,12 @@ const divide: Primitive = {
 	),
 };
 
-const floor: Primitive = {
-	id: "PRIMITIVE-floor",
+const floor: PrimitiveNodePrototype = {
+	id: "primitive.floor",
 	name: "Floor",
 	inputNames: ["Num"],
 	outputNames: ["Floor"],
-	exec: a => (
+	evaluate: a => (
 		verifyAndReduce(
 			padEmpty([a], 1),
 			0,
@@ -114,9 +113,9 @@ const floor: Primitive = {
 	),
 };
 
-const constants = {add, subtract, multiply, divide, floor};
+const primitives = {add, subtract, multiply, divide, floor};
 
-const PRIMITIVES: Dict<Primitive> = Object.values(constants).reduce(
+const PRIMITIVES: Dict<PrimitiveNodePrototype> = Object.values(primitives).reduce(
 	(prior, value) => ({
 		...prior,
 		[value.id]: value,
@@ -125,4 +124,4 @@ const PRIMITIVES: Dict<Primitive> = Object.values(constants).reduce(
 );
 
 
-export { constants, PRIMITIVES };
+export { primitives, PRIMITIVES };
