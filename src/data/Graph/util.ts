@@ -39,12 +39,18 @@ interface EvalEdge extends Edge {
 	targetNode: EvalNode;
 }
 
-const makeBoundaryNode = (
-	id: "input" | "output",
+const makeInputNode = (
+	inputNode: BoundaryNode,
 	inputs: Array<Param | undefined>,
-	outputEdges?: EvalEdge[],
-): BoundaryEvalNode => ({
-	id,
+): BoundaryEvalNode => {
+	const inputEvalNode = inputNode as BoundaryEvalNode;
+	inputEvalNode.inputs = inputs;
+	inputEvalNode.inputNodes = [];
+	return inputEvalNode;
+};
+
+const makeOutputNode = (inputs: Array<Param | undefined>, outputEdges?: EvalEdge[]): BoundaryEvalNode => ({
+	id: "output",
 	inputs,
 	inputNodes: [],
 	edges: outputEdges || [],
@@ -70,16 +76,8 @@ const constructEvaluationGraph = (
 ) => {
 	const { graph } = prototype;
 	const evalGraph: Dict<EvalNode> = {
-		input: makeBoundaryNode(
-			"input",
-			inputParams,
-			graph.input.edges as any as EvalEdge[],
-		),
-		output: makeBoundaryNode(
-			"output",
-			Array(prototype.outputNames.length).fill(undefined),
-			outputEdges,
-		),
+		input: makeInputNode(graph.input as BoundaryNode, inputParams),
+		output: makeOutputNode(Array(prototype.outputNames.length).fill(undefined), outputEdges),
 	};
 
 	for (const node of Object.values(graph)) {
@@ -90,10 +88,7 @@ const constructEvaluationGraph = (
 			const targetEvalNode = evalGraph[edge.target] || makeEvalNode(graph, edge.target);
 			targetEvalNode.inputNodes.push(node.id);
 			evalGraph[edge.target] = targetEvalNode;
-
-			for (const srcEdge of graph[sourceEvalNode.id].edges) {
-				extendGraphEdge(srcEdge, targetEvalNode);
-			}
+			extendGraphEdge(edge, targetEvalNode);
 		}
 	}
 
