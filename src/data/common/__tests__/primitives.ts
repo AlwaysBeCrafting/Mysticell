@@ -3,7 +3,7 @@ import {PARAMS as P } from "data/common";
 import { primitives } from "../primitives";
 
 
-const add = primitives.add.exec;
+const add = primitives.add.evaluate;
 
 describe("add function", () => {
 	it("returns exactly one value", () => {
@@ -48,7 +48,7 @@ describe("add function", () => {
 	});
 });
 
-const subtract = primitives.subtract.exec;
+const subtract = primitives.subtract.evaluate;
 
 describe("subtract primitive", () => {
 	it("returns exactly one value", () => {
@@ -93,7 +93,7 @@ describe("subtract primitive", () => {
 	});
 });
 
-const multiply = primitives.multiply.exec;
+const multiply = primitives.multiply.evaluate;
 
 describe("multiply primitive", () => {
 	it("returns exactly one value", () => {
@@ -138,7 +138,7 @@ describe("multiply primitive", () => {
 	});
 });
 
-const divide = primitives.divide.exec;
+const divide = primitives.divide.evaluate;
 
 describe("divide primitive", () => {
 	it("returns exactly one value", () => {
@@ -183,7 +183,7 @@ describe("divide primitive", () => {
 	});
 });
 
-const floor = primitives.floor.exec;
+const floor = primitives.floor.evaluate;
 
 describe("floor primitive", () => {
 	it("returns exactly one value", () => {
