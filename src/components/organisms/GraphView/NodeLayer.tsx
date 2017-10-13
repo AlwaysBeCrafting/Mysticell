@@ -1,6 +1,7 @@
 import classNames from "classnames";
 import React from "react";
 import { connect } from "react-redux";
+import Redux from "redux";
 
 import { Dict } from "common/types";
 
@@ -13,18 +14,14 @@ import { GraphNodePrototype, NodePrototype } from "data/NodePrototype";
 import "./NodeLayer.scss";
 
 
-const yes = (_: any) => true; // DELETEME
-
 interface DispatchProps {
-	changeUserValue: (nodeId: string, index: number, value: string) => void;
+	dispatch: Redux.Dispatch<Redux.Action>;
 }
-
 interface OwnProps {
 	prototype: GraphNodePrototype;
 	nodePrototypes: Dict<NodePrototype>;
 	className?: string;
 }
-
 type Props =
 	& DispatchProps
 	& OwnProps;
@@ -41,7 +38,7 @@ class PartialNodeLayer extends React.PureComponent<Props> {
 		);
 	}
 
-	public renderNode = (nodeId: string) => {
+	private renderNode = (nodeId: string) => {
 		const { prototype, nodePrototypes } = this.props;
 		const { graph } = prototype;
 		const node = graph[nodeId];
@@ -59,21 +56,33 @@ class PartialNodeLayer extends React.PureComponent<Props> {
 				node={node}
 				position={position}
 				prototype={childPrototype}
-				isInputConnected={yes}
-				onUserValueChange={this.props.changeUserValue}
+				isInputConnected={this.isInputConnected}
+				onUserValueChange={this.onUserValueChange}
 			/>
 		);
+	}
+
+	private isInputConnected = (nodeId: string, index: number) => {
+		const { graph } = this.props.prototype;
+		for (const node of Object.values(graph)) {
+			for (const edge of node.edges) {
+				if (edge.target === nodeId && edge.data[1] === index) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	private onUserValueChange = (nodeId: string, index: number, value: string) => {
+		// tslint:disable-next-line:no-console
+		console.log(nodeId, index, value);
 	}
 }
 
 const NodeLayer = connect<{}, DispatchProps, OwnProps>(
 	() => ({}),
-	dispatch => ({
-		changeUserValue: (nodeId: string, index: number, value: string) => {
-			// tslint:disable-next-line:no-console
-			console.log(dispatch, nodeId, index, value);
-		},
-	}),
+	dispatch => ({ dispatch }),
 )(PartialNodeLayer);
 
 

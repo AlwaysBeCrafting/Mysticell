@@ -30,8 +30,6 @@ type Props =
 	& StateProps
 	& OwnProps;
 
-const yes = (_: any) => true;
-
 const PartialGraphView = (props: Props) => {
 	const { className, path, prototype, nodePrototypes } = props;
 	return (
@@ -43,14 +41,12 @@ const PartialGraphView = (props: Props) => {
 			<div className="graphView-graph">
 				<Boundary
 					input
-					pinNames={prototype.inputNames}
-					isPinConnected={yes}
+					prototype={prototype}
 				/>
 				{renderGrid(prototype, nodePrototypes)}
 				<Boundary
 					output
-					pinNames={prototype.outputNames}
-					isPinConnected={yes}
+					prototype={prototype}
 				/>
 			</div>
 		</div>

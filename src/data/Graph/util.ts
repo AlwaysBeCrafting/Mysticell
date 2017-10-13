@@ -205,4 +205,19 @@ const resolveGraph = async (
 };
 
 
-export { resolveGraph };
+const isEdgeTarget = (graph: Graph, nodeId: string, index?: number) => {
+	for (const node of Object.values(graph)) {
+		for (const edge of node.edges) {
+			if (
+				edge.target === nodeId &&
+				(typeof index === "undefined" || index === edge.data[1])
+			) {
+				return true;
+			}
+		}
+	}
+	return false;
+};
+
+
+export { resolveGraph, isEdgeTarget };

@@ -40,9 +40,9 @@ class Pin extends React.PureComponent<Props> {
 				<div className={`pin-dot ${type}Pin-dot`} />
 				<label className="pin-label">{name}</label>
 				{
-					!source && takesInput &&
+					takesInput &&
 					<input
-						className="pin-value"
+						className={`pin-value ${type}Pin-value`}
 						defaultValue={this.props.userValue}
 						onChange={this.onChange}
 					/>

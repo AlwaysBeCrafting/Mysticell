@@ -13,7 +13,7 @@ interface Props {
 	node: InnerNode;
 	prototype: NodePrototype;
 	position: [number, number];
-	isInputConnected: (index: number) => boolean;
+	isInputConnected: (nodeId: string, index: number) => boolean;
 	onUserValueChange: (nodeId: string, index: number, value: string) => void;
 }
 
@@ -27,14 +27,14 @@ class NodeView extends React.PureComponent<Props> {
 				<header className="nodeView-headerRow nodeView-row">
 					<span className="nodeView-headerRow-name">{name}</span>
 				</header>
-				{prototype.outputNames.map((outputName, i) => (
+				{prototype.outputNames.map((outputName, index) => (
 					<Pin
 						source
 						key={outputName}
 						name={outputName}
 						takesInput={false}
 						param={PARAMS.string("")}
-						index={i}
+						index={index}
 					/>
 				))}
 				{prototype.inputNames.map((inputName, index) => (
@@ -42,7 +42,7 @@ class NodeView extends React.PureComponent<Props> {
 						target
 						key={inputName}
 						name={inputName}
-						takesInput={isInputConnected(index)}
+						takesInput={!isInputConnected(node.id, index)}
 						userValue={node.constants[index]}
 						param={PARAMS.empty()}
 						index={index}

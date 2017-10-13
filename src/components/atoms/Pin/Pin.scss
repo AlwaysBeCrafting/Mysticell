@@ -35,6 +35,7 @@ $pin-size: 14px;
 		flex: 1 0 0;
 		text-align: right;
 		margin-left: 16px;
+		margin-right: 0;
 		line-height: 1;
 		background: none;
 		border: none;
@@ -53,6 +54,11 @@ $pin-size: 14px;
 
 	.sourcePin-dot {
 		right: -$pin-size / 2;
+	}
+
+	.sourcePin-value {
+		margin-left: 0;
+		margin-right: 16px;
 	}
 
 .targetPin-dot {

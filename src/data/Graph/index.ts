@@ -1,2 +1,2 @@
 export { Edge, BoundaryNode, InnerNode, Graph, GraphNode, isBoundaryNode } from "./model";
-export { resolveGraph } from "./util";
+export { resolveGraph, isEdgeTarget } from "./util";
