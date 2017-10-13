@@ -7,7 +7,7 @@ import { graphLayoutWidth } from "common/utils";
 import { Wire } from "components/atoms";
 
 import { PRIMITIVES } from "data/common";
-import { Edge, GraphNode, isBoundaryNode } from "data/Graph";
+import { Edge, GraphNode, InnerNode } from "data/Graph";
 import { GraphNodePrototype, NodePrototype } from "data/NodePrototype";
 
 
@@ -31,10 +31,10 @@ class WireLayer extends React.PureComponent<Props> {
 		);
 	}
 
-	private renderNodeWires = (node: GraphNode) => {
+	private renderNodeWires = (node: GraphNode) => (
 		node.edges
-			.map(this.renderWire(node.id));
-	}
+			.map(this.renderWire(node.id))
+	)
 
 	private renderWire = (source: string) => (edge: Edge) => {
 		const { graph, layout } = this.props.prototype;
@@ -44,18 +44,11 @@ class WireLayer extends React.PureComponent<Props> {
 		const srcPos: [number, number] = [0, 0];
 		const dstPos: [number, number]  = [0, 0];
 
-		if (layout[source]) {
-			srcPos[0] += layout[source][0];
-			srcPos[1] += layout[source][1];
-		}
-		if (layout[target]) {
-			dstPos[0] = layout[target][0];
-			dstPos[1] = layout[target][1];
-		}
-
 		if (source === "input") {
 			srcPos[1] += panelHeaderRows;
 		} else {
+			srcPos[0] += layout[source][0];
+			srcPos[1] += layout[source][1];
 			srcPos[0] += nodeWidth;
 			srcPos[1] += nodeHeaderRows;
 		}
@@ -64,15 +57,16 @@ class WireLayer extends React.PureComponent<Props> {
 			dstPos[0] = graphLayoutWidth(layout);
 			dstPos[1] += panelHeaderRows;
 		} else {
+			dstPos[0] = layout[target][0];
+			dstPos[1] = layout[target][1];
 			dstPos[1] += nodeHeaderRows;
-			const tgtNode = graph[target];
-			if (!isBoundaryNode(tgtNode)) {
-				dstPos[1] += (
-					this.props.nodePrototypes[tgtNode.prototype] ||
-					PRIMITIVES[tgtNode.prototype]
-				).outputNames.length;
-			}
+			const tgtNode = graph[target] as InnerNode;
+			dstPos[1] += (
+				PRIMITIVES[tgtNode.prototype] ||
+				this.props.nodePrototypes[tgtNode.prototype]
+			).outputNames.length;
 		}
+
 		srcPos[1] += srcIndex;
 		dstPos[1] += tgtIndex;
 

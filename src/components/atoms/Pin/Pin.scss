@@ -6,7 +6,7 @@
 $row-height: $dimen-graph-cell-size;
 $pin-size: 14px;
 
-.pinRow {
+.pin {
 	position: relative;
 	display: flex;
 	flex-flow: row nowrap;
@@ -15,7 +15,7 @@ $pin-size: 14px;
 	@include font-body1;
 }
 
-	.pinRow-pin {
+	.pin-dot {
 		position: absolute;
 		top: ($row-height - $pin-size) / 2;
 		width: $pin-size;
@@ -26,34 +26,35 @@ $pin-size: 14px;
 		content: ' ';
 	}
 
-	.pinRow-label {
+	.pin-label {
 		color: $color-text-secondary;
 	}
 	
-	.pinRow-value {
+	.pin-value {
 		width: 0;
 		flex: 1 0 0;
 		text-align: right;
 		margin-left: 16px;
 		line-height: 1;
+		background: none;
 		border: none;
 		border-bottom: solid 2px $color-black-alpha-12;
 		padding: 6px 0 4px;
 		color: $color-text-primary;
 	}
 
-	.pinRow-value:focus {
+	.pin-value:focus {
 		border-color: $color-brand-primary;
 	}
 
-.srcPinRow {
+.sourcePin {
 	flex-direction: row-reverse;
 }
 
-	.srcPinRow-pin {
+	.sourcePin-dot {
 		right: -$pin-size / 2;
 	}
 
-.dstPinRow-pin {
+.targetPin-dot {
 	left: -$pin-size / 2;
 }

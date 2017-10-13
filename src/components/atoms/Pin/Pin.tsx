@@ -3,7 +3,7 @@ import React from "react";
 
 import { Param } from "data/common";
 
-import "./PinRow.scss";
+import "./Pin.scss";
 
 
 interface CommonProps {
@@ -28,21 +28,21 @@ interface DstProps extends CommonProps {
 
 type Props = SrcProps | DstProps;
 
-class PinRow extends React.PureComponent<Props> {
+class Pin extends React.PureComponent<Props> {
 	public render() {
 		const { className, name, source, takesInput } = this.props;
 		const type = source ? "source" : "target";
 		return (
 			<div
-				className={classNames(`pinRow ${type}PinRow`, className)}
+				className={classNames(`pin ${type}Pin`, className)}
 				key={name}
 			>
-				<div className={`pinRow-pin ${type}PinRow-pin`} />
-				<label className="pinRow-label">{name}</label>
+				<div className={`pin-dot ${type}Pin-dot`} />
+				<label className="pin-label">{name}</label>
 				{
 					!source && takesInput &&
 					<input
-						className="pinRow-value"
+						className="pin-value"
 						defaultValue={this.props.userValue}
 						onChange={this.onChange}
 					/>
@@ -59,4 +59,4 @@ class PinRow extends React.PureComponent<Props> {
 }
 
 
-export { PinRow };
+export { Pin };

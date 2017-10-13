@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Card, PinRow } from "components/atoms";
+import { Card, Pin } from "components/atoms";
 
 import { PARAMS } from "data/common";
 import { InnerNode } from "data/Graph";
@@ -28,7 +28,7 @@ class NodeView extends React.PureComponent<Props> {
 					<span className="nodeView-headerRow-name">{name}</span>
 				</header>
 				{prototype.outputNames.map((outputName, i) => (
-					<PinRow
+					<Pin
 						source
 						key={outputName}
 						name={outputName}
@@ -38,7 +38,7 @@ class NodeView extends React.PureComponent<Props> {
 					/>
 				))}
 				{prototype.inputNames.map((inputName, index) => (
-					<PinRow
+					<Pin
 						target
 						key={inputName}
 						name={inputName}

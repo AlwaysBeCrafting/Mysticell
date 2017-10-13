@@ -2,7 +2,7 @@ import React from "react";
 
 import { PARAMS } from "data/common";
 
-import { PinRow } from "components/atoms/PinRow";
+import { Pin } from "components/atoms";
 
 
 interface CommonProps {
@@ -21,7 +21,7 @@ type Props =
 	| InputProps
 	| OutputProps;
 
-const Panel = (props: Props) => {
+const Boundary = (props: Props) => {
 	const { pinNames, isPinConnected, input } = props;
 
 	const type = input ? "input" : "output";
@@ -32,30 +32,26 @@ const Panel = (props: Props) => {
 			</div>
 			{pinNames.map((name, index) => (
 				type === "input"
-					? (
-						<PinRow
-							source
-							name={name}
-							param={PARAMS.string("")}
-							index={index}
-							key={name}
-						/>
-					)
-					: (
-						<PinRow
-							target
-							name={name}
-							takesInput={isPinConnected(index)}
-							param={PARAMS.empty()}
-							userValue={""}
-							index={index}
-							key={name}
-						/>
-					)
+					? <Pin
+						source
+						name={name}
+						param={PARAMS.string("")}
+						index={index}
+						key={name}
+					/>
+					: <Pin
+						target
+						name={name}
+						takesInput={isPinConnected(index)}
+						param={PARAMS.empty()}
+						userValue={""}
+						index={index}
+						key={name}
+					/>
 			))}
 		</div>
 	);
 };
 
 
-export { Panel };
+export { Boundary };

@@ -1,6 +1,6 @@
 export { Card } from "./Card";
 export { CellView } from "./CellView";
 export { Icon } from "./Icon";
-export { PinRow } from "./PinRow";
+export { Pin } from "./Pin";
 export { ToolButton } from "./ToolButton";
 export { Wire } from "./Wire";

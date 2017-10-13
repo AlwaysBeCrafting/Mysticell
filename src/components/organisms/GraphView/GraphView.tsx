@@ -11,8 +11,8 @@ import { Toolbar } from "components/molecules";
 import { AppState } from "data/AppState";
 import { GraphNodePrototype, NodePrototype } from "data/NodePrototype";
 
+import { Boundary } from "./Boundary";
 import { NodeLayer } from "./NodeLayer";
-import { Panel } from "./Panel";
 import { WireLayer } from "./WireLayer";
 
 import "./GraphView.scss";
@@ -41,13 +41,13 @@ const PartialGraphView = (props: Props) => {
 				{path.map((_, i) => renderPathSegment(path, i))}
 			</Toolbar>
 			<div className="graphView-graph">
-				<Panel
+				<Boundary
 					input
 					pinNames={prototype.inputNames}
 					isPinConnected={yes}
 				/>
 				{renderGrid(prototype, nodePrototypes)}
-				<Panel
+				<Boundary
 					output
 					pinNames={prototype.outputNames}
 					isPinConnected={yes}
