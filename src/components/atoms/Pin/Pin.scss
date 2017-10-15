@@ -13,6 +13,10 @@ $pin-size: 14px;
   padding: 0 $dimen-keyline-padding / 2;
   @include font-body1;
 
+  &.mod-source {
+    flex-direction: row-reverse;
+  }
+
   &-dot {
     position: absolute;
     top: ($row-height - $pin-size) / 2;
@@ -22,6 +26,14 @@ $pin-size: 14px;
     border: solid thin $color-black-alpha-38;
     background: $color-grey-400;
     content: " ";
+
+    &.mod-source {
+      right: -$pin-size / 2;
+    }
+
+    &.mod-target {
+      left: -$pin-size / 2;
+    }
   }
 
   &-label {
@@ -40,26 +52,14 @@ $pin-size: 14px;
     border-bottom: solid 2px $color-black-alpha-12;
     padding: 6px 0 4px;
     color: $color-text-primary;
+
+    &:focus {
+      border-color: $color-brand-primary;
+    }
+
+    &.mod-source {
+      margin-left: 0;
+      margin-right: 16px;
+    }
   }
-
-  &-value:focus {
-    border-color: $color-brand-primary;
-  }
-}
-
-.sourcePin {
-  flex-direction: row-reverse;
-
-  &-dot {
-    right: -$pin-size / 2;
-  }
-
-  &-value {
-    margin-left: 0;
-    margin-right: 16px;
-  }
-}
-
-.targetPin-dot {
-  left: -$pin-size / 2;
 }

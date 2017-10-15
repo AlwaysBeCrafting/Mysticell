@@ -30,14 +30,17 @@ type Props = SrcProps | DstProps;
 class Pin extends React.PureComponent<Props> {
   public render() {
     const { className, name, source, takesInput } = this.props;
-    const type = source ? "source" : "target";
+    const classMod = {
+      "mod-source": source,
+      "mod-target": !source,
+    };
     return (
-      <div className={classNames(`pin ${type}Pin`, className)} key={name}>
-        <div className={`pin-dot ${type}Pin-dot`} />
+      <div className={classNames("pin", className, classMod)} key={name}>
+        <div className={classNames("pin-dot", classMod)} />
         <label className="pin-label">{name}</label>
         {takesInput && (
           <input
-            className={`pin-value ${type}Pin-value`}
+            className={classNames("pin-value", classMod)}
             defaultValue={this.props.userValue}
             onChange={this.onChange}
           />
