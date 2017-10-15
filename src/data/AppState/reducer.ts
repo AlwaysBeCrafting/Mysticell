@@ -6,12 +6,10 @@ import { reducer as uiState } from "data/UiState";
 
 import { AppState } from "./model";
 
-
 const reducer = combineReducers<AppState>({
-	document,
-	uiState,
-	propertyCache,
+  document,
+  uiState,
+  propertyCache,
 });
-
 
 export { reducer };

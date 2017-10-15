@@ -4,18 +4,16 @@ import { Nav } from "data/Nav";
 import { NodePrototype } from "data/NodePrototype";
 import { Sheet } from "data/Sheet";
 
-
 interface Document {
-	id: string;
-	title: string;
-	version: number;
-	include: string[];
+  id: string;
+  title: string;
+  version: number;
+  include: string[];
 
-	sheets: Dict<Sheet>;
-	nodePrototypes: Dict<NodePrototype>;
+  sheets: Dict<Sheet>;
+  nodePrototypes: Dict<NodePrototype>;
 
-	nav: Nav;
+  nav: Nav;
 }
-
 
 export { Document };

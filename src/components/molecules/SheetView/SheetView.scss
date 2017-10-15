@@ -1,21 +1,21 @@
 @import "~common/styles/mixins";
 
 .sheetView {
-	background: white;
-	display: flex;
-	flex-flow: column nowrap;
+  background: #fff;
+  display: flex;
+  flex-flow: column nowrap;
 
-	@include elevation(4px);
+  @include elevation(4px);
+
+  &-header {
+    flex: 0 0 40px;
+    background: none;
+  }
+
+  &-grid {
+    flex: 1 0 0;
+    display: grid;
+    grid-auto-columns: 40px;
+    grid-auto-rows: 40px;
+  }
 }
-
-	.sheetView-header {
-		flex: 0 0 40px;
-		background: none;
-	}
-
-	.sheetView-grid {
-		flex: 1 0 0;
-		display: grid;
-		grid-auto-columns: 40px;
-		grid-auto-rows: 40px;
-	}

@@ -1,29 +1,30 @@
-@import '~common/styles/colors';
-@import '~common/styles/dimensions';
-@import '~common/styles/mixins';
-
+@import "~common/styles/colors";
+@import "~common/styles/dimensions";
+@import "~common/styles/mixins";
 
 .editor {
-	flex: 1 0 auto;
-	background: $color-grey-200;
-	color: $color-text-primary;
+  flex: 1 0 auto;
+  background: $color-grey-200;
+  color: $color-text-primary;
+
+  &-appbar {
+    flex: 0 0 $dimen-toolbar-size;
+    @include elevation(4px);
+
+    background: $color-brand-primary;
+    z-index: 100;
+  }
+
+  &-document {
+    flex: 1 0 auto;
+    flex-flow: row nowrap;
+
+    &-nav {
+      flex: 0 0 320px;
+    }
+
+    &-content {
+      flex: 1 0 0;
+    }
+  }
 }
-	.editor-appbar {
-		flex: 0 0 $dimen-toolbar-size;
-		@include elevation(4px);
-
-		background: $color-brand-primary;
-		z-index: 100;
-	}
-
-	.editor-document {
-		flex: 1 0 auto;
-		flex-flow: row nowrap;
-	}
-		.editor-document-nav {
-			flex: 0 0 320px;
-		}
-
-		.editor-document-content {
-			flex: 1 0 0;
-		}

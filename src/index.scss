@@ -1,0 +1,91 @@
+@font-face {
+  font-family: "Material Icons";
+  font-style: normal;
+  font-weight: 400;
+  src: local("Material Icons"), local("MaterialIcons-Regular"),
+    url("https://fonts.gstatic.com/s/materialicons/v18/2fcrYFNaTjcS6g4U3t-Y5ZjZjT5FdEJ140U2DJYC3mY.woff2")
+      format("woff2");
+}
+
+.icon {
+  font-family: "Material Icons";
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: "liga";
+  -webkit-font-smoothing: antialiased;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  outline: none;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+html,
+body,
+.root {
+  height: 100vh;
+}
+
+article,
+aside,
+body,
+div,
+footer,
+header,
+hgroup,
+main,
+nav,
+section,
+ul,
+ol {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+input,
+button {
+  -webkit-appearance: none;
+  color: inherit;
+  font: inherit;
+  min-width: 0;
+  border: none;
+}
+
+ul,
+ol {
+  list-style: none;
+  padding-left: 0;
+}
+
+menu[type="toolbar"] {
+  display: flex;
+  flex-flow: row nowrap;
+
+  list-style: none;
+}
+
+button {
+  -webkit-appearance: none;
+  border: none;
+  background: none;
+  cursor: pointer;
+}

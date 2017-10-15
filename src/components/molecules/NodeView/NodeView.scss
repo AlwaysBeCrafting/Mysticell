@@ -1,33 +1,31 @@
-@import '~common/styles/colors';
-@import '~common/styles/dimensions';
-@import '~common/styles/fonts';
-@import '~common/styles/mixins';
-
+@import "~common/styles/colors";
+@import "~common/styles/dimensions";
+@import "~common/styles/fonts";
+@import "~common/styles/mixins";
 
 $row-height: $dimen-graph-cell-size;
 
 .nodeView {
-	@include elevation(2px);
-	@include font-body1;
-	line-height: $row-height;
-	display: grid;
-	grid-template-columns: 1fr;
-	grid-auto-rows: 40px;
-	flex-flow: column nowrap;
+  @include elevation(2px);
+  @include font-body1;
+  line-height: $row-height;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-auto-rows: 40px;
+  flex-flow: column nowrap;
 }
-	.nodeView-row {
-		padding: 0 $dimen-keyline-padding / 2;
-		display: flex;
-		flex-flow: row nowrap;
+.nodeView-row {
+  padding: 0 $dimen-keyline-padding / 2;
+  display: flex;
+  flex-flow: row nowrap;
+}
 
-	}
+.nodeView-headerRow {
+  display: flex;
+  flex-flow: row nowrap;
+}
 
-	.nodeView-headerRow {
-		display: flex;
-		flex-flow: row nowrap;
-	}
-
-		.nodeView-headerRow-name {
-			flex: 1 0 auto;
-			@include font-body2;
-		}
+.nodeView-headerRow-name {
+  flex: 1 0 auto;
+  @include font-body2;
+}

@@ -8,18 +8,21 @@ import { setParams } from "data/PropertyCache";
 
 import { Action, ActionTypes } from "./actions";
 
-
-const initPropertyCacheEpic = (action$: ActionsObservable<Action>) => action$
-	.ofType(ActionTypes.LOAD_DOCUMENT)
-	.mergeMap(({ payload: { documentJson }}) => (
-		Observable.of(...Object.values(documentJson.nodePrototypes))
-			.filter(formula => isProperty(formula))
-			.mergeMap(property => {
-				if (!isProperty(property)) { return []; }
-				return resolveGraph(documentJson.nodePrototypes, property)
-					.then(params => setParams(property.id, params));
-			})
-	));
-
+const initPropertyCacheEpic = (action$: ActionsObservable<Action>) =>
+  action$
+    .ofType(ActionTypes.LOAD_DOCUMENT)
+    .mergeMap(({ payload: { documentJson } }) =>
+      Observable.of(...Object.values(documentJson.nodePrototypes))
+        .filter(formula => isProperty(formula))
+        .mergeMap(property => {
+          if (!isProperty(property)) {
+            return [];
+          }
+          return resolveGraph(
+            documentJson.nodePrototypes,
+            property,
+          ).then(params => setParams(property.id, params));
+        }),
+    );
 
 export { initPropertyCacheEpic };

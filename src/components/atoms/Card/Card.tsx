@@ -3,16 +3,14 @@ import React from "react";
 
 import "./Card.scss";
 
-
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
-	className?: string;
+  className?: string;
 }
 
-const Card = ({className, children, ...attrs}: Props) => (
-	<div className={classNames("card", className)} {...attrs}>
-		{children}
-	</div>
+const Card = ({ className, children, ...attrs }: Props) => (
+  <div className={classNames("card", className)} {...attrs}>
+    {children}
+  </div>
 );
-
 
 export { Card };

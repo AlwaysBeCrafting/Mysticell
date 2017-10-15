@@ -1,33 +1,33 @@
-@import '~common/styles/colors';
-@import '~common/styles/dimensions';
-@import '~common/styles/fonts';
+@import "~common/styles/colors";
+@import "~common/styles/dimensions";
+@import "~common/styles/fonts";
 
-
-$dimen-toolbar-padding: $dimen-keyline-padding - (($dimen-toolbar-size - $dimen-icon-size) / 2);
+$dimen-toolbar-padding: $dimen-keyline-padding - (($dimen-toolbar-size -
+          $dimen-icon-size) / 2);
 $dimen-title-margin: $dimen-keyline-padding - $dimen-toolbar-padding;
-$dimen-title-margin-afterNav: $dimen-keyline-content - ($dimen-toolbar-size + $dimen-toolbar-padding);
-
+$dimen-title-margin-afterNav: $dimen-keyline-content - ($dimen-toolbar-size +
+      $dimen-toolbar-padding);
 
 .toolbar {
-	display: flex;
-	flex-flow: row nowrap;
-	justify-content: flex-start;
-	align-items: center;
-	padding: 0 $dimen-toolbar-padding;
-	@include font-button;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 0 $dimen-toolbar-padding;
+  @include font-button;
+
+  &.mod-inverted {
+    color: $color-text-primary-inverted;
+  }
+
+  &-title {
+    flex: 1 0 auto;
+    align-self: center;
+    margin: 0 $dimen-title-margin;
+    @include font-title;
+  }
+
+  &-nav + &-title {
+    margin: 0 $dimen-title-margin-afterNav;
+  }
 }
-
-.toolbar.mod-inverted {
-	color: $color-text-primary-inverted;
-}
-
-	.toolbar-title {
-		flex: 1 0 auto;
-		align-self: center;
-		margin: 0 $dimen-title-margin;
-		@include font-title;
-	}
-
-	.toolbar-nav + .toolbar-title {
-		margin: 0 $dimen-title-margin-afterNav;
-	}

@@ -1,22 +1,18 @@
 {
-	"extends": ["tslint:latest", "tslint-react"],
-	"defaultSeverity": "warning",
-	"rules": {
-		"align": [false],
-		"arrow-parens": [true, "ban-single-arg-parens"],
-		"indent": [true, "tabs"],
-		"interface-name": [true, "never-prefix"],
-		"no-consecutive-blank-lines": [true, 2],
-		"no-default-export": true,
-		"no-empty-interface": false,
-		"no-submodule-imports": [true, "common", "components", "data", "rxjs"],
-		"no-var-requires": true,
-		"object-literal-sort-keys": [false],
-		"only-arrow-functions": [true],
-		"quotemark": [true, "double", "jsx-double", "avoid-escape"],
-		"whitespace": [true, "check-module"],
-		"jsx-no-multiline-js": false,
-		"jsx-boolean-value": [true, "never"],
-		"jsx-curly-spacing": [true, "never"]
-	}
+  "extends": ["tslint:latest", "tslint-react", "tslint-config-prettier"],
+  "defaultSeverity": "warning",
+  "rulesDirectory": ["tslint-plugin-prettier"],
+  "rules": {
+    "align": [false],
+    "interface-name": [true, "never-prefix"],
+    "no-default-export": true,
+    "no-empty-interface": false,
+    "no-submodule-imports": [true, "common", "components", "data", "rxjs"],
+    "no-var-requires": true,
+    "object-literal-sort-keys": [false],
+    "only-arrow-functions": [true],
+    "prettier": true,
+    "jsx-no-multiline-js": false,
+    "jsx-boolean-value": [true, "never"]
+  }
 }

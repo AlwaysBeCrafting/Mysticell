@@ -1,6 +1,5 @@
 interface UiState {
-	expandedNavItems: Set<string>;
+  expandedNavItems: Set<string>;
 }
-
 
 export { UiState };

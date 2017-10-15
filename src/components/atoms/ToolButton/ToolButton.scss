@@ -1,33 +1,24 @@
-@import '~common/styles/colors';
-@import '~common/styles/dimensions';
-
+@import "~common/styles/colors";
+@import "~common/styles/dimensions";
 
 .toolButton {
-	flex: 0 0 auto;
-	padding: 8px;
-	align-self: stretch;
-	display: flex;
-	flex-flow: row nowrap;
-	justify-content: center;
-	align-items: center;
-	user-select: none;
-	font-size: 14px;
-	font-weight: 500;
-	color: $color-text-primary;
-}
+  flex: 0 0 auto;
+  padding: 8px;
+  align-self: stretch;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+  font-size: 14px;
+  font-weight: 500;
+  color: $color-text-primary;
 
-.toolButton.mod-link {
-	text-decoration: inherit;
-}
+  &.mod-link {
+    text-decoration: inherit;
+  }
 
-.toolButton.is-disabled {
-	color: $color-text-disabled;
-}
-
-.mod-inverted .toolButton {
-	color: $color-text-primary-inverted;
-}
-
-.mod-inverted .toolButton.is-disabled {
-	color: $color-text-disabled-inverted;
+  &.is-disabled {
+    color: $color-text-disabled;
+  }
 }

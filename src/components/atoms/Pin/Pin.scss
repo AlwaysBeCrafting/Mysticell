@@ -1,66 +1,65 @@
-@import '~common/styles/colors';
-@import '~common/styles/dimensions';
-@import '~common/styles/fonts';
-
+@import "~common/styles/colors";
+@import "~common/styles/dimensions";
+@import "~common/styles/fonts";
 
 $row-height: $dimen-graph-cell-size;
 $pin-size: 14px;
 
 .pin {
-	position: relative;
-	display: flex;
-	flex-flow: row nowrap;
-	align-items: baseline;
-	padding: 0 $dimen-keyline-padding / 2;
-	@include font-body1;
+  position: relative;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: baseline;
+  padding: 0 $dimen-keyline-padding / 2;
+  @include font-body1;
+
+  &-dot {
+    position: absolute;
+    top: ($row-height - $pin-size) / 2;
+    width: $pin-size;
+    height: $pin-size;
+    border-radius: 50%;
+    border: solid thin $color-black-alpha-38;
+    background: $color-grey-400;
+    content: " ";
+  }
+
+  &-label {
+    color: $color-text-secondary;
+  }
+
+  &-value {
+    width: 0;
+    flex: 1 0 0;
+    text-align: right;
+    margin-left: 16px;
+    margin-right: 0;
+    line-height: 1;
+    background: none;
+    border: none;
+    border-bottom: solid 2px $color-black-alpha-12;
+    padding: 6px 0 4px;
+    color: $color-text-primary;
+  }
+
+  &-value:focus {
+    border-color: $color-brand-primary;
+  }
 }
-
-	.pin-dot {
-		position: absolute;
-		top: ($row-height - $pin-size) / 2;
-		width: $pin-size;
-		height: $pin-size;
-		border-radius: 50%;
-		border: solid thin $color-black-alpha-38;
-		background: $color-grey-400;
-		content: ' ';
-	}
-
-	.pin-label {
-		color: $color-text-secondary;
-	}
-	
-	.pin-value {
-		width: 0;
-		flex: 1 0 0;
-		text-align: right;
-		margin-left: 16px;
-		margin-right: 0;
-		line-height: 1;
-		background: none;
-		border: none;
-		border-bottom: solid 2px $color-black-alpha-12;
-		padding: 6px 0 4px;
-		color: $color-text-primary;
-	}
-
-	.pin-value:focus {
-		border-color: $color-brand-primary;
-	}
 
 .sourcePin {
-	flex-direction: row-reverse;
+  flex-direction: row-reverse;
+
+  &-dot {
+    right: -$pin-size / 2;
+  }
+
+  &-value {
+    margin-left: 0;
+    margin-right: 16px;
+  }
 }
 
-	.sourcePin-dot {
-		right: -$pin-size / 2;
-	}
-
-	.sourcePin-value {
-		margin-left: 0;
-		margin-right: 16px;
-	}
-
 .targetPin-dot {
-	left: -$pin-size / 2;
+  left: -$pin-size / 2;
 }
