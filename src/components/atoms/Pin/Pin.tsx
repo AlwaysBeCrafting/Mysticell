@@ -12,7 +12,7 @@ interface CommonProps {
   userValue?: string;
   onChange?: (index: number, value: string) => void;
   index: number;
-  param: Param;
+  param?: Param;
 }
 
 interface SrcProps extends CommonProps {
@@ -29,24 +29,43 @@ type Props = SrcProps | DstProps;
 
 class Pin extends React.PureComponent<Props> {
   public render() {
-    const { className, name, source, takesInput } = this.props;
+    const { className, name, source, target } = this.props;
     const classMod = {
       "mod-source": source,
-      "mod-target": !source,
+      "mod-target": target,
     };
     return (
       <div className={classNames("pin", className, classMod)} key={name}>
         <div className={classNames("pin-dot", classMod)} />
-        <label className="pin-label">{name}</label>
-        {takesInput && (
-          <input
-            className={classNames("pin-value", classMod)}
-            defaultValue={this.props.userValue}
-            onChange={this.onChange}
-          />
-        )}
+        <label className={classNames("pin-label", classMod)}>{name}</label>
+        {this.renderInputValue(classNames("pin-value", classMod))}
+        {this.renderReadOnlyValue(classNames("pin-value", classMod))}
       </div>
     );
+  }
+
+  private renderInputValue(className: string) {
+    if (this.props.takesInput) {
+      return (
+        <input
+          className={className}
+          defaultValue={this.props.userValue}
+          onChange={this.onChange}
+        />
+      );
+    }
+    return null;
+  }
+
+  private renderReadOnlyValue(className: string) {
+    if (!this.props.takesInput && this.props.param) {
+      return (
+        <div className={classNames(className, "mod-readonly")}>
+          {this.props.param.value}
+        </div>
+      );
+    }
+    return null;
   }
 
   private onChange = (event: React.ChangeEvent<HTMLInputElement>) => {

@@ -6,10 +6,11 @@ import { Dict } from "common/types";
 import { graphLayoutWidth } from "common/utils";
 
 import { Icon, ToolButton } from "components/atoms";
-import { Toolbar } from "components/molecules";
+import { ErrorBoundary, Toolbar } from "components/molecules";
 
 import { AppState } from "data/AppState";
 import { GraphNodePrototype, NodePrototype } from "data/NodePrototype";
+import { PropertyCache } from "data/PropertyCache";
 
 import { Boundary } from "./Boundary";
 import { NodeLayer } from "./NodeLayer";
@@ -19,6 +20,7 @@ import "./GraphView.scss";
 
 interface StateProps {
   nodePrototypes: Dict<NodePrototype>;
+  propertyCache: PropertyCache;
 }
 interface OwnProps {
   className?: string;
@@ -28,7 +30,7 @@ interface OwnProps {
 type Props = StateProps & OwnProps;
 
 const PartialGraphView = (props: Props) => {
-  const { className, path, prototype, nodePrototypes } = props;
+  const { className, path, prototype, nodePrototypes, propertyCache } = props;
   return (
     <div className={classnames("graphView", className)}>
       <Toolbar className="graphView-toolbar">
@@ -38,9 +40,17 @@ const PartialGraphView = (props: Props) => {
         {path.map((_, i) => renderPathSegment(path, i))}
       </Toolbar>
       <div className="graphView-graph">
-        <Boundary input prototype={prototype} />
+        <ErrorBoundary>
+          <Boundary input prototype={prototype} propertyCache={propertyCache} />
+        </ErrorBoundary>
         {renderGrid(prototype, nodePrototypes)}
-        <Boundary output prototype={prototype} />
+        <ErrorBoundary>
+          <Boundary
+            output
+            prototype={prototype}
+            propertyCache={propertyCache}
+          />
+        </ErrorBoundary>
       </div>
     </div>
   );
@@ -80,6 +90,7 @@ const renderGrid = (
 
 const GraphView = connect<StateProps, {}, OwnProps>((state: AppState) => ({
   nodePrototypes: state.document.nodePrototypes,
+  propertyCache: state.propertyCache,
 }))(PartialGraphView);
 
 export { GraphView };

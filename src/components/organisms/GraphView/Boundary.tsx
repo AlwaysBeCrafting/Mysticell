@@ -1,14 +1,16 @@
 import React from "react";
 
-import { PARAMS } from "data/common";
-
-import { Pin } from "components/atoms";
-
+import { Dict } from "common/types";
 import { isEdgeTarget } from "data/Graph";
 import { GraphNodePrototype, isProperty } from "data/NodePrototype";
 
+import { Pin } from "components/atoms";
+
+import { Param, PARAMS } from "data/common";
+
 interface CommonProps {
   prototype: GraphNodePrototype;
+  propertyCache: Dict<Param[]>;
 }
 interface InputProps extends CommonProps {
   input: true;
@@ -20,10 +22,13 @@ interface OutputProps extends CommonProps {
 }
 type Props = InputProps | OutputProps;
 
+const working = PARAMS.error("…", "Working…");
+
 const Boundary = (props: Props) => {
-  const { input, prototype } = props;
+  const { input, prototype, propertyCache } = props;
   const pinNames = input ? prototype.inputNames : prototype.outputNames;
   const type = input ? "input" : "output";
+  const params = propertyCache[prototype.id];
 
   return (
     <div className={`graphView-graph-panel graphView-graph-${type}Panel`}>
@@ -42,7 +47,6 @@ const Boundary = (props: Props) => {
               source
               takesInput={isProperty(prototype)}
               name={name}
-              param={PARAMS.string("")}
               userValue={userValue}
               index={index}
               key={name}
@@ -54,8 +58,7 @@ const Boundary = (props: Props) => {
               target
               takesInput={!isEdgeTarget(prototype.graph, "output", index)}
               name={name}
-              param={PARAMS.empty()}
-              userValue={""}
+              param={params ? params[index] : working}
               index={index}
               key={name}
             />

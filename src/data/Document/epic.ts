@@ -25,4 +25,6 @@ const initPropertyCacheEpic = (action$: ActionsObservable<Action>) =>
         }),
     );
 
-export { initPropertyCacheEpic };
+const epic = initPropertyCacheEpic;
+
+export { epic };

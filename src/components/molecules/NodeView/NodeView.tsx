@@ -2,7 +2,6 @@ import React from "react";
 
 import { Card, Pin } from "components/atoms";
 
-import { PARAMS } from "data/common";
 import { InnerNode } from "data/Graph";
 import { NodePrototype } from "data/NodePrototype";
 
@@ -33,7 +32,6 @@ class NodeView extends React.PureComponent<Props> {
             key={outputName}
             name={outputName}
             takesInput={false}
-            param={PARAMS.string("")}
             index={index}
           />
         ))}
@@ -44,7 +42,6 @@ class NodeView extends React.PureComponent<Props> {
             name={inputName}
             takesInput={!isInputConnected(node.id, index)}
             userValue={node.constants[index]}
-            param={PARAMS.empty()}
             index={index}
             onChange={this.onUserValueChange}
           />

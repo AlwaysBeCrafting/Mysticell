@@ -9,8 +9,8 @@ $pin-size: 14px;
   position: relative;
   display: flex;
   flex-flow: row nowrap;
-  align-items: baseline;
-  padding: 0 $dimen-keyline-padding / 2;
+  align-items: center;
+  padding: 4px $dimen-keyline-padding / 2;
   @include font-body1;
 
   &.mod-source {
@@ -37,15 +37,25 @@ $pin-size: 14px;
   }
 
   &-label {
+    flex: 0 1 auto;
     color: $color-text-secondary;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    &.mod-target {
+      padding-right: 16px;
+    }
+
+    &.mod-source {
+      padding-left: 16px;
+    }
   }
 
   &-value {
     width: 0;
-    flex: 1 0 0;
+    flex: 1 0 auto;
     text-align: right;
-    margin-left: 16px;
-    margin-right: 0;
     line-height: 1;
     background: none;
     border: none;
@@ -57,9 +67,8 @@ $pin-size: 14px;
       border-color: $color-brand-primary;
     }
 
-    &.mod-source {
-      margin-left: 0;
-      margin-right: 16px;
+    &.mod-readonly {
+      border-bottom: none;
     }
   }
 }
