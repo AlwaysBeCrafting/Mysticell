@@ -35,13 +35,13 @@ class SheetView extends React.PureComponent<Props> {
           </ToolButton>
         </Toolbar>
         <div className="sheetView-grid">
-          {Object.values(sheet.cells).map(this.renderCell)}
+          {Object.values(sheet.cells).map(cell => this.renderCell(cell))}
         </div>
       </div>
     );
   }
 
-  private renderCell = (cell: Cell) => {
+  private renderCell(cell: Cell) {
     const { sheet, propertyCache, nodePrototypes } = this.props;
     if (cell.property.type === "input") {
       const cellPrototype = nodePrototypes[cell.property.id];
@@ -74,7 +74,7 @@ class SheetView extends React.PureComponent<Props> {
         />
       );
     }
-  };
+  }
 
   private onCellInput = (cell: Cell, newValue: string) => {
     this.props.onCellInput(cell, newValue);
