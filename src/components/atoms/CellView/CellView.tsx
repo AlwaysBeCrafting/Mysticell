@@ -14,27 +14,27 @@ interface Props {
   param: Param;
   rect: Rect2d;
   onChange?: (cell: Cell, newValue: string) => void;
+  readonly?: boolean;
 }
+
 class CellView extends React.PureComponent<Props> {
   public render() {
-    const { className, param, rect, onChange } = this.props;
+    const { className, param, rect, readonly } = this.props;
     const style = {
       gridArea: [rect.top, rect.left, rect.bottom, rect.right]
         .map(val => val + 1)
         .join(" / "),
     };
-    const content = onChange ? (
-      <input
-        className="cellView-content mod-input"
-        defaultValue={`${param.value}`}
-        onChange={this.onChange}
-      />
-    ) : (
-      <div className="cellView-content">{param.value}</div>
-    );
     return (
       <div style={style} className={classnames("cellView", className)}>
-        {content}
+        {readonly && <div className="cellView-content">{param.value}</div>}
+        {!readonly && (
+          <input
+            className="cellView-content mod-input"
+            defaultValue={`${param.value}`}
+            onChange={this.onChange}
+          />
+        )}
       </div>
     );
   }

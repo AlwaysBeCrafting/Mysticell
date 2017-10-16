@@ -35,45 +35,36 @@ class SheetView extends React.PureComponent<Props> {
           </ToolButton>
         </Toolbar>
         <div className="sheetView-grid">
-          {Object.values(sheet.cells).map(cell => this.renderCell(cell))}
+          {Object.values(sheet.cells).map(cell => (
+            <CellView
+              key={cell.id}
+              className="sheetView-grid-cell"
+              param={this.getParamForCell(cell)}
+              rect={sheet.layout[cell.id]}
+              cell={cell}
+              onChange={this.onCellInput}
+              readonly={cell.property.type !== "input"}
+            />
+          ))}
         </div>
       </div>
     );
   }
 
-  private renderCell(cell: Cell) {
-    const { sheet, propertyCache, nodePrototypes } = this.props;
+  private getParamForCell(cell: Cell) {
+    const { propertyCache, nodePrototypes } = this.props;
+    const cached = propertyCache[cell.property.id];
+    const cellPrototype = nodePrototypes[cell.property.id];
+    const cellValue = isProperty(cellPrototype)
+      ? cellPrototype.inputValues[cell.property.index]
+      : "";
     if (cell.property.type === "input") {
-      const cellPrototype = nodePrototypes[cell.property.id];
-      const cellValue = isProperty(cellPrototype)
-        ? cellPrototype.inputValues[cell.property.index]
-        : "";
-      const param = PARAMS.string(cellValue);
-      return (
-        <CellView
-          className="sheetView-grid-cell"
-          param={param}
-          key={cell.id}
-          rect={sheet.layout[cell.id]}
-          cell={cell}
-          onChange={this.onCellInput}
-        />
-      );
-    } else {
-      const cached = propertyCache[cell.property.id];
-      const param = cached
-        ? cached[cell.property.index]
-        : PARAMS.error("…", "Value has changed. Loading the new value now.");
-      return (
-        <CellView
-          className="sheetView-grid-cell"
-          param={param}
-          key={cell.id}
-          rect={sheet.layout[cell.id]}
-          cell={cell}
-        />
-      );
+      return PARAMS.string(cellValue);
     }
+    if (cached) {
+      return cached[cell.property.index];
+    }
+    return PARAMS.error("…", "Value has changed. Loading the new value now.");
   }
 
   private onCellInput = (cell: Cell, newValue: string) => {
