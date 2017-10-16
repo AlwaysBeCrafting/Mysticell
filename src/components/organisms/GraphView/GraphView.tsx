@@ -9,7 +9,11 @@ import { Icon, ToolButton } from "components/atoms";
 import { ErrorBoundary, Toolbar } from "components/molecules";
 
 import { AppState } from "data/AppState";
-import { GraphNodePrototype, NodePrototype } from "data/NodePrototype";
+import {
+  changePropertyInputValueAsync,
+  GraphNodePrototype,
+  NodePrototype,
+} from "data/NodePrototype";
 import { PropertyCache } from "data/PropertyCache";
 
 import { Boundary } from "./Boundary";
@@ -22,12 +26,19 @@ interface StateProps {
   nodePrototypes: Dict<NodePrototype>;
   propertyCache: PropertyCache;
 }
+interface DispatchProps {
+  changePropertyInputValue: (
+    propertyId: string,
+    index: number,
+    newValue: string,
+  ) => void;
+}
 interface OwnProps {
   className?: string;
   path: string[];
   prototype: GraphNodePrototype;
 }
-type Props = StateProps & OwnProps;
+type Props = StateProps & DispatchProps & OwnProps;
 
 const PartialGraphView = (props: Props) => {
   const { className, path, prototype, nodePrototypes, propertyCache } = props;
@@ -41,7 +52,12 @@ const PartialGraphView = (props: Props) => {
       </Toolbar>
       <div className="graphView-graph">
         <ErrorBoundary>
-          <Boundary input prototype={prototype} propertyCache={propertyCache} />
+          <Boundary
+            input
+            prototype={prototype}
+            propertyCache={propertyCache}
+            onValueChange={props.changePropertyInputValue}
+          />
         </ErrorBoundary>
         {renderGrid(prototype, nodePrototypes)}
         <ErrorBoundary>
@@ -88,9 +104,20 @@ const renderGrid = (
   );
 };
 
-const GraphView = connect<StateProps, {}, OwnProps>((state: AppState) => ({
-  nodePrototypes: state.document.nodePrototypes,
-  propertyCache: state.propertyCache,
-}))(PartialGraphView);
+const GraphView = connect<StateProps, DispatchProps, OwnProps>(
+  (state: AppState) => ({
+    nodePrototypes: state.document.nodePrototypes,
+    propertyCache: state.propertyCache,
+  }),
+  dispatch => ({
+    changePropertyInputValue: (
+      propertyId: string,
+      index: number,
+      newValue: string,
+    ) => {
+      dispatch(changePropertyInputValueAsync(propertyId, index, newValue));
+    },
+  }),
+)(PartialGraphView);
 
 export { GraphView };
