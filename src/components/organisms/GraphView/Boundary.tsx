@@ -29,6 +29,7 @@ const Boundary = (props: Props) => {
   const pinNames = input ? prototype.inputNames : prototype.outputNames;
   const type = input ? "input" : "output";
   const params = propertyCache[prototype.id];
+  const defaultParam = isProperty(prototype) ? working : undefined;
 
   return (
     <div className={`graphView-graph-panel graphView-graph-${type}Panel`}>
@@ -58,7 +59,7 @@ const Boundary = (props: Props) => {
               target
               takesInput={!isEdgeTarget(prototype.graph, "output", index)}
               name={name}
-              param={params ? params[index] : working}
+              param={params ? params[index] : defaultParam}
               index={index}
               key={name}
             />
