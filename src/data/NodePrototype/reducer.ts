@@ -1,7 +1,7 @@
 import { Dict } from "common/types";
 
 import { Action, ActionTypes } from "./actions";
-import { isProperty, NodePrototype } from "./model";
+import { isGraph, isProperty, NodePrototype } from "./model";
 
 const reducer = (state: Dict<NodePrototype> = {}, action: Action) => {
   switch (action.type) {
@@ -22,6 +22,25 @@ const reducer = (state: Dict<NodePrototype> = {}, action: Action) => {
       return {
         ...state,
         [propertyId]: newProperty,
+      };
+    }
+    case ActionTypes.MOVE_NODE_RELATIVE: {
+      const { prototypeId, nodeId, dX, dY } = action.payload;
+      const newPrototype = { ...state[prototypeId] };
+      if (!isGraph(newPrototype)) {
+        throw new Error(`Cannot change layout on non-graph ${prototypeId}`);
+      }
+      const newLayout = {
+        ...newPrototype.layout,
+        [nodeId]: [
+          newPrototype.layout[nodeId][0] + dX,
+          newPrototype.layout[nodeId][1] + dY,
+        ] as [number, number],
+      };
+      newPrototype.layout = newLayout;
+      return {
+        ...state,
+        [prototypeId]: newPrototype,
       };
     }
     default:

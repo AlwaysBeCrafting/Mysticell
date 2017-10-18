@@ -1,8 +1,14 @@
 import classnames from "classnames";
 import React from "react";
-import { connect } from "react-redux";
+import {
+  ConnectDropTarget,
+  DropTarget,
+  DropTargetCollector,
+  DropTargetSpec,
+} from "react-dnd";
+import { connect as connectStore } from "react-redux";
 
-import { Dict } from "common/types";
+import { Dict, DndTypes } from "common/types";
 import { graphLayoutWidth } from "common/utils";
 
 import { Icon, ToolButton } from "components/atoms";
@@ -12,6 +18,7 @@ import { AppState } from "data/AppState";
 import {
   changePropertyInputValueAsync,
   GraphNodePrototype,
+  moveNodeRelative,
   NodePrototype,
 } from "data/NodePrototype";
 import { PropertyCache } from "data/PropertyCache";
@@ -32,16 +39,33 @@ interface DispatchProps {
     index: number,
     newValue: string,
   ) => void;
+  moveNodeRelative: (
+    propertyId: string,
+    nodeId: string,
+    dX: number,
+    dY: number,
+  ) => void;
 }
 interface OwnProps {
   className?: string;
   path: string[];
   prototype: GraphNodePrototype;
 }
-type Props = StateProps & DispatchProps & OwnProps;
+type StoreProps = StateProps & DispatchProps & OwnProps;
+interface DropProps {
+  connectDrop: ConnectDropTarget;
+}
+type Props = StoreProps & DropProps;
 
 const PartialGraphView = (props: Props) => {
-  const { className, path, prototype, nodePrototypes, propertyCache } = props;
+  const {
+    className,
+    connectDrop,
+    path,
+    prototype,
+    nodePrototypes,
+    propertyCache,
+  } = props;
   return (
     <div className={classnames("graphView", className)}>
       <Toolbar className="graphView-toolbar">
@@ -50,24 +74,26 @@ const PartialGraphView = (props: Props) => {
         </ToolButton>
         {path.map((_, i) => renderPathSegment(path, i))}
       </Toolbar>
-      <div className="graphView-graph">
-        <ErrorBoundary>
-          <Boundary
-            input
-            prototype={prototype}
-            propertyCache={propertyCache}
-            onValueChange={props.changePropertyInputValue}
-          />
-        </ErrorBoundary>
-        {renderGrid(prototype, nodePrototypes)}
-        <ErrorBoundary>
-          <Boundary
-            output
-            prototype={prototype}
-            propertyCache={propertyCache}
-          />
-        </ErrorBoundary>
-      </div>
+      {connectDrop(
+        <div className="graphView-graph">
+          <ErrorBoundary>
+            <Boundary
+              input
+              prototype={prototype}
+              propertyCache={propertyCache}
+              onValueChange={props.changePropertyInputValue}
+            />
+          </ErrorBoundary>
+          {renderGrid(prototype, nodePrototypes)}
+          <ErrorBoundary>
+            <Boundary
+              output
+              prototype={prototype}
+              propertyCache={propertyCache}
+            />
+          </ErrorBoundary>
+        </div>,
+      )}
     </div>
   );
 };
@@ -104,7 +130,22 @@ const renderGrid = (
   );
 };
 
-const GraphView = connect<StateProps, DispatchProps, OwnProps>(
+const dropSpec: DropTargetSpec<StoreProps> = {
+  drop: (props, monitor) => {
+    const item = monitor!.getItem() as any;
+    const dX = Math.round(monitor!.getDifferenceFromInitialOffset().x / 40);
+    const dY = Math.round(monitor!.getDifferenceFromInitialOffset().y / 40);
+    props.moveNodeRelative(props.prototype.id, item.nodeId, dX, dY);
+  },
+};
+const dropCollect: DropTargetCollector = connect => ({
+  connectDrop: connect.dropTarget(),
+});
+const DropGraphView = DropTarget(DndTypes.NODE, dropSpec, dropCollect)(
+  PartialGraphView,
+);
+
+const GraphView = connectStore<StateProps, DispatchProps, OwnProps>(
   (state: AppState) => ({
     nodePrototypes: state.document.nodePrototypes,
     propertyCache: state.propertyCache,
@@ -117,7 +158,15 @@ const GraphView = connect<StateProps, DispatchProps, OwnProps>(
     ) => {
       dispatch(changePropertyInputValueAsync(propertyId, index, newValue));
     },
+    moveNodeRelative: (
+      prototypeId: string,
+      nodeId: string,
+      dX: number,
+      dY: number,
+    ) => {
+      dispatch(moveNodeRelative(prototypeId, nodeId, dX, dY));
+    },
   }),
-)(PartialGraphView);
+)(DropGraphView);
 
 export { GraphView };

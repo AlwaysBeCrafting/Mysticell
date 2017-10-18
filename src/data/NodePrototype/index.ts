@@ -1,4 +1,5 @@
 export { Action } from "./actions";
+export { moveNodeRelative } from "./actions";
 export { changePropertyInputValueAsync } from "./actions";
 export { epic } from "./epic";
 export {
