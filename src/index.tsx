@@ -1,4 +1,6 @@
 import React from "react";
+import { DragDropContextProvider } from "react-dnd";
+import HTML5Backend from "react-dnd-html5-backend";
 import ReactDOM from "react-dom";
 import { AppContainer } from "react-hot-loader";
 import { Provider } from "react-redux";
@@ -21,7 +23,9 @@ const rootElem = document.querySelector(".root");
 const renderRoot = () => {
   const editor = (
     <Provider store={store}>
-      <EditorPage />
+      <DragDropContextProvider backend={HTML5Backend}>
+        <EditorPage />
+      </DragDropContextProvider>
     </Provider>
   );
   ReactDOM.render(
