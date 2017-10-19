@@ -68,7 +68,7 @@ class WireLayer extends React.PureComponent<Props> {
       return (
         <Wire
           srcPos={srcPos}
-          dstPos={dstPos}
+          tgtPos={dstPos}
           key={`${source}@${srcIndex}-${target}@${tgtIndex}`}
         />
       );
