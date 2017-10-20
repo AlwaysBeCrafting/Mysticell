@@ -9,7 +9,12 @@ import { Dispatch } from "redux";
 
 import { Dict } from "common/types";
 
-import { GraphView, NavView, SheetWrapper } from "components/organisms";
+import {
+  AppDragLayer,
+  GraphView,
+  NavView,
+  SheetWrapper,
+} from "components/organisms";
 
 import { Action, AppState } from "data/AppState";
 import { Nav, pathToNodePrototype } from "data/Nav";
@@ -38,6 +43,7 @@ class ProtoEditor extends React.PureComponent<Props> {
       <Router>
         <main className="editor">
           <div className="editor-document">
+            <AppDragLayer />
             <Route exact path="/:path*" render={this.renderNavView} />
             <Route exact path="/" render={this.renderSheetView} />
             <Route exact path="/:path+" render={this.renderGraphView} />

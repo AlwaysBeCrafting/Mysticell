@@ -10,4 +10,9 @@ interface Size2d {
   height: number;
 }
 
-export { Rect2d, Size2d };
+interface Position2d {
+  x: number;
+  y: number;
+}
+
+export { Position2d, Rect2d, Size2d };
