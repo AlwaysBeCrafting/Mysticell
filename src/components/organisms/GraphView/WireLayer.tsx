@@ -38,7 +38,7 @@ class WireLayer extends React.PureComponent<Props> {
       const offset =
         tgtNode && !isBoundaryNode(tgtNode)
           ? (PRIMITIVES[tgtNode.prototype] || nodePrototypes[tgtNode.prototype])
-              .inputNames.length
+              .outputNames.length
           : 0;
       const dstPos = targetPinPosition(
         layout,
