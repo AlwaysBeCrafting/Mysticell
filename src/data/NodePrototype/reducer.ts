@@ -32,10 +32,10 @@ const reducer = (state: Dict<NodePrototype> = {}, action: Action) => {
       }
       const newLayout = {
         ...newPrototype.layout,
-        [nodeId]: [
-          newPrototype.layout[nodeId][0] + dX,
-          newPrototype.layout[nodeId][1] + dY,
-        ] as [number, number],
+        [nodeId]: {
+          x: newPrototype.layout[nodeId].x + dX,
+          y: newPrototype.layout[nodeId].y + dY,
+        },
       };
       newPrototype.layout = newLayout;
       return {

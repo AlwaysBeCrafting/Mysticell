@@ -1,4 +1,4 @@
-import { Dict } from "common/types";
+import { Dict, Position2d } from "common/types";
 
 import { ParamFunction } from "data/common";
 import { Graph } from "data/Graph";
@@ -13,7 +13,7 @@ interface PrimitiveNodePrototype extends NodePrototype {
   evaluate: ParamFunction;
 }
 interface GraphNodePrototype extends NodePrototype {
-  layout: Dict<[number, number]>;
+  layout: Dict<Position2d>;
   graph: Graph;
 }
 interface FunctionNodePrototype extends GraphNodePrototype {}

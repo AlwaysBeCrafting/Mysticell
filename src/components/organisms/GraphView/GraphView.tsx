@@ -15,6 +15,7 @@ import { Icon, ToolButton } from "components/atoms";
 import { ErrorBoundary, Toolbar } from "components/molecules";
 
 import { AppState } from "data/AppState";
+import { NodeInfo } from "data/common";
 import {
   changePropertyInputValueAsync,
   GraphNodePrototype,
@@ -132,10 +133,10 @@ const renderGrid = (
 
 const dropSpec: DropTargetSpec<StoreProps> = {
   drop: (props, monitor) => {
-    const item = monitor!.getItem() as any;
+    const item = monitor!.getItem() as NodeInfo;
     const dX = Math.round(monitor!.getDifferenceFromInitialOffset().x / 40);
     const dY = Math.round(monitor!.getDifferenceFromInitialOffset().y / 40);
-    props.moveNodeRelative(props.prototype.id, item.nodeId, dX, dY);
+    props.moveNodeRelative(item.parentId, item.id, dX, dY);
   },
 };
 const dropCollect: DropTargetCollector = connect => ({

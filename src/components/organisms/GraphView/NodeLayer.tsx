@@ -7,7 +7,7 @@ import { Dict } from "common/types";
 
 import { NodeView } from "components/molecules";
 
-import { PRIMITIVES } from "data/common";
+import { getNodeInfo } from "data/common";
 import { isBoundaryNode } from "data/Graph";
 import { GraphNodePrototype, NodePrototype } from "data/NodePrototype";
 
@@ -46,41 +46,26 @@ class PartialNodeLayer extends React.PureComponent<Props> {
       );
     }
 
-    const position = prototype.layout[nodeId] || [0, 0];
-    const childPrototype =
-      nodePrototypes[node.prototype] || PRIMITIVES[node.prototype];
+    const position = prototype.layout[nodeId] || { x: 0, y: 0 };
 
     return (
       <NodeView
         key={node.id}
-        node={node}
+        nodeInfo={getNodeInfo(nodePrototypes, prototype, node)}
         position={position}
-        prototype={childPrototype}
-        isInputConnected={this.isInputConnected}
         onUserValueChange={this.onUserValueChange}
       />
     );
   };
 
-  private isInputConnected = (nodeId: string, index: number) => {
-    const { graph } = this.props.prototype;
-    for (const node of Object.values(graph)) {
-      for (const edge of node.edges) {
-        if (edge.target === nodeId && edge.data[1] === index) {
-          return true;
-        }
-      }
-    }
-    return false;
-  };
-
   private onUserValueChange = (
+    prototypeId: string,
     nodeId: string,
     index: number,
     value: string,
   ) => {
     // tslint:disable-next-line:no-console
-    console.log(nodeId, index, value);
+    console.log(prototypeId, nodeId, index, value);
   };
 }
 

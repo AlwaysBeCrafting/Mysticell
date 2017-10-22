@@ -1,27 +1,26 @@
-import { Dict } from "common/types";
+import { Dict, Position2d } from "common/types";
 
-type Layout = Dict<[number, number]>;
+type Layout = Dict<Position2d>;
 
 const graphLayoutWidth = (layout: Layout) =>
-  Object.keys(layout)
-    .map(key => layout[key])
-    .reduce((max, current) => Math.max(current[0], max), 2) + 6;
+  Object.values(layout).reduce((max, current) => Math.max(current.x, max), 2) +
+  6;
 
 const nodeHeaderRows = 1;
 const panelHeaderRows = 2;
 const nodeWidth = 4;
 
 const sourcePinPosition = (layout: Layout, srcId: string, srcIndex: number) => {
-  const srcPos: [number, number] = [0, 0];
+  const srcPos: Position2d = { x: 0, y: 0 };
   if (srcId === "input") {
-    srcPos[1] += panelHeaderRows;
+    srcPos.y += panelHeaderRows;
   } else {
-    srcPos[0] += layout[srcId][0];
-    srcPos[1] += layout[srcId][1];
-    srcPos[0] += nodeWidth;
-    srcPos[1] += nodeHeaderRows;
+    srcPos.x += layout[srcId].x;
+    srcPos.y += layout[srcId].y;
+    srcPos.x += nodeWidth;
+    srcPos.y += nodeHeaderRows;
   }
-  srcPos[1] += srcIndex;
+  srcPos.y += srcIndex;
   return srcPos;
 };
 
@@ -31,17 +30,17 @@ const targetPinPosition = (
   tgtId: string,
   tgtIndex: number,
 ) => {
-  const tgtPos: [number, number] = [0, 0];
+  const tgtPos: Position2d = { x: 0, y: 0 };
   if (tgtId === "output") {
-    tgtPos[0] = graphLayoutWidth(layout);
-    tgtPos[1] += panelHeaderRows;
+    tgtPos.x = graphLayoutWidth(layout);
+    tgtPos.y += panelHeaderRows;
   } else {
-    tgtPos[0] = layout[tgtId][0];
-    tgtPos[1] = layout[tgtId][1];
-    tgtPos[1] += nodeHeaderRows;
-    tgtPos[1] += offset;
+    tgtPos.x = layout[tgtId].x;
+    tgtPos.y = layout[tgtId].y;
+    tgtPos.y += nodeHeaderRows;
+    tgtPos.y += offset;
   }
-  tgtPos[1] += tgtIndex;
+  tgtPos.y += tgtIndex;
   return tgtPos;
 };
 

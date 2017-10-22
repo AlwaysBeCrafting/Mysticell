@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import React from "react";
 import {
   ConnectDragPreview,
@@ -8,22 +9,25 @@ import {
 } from "react-dnd";
 import { getEmptyImage } from "react-dnd-html5-backend";
 
-import { DndTypes } from "common/types";
+import { DndTypes, Position2d } from "common/types";
 
 import { Pin } from "components/atoms";
 
-import { InnerNode } from "data/Graph";
-import { NodePrototype } from "data/NodePrototype";
+import { NodeInfo } from "data/common";
 
 import "./NodeView.scss";
 
 interface OwnProps {
-  node: InnerNode;
-  prototype: NodePrototype;
+  className?: string;
   style?: React.CSSProperties;
-  position: [number, number];
-  isInputConnected: (nodeId: string, index: number) => boolean;
-  onUserValueChange: (nodeId: string, index: number, value: string) => void;
+  position: Position2d;
+  nodeInfo: NodeInfo;
+  onUserValueChange?: (
+    prototypeId: string,
+    nodeId: string,
+    index: number,
+    newValue: string,
+  ) => void;
 }
 interface DragProps {
   connectDrag: ConnectDragSource;
@@ -36,41 +40,38 @@ class PartialNodeView extends React.PureComponent<Props> {
   }
 
   public render() {
-    const {
-      connectDrag,
-      isInputConnected,
-      node,
-      position,
-      prototype,
-    } = this.props;
-    const name = node.label || prototype.name;
-    const pinRowCount =
-      prototype.inputNames.length + prototype.outputNames.length;
-    const style = this.props.style || {
-      gridRow: `${position[1] + 1} / span ${pinRowCount + 1}`,
-      gridColumn: `${position[0] + 1} / span 4`,
+    const { style, position, connectDrag, nodeInfo, className } = this.props;
+    const { label, inputs, outputs } = nodeInfo;
+    const pinCount = inputs.length + outputs.length;
+    const positionedStyle = {
+      gridRow: `${position.y + 1} / span ${pinCount + 1}`,
+      gridColumn: `${position.x + 1} / span 4`,
+      ...style,
     };
     return connectDrag(
-      <div className="nodeView" style={style}>
+      <div
+        className={classNames("nodeView", className)}
+        style={positionedStyle}
+      >
         <header className="nodeView-headerRow nodeView-row">
-          <span className="nodeView-headerRow-name">{name}</span>
+          <span className="nodeView-headerRow-name">{label}</span>
         </header>
-        {prototype.outputNames.map((outputName, index) => (
+        {outputs.map((output, index) => (
           <Pin
             source
-            key={outputName}
-            name={outputName}
+            key={output.name}
+            name={output.name}
             takesInput={false}
             index={index}
           />
         ))}
-        {prototype.inputNames.map((inputName, index) => (
+        {inputs.map((input, index) => (
           <Pin
             target
-            key={inputName}
-            name={inputName}
-            takesInput={!isInputConnected(node.id, index)}
-            userValue={node.constants[index]}
+            key={input.name}
+            name={input.name}
+            takesInput={!input.isConnected}
+            userValue={input.value}
             index={index}
             onChange={this.onUserValueChange}
           />
@@ -80,12 +81,16 @@ class PartialNodeView extends React.PureComponent<Props> {
   }
 
   private onUserValueChange = (index: number, value: string) => {
-    this.props.onUserValueChange(this.props.node.id, index, value);
+    const { onUserValueChange } = this.props;
+    if (onUserValueChange) {
+      const { id, parentId } = this.props.nodeInfo;
+      onUserValueChange(parentId, id, index, value);
+    }
   };
 }
 
 const dragSpec: DragSourceSpec<OwnProps> = {
-  beginDrag: props => ({ nodeId: props.node.id }),
+  beginDrag: props => props.nodeInfo,
 };
 const dragCollect: DragSourceCollector = connect => ({
   connectDrag: connect.dragSource(),
