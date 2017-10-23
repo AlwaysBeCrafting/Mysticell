@@ -80,6 +80,7 @@ class PartialNodeView extends React.PureComponent<Props> {
             key={input.name}
             name={input.name}
             takesInput={!input.isConnected}
+            canConnect={input.canConnect}
             userValue={input.value}
             index={index}
             onChange={this.onUserValueChange}

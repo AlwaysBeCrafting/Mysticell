@@ -4,7 +4,7 @@ import { Position2d } from "common/types";
 
 import { NodeView } from "components/molecules";
 
-import { NodeInfo } from "data/common";
+import { getPrototypeNodeInfo, NodeInfo } from "data/common";
 import { NodePrototype } from "data/NodePrototype";
 
 import { DragItem } from "./DragItem";
@@ -20,10 +20,10 @@ interface State {
 
 class NodePrototypeDragItem extends DragItem<Props, State> {
   public componentWillMount() {
-    this.setState({ nodeInfo: generateNodeInfo(this.props.prototype) });
+    this.setState({ nodeInfo: getPrototypeNodeInfo(this.props.prototype) });
   }
   public componentWillReceiveProps(nextProps: Props) {
-    this.setState({ nodeInfo: generateNodeInfo(nextProps.prototype) });
+    this.setState({ nodeInfo: getPrototypeNodeInfo(nextProps.prototype) });
   }
 
   public render() {
@@ -41,17 +41,5 @@ class NodePrototypeDragItem extends DragItem<Props, State> {
     );
   }
 }
-
-const generateNodeInfo = (prototype: NodePrototype): NodeInfo => ({
-  id: "node.drag",
-  label: prototype.name,
-  parentId: prototype.id,
-  inputs: prototype.inputNames.map(inputName => ({
-    name: inputName,
-    value: "",
-    isConnected: false,
-  })),
-  outputs: prototype.outputNames.map(outputName => ({ name: outputName })),
-});
 
 export { NodePrototypeDragItem };

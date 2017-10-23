@@ -2,12 +2,17 @@ import { Dict } from "common/types";
 
 import { PRIMITIVES } from "data/common";
 import { InnerNode } from "data/Graph";
-import { GraphNodePrototype, NodePrototype } from "data/NodePrototype";
+import {
+  GraphNodePrototype,
+  isProperty,
+  NodePrototype,
+} from "data/NodePrototype";
 
 interface InputInfo {
   readonly name: string;
   readonly value: string;
   readonly isConnected: boolean;
+  readonly canConnect: boolean;
 }
 
 interface OutputInfo {
@@ -43,10 +48,28 @@ const getNodeInfo = (
           }
         }
       }
-      return { name, value: node.constants[index], isConnected };
+      return {
+        name,
+        value: node.constants[index],
+        isConnected,
+        canConnect: !isProperty(prototype),
+      };
     }),
     outputs: prototype.outputNames.map(name => ({ name })),
   };
 };
 
-export { NodeInfo, getNodeInfo };
+const getPrototypeNodeInfo = (prototype: NodePrototype): NodeInfo => ({
+  id: "node.drag",
+  label: prototype.name,
+  parentId: prototype.id,
+  inputs: prototype.inputNames.map((inputName, index) => ({
+    name: inputName,
+    value: isProperty(prototype) ? prototype.inputValues[index] : "",
+    canConnect: !isProperty(prototype),
+    isConnected: false,
+  })),
+  outputs: prototype.outputNames.map(outputName => ({ name: outputName })),
+});
+
+export { NodeInfo, getNodeInfo, getPrototypeNodeInfo };

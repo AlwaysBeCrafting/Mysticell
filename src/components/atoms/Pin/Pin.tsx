@@ -9,6 +9,7 @@ interface CommonProps {
   name: string;
   className?: string;
   takesInput?: boolean;
+  canConnect?: boolean;
   userValue?: string;
   onChange?: (index: number, value: string) => void;
   index: number;
@@ -29,14 +30,16 @@ type Props = SrcProps | DstProps;
 
 class Pin extends React.PureComponent<Props> {
   public render() {
-    const { className, name, source, target } = this.props;
+    const { className, name, source, target, canConnect } = this.props;
     const classMod = {
       "mod-source": source,
       "mod-target": target,
     };
     return (
       <div className={classNames("pin", className, classMod)} key={name}>
-        <div className={classNames("pin-dot", classMod)} />
+        {(typeof canConnect === "undefined" || canConnect) && (
+          <div className={classNames("pin-dot", classMod)} />
+        )}
         <label className={classNames("pin-label", classMod)}>{name}</label>
         {this.renderInputValue(classNames("pin-value", classMod))}
         {this.renderReadOnlyValue(classNames("pin-value", classMod))}
