@@ -32,6 +32,7 @@ interface OwnProps {
 interface DragProps {
   connectDrag: ConnectDragSource;
   connectPreview: ConnectDragPreview;
+  isDragging: boolean;
 }
 type Props = OwnProps & DragProps;
 class PartialNodeView extends React.PureComponent<Props> {
@@ -40,13 +41,21 @@ class PartialNodeView extends React.PureComponent<Props> {
   }
 
   public render() {
-    const { style, position, connectDrag, nodeInfo, className } = this.props;
+    const {
+      className,
+      style,
+      position,
+      nodeInfo,
+      connectDrag,
+      isDragging,
+    } = this.props;
     const { label, inputs, outputs } = nodeInfo;
     const pinCount = inputs.length + outputs.length;
     const positionedStyle = {
       gridRow: `${position.y + 1} / span ${pinCount + 1}`,
       gridColumn: `${position.x + 1} / span 4`,
       ...style,
+      opacity: isDragging ? 0.6 : 1,
     };
     return connectDrag(
       <div
@@ -92,9 +101,10 @@ class PartialNodeView extends React.PureComponent<Props> {
 const dragSpec: DragSourceSpec<OwnProps> = {
   beginDrag: props => props.nodeInfo,
 };
-const dragCollect: DragSourceCollector = connect => ({
+const dragCollect: DragSourceCollector = (connect, monitor) => ({
   connectDrag: connect.dragSource(),
   connectPreview: connect.dragPreview(),
+  isDragging: monitor.isDragging(),
 });
 const NodeView = DragSource(DndTypes.NODE, dragSpec, dragCollect)(
   PartialNodeView,
