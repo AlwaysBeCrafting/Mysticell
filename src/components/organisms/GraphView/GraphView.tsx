@@ -133,18 +133,31 @@ const renderGrid = (
 
 const dropSpec: DropTargetSpec<StoreProps> = {
   drop: (props, monitor) => {
-    const item = monitor!.getItem() as NodeInfo;
-    const dX = Math.round(monitor!.getDifferenceFromInitialOffset().x / 40);
-    const dY = Math.round(monitor!.getDifferenceFromInitialOffset().y / 40);
-    props.moveNodeRelative(item.parentId, item.id, dX, dY);
+    switch (monitor!.getItemType()) {
+      case DndTypes.NODE: {
+        const item = monitor!.getItem() as NodeInfo;
+        const dX = Math.round(monitor!.getDifferenceFromInitialOffset().x / 40);
+        const dY = Math.round(monitor!.getDifferenceFromInitialOffset().y / 40);
+        props.moveNodeRelative(item.parentId, item.id, dX, dY);
+        break;
+      }
+      case DndTypes.NODE_PROTOTYPE: {
+        const item = monitor!.getItem() as NodePrototype;
+        // tslint:disable-next-line:no-console
+        console.log(`Add ${item.name} to graph`);
+        break;
+      }
+    }
   },
 };
 const dropCollect: DropTargetCollector = connect => ({
   connectDrop: connect.dropTarget(),
 });
-const DropGraphView = DropTarget(DndTypes.NODE, dropSpec, dropCollect)(
-  PartialGraphView,
-);
+const DropGraphView = DropTarget(
+  [DndTypes.NODE, DndTypes.NODE_PROTOTYPE],
+  dropSpec,
+  dropCollect,
+)(PartialGraphView);
 
 const GraphView = connectStore<StateProps, DispatchProps, OwnProps>(
   (state: AppState) => ({
