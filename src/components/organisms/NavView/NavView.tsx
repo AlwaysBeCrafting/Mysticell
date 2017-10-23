@@ -1,27 +1,21 @@
 import classnames from "classnames";
 import React from "react";
-import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { connect as reduxConnect } from "react-redux";
 import { Dispatch } from "redux";
 
 import { Dict, isBranch } from "common/types";
 import { collapse } from "common/utils";
 
-import { Icon } from "components/atoms";
 import { TreeView } from "components/molecules";
 
 import { Action } from "data/AppState";
 import { Nav } from "data/Nav";
-import { isProperty, NodePrototype } from "data/NodePrototype";
+import { NodePrototype } from "data/NodePrototype";
 import { toggleNavItem } from "data/UiState";
 
-import functionIcon from "./assets/icon-function.svg";
-import propertyIcon from "./assets/icon-property.svg";
+import { DirItemView } from "components/organisms/NavView/DirItemView";
+import { EndItemView } from "components/organisms/NavView/EndItemView";
 import "./NavView.scss";
-
-interface DispatchProps {
-  dispatch: Dispatch<Action>;
-}
 
 interface OwnProps {
   className?: string;
@@ -31,7 +25,11 @@ interface OwnProps {
   selectedNavItem: string;
 }
 
-type Props = DispatchProps & OwnProps;
+interface DispatchProps {
+  dispatch: Dispatch<Action>;
+}
+
+type Props = OwnProps & DispatchProps;
 
 const getItemKey = (tree: Nav) => tree.value;
 
@@ -65,14 +63,25 @@ class ProtoNavView extends React.PureComponent<Props> {
   }
 
   private renderItem = (tree: Nav, path: string[]) =>
-    isBranch(tree)
-      ? this.renderDirItem(tree.value, path)
-      : this.renderEndItem(
-          this.props.nodePrototypes[tree.value],
-          path,
+    isBranch(tree) ? (
+      <DirItemView
+        name={tree.value}
+        path={path}
+        expanded={this.props.expandedNavItems.has(
+          `${path.join("/")}/${tree.value}`,
+        )}
+        onClick={this.toggleBranchItemExpanded}
+      />
+    ) : (
+      <EndItemView
+        path={path}
+        prototype={this.props.nodePrototypes[tree.value]}
+        selected={
           this.props.selectedNavItem ===
-            `${path.join("/")}/${this.props.nodePrototypes[tree.value].name}`,
-        );
+          `${path.join("/")}/${this.props.nodePrototypes[tree.value].name}`
+        }
+      />
+    );
 
   private collapseNav = (props: Props): Nav =>
     collapse(
@@ -82,54 +91,12 @@ class ProtoNavView extends React.PureComponent<Props> {
         props.expandedNavItems.has(`${path.join("/")}/${branch.value}`),
     );
 
-  private toggleBranchItemExpanded = (
-    event: React.MouseEvent<HTMLDivElement>,
-  ) => {
-    const path = event.currentTarget.getAttribute("data-path");
-    const name = event.currentTarget.getAttribute("data-name");
-    this.props.dispatch(toggleNavItem(`${path}/${name}`));
+  private toggleBranchItemExpanded = (path: string) => {
+    this.props.dispatch(toggleNavItem(path));
   };
-
-  private renderDirItem = (name: string, path: string[]) => (
-    <div
-      className="navView-item"
-      data-path={path.join("/")}
-      data-name={name}
-      onClick={this.toggleBranchItemExpanded}
-    >
-      <Icon
-        className={classnames("navView-item-icon", "mod-dropdown", {
-          "is-expanded": this.props.expandedNavItems.has(
-            `${path.join("/")}/${name}`,
-          ),
-        })}
-        name="arrow_drop_down"
-      />
-      <span className="navView-item-title">{name}</span>
-    </div>
-  );
-
-  private renderEndItem = (
-    prototype: NodePrototype,
-    path: string[],
-    isSelected: boolean,
-  ) => (
-    <Link
-      className={classnames("navView-item", { "is-selected": isSelected })}
-      to={`/${path.slice(1).join("/")}/${prototype.name}`}
-    >
-      <Icon
-        className={classnames("navView-item-icon", {
-          "is-selected": isSelected,
-        })}
-        src={isProperty(prototype) ? propertyIcon : functionIcon}
-      />
-      <div className="navView-item-title">{prototype.name}</div>
-    </Link>
-  );
 }
 
-const NavView = connect<{}, DispatchProps, OwnProps>(
+const NavView = reduxConnect<{}, DispatchProps, OwnProps>(
   () => ({}),
   (dispatch: Dispatch<Action>) => ({ dispatch }),
 )(ProtoNavView);
