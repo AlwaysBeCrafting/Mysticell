@@ -28,6 +28,13 @@ interface OwnProps {
     index: number,
     newValue: string,
   ) => void;
+  onConnect?: (
+    prototypeId: string,
+    fromId: string,
+    fromIndex: number,
+    toId: string,
+    toIndex: number,
+  ) => void;
 }
 interface DragProps {
   connectDrag: ConnectDragSource;
@@ -67,23 +74,27 @@ class PartialNodeView extends React.PureComponent<Props> {
         </header>
         {outputs.map((output, index) => (
           <Pin
+            nodeId={nodeInfo.id}
             source
             key={output.name}
             name={output.name}
             takesInput={false}
             index={index}
+            onConnect={this.onConnect}
           />
         ))}
         {inputs.map((input, index) => (
           <Pin
+            nodeId={nodeInfo.id}
             target
             key={input.name}
             name={input.name}
             takesInput={!input.isConnected}
-            canConnect={input.canConnect}
+            hasPin={input.canConnect}
             userValue={input.value}
             index={index}
             onChange={this.onUserValueChange}
+            onConnect={this.onConnect}
           />
         ))}
       </div>,
@@ -95,6 +106,18 @@ class PartialNodeView extends React.PureComponent<Props> {
     if (onUserValueChange) {
       const { id, parentId } = this.props.nodeInfo;
       onUserValueChange(parentId, id, index, value);
+    }
+  };
+
+  private onConnect = (
+    fromId: string,
+    fromIndex: number,
+    toId: string,
+    toIndex: number,
+  ) => {
+    const { onConnect } = this.props;
+    if (onConnect) {
+      onConnect(this.props.nodeInfo.parentId, fromId, fromIndex, toId, toIndex);
     }
   };
 }

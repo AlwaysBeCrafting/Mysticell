@@ -9,7 +9,11 @@ import { NodeView } from "components/molecules";
 
 import { getNodeInfo } from "data/common";
 import { isBoundaryNode } from "data/Graph";
-import { GraphNodePrototype, NodePrototype } from "data/NodePrototype";
+import {
+  connectNodes,
+  GraphNodePrototype,
+  NodePrototype,
+} from "data/NodePrototype";
 
 import "./NodeLayer.scss";
 
@@ -54,6 +58,7 @@ class PartialNodeLayer extends React.PureComponent<Props> {
         nodeInfo={getNodeInfo(nodePrototypes, prototype, node)}
         position={position}
         onUserValueChange={this.onUserValueChange}
+        onConnect={this.onConnect}
       />
     );
   };
@@ -66,6 +71,18 @@ class PartialNodeLayer extends React.PureComponent<Props> {
   ) => {
     // tslint:disable-next-line:no-console
     console.log(prototypeId, nodeId, index, value);
+  };
+
+  private onConnect = (
+    prototypeId: string,
+    fromId: string,
+    fromIndex: number,
+    toId: string,
+    toIndex: number,
+  ) => {
+    this.props.dispatch(
+      connectNodes(prototypeId, fromId, fromIndex, toId, toIndex),
+    );
   };
 }
 

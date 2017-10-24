@@ -10,11 +10,13 @@ import "./AppDragLayer.scss";
 
 import { NodeDragItem } from "./items/NodeDragItem";
 import { NodePrototypeDragItem } from "./items/NodePrototypeDragItem";
+import { WireDragItem } from "./items/WireDragItem";
 
 interface OwnProps {}
 interface CommonLayerProps {
-  initialOffset: Position2d;
-  currentOffset: Position2d;
+  initialClientOffset: Position2d;
+  clientOffset: Position2d;
+  sourceClientOffset: Position2d;
 }
 interface NodeLayerProps extends CommonLayerProps {
   itemType: DndTypes.NODE;
@@ -24,7 +26,11 @@ interface NodePrototypeLayerProps extends CommonLayerProps {
   itemType: DndTypes.NODE_PROTOTYPE;
   item: NodePrototype;
 }
-type LayerProps = NodeLayerProps | NodePrototypeLayerProps;
+interface WireLayerProps extends CommonLayerProps {
+  itemType: DndTypes.WIRE_START | DndTypes.WIRE_END;
+  item: { nodeId: string };
+}
+type LayerProps = NodeLayerProps | NodePrototypeLayerProps | WireLayerProps;
 type Props = OwnProps & LayerProps;
 
 class PartialDragLayer extends React.PureComponent<Props> {
@@ -33,18 +39,40 @@ class PartialDragLayer extends React.PureComponent<Props> {
   }
 
   private renderDragItem() {
-    const { currentOffset } = this.props;
+    const {
+      initialClientOffset,
+      sourceClientOffset,
+      clientOffset,
+    } = this.props;
     switch (this.props.itemType) {
       case DndTypes.NODE: {
         const { item } = this.props;
-        return <NodeDragItem nodeInfo={item} currentOffset={currentOffset} />;
+        return (
+          <NodeDragItem nodeInfo={item} currentOffset={sourceClientOffset} />
+        );
       }
       case DndTypes.NODE_PROTOTYPE: {
         const { item } = this.props;
         return (
           <NodePrototypeDragItem
             prototype={item}
-            currentOffset={currentOffset}
+            currentOffset={sourceClientOffset}
+          />
+        );
+      }
+      case DndTypes.WIRE_START: {
+        return (
+          <WireDragItem
+            end={initialClientOffset}
+            currentOffset={clientOffset}
+          />
+        );
+      }
+      case DndTypes.WIRE_END: {
+        return (
+          <WireDragItem
+            start={initialClientOffset}
+            currentOffset={clientOffset}
           />
         );
       }
@@ -58,8 +86,9 @@ class PartialDragLayer extends React.PureComponent<Props> {
 const collectLayer: DragLayerCollector = monitor => ({
   itemType: monitor.getItemType(),
   item: monitor.getItem(),
-  initialOffset: monitor.getInitialClientOffset(),
-  currentOffset: monitor.getSourceClientOffset(),
+  initialClientOffset: monitor.getInitialClientOffset(),
+  clientOffset: monitor.getClientOffset(),
+  sourceClientOffset: monitor.getSourceClientOffset(),
 });
 const AppDragLayer = DragLayer<OwnProps>(collectLayer)(PartialDragLayer);
 

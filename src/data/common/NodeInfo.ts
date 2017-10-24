@@ -1,4 +1,4 @@
-import { Dict } from "common/types";
+import { Dict, Position2d } from "common/types";
 
 import { PRIMITIVES } from "data/common";
 import { InnerNode } from "data/Graph";
@@ -25,6 +25,7 @@ interface NodeInfo {
   readonly parentId: string;
   readonly inputs: InputInfo[];
   readonly outputs: OutputInfo[];
+  readonly position: Position2d;
 }
 
 const getNodeInfo = (
@@ -56,10 +57,11 @@ const getNodeInfo = (
       };
     }),
     outputs: prototype.outputNames.map(name => ({ name })),
+    position: parentGraph.layout[node.id] || { x: 0, y: 0 },
   };
 };
 
-const getPrototypeNodeInfo = (prototype: NodePrototype): NodeInfo => ({
+const makePrototypeNodeInfo = (prototype: NodePrototype): NodeInfo => ({
   id: "node.drag",
   label: prototype.name,
   parentId: prototype.id,
@@ -70,6 +72,7 @@ const getPrototypeNodeInfo = (prototype: NodePrototype): NodeInfo => ({
     isConnected: false,
   })),
   outputs: prototype.outputNames.map(outputName => ({ name: outputName })),
+  position: { x: 0, y: 0 },
 });
 
-export { NodeInfo, getNodeInfo, getPrototypeNodeInfo };
+export { NodeInfo, getNodeInfo, makePrototypeNodeInfo };

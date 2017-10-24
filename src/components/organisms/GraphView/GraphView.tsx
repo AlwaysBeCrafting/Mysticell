@@ -71,7 +71,6 @@ class PartialGraphView extends React.PureComponent<Props> {
       changePropertyInputValue,
     } = this.props;
     return (
-      // tslint:disable-next-line:no-console
       <div className={classnames("graphView", className)}>
         <Toolbar className="graphView-toolbar">
           <ToolButton link to="/">

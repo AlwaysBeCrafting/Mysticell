@@ -1,6 +1,8 @@
 const enum DndTypes {
-  NODE = "node",
-  NODE_PROTOTYPE = "node prototype",
+  NODE = "NODE",
+  NODE_PROTOTYPE = "NODE_PROTOTYPE",
+  WIRE_START = "WIRE_START",
+  WIRE_END = "WIRE_END",
 }
 
 export { DndTypes };

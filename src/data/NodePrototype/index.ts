@@ -1,5 +1,5 @@
 export { Action } from "./actions";
-export { placeNode, addNode } from "./actions";
+export { addNode, placeNode, connectNodes } from "./actions";
 export { changePropertyInputValueAsync } from "./actions";
 export { epic } from "./epic";
 export {
