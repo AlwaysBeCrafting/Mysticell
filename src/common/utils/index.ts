@@ -1,5 +1,6 @@
 export { patchArray } from "./array";
 export {
+  elementRelativePosition,
   graphLayoutWidth,
   sourcePinPosition,
   targetPinPosition,

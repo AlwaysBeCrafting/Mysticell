@@ -44,4 +44,17 @@ const targetPinPosition = (
   return tgtPos;
 };
 
-export { graphLayoutWidth, sourcePinPosition, targetPinPosition };
+const elementRelativePosition = (
+  element: HTMLElement,
+  absolutePosition: Position2d,
+): Position2d => ({
+  x: absolutePosition.x - element.getBoundingClientRect().left,
+  y: absolutePosition.y - element.getBoundingClientRect().top,
+});
+
+export {
+  elementRelativePosition,
+  graphLayoutWidth,
+  sourcePinPosition,
+  targetPinPosition,
+};

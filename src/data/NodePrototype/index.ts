@@ -1,5 +1,5 @@
 export { Action } from "./actions";
-export { moveNodeRelative } from "./actions";
+export { placeNode, addNode } from "./actions";
 export { changePropertyInputValueAsync } from "./actions";
 export { epic } from "./epic";
 export {
@@ -12,3 +12,4 @@ export {
 } from "./model";
 export { isPrimitive, isGraph, isFunction, isProperty, isTable } from "./model";
 export { reducer } from "./reducer";
+export { generateGraphNode } from "./utils";

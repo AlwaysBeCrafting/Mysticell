@@ -1,14 +1,19 @@
+import { Position2d } from "common/types";
+
 import { TypedAction } from "data/common";
+import { InnerNode } from "data/Graph";
 
 const enum ActionTypes {
   CHANGE_PROPERTY_INPUT_VALUE = "[Property] Change input value",
-  MOVE_NODE_RELATIVE = "[Graph] Move node (relative)",
+  PLACE_NODE = "[Graph] Place node",
+  ADD_NODE = "[Graph] Add node",
 
   CHANGE_PROPERTY_INPUT_VALUE_ASYNC = "[Property/Async] Change input value",
 }
 type Action =
   | SetPropertyInputValueAction
-  | MoveNodeRelativeAction
+  | PlaceNodeAction
+  | AddNodeAction
   //
   | SetPropertyInputValueAsyncAction;
 
@@ -24,18 +29,25 @@ const setPropertyInputValue = (
   type: ActionTypes.CHANGE_PROPERTY_INPUT_VALUE,
   payload: { propertyId, index, value },
 });
-interface MoveNodeRelativeAction
-  extends TypedAction<ActionTypes.MOVE_NODE_RELATIVE> {
-  payload: { prototypeId: string; nodeId: string; dX: number; dY: number };
+
+interface AddNodeAction extends TypedAction<ActionTypes.ADD_NODE> {
+  payload: { prototypeId: string; node: InnerNode };
 }
-const moveNodeRelative = (
+const addNode = (prototypeId: string, node: InnerNode) => ({
+  type: ActionTypes.ADD_NODE,
+  payload: { prototypeId, node },
+});
+
+interface PlaceNodeAction extends TypedAction<ActionTypes.PLACE_NODE> {
+  payload: { prototypeId: string; nodeId: string; newPosition: Position2d };
+}
+const placeNode = (
   prototypeId: string,
   nodeId: string,
-  dX: number,
-  dY: number,
+  newPosition: Position2d,
 ): Action => ({
-  type: ActionTypes.MOVE_NODE_RELATIVE,
-  payload: { prototypeId, nodeId, dX, dY },
+  type: ActionTypes.PLACE_NODE,
+  payload: { prototypeId, nodeId, newPosition },
 });
 
 interface SetPropertyInputValueAsyncAction
@@ -53,9 +65,9 @@ const changePropertyInputValueAsync = (
 
 export { Action, ActionTypes };
 export {
-  MoveNodeRelativeAction,
+  PlaceNodeAction,
   SetPropertyInputValueAction,
   SetPropertyInputValueAsyncAction,
 };
-export { setPropertyInputValue, moveNodeRelative };
+export { setPropertyInputValue, placeNode, addNode };
 export { changePropertyInputValueAsync };

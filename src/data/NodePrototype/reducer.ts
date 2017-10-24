@@ -24,18 +24,36 @@ const reducer = (state: Dict<NodePrototype> = {}, action: Action) => {
         [propertyId]: newProperty,
       };
     }
-    case ActionTypes.MOVE_NODE_RELATIVE: {
-      const { prototypeId, nodeId, dX, dY } = action.payload;
+    case ActionTypes.PLACE_NODE: {
+      const { prototypeId, nodeId, newPosition } = action.payload;
       const newPrototype = { ...state[prototypeId] };
       if (!isGraph(newPrototype)) {
         throw new Error(`Cannot change layout on non-graph ${prototypeId}`);
       }
       const newLayout = {
         ...newPrototype.layout,
-        [nodeId]: {
-          x: newPrototype.layout[nodeId].x + dX,
-          y: newPrototype.layout[nodeId].y + dY,
-        },
+        [nodeId]: newPosition,
+      };
+      newPrototype.layout = newLayout;
+      return {
+        ...state,
+        [prototypeId]: newPrototype,
+      };
+    }
+    case ActionTypes.ADD_NODE: {
+      const { prototypeId, node } = action.payload;
+      const newPrototype = { ...state[prototypeId] };
+      if (!isGraph(newPrototype)) {
+        throw new Error(`Cannot add node to non-graph ${prototypeId}`);
+      }
+      const newGraph = {
+        ...newPrototype.graph,
+        [node.id]: node,
+      };
+      newPrototype.graph = newGraph;
+      const newLayout = {
+        ...newPrototype.layout,
+        [node.id]: { x: 0, y: 0 },
       };
       newPrototype.layout = newLayout;
       return {
