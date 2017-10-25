@@ -1,16 +1,23 @@
 import classnames from "classnames";
 import React from "react";
+import {
+  ConnectDropTarget,
+  DropTarget,
+  DropTargetCollector,
+  DropTargetSpec,
+} from "react-dnd";
 import { connect as reduxConnect } from "react-redux";
 import { Dispatch } from "redux";
 
-import { Dict, isBranch } from "common/types";
+import { Dict, DndTypes, isBranch } from "common/types";
 import { collapse } from "common/utils";
 
 import { TreeView } from "components/molecules";
 
 import { Action } from "data/AppState";
+import { NodeInfo } from "data/common";
 import { Nav } from "data/Nav";
-import { NodePrototype } from "data/NodePrototype";
+import { NodePrototype, removeNode } from "data/NodePrototype";
 import { toggleNavItem } from "data/UiState";
 
 import { DirItemView } from "components/organisms/NavView/DirItemView";
@@ -29,11 +36,17 @@ interface DispatchProps {
   dispatch: Dispatch<Action>;
 }
 
-type Props = OwnProps & DispatchProps;
+type StoreProps = OwnProps & DispatchProps;
+
+interface DropProps {
+  connectDropTarget: ConnectDropTarget;
+}
+
+type Props = StoreProps & DropProps;
 
 const getItemKey = (tree: Nav) => tree.value;
 
-class ProtoNavView extends React.PureComponent<Props> {
+class PartialNavView extends React.PureComponent<Props> {
   private collapsedNav: Nav;
 
   public componentWillMount() {
@@ -51,14 +64,16 @@ class ProtoNavView extends React.PureComponent<Props> {
   }
 
   public render() {
-    const props = this.props;
-    return (
-      <TreeView
-        className={classnames("navView", props.className)}
-        tree={this.collapsedNav}
-        getKey={getItemKey}
-        renderItem={this.renderItem}
-      />
+    const { connectDropTarget, className } = this.props;
+    return connectDropTarget(
+      <div className={classnames("navView", className)}>
+        <TreeView
+          className="navView-tree"
+          tree={this.collapsedNav}
+          getKey={getItemKey}
+          renderItem={this.renderItem}
+        />
+      </div>,
     );
   }
 
@@ -96,9 +111,22 @@ class ProtoNavView extends React.PureComponent<Props> {
   };
 }
 
+const dropSpec: DropTargetSpec<StoreProps> = {
+  drop: (props, monitor) => {
+    const nodeInfo = monitor!.getItem() as NodeInfo;
+    props.dispatch(removeNode(nodeInfo.parentId, nodeInfo.id));
+  },
+};
+const dropCollect: DropTargetCollector = connect => ({
+  connectDropTarget: connect.dropTarget(),
+});
+const DropNavView = DropTarget(DndTypes.NODE, dropSpec, dropCollect)(
+  PartialNavView,
+);
+
 const NavView = reduxConnect<{}, DispatchProps, OwnProps>(
   () => ({}),
   (dispatch: Dispatch<Action>) => ({ dispatch }),
-)(ProtoNavView);
+)(DropNavView);
 
 export { NavView };

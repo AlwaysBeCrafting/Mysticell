@@ -1,6 +1,6 @@
-import { Dict } from "common/types";
+import { Dict, Position2d } from "common/types";
 
-import { Graph } from "data/Graph";
+import { Graph, isBoundaryNode } from "data/Graph";
 
 import { Action, ActionTypes } from "./actions";
 import { isGraph, isProperty, NodePrototype } from "./model";
@@ -55,6 +55,34 @@ const reducer = (state: Dict<NodePrototype> = {}, action: Action) => {
         ...newPrototype.layout,
         [node.id]: { x: 0, y: 0 },
       };
+      newPrototype.layout = newLayout;
+      return {
+        ...state,
+        [prototypeId]: newPrototype,
+      };
+    }
+    case ActionTypes.REMOVE_NODE: {
+      const { prototypeId, nodeId } = action.payload;
+      const newPrototype = { ...state[prototypeId] };
+      if (!isGraph(newPrototype)) {
+        throw new Error(`Cannot change layout on non-graph ${prototypeId}`);
+      }
+      const newGraph = Object.entries(newPrototype.graph)
+        .filter(entry => entry[0] !== nodeId)
+        .reduce((graph: Graph, entry) => {
+          const newNode = { ...entry[1] };
+          newNode.edges = newNode.edges.filter(edge => edge.target !== nodeId);
+          return { ...graph, [newNode.id]: newNode };
+        }, {});
+      const newLayout = Object.entries(
+        newPrototype.layout,
+      ).reduce((layout: Dict<Position2d>, entry) => {
+        if (entry[0] !== nodeId) {
+          layout[entry[0]] = entry[1];
+        }
+        return layout;
+      }, {});
+      newPrototype.graph = newGraph;
       newPrototype.layout = newLayout;
       return {
         ...state,

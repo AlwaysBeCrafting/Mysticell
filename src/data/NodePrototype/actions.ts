@@ -6,6 +6,7 @@ import { InnerNode } from "data/Graph";
 const enum ActionTypes {
   CHANGE_PROPERTY_INPUT_VALUE = "[Property] Change input value",
   ADD_NODE = "[Graph] Add node",
+  REMOVE_NODE = "[Graph] Remove node",
   PLACE_NODE = "[Graph] Place node",
   CONNECT_NODES = "[Graph] Connect nodes",
 
@@ -14,6 +15,7 @@ const enum ActionTypes {
 type Action =
   | SetPropertyInputValueAction
   | AddNodeAction
+  | RemoveNodeAction
   | PlaceNodeAction
   | ConnectNodesAction
   //
@@ -35,9 +37,17 @@ const setPropertyInputValue = (
 interface AddNodeAction extends TypedAction<ActionTypes.ADD_NODE> {
   payload: { prototypeId: string; node: InnerNode };
 }
-const addNode = (prototypeId: string, node: InnerNode) => ({
+const addNode = (prototypeId: string, node: InnerNode): Action => ({
   type: ActionTypes.ADD_NODE,
   payload: { prototypeId, node },
+});
+
+interface RemoveNodeAction extends TypedAction<ActionTypes.REMOVE_NODE> {
+  payload: { prototypeId: string; nodeId: string };
+}
+const removeNode = (prototypeId: string, nodeId: string): Action => ({
+  type: ActionTypes.REMOVE_NODE,
+  payload: { prototypeId, nodeId },
 });
 
 interface PlaceNodeAction extends TypedAction<ActionTypes.PLACE_NODE> {
@@ -91,5 +101,5 @@ export {
   SetPropertyInputValueAction,
   SetPropertyInputValueAsyncAction,
 };
-export { setPropertyInputValue, addNode, placeNode, connectNodes };
+export { setPropertyInputValue, addNode, removeNode, placeNode, connectNodes };
 export { changePropertyInputValueAsync };
