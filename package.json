@@ -52,7 +52,9 @@
   },
   "dependencies": {
     "@types/react-dnd-html5-backend": "^2.1.8",
+    "@types/redux-immutable": "^3.0.37",
     "classnames": "^2.2.5",
+    "immutable": "4.0.0-rc.9",
     "react": "^16.0.0",
     "react-dnd": "^2.5.4",
     "react-dnd-html5-backend": "^2.5.4",
@@ -61,6 +63,7 @@
     "react-router-dom": "^4.2.2",
     "redux": "^3.7.2",
     "redux-devtools-extension": "^2.13.2",
+    "redux-immutable": "^4.0.0",
     "redux-observable": "^0.16.0",
     "rxjs": "^5.4.3",
     "shortid": "^2.2.8"
