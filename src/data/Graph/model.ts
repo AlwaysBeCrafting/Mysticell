@@ -16,7 +16,7 @@ interface BoundaryNode extends CommonNodeProperties {
 
 interface InnerNode extends CommonNodeProperties {
   prototype: string;
-  label: string;
+  label?: string;
   constants: string[];
 }
 

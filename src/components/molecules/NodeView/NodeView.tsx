@@ -1,63 +1,137 @@
+import classNames from "classnames";
 import React from "react";
+import {
+  ConnectDragPreview,
+  ConnectDragSource,
+  DragSource,
+  DragSourceCollector,
+  DragSourceSpec,
+} from "react-dnd";
+import { getEmptyImage } from "react-dnd-html5-backend";
 
-import { Card, Pin } from "components/atoms";
+import { DndTypes, Position2d } from "common/types";
 
-import { InnerNode } from "data/Graph";
-import { NodePrototype } from "data/NodePrototype";
+import { Pin } from "components/atoms";
+
+import { NodeInfo } from "data/common";
 
 import "./NodeView.scss";
 
-interface Props {
-  node: InnerNode;
-  prototype: NodePrototype;
-  position: [number, number];
-  isInputConnected: (nodeId: string, index: number) => boolean;
-  onUserValueChange: (nodeId: string, index: number, value: string) => void;
+interface OwnProps {
+  className?: string;
+  style?: React.CSSProperties;
+  position: Position2d;
+  nodeInfo: NodeInfo;
+  onUserValueChange?: (
+    prototypeId: string,
+    nodeId: string,
+    index: number,
+    newValue: string,
+  ) => void;
+  onConnect?: (
+    prototypeId: string,
+    fromId: string,
+    fromIndex: number,
+    toId: string,
+    toIndex: number,
+  ) => void;
 }
+interface DragProps {
+  connectDrag: ConnectDragSource;
+  connectPreview: ConnectDragPreview;
+  isDragging: boolean;
+}
+type Props = OwnProps & DragProps;
+class PartialNodeView extends React.PureComponent<Props> {
+  public componentDidMount() {
+    this.props.connectPreview(getEmptyImage());
+  }
 
-class NodeView extends React.PureComponent<Props> {
   public render() {
-    const { isInputConnected, node, position, prototype } = this.props;
-    const name = node.label || prototype.name;
-    const pinRowCount =
-      prototype.inputNames.length + prototype.outputNames.length;
-    return (
-      <Card className="nodeView" style={makeStyle(position, pinRowCount)}>
+    const {
+      className,
+      style,
+      position,
+      nodeInfo,
+      connectDrag,
+      isDragging,
+    } = this.props;
+    const { label, inputs, outputs } = nodeInfo;
+    const pinCount = inputs.length + outputs.length;
+    const positionedStyle = {
+      gridRow: `${position.y + 1} / span ${pinCount + 1}`,
+      gridColumn: `${position.x + 1} / span 4`,
+      ...style,
+      opacity: isDragging ? 0.6 : 1,
+    };
+    return connectDrag(
+      <div
+        className={classNames("nodeView", className)}
+        style={positionedStyle}
+      >
         <header className="nodeView-headerRow nodeView-row">
-          <span className="nodeView-headerRow-name">{name}</span>
+          <span className="nodeView-headerRow-name">{label}</span>
         </header>
-        {prototype.outputNames.map((outputName, index) => (
+        {outputs.map((output, index) => (
           <Pin
+            nodeId={nodeInfo.id}
             source
-            key={outputName}
-            name={outputName}
+            key={output.name}
+            name={output.name}
             takesInput={false}
             index={index}
+            onConnect={this.onConnect}
           />
         ))}
-        {prototype.inputNames.map((inputName, index) => (
+        {inputs.map((input, index) => (
           <Pin
+            nodeId={nodeInfo.id}
             target
-            key={inputName}
-            name={inputName}
-            takesInput={!isInputConnected(node.id, index)}
-            userValue={node.constants[index]}
+            key={input.name}
+            name={input.name}
+            takesInput={!input.isConnected}
+            hasPin={input.canConnect}
+            userValue={input.value}
             index={index}
             onChange={this.onUserValueChange}
+            onConnect={this.onConnect}
           />
         ))}
-      </Card>
+      </div>,
     );
   }
 
   private onUserValueChange = (index: number, value: string) => {
-    this.props.onUserValueChange(this.props.node.id, index, value);
+    const { onUserValueChange } = this.props;
+    if (onUserValueChange) {
+      const { id, parentId } = this.props.nodeInfo;
+      onUserValueChange(parentId, id, index, value);
+    }
+  };
+
+  private onConnect = (
+    fromId: string,
+    fromIndex: number,
+    toId: string,
+    toIndex: number,
+  ) => {
+    const { onConnect } = this.props;
+    if (onConnect) {
+      onConnect(this.props.nodeInfo.parentId, fromId, fromIndex, toId, toIndex);
+    }
   };
 }
 
-const makeStyle = (position: [number, number], pinRowCount: number) => ({
-  gridRow: `${position[1] + 1} / span ${pinRowCount + 1}`,
-  gridColumn: `${position[0] + 1} / span 4`,
+const dragSpec: DragSourceSpec<OwnProps> = {
+  beginDrag: props => props.nodeInfo,
+};
+const dragCollect: DragSourceCollector = (connect, monitor) => ({
+  connectDrag: connect.dragSource(),
+  connectPreview: connect.dragPreview(),
+  isDragging: monitor.isDragging(),
 });
+const NodeView = DragSource(DndTypes.NODE, dragSpec, dragCollect)(
+  PartialNodeView,
+);
 
 export { NodeView };

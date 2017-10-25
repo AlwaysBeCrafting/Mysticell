@@ -8,6 +8,8 @@ $row-height: $dimen-graph-cell-size;
 .nodeView {
   @include elevation(2px);
   @include font-body1;
+  background: #fff;
+  border-radius: 2px;
   line-height: $row-height;
   display: grid;
   grid-template-columns: 1fr;

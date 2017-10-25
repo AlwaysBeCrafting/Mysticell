@@ -8,10 +8,15 @@ import { resolveGraph } from "data/Graph";
 import { isProperty } from "data/NodePrototype";
 import { setParams } from "data/PropertyCache";
 
-import { Action, ActionTypes, setPropertyInputValue } from "./actions";
+import {
+  ActionTypes,
+  setPropertyInputValue,
+  SetPropertyInputValueAction,
+  SetPropertyInputValueAsyncAction,
+} from "./actions";
 
 const changePropertyInputValueEpic = (
-  action$: ActionsObservable<Action>,
+  action$: ActionsObservable<SetPropertyInputValueAsyncAction>,
 ): Observable<Redux.Action> =>
   action$
     .ofType(ActionTypes.CHANGE_PROPERTY_INPUT_VALUE_ASYNC)
@@ -22,12 +27,15 @@ const changePropertyInputValueEpic = (
     });
 
 const setPropertyCacheParamsEpic = (
-  action$: ActionsObservable<Action>,
+  action$: ActionsObservable<SetPropertyInputValueAction>,
   store: Redux.Store<AppState>,
 ): Observable<Redux.Action> =>
   action$
     .ofType(ActionTypes.CHANGE_PROPERTY_INPUT_VALUE)
     .mergeMap(async action => {
+      if (action.type !== ActionTypes.CHANGE_PROPERTY_INPUT_VALUE) {
+        throw new Error(`Failed to verify type ${action.type}`);
+      }
       const { propertyId } = action.payload;
       const { nodePrototypes } = store.getState().document;
       const property = nodePrototypes[propertyId];

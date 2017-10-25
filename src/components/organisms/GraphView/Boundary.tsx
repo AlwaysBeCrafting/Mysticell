@@ -51,6 +51,7 @@ class Boundary extends React.PureComponent<Props> {
               : "";
             return (
               <Pin
+                nodeId="input"
                 source
                 takesInput={isProperty(prototype)}
                 name={name}
@@ -63,6 +64,7 @@ class Boundary extends React.PureComponent<Props> {
           } else {
             return (
               <Pin
+                nodeId="output"
                 target
                 takesInput={!isEdgeTarget(prototype.graph, "output", index)}
                 name={name}

@@ -1,5 +1,10 @@
 export { patchArray } from "./array";
-export { graphLayoutWidth } from "./layout";
+export {
+  elementRelativePosition,
+  graphLayoutWidth,
+  sourcePinPosition,
+  targetPinPosition,
+} from "./layout";
 export { generateId } from "./id";
 export { composeReducers } from "./reducer";
 export { tail } from "./string";

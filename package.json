@@ -12,6 +12,7 @@
     "@types/jest": "^21.1.2",
     "@types/node": "^8.0.34",
     "@types/react": "^16.0.10",
+    "@types/react-dnd": "^2.0.34",
     "@types/react-dom": "^16.0.1",
     "@types/react-hot-loader": "^3.0.4",
     "@types/react-redux": "^5.0.10",
@@ -50,6 +51,7 @@
     "webpack-dev-server": "^2.9.2"
   },
   "dependencies": {
+    "@types/react-dnd-html5-backend": "^2.1.8",
     "classnames": "^2.2.5",
     "react": "^16.0.0",
     "react-dnd": "^2.5.4",
