@@ -1,6 +1,6 @@
 import { Dict, Position2d } from "common/types";
 
-import { Graph, isBoundaryNode } from "data/Graph";
+import { Graph } from "data/Graph";
 
 import { Action, ActionTypes } from "./actions";
 import { isGraph, isProperty, NodePrototype } from "./model";
