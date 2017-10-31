@@ -1,6 +1,5 @@
+import { Map } from "immutable";
 import React from "react";
-
-import { Dict } from "common/types";
 
 import { CellView, Icon, ToolButton } from "components/atoms";
 import { Toolbar } from "components/molecules";
@@ -15,7 +14,7 @@ import "./SheetView.scss";
 
 interface Props {
   sheet: Sheet;
-  nodePrototypes: Dict<NodePrototype>;
+  nodePrototypes: Map<string, NodePrototype>;
   propertyCache: PropertyCache;
   onCellInput: (cell: Cell, newValue: string) => void;
 }
@@ -35,17 +34,19 @@ class SheetView extends React.PureComponent<Props> {
           </ToolButton>
         </Toolbar>
         <div className="sheetView-grid">
-          {Object.values(sheet.cells).map(cell => (
-            <CellView
-              key={cell.id}
-              className="sheetView-grid-cell"
-              param={this.getParamForCell(cell)}
-              rect={sheet.layout[cell.id]}
-              cell={cell}
-              onChange={this.onCellInput}
-              readonly={cell.property.type !== "input"}
-            />
-          ))}
+          {sheet.cells
+            .map(cell => (
+              <CellView
+                key={cell.id}
+                className="sheetView-grid-cell"
+                param={this.getParamForCell(cell)!}
+                rect={sheet.layout.get(cell.id)!}
+                cell={cell}
+                onChange={this.onCellInput}
+                readonly={cell.property.type !== "input"}
+              />
+            ))
+            .toList()}
         </div>
       </div>
     );
@@ -53,16 +54,16 @@ class SheetView extends React.PureComponent<Props> {
 
   private getParamForCell(cell: Cell) {
     const { propertyCache, nodePrototypes } = this.props;
-    const cached = propertyCache[cell.property.id];
-    const cellPrototype = nodePrototypes[cell.property.id];
+    const cached = propertyCache.get(cell.property.id);
+    const cellPrototype = nodePrototypes.get(cell.property.id);
     const cellValue = isProperty(cellPrototype)
-      ? cellPrototype.inputValues[cell.property.index]
+      ? cellPrototype.inputValues.get(cell.property.index)
       : "";
     if (cell.property.type === "input") {
-      return PARAMS.string(cellValue);
+      return PARAMS.string(cellValue || "");
     }
     if (cached) {
-      return cached[cell.property.index];
+      return cached.get(cell.property.index);
     }
     return PARAMS.error("…", "Value has changed. Loading the new value now.");
   }

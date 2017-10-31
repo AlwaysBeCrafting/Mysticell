@@ -1,9 +1,8 @@
 import classNames from "classnames";
+import { Map } from "immutable";
 import React from "react";
 import { connect } from "react-redux";
 import Redux from "redux";
-
-import { Dict } from "common/types";
 
 import { ErrorBoundary, SheetView } from "components/molecules";
 
@@ -19,9 +18,9 @@ import { Sheet } from "data/Sheet";
 import "./SheetWrapper.scss";
 
 interface StateProps {
-  sheets: Dict<Sheet>;
+  sheets: Map<string, Sheet>;
   propertyCache: PropertyCache;
-  nodePrototypes: Dict<NodePrototype>;
+  nodePrototypes: Map<string, NodePrototype>;
 }
 interface DispatchProps {
   dispatch: (action: Redux.Action) => void;
@@ -35,16 +34,18 @@ class PartialSheetWrapper extends React.PureComponent<Props> {
     const { className, nodePrototypes, sheets, propertyCache } = this.props;
     return (
       <div className={classNames("sheetWrapper", className)}>
-        {Object.values(sheets).map(sheet => (
-          <ErrorBoundary key={sheet.id}>
-            <SheetView
-              propertyCache={propertyCache}
-              nodePrototypes={nodePrototypes}
-              sheet={sheet}
-              onCellInput={this.onCellInput}
-            />
-          </ErrorBoundary>
-        ))}
+        {sheets
+          .map(sheet => (
+            <ErrorBoundary key={sheet.id}>
+              <SheetView
+                propertyCache={propertyCache}
+                nodePrototypes={nodePrototypes}
+                sheet={sheet}
+                onCellInput={this.onCellInput}
+              />
+            </ErrorBoundary>
+          ))
+          .toList()}
       </div>
     );
   }

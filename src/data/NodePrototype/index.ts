@@ -4,12 +4,12 @@ export { changePropertyInputValueAsync } from "./actions";
 export { epic } from "./epic";
 export {
   NodePrototype,
+  FunctionNodePrototype,
   PrimitiveNodePrototype,
   GraphNodePrototype,
-  FunctionNodePrototype,
   PropertyNodePrototype,
   TableNodePrototype,
 } from "./model";
-export { isPrimitive, isGraph, isFunction, isProperty, isTable } from "./model";
+export { isPrimitive, isGraph, isProperty, isTable } from "./model";
 export { reducer } from "./reducer";
 export { generateGraphNode } from "./utils";

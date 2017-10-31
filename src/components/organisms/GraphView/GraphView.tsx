@@ -1,4 +1,5 @@
 import classnames from "classnames";
+import { Map } from "immutable";
 import React from "react";
 import {
   ConnectDropTarget,
@@ -8,7 +9,7 @@ import {
 } from "react-dnd";
 import { connect as connectStore } from "react-redux";
 
-import { Dict, DndTypes, Position2d } from "common/types";
+import { DndTypes, Position2d } from "common/types";
 import { elementRelativePosition, graphLayoutWidth } from "common/utils";
 
 import { Icon, ToolButton } from "components/atoms";
@@ -34,7 +35,7 @@ import { WireLayer } from "./WireLayer";
 import "./GraphView.scss";
 
 interface StateProps {
-  nodePrototypes: Dict<NodePrototype>;
+  nodePrototypes: Map<string, NodePrototype>;
   propertyCache: PropertyCache;
 }
 interface DispatchProps {
@@ -104,7 +105,7 @@ class PartialGraphView extends React.PureComponent<Props> {
 
   private renderGrid(
     prototype: GraphNodePrototype,
-    nodePrototypes: Dict<NodePrototype>,
+    nodePrototypes: Map<string, NodePrototype>,
   ) {
     const gridStyle = { flexBasis: 40 * graphLayoutWidth(prototype.layout) };
     return (
@@ -143,19 +144,21 @@ const dropSpec: DropTargetSpec<StoreProps> = {
   drop: (props, monitor, component) => {
     const gridPosition = elementRelativePosition(
       (component as PartialGraphView).wrapper!,
-      monitor!.getSourceClientOffset(),
-    );
-    gridPosition.x = Math.round(gridPosition.x / 40);
-    gridPosition.y = Math.round(gridPosition.y / 40);
+      new Position2d(monitor!.getSourceClientOffset()),
+    ).withMutations(position => {
+      position.set("x", Math.round(position.x / 40));
+      position.set("y", Math.round(position.y / 40));
+    });
+    const nodeInfo = monitor!.getItem() as NodeInfo;
     switch (monitor!.getItemType()) {
       case DndTypes.NODE: {
-        const nodeInfo = monitor!.getItem() as NodeInfo;
         props.placeNode(nodeInfo.id, gridPosition);
         break;
       }
       case DndTypes.NODE_PROTOTYPE: {
-        const prototype = monitor!.getItem() as NodePrototype;
-        const node = generateGraphNode(prototype);
+        const node = generateGraphNode(
+          props.nodePrototypes.get(nodeInfo.parentId)!,
+        );
         props.addNode(node);
         props.placeNode(node.id, gridPosition);
         break;

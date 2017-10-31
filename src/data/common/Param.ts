@@ -1,3 +1,5 @@
+import { List } from "immutable";
+
 interface NumberParam {
   type: "number";
   value: number;
@@ -41,7 +43,7 @@ const PARAMS = {
   }),
 };
 
-type ParamFunction = (...params: Param[]) => Param[];
+type ParamFunction = (params: List<Param>) => List<Param>;
 
 export { Param, ErrorParam, PARAMS, ParamFunction };
 export { NumberParam };

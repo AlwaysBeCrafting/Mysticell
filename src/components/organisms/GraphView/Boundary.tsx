@@ -1,6 +1,6 @@
+import { List, Map } from "immutable";
 import React from "react";
 
-import { Dict } from "common/types";
 import { isEdgeTarget } from "data/Graph";
 import { GraphNodePrototype, isProperty } from "data/NodePrototype";
 
@@ -10,7 +10,7 @@ import { Param, PARAMS } from "data/common";
 
 interface CommonProps {
   prototype: GraphNodePrototype;
-  propertyCache: Dict<Param[]>;
+  propertyCache: Map<string, List<Param>>;
   onValueChange?: (
     prototypeId: string,
     index: number,
@@ -34,7 +34,7 @@ class Boundary extends React.PureComponent<Props> {
     const { input, prototype, propertyCache } = this.props;
     const pinNames = input ? prototype.inputNames : prototype.outputNames;
     const type = input ? "input" : "output";
-    const params = propertyCache[prototype.id];
+    const params = propertyCache.get(prototype.id);
     const defaultParam = isProperty(prototype) ? working : undefined;
 
     return (
@@ -47,7 +47,7 @@ class Boundary extends React.PureComponent<Props> {
         {pinNames.map((name, index) => {
           if (type === "input") {
             const userValue = isProperty(prototype)
-              ? prototype.inputValues[index]
+              ? prototype.inputValues.get(index)
               : "";
             return (
               <Pin
@@ -68,7 +68,7 @@ class Boundary extends React.PureComponent<Props> {
                 target
                 takesInput={!isEdgeTarget(prototype.graph, "output", index)}
                 name={name}
-                param={params ? params[index] : defaultParam}
+                param={params ? params.get(index) : defaultParam}
                 index={index}
                 key={name}
               />

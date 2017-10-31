@@ -1,4 +1,4 @@
-import { combineReducers } from "redux";
+import { combineReducers } from "redux-immutable";
 
 import { reducer as document } from "data/Document";
 import { reducer as propertyCache } from "data/PropertyCache";

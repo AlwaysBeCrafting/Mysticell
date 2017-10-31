@@ -1,13 +1,16 @@
+import { Map } from "immutable";
+
 import { Action, ActionTypes } from "./actions";
 import { PropertyCache } from "./model";
 
-const reducer = (state: PropertyCache = {}, action: Action): PropertyCache => {
+const reducer = (
+  state: PropertyCache = Map(),
+  action: Action,
+): PropertyCache => {
   switch (action.type) {
     case ActionTypes.SET_PARAMS: {
-      return {
-        ...state,
-        [action.payload.propertyId]: action.payload.params,
-      };
+      const { propertyId, params } = action.payload;
+      return state.set(propertyId, params);
     }
     default:
       return state;

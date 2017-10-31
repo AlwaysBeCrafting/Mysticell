@@ -5,7 +5,7 @@ import ReactDOM from "react-dom";
 import { AppContainer } from "react-hot-loader";
 import { Provider } from "react-redux";
 
-import exampleDoc from "common/assets/exampleDoc.json";
+import { exampleDoc } from "common/assets/exampleDoc";
 
 import { EditorPage } from "components/pages";
 

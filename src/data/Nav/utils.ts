@@ -1,11 +1,13 @@
-import { Dict, isBranch, isLeaf } from "common/types";
+import { Map } from "immutable";
+
+import { isBranch, isLeaf } from "common/types";
 import { resolvePath } from "common/utils";
 
 import { Nav } from "data/Nav";
 import { NodePrototype } from "data/NodePrototype";
 
 const pathToNodePrototype = (
-  prototypes: Dict<NodePrototype>,
+  prototypes: Map<string, NodePrototype>,
   nav: Nav,
   path: string[],
 ): NodePrototype | undefined => {
@@ -20,13 +22,10 @@ const pathToNodePrototype = (
     return undefined;
   }
   const leaf = branch.children.find(
-    child =>
-      isLeaf(child) &&
-      prototypes[child.value] &&
-      prototypes[child.value].name === name,
+    child => isLeaf(child) && prototypes.getIn([child.value, "name"]) === name,
   );
 
-  return isLeaf(leaf) ? prototypes[leaf.value] : undefined;
+  return isLeaf(leaf) ? prototypes.get(leaf.value) : undefined;
 };
 
 export { pathToNodePrototype };

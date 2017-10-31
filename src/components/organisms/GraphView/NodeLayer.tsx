@@ -1,14 +1,15 @@
 import classNames from "classnames";
+import { Map } from "immutable";
 import React from "react";
 import { connect } from "react-redux";
 import Redux from "redux";
 
-import { Dict } from "common/types";
+import { Position2d } from "common/types";
 
 import { NodeView } from "components/molecules";
 
-import { getNodeInfo } from "data/common";
-import { isBoundaryNode } from "data/Graph";
+import { nodeInfoFromNode } from "data/common";
+import { isInnerNode } from "data/Graph";
 import {
   connectNodes,
   GraphNodePrototype,
@@ -22,7 +23,7 @@ interface DispatchProps {
 }
 interface OwnProps {
   prototype: GraphNodePrototype;
-  nodePrototypes: Dict<NodePrototype>;
+  nodePrototypes: Map<string, NodePrototype>;
   className?: string;
 }
 type Props = DispatchProps & OwnProps;
@@ -30,11 +31,10 @@ type Props = DispatchProps & OwnProps;
 class PartialNodeLayer extends React.PureComponent<Props> {
   public render() {
     const { prototype, className } = this.props;
-    const formulaNodes = Object.keys(prototype.layout);
 
     return (
       <div className={classNames("nodeLayer", className)}>
-        {formulaNodes.map(this.renderNode)}
+        {prototype.layout.keySeq().map(this.renderNode)}
       </div>
     );
   }
@@ -42,20 +42,20 @@ class PartialNodeLayer extends React.PureComponent<Props> {
   private renderNode = (nodeId: string) => {
     const { prototype, nodePrototypes } = this.props;
     const { graph } = prototype;
-    const node = graph[nodeId];
+    const node = graph.get(nodeId);
 
-    if (isBoundaryNode(node)) {
+    if (!isInnerNode(node)) {
       throw new Error(
-        `Tried to render a boundary node in graph of ${prototype.id}`,
+        `Tried to render a non-inner node "${nodeId}" in graph of "${prototype.id}"`,
       );
     }
 
-    const position = prototype.layout[nodeId] || { x: 0, y: 0 };
+    const position = prototype.layout.get(nodeId) || new Position2d();
 
     return (
       <NodeView
         key={node.id}
-        nodeInfo={getNodeInfo(nodePrototypes, prototype, node)}
+        nodeInfo={nodeInfoFromNode(nodePrototypes, prototype, node)}
         position={position}
         onUserValueChange={this.onUserValueChange}
         onConnect={this.onConnect}
