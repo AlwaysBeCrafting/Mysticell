@@ -6,6 +6,7 @@
     "align": [false],
     "interface-name": [true, "never-prefix"],
     "max-classes-per-file": false,
+    "member-access": [true, "no-public"],
     "no-default-export": true,
     "no-implicit-dependencies": false,
     "no-empty-interface": false,
