@@ -14,6 +14,7 @@ import { DndTypes } from "common/types";
 
 import { Icon } from "components/atoms";
 
+import { nodeInfoFromPrototype } from "data/common";
 import { isProperty, NodePrototype } from "data/NodePrototype";
 
 import functionIcon from "./assets/icon-function.svg";
@@ -59,7 +60,7 @@ class PartialEndItemView extends React.PureComponent<Props> {
 }
 
 const dragSpec: DragSourceSpec<OwnProps> = {
-  beginDrag: props => props.prototype,
+  beginDrag: props => nodeInfoFromPrototype(props.prototype),
 };
 
 const dragCollect: DragSourceCollector = (connect, monitor) => ({

@@ -1,4 +1,5 @@
-import { combineReducers } from "redux";
+import { List, Map } from "immutable";
+import { combineReducers } from "redux-immutable";
 
 import { composeReducers } from "common/utils";
 
@@ -7,42 +8,29 @@ import { reducer as nodePrototypes } from "data/NodePrototype";
 import { Action, ActionTypes } from "./actions";
 import { Document } from "./model";
 
-const defaultState: Document = {
-  id: "DOCUMENT-0000",
-  title: "Untitled",
-  version: 0,
-  include: [],
-
-  sheets: {},
-  nodePrototypes: {},
-
-  nav: { value: "root" },
-};
-
 const documentReducer = (
-  state: Document = defaultState,
+  state: Document = new Document(),
   action: Action,
 ): Document => {
   switch (action.type) {
     case ActionTypes.LOAD_DOCUMENT: {
-      return { ...defaultState, ...action.payload.documentJson };
+      return Document.fromJson(action.payload.documentJson);
     }
 
     default:
       return state;
   }
 };
-const identity = <T>(x: T = {} as any) => x;
 const subReducers = combineReducers<Document>({
-  id: identity,
-  title: identity,
-  version: identity,
-  include: identity,
+  id: id => id || "",
+  title: title => title || "",
+  version: version => version || 0,
+  include: include => include || List(),
 
-  sheets: identity,
+  sheets: sheets => sheets || Map(),
   nodePrototypes,
 
-  nav: identity,
+  nav: nav => nav || {},
 });
 const reducer = composeReducers(documentReducer, subReducers);
 

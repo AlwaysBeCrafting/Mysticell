@@ -1,3 +1,5 @@
+import { List, Map } from "immutable";
+
 import { Dict } from "common/types";
 
 import { Param, PARAMS, PRIMITIVES } from "data/common";
@@ -11,14 +13,15 @@ import { BoundaryNode, Edge, Graph, InnerNode, isBoundaryNode } from "./model";
 
 interface EvalGraph extends Dict<EvalNode> {}
 
-interface BoundaryEvalNode extends BoundaryNode {
-  id: "input" | "output";
+interface BoundaryEvalNode {
+  node: BoundaryNode;
   inputs: Array<Param | undefined>;
   inputNodes: string[];
   edges: EvalEdge[];
 }
 
-interface InnerEvalNode extends InnerNode {
+interface InnerEvalNode {
+  node: InnerNode;
   inputs: Array<Param | undefined>;
   inputNodes: string[];
   edges: EvalEdge[];
@@ -26,41 +29,41 @@ interface InnerEvalNode extends InnerNode {
 
 type EvalNode = BoundaryEvalNode | InnerEvalNode;
 
-interface EvalEdge extends Edge {
+interface EvalEdge {
+  edge: Edge;
   targetNode: EvalNode;
 }
 
 const makeInputNode = (
   inputNode: BoundaryNode,
   inputs: Array<Param | undefined>,
-): BoundaryEvalNode => {
-  const inputEvalNode = inputNode as BoundaryEvalNode;
-  inputEvalNode.inputs = inputs;
-  inputEvalNode.inputNodes = [];
-  return inputEvalNode;
-};
+): BoundaryEvalNode => ({
+  node: inputNode,
+  inputs,
+  inputNodes: [],
+  edges: inputNode.edges
+    .map(edge => ({ edge, targetNode: undefined! }))
+    .toArray(),
+});
 
 const makeOutputNode = (
   inputs: Array<Param | undefined>,
   outputEdges?: EvalEdge[],
 ): BoundaryEvalNode => ({
-  id: "output",
+  node: new BoundaryNode({ id: "output" }),
   inputs,
   inputNodes: [],
   edges: outputEdges || [],
 });
 
 const makeEvalNode = (graph: Graph, nodeId: string): InnerEvalNode => {
-  const evalNode = graph[nodeId] as InnerEvalNode;
-  evalNode.inputs = evalNode.constants.map(PARAMS.string);
-  evalNode.inputNodes = [];
-  return evalNode;
-};
-
-const extendGraphEdge = (edge: Edge, targetNode: EvalNode): EvalEdge => {
-  const evalEdge = edge as EvalEdge;
-  evalEdge.targetNode = targetNode;
-  return evalEdge;
+  const node = graph.get(nodeId) as InnerNode;
+  return {
+    node,
+    inputs: node.constants.map(PARAMS.string).toArray(),
+    inputNodes: [],
+    edges: node.edges.map(edge => ({ edge, targetNode: undefined! })).toArray(),
+  };
 };
 
 const constructEvaluationGraph = (
@@ -68,25 +71,25 @@ const constructEvaluationGraph = (
   inputParams: Param[],
   outputEdges?: EvalEdge[],
 ) => {
-  const { graph } = prototype;
+  const graph = prototype.graph;
   const evalGraph: Dict<EvalNode> = {
-    input: makeInputNode(graph.input as BoundaryNode, inputParams),
+    input: makeInputNode(graph.get("input") as BoundaryNode, inputParams),
     output: makeOutputNode(
-      Array(prototype.outputNames.length).fill(undefined),
+      Array(prototype.outputNames.size).fill(undefined),
       outputEdges,
     ),
   };
 
-  for (const node of Object.values(graph)) {
+  for (const node of graph.values()) {
     const sourceEvalNode = evalGraph[node.id] || makeEvalNode(graph, node.id);
     evalGraph[node.id] = sourceEvalNode;
 
-    for (const edge of node.edges) {
+    for (const edge of sourceEvalNode.edges) {
       const targetEvalNode =
-        evalGraph[edge.target] || makeEvalNode(graph, edge.target);
+        evalGraph[edge.edge.target] || makeEvalNode(graph, edge.edge.target);
       targetEvalNode.inputNodes.push(node.id);
-      evalGraph[edge.target] = targetEvalNode;
-      extendGraphEdge(edge, targetEvalNode);
+      evalGraph[edge.edge.target] = targetEvalNode;
+      edge.targetNode = targetEvalNode;
     }
   }
 
@@ -110,15 +113,15 @@ const isNodeReady = (node: EvalNode) =>
 
 const hasCyclesUntil = (
   graph: EvalGraph,
-  node: EvalNode,
+  evalNode: EvalNode,
   visited: Set<string>,
   stack: Set<string>,
 ) => {
-  visited.add(node.id);
-  stack.add(node.id);
+  visited.add(evalNode.node.id);
+  stack.add(evalNode.node.id);
 
   // A directed graph only has a cycle if it has a back-edge in its DFS tree
-  for (const neighbor of node.edges) {
+  for (const neighbor of evalNode.node.edges) {
     const target = neighbor.target;
     if (
       !visited.has(target) &&
@@ -130,7 +133,7 @@ const hasCyclesUntil = (
     }
   }
 
-  stack.delete(node.id);
+  stack.delete(evalNode.node.id);
   return false;
 };
 
@@ -139,14 +142,17 @@ const hasCycles = (graph: EvalGraph, startingNodes: EvalNode[]) =>
     hasCyclesUntil(graph, startingNode, new Set(), new Set()),
   );
 
-const gatherReadyNodes = (node: EvalNode, value: Array<Param | undefined>) => {
+const gatherReadyNodes = (
+  evalNode: EvalNode,
+  value: Array<Param | undefined>,
+) => {
   const readyNodes = [];
-  for (const edge of node.edges) {
-    const target = edge.targetNode;
-    const [sourceIndex, targetIndex] = edge.data;
+  for (const evalEdge of evalNode.edges) {
+    const target = evalEdge.targetNode;
+    const { src, dst } = evalEdge.edge.index;
 
-    if (value[sourceIndex] != null) {
-      target.inputs[targetIndex] = value[sourceIndex];
+    if (value[src] != null) {
+      target.inputs[dst] = value[src];
     }
 
     if (isNodeReady(target)) {
@@ -161,35 +167,38 @@ type EvalResult =
   | { type: "value"; value: Param[] };
 
 const evaluate = async (
-  nodePrototypes: Dict<NodePrototype>,
-  node: EvalNode,
+  nodePrototypes: Map<string, NodePrototype>,
+  evalNode: EvalNode,
 ): Promise<EvalResult> => {
-  if (isBoundaryNode(node)) {
-    return { type: "value", value: node.inputs as Param[] };
+  const inputs: Param[] = evalNode.inputs as Param[];
+  if (isBoundaryNode(evalNode.node)) {
+    return { type: "value", value: inputs };
   }
 
-  const prototype = nodePrototypes[node.prototype] as GraphNodePrototype;
-  const primitive = PRIMITIVES[node.prototype];
+  const prototype = nodePrototypes.get(
+    evalNode.node.prototype,
+  ) as GraphNodePrototype;
+  const primitive = PRIMITIVES[evalNode.node.prototype];
   return primitive
     ? {
         type: "value",
-        value: primitive.evaluate(...(node.inputs as Param[])),
+        value: primitive.evaluate(List(inputs)).toArray(),
       }
     : {
         type: "expansion",
-        nodes: shallowExpand(prototype, node.inputs as Param[], node.edges)[1],
+        nodes: shallowExpand(prototype, inputs, evalNode.edges)[1],
       };
 };
 
 const resolveGraph = async (
-  nodePrototypes: Dict<NodePrototype>,
+  nodePrototypes: Map<string, NodePrototype>,
   prototype: PropertyNodePrototype,
-): Promise<Param[]> => {
+): Promise<List<Param>> => {
   const params = prototype.inputValues.map(PARAMS.string);
-  const [graph, wavefront] = shallowExpand(prototype, params);
+  const [graph, wavefront] = shallowExpand(prototype, params.toArray());
 
   if (hasCycles(graph, wavefront)) {
-    return Array(prototype.outputNames.length).fill(
+    return prototype.outputNames.map(_ =>
       PARAMS.error("FUNC", "Graph cannot contain cycles"),
     );
   }
@@ -204,7 +213,7 @@ const resolveGraph = async (
     }
   }
 
-  return graph.output.inputs.map(
+  return List(graph.output.inputs).map(
     param =>
       param
         ? param as Param
@@ -213,11 +222,11 @@ const resolveGraph = async (
 };
 
 const isEdgeTarget = (graph: Graph, nodeId: string, index?: number) => {
-  for (const node of Object.values(graph)) {
+  for (const node of graph.values()) {
     for (const edge of node.edges) {
       if (
         edge.target === nodeId &&
-        (typeof index === "undefined" || index === edge.data[1])
+        (typeof index === "undefined" || index === edge.index.dst)
       ) {
         return true;
       }

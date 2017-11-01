@@ -4,7 +4,6 @@ import { DragLayer, DragLayerCollector } from "react-dnd";
 import { DndTypes, Position2d } from "common/types";
 
 import { NodeInfo } from "data/common";
-import { NodePrototype } from "data/NodePrototype";
 
 import "./AppDragLayer.scss";
 
@@ -24,7 +23,7 @@ interface NodeLayerProps extends CommonLayerProps {
 }
 interface NodePrototypeLayerProps extends CommonLayerProps {
   itemType: DndTypes.NODE_PROTOTYPE;
-  item: NodePrototype;
+  item: NodeInfo;
 }
 interface WireLayerProps extends CommonLayerProps {
   itemType: DndTypes.WIRE_START | DndTypes.WIRE_END;
@@ -55,7 +54,7 @@ class PartialDragLayer extends React.PureComponent<Props> {
         const { item } = this.props;
         return (
           <NodePrototypeDragItem
-            prototype={item}
+            nodeInfo={item}
             currentOffset={sourceClientOffset}
           />
         );

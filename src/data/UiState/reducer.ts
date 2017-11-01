@@ -1,37 +1,24 @@
+import { Set } from "immutable";
+
 import { Action, ActionTypes } from "./actions";
 import { UiState } from "./model";
 
-const defaultState: UiState = {
-  expandedNavItems: new Set(["root/Abilities"]),
-};
-
-const reducer = (state: UiState = defaultState, action: Action): UiState => {
+const reducer = (state: UiState = new UiState(), action: Action): UiState => {
   switch (action.type) {
     case ActionTypes.COLLAPSE_ALL_NAV_ITEMS: {
-      return {
-        ...state,
-        expandedNavItems: new Set(),
-      };
+      return state.set("expandedNavItems", Set());
     }
     case ActionTypes.EXPAND_NAV_ITEM: {
-      const expandedNavItems = new Set(state.expandedNavItems);
-      expandedNavItems.add(action.payload.path);
-      return {
-        ...state,
-        expandedNavItems,
-      };
+      return state.update("expandedNavItems", set =>
+        set.add(action.payload.path),
+      );
     }
     case ActionTypes.TOGGLE_NAV_ITEM: {
-      const expandedNavItems = new Set(state.expandedNavItems);
-      if (expandedNavItems.has(action.payload.path)) {
-        expandedNavItems.delete(action.payload.path);
-      } else {
-        expandedNavItems.add(action.payload.path);
-      }
-      return {
-        ...state,
-        expandedNavItems,
-      };
+      const { path } = action.payload;
+      return state.update(
+        "expandedNavItems",
+        set => (set.has(path) ? set.remove(path) : set.add(path)),
+      );
     }
     default:
       return state;

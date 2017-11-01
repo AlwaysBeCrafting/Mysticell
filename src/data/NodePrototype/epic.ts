@@ -38,7 +38,7 @@ const setPropertyCacheParamsEpic = (
       }
       const { propertyId } = action.payload;
       const { nodePrototypes } = store.getState().document;
-      const property = nodePrototypes[propertyId];
+      const property = nodePrototypes.get(propertyId)!;
       if (!isProperty(property)) {
         throw new Error(
           `Cannot cache calculated values of non-property ${propertyId}`,

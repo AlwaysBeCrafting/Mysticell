@@ -4,7 +4,7 @@ import { createEpicMiddleware } from "redux-observable";
 
 import { AppState, appStateEpic, reducer } from "data/AppState";
 
-const configureStore = (initialState?: AppState) => {
+const configureStore = (initialState: AppState = new AppState()) => {
   const epicMiddleware = createEpicMiddleware(appStateEpic);
   const enhancers = composeWithDevTools(applyMiddleware(epicMiddleware));
   const store = initialState

@@ -1,5 +1,7 @@
 import React from "react";
 
+import { Position2d } from "common/types";
+
 import { NodeView } from "components/molecules";
 
 import { NodeInfo } from "data/common";
@@ -21,7 +23,7 @@ class NodeDragItem extends DragItem<Props> {
       <NodeView
         className="nodeDragItem"
         nodeInfo={this.props.nodeInfo}
-        position={{ x: 0, y: 0 }}
+        position={new Position2d()}
         style={style}
       />
     );

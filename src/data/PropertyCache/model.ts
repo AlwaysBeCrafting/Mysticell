@@ -1,7 +1,7 @@
-import { Dict } from "common/types";
+import { List, Map } from "immutable";
 
 import { Param } from "data/common";
 
-type PropertyCache = Dict<Param[]>;
+type PropertyCache = Map<string, List<Param>>;
 
 export { PropertyCache };

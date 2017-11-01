@@ -1,3 +1,4 @@
+import { Map, Set } from "immutable";
 import React from "react";
 import { connect } from "react-redux";
 import {
@@ -6,8 +7,6 @@ import {
   RouteComponentProps,
 } from "react-router-dom";
 import { Dispatch } from "redux";
-
-import { Dict } from "common/types";
 
 import {
   AppDragLayer,
@@ -27,8 +26,8 @@ import "./EditorPage.scss";
 interface StateProps {
   title: string;
   nav: Nav;
-  nodePrototypes: Dict<NodePrototype>;
-  sheets: Dict<Sheet>;
+  nodePrototypes: Map<string, NodePrototype>;
+  sheets: Map<string, Sheet>;
   expandedNavItems: Set<string>;
   propertyCache: PropertyCache;
 }
@@ -85,7 +84,8 @@ class ProtoEditor extends React.PureComponent<Props> {
     } else {
       return (
         <div className="editor-document-error">
-          No formula exists at /{routeProps.match.params.path}.
+          No formula exists at /{routeProps.match.params.path}.<br />
+          Prototype is {prototype}
         </div>
       );
     }

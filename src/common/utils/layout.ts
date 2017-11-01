@@ -1,56 +1,50 @@
-import { Dict, Position2d } from "common/types";
+import { Map } from "immutable";
 
-type Layout = Dict<Position2d>;
+import { Position2d } from "common/types";
+
+type Layout = Map<string, Position2d>;
 
 const graphLayoutWidth = (layout: Layout) =>
-  Object.values(layout).reduce((max, current) => Math.max(current.x, max), 2) +
-  6;
+  layout.reduce((max, current) => Math.max(current.x, max), 2) + 6;
 
 const nodeHeaderRows = 1;
 const panelHeaderRows = 2;
 const nodeWidth = 4;
 
-const sourcePinPosition = (layout: Layout, srcId: string, srcIndex: number) => {
-  const srcPos: Position2d = { x: 0, y: 0 };
-  if (srcId === "input") {
-    srcPos.y += panelHeaderRows;
-  } else {
-    srcPos.x += layout[srcId].x;
-    srcPos.y += layout[srcId].y;
-    srcPos.x += nodeWidth;
-    srcPos.y += nodeHeaderRows;
-  }
-  srcPos.y += srcIndex;
-  return srcPos;
-};
+const sourcePinPosition = (layout: Layout, srcId: string, srcIndex: number) =>
+  srcId === "input"
+    ? new Position2d({
+        y: panelHeaderRows + srcIndex,
+      })
+    : new Position2d({
+        x: layout.get(srcId, new Position2d()).x + nodeWidth,
+        y: layout.get(srcId, new Position2d()).y + nodeHeaderRows + srcIndex,
+      });
 
 const targetPinPosition = (
   layout: Layout,
   offset: number,
   tgtId: string,
   tgtIndex: number,
-) => {
-  const tgtPos: Position2d = { x: 0, y: 0 };
-  if (tgtId === "output") {
-    tgtPos.x = graphLayoutWidth(layout);
-    tgtPos.y += panelHeaderRows;
-  } else {
-    tgtPos.x = layout[tgtId].x;
-    tgtPos.y = layout[tgtId].y;
-    tgtPos.y += nodeHeaderRows;
-    tgtPos.y += offset;
-  }
-  tgtPos.y += tgtIndex;
-  return tgtPos;
-};
+) =>
+  tgtId === "output"
+    ? new Position2d({
+        x: graphLayoutWidth(layout),
+        y: panelHeaderRows + tgtIndex,
+      })
+    : new Position2d({
+        x: layout.get(tgtId, new Position2d()).x,
+        y: layout.get(tgtId, new Position2d()).y + nodeHeaderRows + offset,
+      });
 
 const elementRelativePosition = (
   element: HTMLElement,
   absolutePosition: Position2d,
-): Position2d => ({
-  x: absolutePosition.x - element.getBoundingClientRect().left,
-  y: absolutePosition.y - element.getBoundingClientRect().top,
-});
+): Position2d =>
+  absolutePosition.withMutations(pos => {
+    const rect = element.getBoundingClientRect();
+    pos.set("x", pos.x - rect.left).set("y", pos.y - rect.top);
+  });
 
 export {
   elementRelativePosition,

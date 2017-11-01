@@ -1,12 +1,12 @@
+import { List } from "immutable";
+
 import { Dict } from "common/types";
 
 import { Param, PARAMS } from "data/common";
 import { PrimitiveNodePrototype } from "data/NodePrototype";
 
-const padEmpty = (params: Param[], length: number) =>
-  params
-    .map(p => p || PARAMS.empty())
-    .concat(Array(length - params.length).fill(PARAMS.empty()));
+const padEmpty = (params: List<Param>, length: number) =>
+  params.setSize(length).map(p => p || PARAMS.empty());
 
 const paramToNumber = (identity: number) => (param: Param): Param => {
   switch (param.type) {
@@ -34,58 +34,63 @@ const paramToNumber = (identity: number) => (param: Param): Param => {
 type Operator = (...nums: number[]) => number;
 
 const verifyAndReduce = (
-  params: Param[],
+  params: List<Param>,
   identity: number,
   op: Operator,
-): Param[] => {
+): List<Param> => {
   const convParams = params.map(paramToNumber(identity));
   const error = convParams.find(param => param.type === "error");
   if (error) {
-    return [error];
+    return List([error]);
   }
   const result = op(...convParams.map(param => param.value as number));
-  return [PARAMS.number(result)];
+  return List([PARAMS.number(result)]);
 };
 
-const add: PrimitiveNodePrototype = {
+const add = new PrimitiveNodePrototype({
   id: "primitive.add",
   name: "Add",
-  inputNames: ["A", "B"],
-  outputNames: ["Sum"],
-  evaluate: (a, b) => verifyAndReduce(padEmpty([a, b], 2), 0, (x, y) => x + y),
-};
+  inputNames: List(["A", "B"]),
+  outputNames: List(["Sum"]),
+  evaluate: (params: List<Param>) =>
+    verifyAndReduce(padEmpty(params, 2), 0, (x, y) => x + y),
+});
 
-const subtract: PrimitiveNodePrototype = {
+const subtract = new PrimitiveNodePrototype({
   id: "primitive.subtract",
   name: "Subtract",
-  inputNames: ["A", "B"],
-  outputNames: ["Difference"],
-  evaluate: (a, b) => verifyAndReduce(padEmpty([a, b], 2), 0, (x, y) => x - y),
-};
+  inputNames: List(["A", "B"]),
+  outputNames: List(["Difference"]),
+  evaluate: (params: List<Param>) =>
+    verifyAndReduce(padEmpty(params, 2), 0, (x, y) => x - y),
+});
 
-const multiply: PrimitiveNodePrototype = {
+const multiply = new PrimitiveNodePrototype({
   id: "primitive.multiply",
   name: "Multiply",
-  inputNames: ["A", "B"],
-  outputNames: ["Product"],
-  evaluate: (a, b) => verifyAndReduce(padEmpty([a, b], 2), 1, (x, y) => x * y),
-};
+  inputNames: List(["A", "B"]),
+  outputNames: List(["Product"]),
+  evaluate: (params: List<Param>) =>
+    verifyAndReduce(padEmpty(params, 2), 1, (x, y) => x * y),
+});
 
-const divide: PrimitiveNodePrototype = {
+const divide = new PrimitiveNodePrototype({
   id: "primitive.divide",
   name: "Divide",
-  inputNames: ["A", "B"],
-  outputNames: ["Quotient"],
-  evaluate: (a, b) => verifyAndReduce(padEmpty([a, b], 2), 1, (x, y) => x / y),
-};
+  inputNames: List(["A", "B"]),
+  outputNames: List(["Quotient"]),
+  evaluate: (params: List<Param>) =>
+    verifyAndReduce(padEmpty(params, 2), 1, (x, y) => x / y),
+});
 
-const floor: PrimitiveNodePrototype = {
+const floor = new PrimitiveNodePrototype({
   id: "primitive.floor",
   name: "Floor",
-  inputNames: ["Num"],
-  outputNames: ["Floor"],
-  evaluate: a => verifyAndReduce(padEmpty([a], 1), 0, Math.floor),
-};
+  inputNames: List(["Num"]),
+  outputNames: List(["Floor"]),
+  evaluate: (params: List<Param>) =>
+    verifyAndReduce(padEmpty(params, 1), 0, Math.floor),
+});
 
 const primitives = { add, subtract, multiply, divide, floor };
 

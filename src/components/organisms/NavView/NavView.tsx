@@ -1,4 +1,5 @@
 import classnames from "classnames";
+import { Map, Set } from "immutable";
 import React from "react";
 import {
   ConnectDropTarget,
@@ -9,7 +10,7 @@ import {
 import { connect as reduxConnect } from "react-redux";
 import { Dispatch } from "redux";
 
-import { Dict, DndTypes, isBranch } from "common/types";
+import { DndTypes, isBranch } from "common/types";
 import { collapse } from "common/utils";
 
 import { TreeView } from "components/molecules";
@@ -26,7 +27,7 @@ import "./NavView.scss";
 
 interface OwnProps {
   className?: string;
-  nodePrototypes: Dict<NodePrototype>;
+  nodePrototypes: Map<string, NodePrototype>;
   nav: Nav;
   expandedNavItems: Set<string>;
   selectedNavItem: string;
@@ -90,10 +91,10 @@ class PartialNavView extends React.PureComponent<Props> {
     ) : (
       <EndItemView
         path={path}
-        prototype={this.props.nodePrototypes[tree.value]}
+        prototype={this.props.nodePrototypes.get(tree.value)!}
         selected={
           this.props.selectedNavItem ===
-          `${path.join("/")}/${this.props.nodePrototypes[tree.value].name}`
+          `${path.join("/")}/${this.props.nodePrototypes.get(tree.value)!.name}`
         }
       />
     );
