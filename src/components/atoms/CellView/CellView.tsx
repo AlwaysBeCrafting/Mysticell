@@ -1,7 +1,7 @@
 import classnames from "classnames";
 import React from "react";
 
-import { Rect2d } from "common/types";
+import { Rect } from "common/types";
 
 import { Cell } from "data/Cell";
 import { Param } from "data/common";
@@ -12,7 +12,7 @@ interface Props {
   className?: string;
   cell: Cell;
   param: Param;
-  rect: Rect2d;
+  rect: Rect;
   onChange?: (cell: Cell, newValue: string) => void;
   readonly?: boolean;
 }

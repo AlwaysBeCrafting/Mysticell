@@ -1,5 +1,5 @@
 export { Dict } from "./Dict";
 export { DndTypes } from "./Dnd";
-export { Position2d, Rect2d, Size2d } from "./dimensions";
+export { Position2d, Rect, Size2d } from "./dimensions";
 export { Predicate } from "./Predicate";
 export { Tree, isLeaf, isBranch } from "./Tree";

@@ -1,39 +1,59 @@
-import { Record } from "immutable";
+import { ValueObject } from "immutable";
 
-interface Rect2dProps {
-  left: number;
-  top: number;
-  right: number;
-  bottom: number;
-}
-class Rect2d extends Record<Rect2dProps>({
-  left: 0,
-  top: 0,
-  right: 0,
-  bottom: 0,
-}) {}
+import { hashAll } from "common/utils";
 
-interface Size2dProps {
-  width: number;
-  height: number;
-}
-class Size2d extends Record<Size2dProps>({
-  width: 0,
-  height: 0,
-}) {}
+class Rect implements ValueObject {
+  constructor(
+    readonly left: number = 0,
+    readonly top: number = 0,
+    readonly right: number = 0,
+    readonly bottom: number = 0,
+  ) {}
 
-interface Position2dProps {
-  x: number;
-  y: number;
-}
-class Position2d extends Record<Position2dProps>({
-  x: 0,
-  y: 0,
-}) {
-  public static fromJson(json: any) {
-    const { x, y } = json;
-    return new Position2d({ x, y });
+  get width(): number {
+    return this.right - this.left;
+  }
+
+  get height(): number {
+    return this.bottom - this.top;
+  }
+
+  equals(other: Rect): boolean {
+    return (
+      other.left === this.left &&
+      other.top === this.top &&
+      other.right === this.right &&
+      other.bottom === this.bottom
+    );
+  }
+
+  hashCode(): number {
+    return hashAll(this.left, this.top, this.right, this.bottom);
   }
 }
 
-export { Position2d, Rect2d, Size2d };
+class Size2d implements ValueObject {
+  constructor(readonly width: number = 0, readonly height: number = 0) {}
+
+  equals(other: Size2d): boolean {
+    return other.width === this.width && other.height === this.height;
+  }
+
+  hashCode(): number {
+    return hashAll(this.width, this.height);
+  }
+}
+
+class Position2d implements ValueObject {
+  constructor(readonly x: number = 0, readonly y: number = 0) {}
+
+  equals(other: Position2d): boolean {
+    return other.x === this.x && other.y === this.y;
+  }
+
+  hashCode(): number {
+    return hashAll(this.x, this.y);
+  }
+}
+
+export { Position2d, Rect, Size2d };

@@ -1,6 +1,6 @@
 import { Map, Record } from "immutable";
 
-import { Rect2d, Size2d } from "common/types";
+import { Rect, Size2d } from "common/types";
 
 import { Cell } from "data/Cell";
 import { SheetJson } from "data/json";
@@ -10,7 +10,7 @@ interface SheetProps {
   title: string;
   size: Size2d;
   cells: Map<string, Cell>;
-  layout: Map<string, Rect2d>;
+  layout: Map<string, Rect>;
 }
 class Sheet extends Record<SheetProps>({
   id: "sheet.00000000",
@@ -26,7 +26,7 @@ class Sheet extends Record<SheetProps>({
       title,
       size: new Size2d(size),
       cells: Map(cells).map(Cell.fromJson),
-      layout: Map(layout).map(pos => new Rect2d(pos)),
+      layout: Map(layout).map(pos => new Rect(pos)),
     });
   }
 }
