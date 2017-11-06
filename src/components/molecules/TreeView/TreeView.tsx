@@ -1,59 +1,48 @@
 import classnames from "classnames";
 import React from "react";
 
-import { isBranch, Tree } from "common/types";
-
 import "./TreeView.scss";
 
-interface ItemFunctions<B, L> {
-  getKey: (tree: Tree<B, L>) => string;
-  renderItem: (tree: Tree<B, L>, path: B[]) => JSX.Element;
-}
-
-interface Props<B, L> extends ItemFunctions<B, L> {
-  tree: Tree<B, L>;
+interface Props<T> {
   className?: string;
+  renderItem: (path: T[]) => JSX.Element;
+  getChildren: (path: T[]) => T[];
 }
 
-interface ItemProps<B, L> extends ItemFunctions<B, L> {
-  tree: Tree<B, L>;
-  path: B[];
+class TreeView<T> extends React.PureComponent<Props<T>> {
+  render() {
+    const { className, renderItem, getChildren } = this.props;
+    return (
+      <ul className={classnames("treeView", className)}>
+        {getChildren([]).map(_ => (
+          <Item path={[]} renderItem={renderItem} getChildren={getChildren} />
+        ))}
+      </ul>
+    );
+  }
 }
 
-const TreeView = <B, L = B>(props: Props<B, L>) => (
-  <ul className={classnames("treeView", props.className)}>
-    {isBranch(props.tree) &&
-      props.tree.children.map(tree => (
-        <Item
-          key={props.getKey(tree)}
-          tree={tree}
-          getKey={props.getKey}
-          renderItem={props.renderItem}
-          path={["root"]}
-        />
-      ))}
-  </ul>
-);
+interface ItemProps<T> extends Props<T> {
+  path: T[];
+}
 
-class Item<B, L> extends React.PureComponent<ItemProps<B, L>> {
-  public render(): JSX.Element {
-    const { tree, path, getKey, renderItem } = this.props;
-    const childrenElem: boolean | JSX.Element = isBranch(tree) && (
+class Item<T> extends React.PureComponent<ItemProps<T>> {
+  render(): JSX.Element {
+    const { path, renderItem, getChildren } = this.props;
+    const childrenElem = (
       <ul className="treeView-item-children">
-        {tree.children.map(child => (
+        {getChildren(path).map(child => (
           <Item
-            key={getKey(child)}
-            tree={child}
-            getKey={getKey}
+            path={[...path, child]}
             renderItem={renderItem}
-            path={[...path, tree.value]}
+            getChildren={getChildren}
           />
         ))}
       </ul>
     );
     return (
       <li className="treeView-item">
-        <span className="treeView-item-body">{renderItem(tree, path)}</span>
+        <span className="treeView-item-body">{renderItem(path)}</span>
         {childrenElem}
       </li>
     );
