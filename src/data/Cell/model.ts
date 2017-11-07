@@ -1,42 +1,25 @@
 import { Record } from "immutable";
 
-import { CellJson } from "data/json";
+import { Rect } from "common/types";
 
-interface CellPropertyProps {
-  id: string;
-  type: "input" | "output";
-  index: number;
-}
-class CellProperty extends Record<CellPropertyProps>({
-  id: "",
-  type: "input",
-  index: 0,
-}) {
-  public static fromJson(json: any) {
-    return new CellProperty({
-      id: json.id,
-      type: json.type,
-      index: json.index,
-    });
-  }
-}
+import { CellJs } from "./js";
 
 interface CellProps {
   id: string;
-  property: CellProperty;
+  property: string;
+  node: string;
+  rect: Rect;
   format: {};
 }
 class Cell extends Record<CellProps>({
-  id: "cell.00000000",
-  property: new CellProperty(),
+  id: "cell.base",
+  property: "template.property.base",
+  node: "node.base",
+  rect: new Rect(),
   format: {},
 }) {
-  public static fromJson(json: CellJson) {
-    const { id, property } = json;
-    return new Cell({
-      id,
-      property: CellProperty.fromJson(property),
-    });
+  static fromJs(js: CellJs): Cell {
+    return new Cell(js);
   }
 }
 

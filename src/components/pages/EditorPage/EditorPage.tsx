@@ -1,4 +1,4 @@
-import { Map, Set } from "immutable";
+import { Map } from "immutable";
 import React from "react";
 import { connect } from "react-redux";
 import {
@@ -11,25 +11,20 @@ import { Dispatch } from "redux";
 import {
   AppDragLayer,
   GraphView,
-  NavView,
+  PaletteView,
   SheetWrapper,
 } from "components/organisms";
 
 import { Action, AppState } from "data/AppState";
-import { Nav, pathToNodePrototype } from "data/Nav";
-import { isGraph, NodePrototype } from "data/NodePrototype";
-import { PropertyCache } from "data/PropertyCache";
+import { Palette } from "data/Palette";
 import { Sheet } from "data/Sheet";
 
 import "./EditorPage.scss";
 
 interface StateProps {
   title: string;
-  nav: Nav;
-  nodePrototypes: Map<string, NodePrototype>;
   sheets: Map<string, Sheet>;
-  expandedNavItems: Set<string>;
-  propertyCache: PropertyCache;
+  palette: Palette;
 }
 interface DispatchProps {
   dispatch: Dispatch<Action>;
@@ -37,7 +32,7 @@ interface DispatchProps {
 type Props = StateProps & DispatchProps;
 
 class ProtoEditor extends React.PureComponent<Props> {
-  public render() {
+  render() {
     return (
       <Router>
         <main className="editor">
@@ -55,37 +50,32 @@ class ProtoEditor extends React.PureComponent<Props> {
   private renderNavView = (
     routeProps: RouteComponentProps<{ path: string }>,
   ) => (
-    <NavView
+    <PaletteView
       className="editor-document-nav"
-      nav={this.props.nav}
-      nodePrototypes={this.props.nodePrototypes}
-      expandedNavItems={this.props.expandedNavItems}
-      selectedNavItem={`root/${routeProps.match.params.path}`}
+      palette={this.props.palette}
+      currentPath={routeProps.match.params.path.split("/")}
     />
   );
 
   private renderGraphView = (
     routeProps: RouteComponentProps<{ path: string }>,
   ) => {
+    const { palette } = this.props;
     const segments = routeProps.match.params.path.split("/");
-    const prototype = pathToNodePrototype(
-      this.props.nodePrototypes,
-      this.props.nav,
-      segments,
-    );
-    if (prototype && isGraph(prototype)) {
+    const templateId = palette.pathToId(segments);
+    const graphTemplate = palette.getGraph(templateId || "");
+    if (graphTemplate) {
       return (
         <GraphView
           className="editor-document-content"
           path={segments}
-          prototype={prototype}
+          template={graphTemplate}
         />
       );
     } else {
       return (
         <div className="editor-document-error">
-          No formula exists at /{routeProps.match.params.path}.<br />
-          Prototype is {prototype}
+          No formula exists at /{routeProps.match.params.path}
         </div>
       );
     }
@@ -99,11 +89,8 @@ class ProtoEditor extends React.PureComponent<Props> {
 const EditorPage = connect<StateProps, DispatchProps, {}>(
   (state: AppState) => ({
     title: state.document.title,
-    nav: state.document.nav,
-    nodePrototypes: state.document.nodePrototypes,
     sheets: state.document.sheets,
-    expandedNavItems: state.uiState.expandedNavItems,
-    propertyCache: state.propertyCache,
+    palette: state.document.palette,
   }),
   (dispatch: Dispatch<Action>) => ({ dispatch }),
 )(ProtoEditor);

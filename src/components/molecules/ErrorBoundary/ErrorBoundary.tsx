@@ -15,14 +15,14 @@ class ErrorBoundary extends React.Component<Props, State> {
     this.state = {};
   }
 
-  public componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
     this.setState({
       error,
       errorInfo,
     });
   }
 
-  public render() {
+  render() {
     if (this.state.errorInfo) {
       return (
         <div className="errorBoundary">

@@ -1,17 +1,9 @@
 import { List, Map, Record } from "immutable";
 
-import {
-  DocumentJson,
-  FunctionNodePrototypeJson,
-  PropertyNodePrototypeJson,
-} from "data/json";
-import { Nav } from "data/Nav";
-import {
-  FunctionNodePrototype,
-  NodePrototype,
-  PropertyNodePrototype,
-} from "data/NodePrototype";
+import { Palette } from "data/Palette";
 import { Sheet } from "data/Sheet";
+
+import { DocumentJs } from "./js";
 
 interface DocumentProps {
   id: string;
@@ -20,9 +12,7 @@ interface DocumentProps {
   include: List<string>;
 
   sheets: Map<string, Sheet>;
-  nodePrototypes: Map<string, NodePrototype>;
-
-  nav: Nav;
+  palette: Palette;
 }
 
 class Document extends Record<DocumentProps>({
@@ -32,40 +22,18 @@ class Document extends Record<DocumentProps>({
   include: List(),
 
   sheets: Map(),
-  nodePrototypes: Map(),
-
-  nav: { value: "root" },
+  palette: new Palette(),
 }) {
-  public static fromJson(json: DocumentJson): Document {
-    const { id, title, version, include, sheets, nodePrototypes, nav } = json;
+  static fromJs(js: DocumentJs): Document {
+    const { id, title, version, include, sheets, palette } = js;
     return new Document({
       id,
       title,
       version,
       include: List(include),
 
-      sheets: Map(sheets).map(Sheet.fromJson),
-      nodePrototypes: Map(nodePrototypes).map(jsonPrototype => {
-        switch (jsonPrototype.id.split(".")[0]) {
-          case "function": {
-            return FunctionNodePrototype.fromJson(
-              jsonPrototype as FunctionNodePrototypeJson,
-            );
-          }
-          case "property": {
-            return PropertyNodePrototype.fromJson(
-              jsonPrototype as PropertyNodePrototypeJson,
-            );
-          }
-          default: {
-            throw new Error(
-              `Could not deserialize node prototype ${jsonPrototype.id}`,
-            );
-          }
-        }
-      }),
-
-      nav,
+      sheets: Map(sheets).map(Sheet.fromJs),
+      palette: Palette.fromJs(palette),
     });
   }
 }

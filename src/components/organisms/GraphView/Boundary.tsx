@@ -1,21 +1,12 @@
-import { List, Map } from "immutable";
 import React from "react";
 
-import { isEdgeTarget } from "data/Graph";
-import { GraphNodePrototype, isProperty } from "data/NodePrototype";
+import { GraphCardTemplate } from "data/CardTemplate";
 
 import { Pin } from "components/atoms";
 
-import { Param, PARAMS } from "data/common";
-
 interface CommonProps {
-  prototype: GraphNodePrototype;
-  propertyCache: Map<string, List<Param>>;
-  onValueChange?: (
-    prototypeId: string,
-    index: number,
-    newValue: string,
-  ) => void;
+  template: GraphCardTemplate;
+  onValueChange?: (prototypeId: string, node: string, newValue: string) => void;
 }
 interface InputProps extends CommonProps {
   input: true;
@@ -27,63 +18,40 @@ interface OutputProps extends CommonProps {
 }
 type Props = InputProps | OutputProps;
 
-const working = PARAMS.error("…", "Working…");
-
 class Boundary extends React.PureComponent<Props> {
-  public render() {
-    const { input, prototype, propertyCache } = this.props;
-    const pinNames = input ? prototype.inputNames : prototype.outputNames;
-    const type = input ? "input" : "output";
-    const params = propertyCache.get(prototype.id);
-    const defaultParam = isProperty(prototype) ? working : undefined;
+  render() {
+    const { input, template } = this.props;
+    const side = input ? "input" : "output";
+    const nodes = template.graph.nodes.filter(
+      node => node.type === "boundary" && node.side === side,
+    );
+    const nodeNames = input ? template.inputNames : template.outputNames;
 
     return (
-      <div className={`graphView-graph-panel graphView-graph-${type}Panel`}>
-        <div
-          className={`graphView-graph-panel-heading graphView-graph-${type}Panel-heading`}
-        >
-          {type}
-        </div>
-        {pinNames.map((name, index) => {
-          if (type === "input") {
-            const userValue = isProperty(prototype)
-              ? prototype.inputValues.get(index)
-              : "";
-            return (
-              <Pin
-                nodeId="input"
-                source
-                takesInput={isProperty(prototype)}
-                name={name}
-                userValue={userValue}
-                index={index}
-                key={name}
-                onChange={this.onPinValueChange}
-              />
-            );
-          } else {
-            return (
-              <Pin
-                nodeId="output"
-                target
-                takesInput={!isEdgeTarget(prototype.graph, "output", index)}
-                name={name}
-                param={params ? params.get(index) : defaultParam}
-                index={index}
-                key={name}
-              />
-            );
-          }
-        })}
+      <div className={`boundary mod-${side}`}>
+        <div className={`boundary-heading mod-${side}`}>{side}</div>
+        {nodes.map((node, id) => (
+          <div className={`boundary-node mod-${side}`}>
+            <div className={`boundary-node-name mod-${side}`}>
+              {nodeNames.get(node.index)}
+            </div>
+            <Pin
+              className={`boundary-node-pin mod-${side}`}
+              key={id}
+              id={id}
+              node={node}
+              onConnect={this.onPinConnect}
+            />
+          </div>
+        ))}
       </div>
     );
   }
 
-  private onPinValueChange = (index: number, newValue: string) => {
-    const { onValueChange } = this.props;
-    if (onValueChange) {
-      onValueChange(this.props.prototype.id, index, newValue);
-    }
+  private onPinConnect = (from: string, to: string) => {
+    // FINISHME
+    // tslint:disable-next-line:no-console
+    console.log(from, to);
   };
 }
 

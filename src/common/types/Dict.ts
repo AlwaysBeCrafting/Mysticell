@@ -1,5 +1,5 @@
 interface Dict<T> {
-  [id: string]: T;
+  [index: string]: T;
 }
 
 export { Dict };

@@ -1,5 +1,7 @@
 import { hash, List, Map, Record, Seq, Set, ValueObject } from "immutable";
 
+import { Dict } from "common/types";
+
 type NodeIndex = string;
 
 class EdgeIndex implements ValueObject {
@@ -17,15 +19,43 @@ class EdgeIndex implements ValueObject {
   }
 }
 
-interface GraphProps<Tn, Te> {
-  nodes: Map<NodeIndex, Tn>;
-  edges: Map<EdgeIndex, Te>;
+interface GraphProps<N, E = N> {
+  nodes: Map<NodeIndex, N>;
+  edges: Map<EdgeIndex, E>;
 }
 
-class Graph<Tn, Te = Tn> extends Record<GraphProps<Tn, Te>>({
+interface GraphMethods<N, E> {
+  readonly order: number;
+  readonly size: number;
+  directSuccessors(node: NodeIndex): Set<NodeIndex>;
+  directPredecessors(node: NodeIndex): Set<NodeIndex>;
+  neighborhood(node: NodeIndex): Set<NodeIndex>;
+  degree(node: NodeIndex): number;
+  inDegree(node: NodeIndex): number;
+  outDegree(node: NodeIndex): number;
+  nodeValue(node: NodeIndex): N;
+  edgeValue(source: NodeIndex, target: NodeIndex): E;
+  addNode(id: NodeIndex, value: N): this;
+  addNodes(nodes: Array<[NodeIndex, N]>): this;
+  removeNode(id: NodeIndex): this;
+  connectNodes(source: NodeIndex, target: NodeIndex, value: E): this;
+  disconnectNodes(source: NodeIndex, target: NodeIndex): Graph<N, E>;
+  findSources(): Seq.Set<NodeIndex>;
+  findSinks(): Seq.Set<NodeIndex>;
+  topoSort(): List<NodeIndex>;
+  hasCycles(): boolean;
+  serialize(): string;
+}
+
+interface SerializedGraph {
+  nodes: Dict<string>;
+  edges: Array<{ source: string; target: string; value: string }>;
+}
+
+class UntypedGraph<N, E = N> extends Record<GraphProps<any>>({
   nodes: Map(),
   edges: Map(),
-}) {
+}) implements GraphMethods<N, E> {
   get order() {
     return this.nodes.size;
   }
@@ -79,19 +109,19 @@ class Graph<Tn, Te = Tn> extends Record<GraphProps<Tn, Te>>({
       .count();
   }
 
-  nodeValue(node: NodeIndex): Tn {
+  nodeValue(node: NodeIndex): N {
     return this.getIn(["nodes", node]);
   }
 
-  edgeValue(source: NodeIndex, target: NodeIndex): Te {
+  edgeValue(source: NodeIndex, target: NodeIndex): E {
     return this.getIn(["edges", List([source, target])]);
   }
 
-  addNode(id: NodeIndex, value: Tn): this {
+  addNode(id: NodeIndex, value: N): this {
     return this.setIn(["nodes", id], value);
   }
 
-  addNodes(nodes: Array<[NodeIndex, Tn]>): this {
+  addNodes(nodes: Array<[NodeIndex, N]>): this {
     return this.mergeIn(["nodes"], nodes);
   }
 
@@ -99,11 +129,11 @@ class Graph<Tn, Te = Tn> extends Record<GraphProps<Tn, Te>>({
     return this.removeIn(["nodes", id]);
   }
 
-  connectNodes(source: NodeIndex, target: NodeIndex, value: Te): this {
+  connectNodes(source: NodeIndex, target: NodeIndex, value: E): this {
     return this.setIn(["edges", List([source, target])], value);
   }
 
-  disconnectNodes(source: NodeIndex, target: NodeIndex): Graph<Tn, Te> {
+  disconnectNodes(source: NodeIndex, target: NodeIndex): Graph<N, E> {
     return this.removeIn(["edges", List([source, target])]);
   }
 
@@ -133,6 +163,27 @@ class Graph<Tn, Te = Tn> extends Record<GraphProps<Tn, Te>>({
     return this._topoSort().hasCycles;
   }
 
+  serialize(
+    serializeNode: (node: N) => string = JSON.stringify,
+    serializeEdge: (edge: E) => string = JSON.stringify,
+  ): string {
+    return JSON.stringify(
+      {
+        nodes: this.nodes.map(n => serializeNode(n.value)).toJS(),
+        edges: this.edges
+          .map((value, { source, target }) => ({
+            source,
+            target,
+            value: serializeEdge(value),
+          }))
+          .toList()
+          .toArray(),
+      },
+      null,
+      2,
+    );
+  }
+
   private _topoSort(): { hasCycles: boolean; list: List<NodeIndex> } {
     let list: List<NodeIndex> = List();
     let sources = this.findSources().toSet();
@@ -149,6 +200,51 @@ class Graph<Tn, Te = Tn> extends Record<GraphProps<Tn, Te>>({
       });
     }
     return { hasCycles: list.size !== this.nodes.size, list };
+  }
+}
+
+type Graph<N, E> = Readonly<GraphProps<N, E>> &
+  GraphMethods<N, E> &
+  Record<GraphProps<N, E>>;
+
+function Graph<N, E>(values?: Partial<GraphProps<N, E>>): Graph<N, E> {
+  return new UntypedGraph(values);
+}
+
+namespace Graph {
+  export function deserialize<N, E>(
+    json: string,
+    deserializeNode: (node: string) => N = JSON.parse,
+    deserializeEdge: (edge: string) => E = JSON.parse,
+  ): Graph<N, E> {
+    const serializedGraph: SerializedGraph = JSON.parse(json);
+    return Graph.from(
+      Object.entries(serializedGraph.nodes).map<[string, N]>(([id, value]) => [
+        id,
+        deserializeNode(value),
+      ]),
+      serializedGraph.edges.map<
+        [string, string, E]
+      >(({ source, target, value }) => [
+        source,
+        target,
+        deserializeEdge(value),
+      ]),
+    );
+  }
+
+  export function from<N, E>(
+    nodes: Array<[NodeIndex, N]>,
+    edges: Array<[NodeIndex, NodeIndex, E]> = [],
+  ): Graph<N, E> {
+    return Graph<N, E>().withMutations(graph => {
+      for (const [node, value] of nodes) {
+        graph.addNode(node, value);
+      }
+      for (const [source, target, value] of edges) {
+        graph.connectNodes(source, target, value);
+      }
+    });
   }
 }
 

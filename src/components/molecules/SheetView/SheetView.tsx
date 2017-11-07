@@ -1,26 +1,23 @@
-import { Map } from "immutable";
 import React from "react";
 
 import { CellView, Icon, ToolButton } from "components/atoms";
 import { Toolbar } from "components/molecules";
 
 import { Cell } from "data/Cell";
-import { PARAMS } from "data/common";
-import { isProperty, NodePrototype } from "data/NodePrototype";
-import { PropertyCache } from "data/PropertyCache";
+import { Param, PARAMS } from "data/common";
+import { Palette } from "data/Palette";
 import { Sheet } from "data/Sheet";
 
 import "./SheetView.scss";
 
 interface Props {
   sheet: Sheet;
-  nodePrototypes: Map<string, NodePrototype>;
-  propertyCache: PropertyCache;
+  palette: Palette;
   onCellInput: (cell: Cell, newValue: string) => void;
 }
 class SheetView extends React.PureComponent<Props> {
-  public render() {
-    const { sheet } = this.props;
+  render() {
+    const { sheet, palette } = this.props;
     const style = {
       gridArea: `span ${sheet.size.height + 1} / span ${sheet.size.width}`,
     };
@@ -39,11 +36,14 @@ class SheetView extends React.PureComponent<Props> {
               <CellView
                 key={cell.id}
                 className="sheetView-grid-cell"
-                param={this.getParamForCell(cell)!}
-                rect={sheet.layout.get(cell.id)!}
+                param={this.getParamForCell(cell)}
+                rect={cell.rect}
                 cell={cell}
                 onChange={this.onCellInput}
-                readonly={cell.property.type !== "input"}
+                readonly={
+                  palette.getGraph(cell.property)!.graph.nodes.get(cell.node)!
+                    .side !== "input"
+                }
               />
             ))
             .toList()}
@@ -52,20 +52,13 @@ class SheetView extends React.PureComponent<Props> {
     );
   }
 
-  private getParamForCell(cell: Cell) {
-    const { propertyCache, nodePrototypes } = this.props;
-    const cached = propertyCache.get(cell.property.id);
-    const cellPrototype = nodePrototypes.get(cell.property.id);
-    const cellValue = isProperty(cellPrototype)
-      ? cellPrototype.inputValues.get(cell.property.index)
-      : "";
-    if (cell.property.type === "input") {
-      return PARAMS.string(cellValue || "");
-    }
-    if (cached) {
-      return cached.get(cell.property.index);
-    }
-    return PARAMS.error("…", "Value has changed. Loading the new value now.");
+  private getParamForCell(cell: Cell): Param {
+    const { palette } = this.props;
+    const template = palette.getProperty(cell.property)!;
+    const node = template.graph.nodes.get(cell.node)!;
+    return node.side === "input"
+      ? PARAMS.string(template.inputValues.get(node.index)!)
+      : template.outputValues.get(node.index)!;
   }
 
   private onCellInput = (cell: Cell, newValue: string) => {

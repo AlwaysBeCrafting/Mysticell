@@ -1,104 +1,127 @@
-const exampleDoc = {
-  id: "document.0000",
+import { DocumentJs } from "data/Document";
+
+const exampleDoc: DocumentJs = {
+  id: "document.0",
   title: "Example Document",
   version: 0,
   include: [],
   sheets: {
-    "sheet.0000": {
-      id: "sheet.0000",
-      title: "Sheet 1",
+    "sheet.0": {
+      id: "sheet.0",
+      title: "Example Sheet",
       size: { width: 16, height: 20 },
       cells: {
-        "cell.0000": {
-          id: "cell.0000",
-          property: { id: "property.0001", type: "input", index: 0 },
+        "cell.0": {
+          id: "cell.0",
+          property: "template.property.1",
+          node: "10",
+          position: { left: 0, top: 0, right: 2, bottom: 1 },
         },
-        "cell.0001": {
-          id: "cell.0001",
-          property: { id: "property.0001", type: "output", index: 0 },
+        "cell.1": {
+          id: "cell.1",
+          property: "template.property.1",
+          node: "13",
+          position: { left: 2, top: 0, right: 4, bottom: 1 },
         },
-        "cell.0002": {
-          id: "cell.0002",
-          property: { id: "property.0001", type: "output", index: 1 },
+        "cell.2": {
+          id: "cell.2",
+          property: "template.property.1",
+          node: "14",
+          position: { left: 2, top: 1, right: 4, bottom: 2 },
         },
-      },
-      layout: {
-        "cell.0000": { left: 0, top: 0, right: 2, bottom: 1 },
-        "cell.0001": { left: 2, top: 0, right: 4, bottom: 1 },
-        "cell.0002": { left: 2, top: 1, right: 4, bottom: 2 },
       },
     },
   },
-  nodePrototypes: {
-    "function.0000": {
-      id: "function.0000",
-      name: "Ability Mod",
-      inputNames: ["Ability Score"],
-      outputNames: ["Modifier"],
-      graph: {
-        input: {
-          id: "input",
-          edges: [{ target: "node.0000", pinIndex: { src: 0, dst: 0 } }],
-        },
-        "node.0000": {
-          id: "node.0000",
-          constants: ["0", "10"],
-          prototype: "primitive.subtract",
-          edges: [{ target: "node.0001", pinIndex: { src: 0, dst: 0 } }],
-        },
-        "node.0001": {
-          id: "node.0001",
-          constants: ["0", "2"],
-          prototype: "primitive.divide",
-          edges: [{ target: "node.0002", pinIndex: { src: 0, dst: 0 } }],
-        },
-        "node.0002": {
-          id: "node.0002",
-          constants: ["0"],
-          prototype: "primitive.floor",
-          edges: [{ target: "output", pinIndex: { src: 0, dst: 0 } }],
-        },
-      },
-      layout: {
-        "node.0000": { x: 2, y: 1 },
-        "node.0001": { x: 8, y: 1 },
-        "node.0002": { x: 14, y: 1 },
-      },
-    },
-    "property.0001": {
-      id: "property.0001",
-      name: "Strength",
-      inputNames: ["Strength"],
-      outputNames: ["Strength", "Str Mod"],
-      inputValues: ["15"],
-      graph: {
-        input: {
-          id: "input",
-          edges: [
-            { target: "output", pinIndex: { src: 0, dst: 0 } },
-            { target: "node.0003", pinIndex: { src: 0, dst: 0 } },
+  palette: {
+    documentTree: {
+      value: { type: "group", name: "" },
+      children: [
+        {
+          value: { type: "group", name: "Abilities" },
+          children: [
+            { value: { type: "item", template: "template.function.0" } },
+            { value: { type: "item", template: "template.property.1" } },
           ],
         },
-        "node.0003": {
-          id: "node.0003",
-          constants: ["0"],
-          prototype: "function.0000",
-          edges: [{ target: "output", pinIndex: { src: 0, dst: 1 } }],
+      ],
+    },
+    templates: {
+      "template.function.0": {
+        id: "template.function.0",
+        name: "Ability Mod",
+        inputNames: ["Ability Score"],
+        outputNames: ["Modifier"],
+        graph: {
+          nodes: {
+            "0": { type: "boundary", side: "input", index: 0 },
+            "1": { type: "card", card: "card.0", side: "input", index: 0 },
+            "2": { type: "card", card: "card.0", side: "input", index: 1 },
+            "3": { type: "card", card: "card.0", side: "output", index: 0 },
+            "4": { type: "card", card: "card.1", side: "input", index: 0 },
+            "5": { type: "card", card: "card.1", side: "input", index: 1 },
+            "6": { type: "card", card: "card.1", side: "output", index: 0 },
+            "7": { type: "card", card: "card.2", side: "input", index: 0 },
+            "8": { type: "card", card: "card.2", side: "output", index: 0 },
+            "9": { type: "boundary", side: "output", index: 0 },
+          },
+          edges: [
+            { source: "0", target: "1" },
+            { source: "3", target: "4" },
+            { source: "6", target: "7" },
+            { source: "8", target: "9" },
+          ],
+        },
+        cards: {
+          "card.0": {
+            id: "card.0",
+            template: "template.primitive.subtract",
+            values: ["", "10"],
+            position: { x: 2, y: 1 },
+          },
+          "card.1": {
+            id: "card.1",
+            template: "template.primitive.divide",
+            values: ["", "2"],
+            position: { x: 8, y: 1 },
+          },
+          "card.2": {
+            id: "card.2",
+            template: "template.primitive.floor",
+            values: [""],
+            position: { x: 14, y: 1 },
+          },
         },
       },
-      layout: {
-        "node.0003": { x: 2, y: 3 },
+      "template.property.1": {
+        id: "template.property.1",
+        name: "Strength",
+        inputNames: ["Strength"],
+        outputNames: ["Strength", "Str Mod"],
+        inputValues: ["15"],
+        graph: {
+          nodes: {
+            "10": { type: "boundary", side: "input", index: 0 },
+            "11": { type: "card", card: "card.3", side: "input", index: 0 },
+            "12": { type: "card", card: "card.3", side: "output", index: 0 },
+            "13": { type: "boundary", side: "output", index: 0 },
+            "14": { type: "boundary", side: "output", index: 1 },
+          },
+          edges: [
+            { source: "10", target: "13" },
+            { source: "10", target: "11" },
+            { source: "12", target: "14" },
+          ],
+        },
+        cards: {
+          "card.3": {
+            id: "card.3",
+            template: "template.function.0",
+            values: [""],
+            position: { x: 2, y: 3 },
+          },
+        },
       },
     },
-  },
-  nav: {
-    value: "root",
-    children: [
-      {
-        value: "Abilities",
-        children: [{ value: "function.0000" }, { value: "property.0001" }],
-      },
-    ],
   },
 };
 

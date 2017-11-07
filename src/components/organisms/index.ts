@@ -1,4 +1,4 @@
 export { AppDragLayer } from "./AppDragLayer";
 export { GraphView } from "./GraphView";
-export { NavView } from "./NavView";
+export { PaletteView } from "./PaletteView";
 export { SheetWrapper } from "./SheetWrapper";

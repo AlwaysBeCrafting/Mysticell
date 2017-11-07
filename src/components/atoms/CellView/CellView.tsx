@@ -18,7 +18,7 @@ interface Props {
 }
 
 class CellView extends React.PureComponent<Props> {
-  public render() {
+  render() {
     const { className, param, rect, readonly } = this.props;
     const style = {
       gridArea: [rect.top, rect.left, rect.bottom, rect.right]
