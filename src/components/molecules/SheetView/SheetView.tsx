@@ -54,11 +54,20 @@ class SheetView extends React.PureComponent<Props> {
 
   private getParamForCell(cell: Cell): Param {
     const { palette } = this.props;
-    const template = palette.getProperty(cell.property)!;
-    const node = template.graph.nodes.get(cell.node)!;
+    const template = palette.getProperty(cell.property);
+    if (!template) {
+      return PARAMS.error("PROP", "Property doesn't exist");
+    }
+    const node = template.graph.nodes.get(cell.node);
+    if (!node) {
+      return PARAMS.error("NODE", "Node doesn't exist");
+    }
     return node.side === "input"
-      ? PARAMS.string(template.inputValues.get(node.index)!)
-      : template.outputValues.get(node.index)!;
+      ? PARAMS.string(template.inputValues.get(node.index, ""))
+      : template.outputValues.get(
+          node.index,
+          PARAMS.error("VAL", "Output value doesn't exist"),
+        );
   }
 
   private onCellInput = (cell: Cell, newValue: string) => {
