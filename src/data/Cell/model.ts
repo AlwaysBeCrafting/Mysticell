@@ -19,7 +19,12 @@ class Cell extends Record<CellProps>({
   format: {},
 }) {
   static fromJs(js: CellJs): Cell {
-    return new Cell(js);
+    return new Cell({
+      id: js.id,
+      property: js.property,
+      node: js.node,
+      rect: new Rect(js.rect.left, js.rect.top, js.rect.right, js.rect.bottom),
+    });
   }
 }
 
