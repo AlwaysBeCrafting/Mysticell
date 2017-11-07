@@ -53,7 +53,7 @@ class ProtoEditor extends React.PureComponent<Props> {
     <PaletteView
       className="editor-document-nav"
       palette={this.props.palette}
-      currentPath={routeProps.match.params.path.split("/")}
+      currentPath={(routeProps.match.params.path || "").split("/")}
     />
   );
 

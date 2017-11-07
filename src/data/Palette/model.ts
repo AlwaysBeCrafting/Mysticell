@@ -117,16 +117,19 @@ class Palette extends Record<PaletteProps>({
 function treeFromJs(js: TreeJs): TemplateTree {
   if (js.value.type === "item") {
     return Tree({ value: new PaletteItem(js.value.template) });
-  } else {
+  }
+  if (js.value.type === "group") {
     const jsGroup = js as TreeGroupJs;
     return Tree({
-      value: new PaletteGroup(js.value.name),
-      children: Seq.Indexed(jsGroup.children.map(treeFromJs))
+      value: new PaletteGroup(jsGroup.value.name),
+      children: Seq.Indexed(jsGroup.children)
         .toKeyedSeq()
+        .map(treeFromJs)
         .mapKeys((_, v) => v.value)
         .toMap(),
     });
   }
+  throw new Error(`Unexpected value ${js} when deserializing template tree`);
 }
 
 export { PaletteGroup, PaletteItem };

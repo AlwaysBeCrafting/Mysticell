@@ -48,13 +48,14 @@ class PartialNavView extends React.PureComponent<Props> {
         <TreeView
           className="navView-tree"
           renderItem={this.renderItem}
+          getItemKey={this.getItemKey}
           getChildren={this.getChildren}
         />
       </div>,
     );
   }
 
-  private renderItem(path: TemplatePath) {
+  private renderItem = (path: TemplatePath) => {
     const item = path[path.length - 1];
     if (item.type === "group") {
       return (
@@ -78,11 +79,23 @@ class PartialNavView extends React.PureComponent<Props> {
         />
       );
     }
-  }
+  };
 
-  private getChildren(path: TemplatePath) {
-    return this.props.palette.documentTree.getSubtree(path)!.children.toArray();
-  }
+  private getItemKey = (path: TemplatePath) => {
+    // tslint:disable:no-console
+    console.log(this.props.palette.documentTree);
+    console.log(path);
+    return `${path[path.length - 1].hashCode()}`;
+  };
+
+  private getChildren = (path: TemplatePath) => {
+    const subtree = this.props.palette.documentTree.getSubtree(path);
+    if (subtree) {
+      return subtree.children.keySeq().toArray();
+    } else {
+      return [];
+    }
+  };
 
   private toggleItemExpanded = (path: TemplatePath) => {
     this.props.dispatch(toggleItem(path));
