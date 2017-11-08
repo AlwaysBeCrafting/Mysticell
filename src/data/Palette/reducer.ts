@@ -1,13 +1,11 @@
-import { List, ValueObject } from "immutable";
 import { combineReducers } from "redux-immutable";
 
 import { Tree } from "common/types";
 
 import { reducer as templates } from "data/CardTemplate";
-import { TemplatePath, TemplateTree } from "data/Palette";
 
 import { Action, ActionTypes } from "./actions";
-import { PaletteGroup } from "./model";
+import { PaletteGroup, TemplateTree } from "./model";
 
 function documentTree(
   state: TemplateTree = Tree(),
@@ -15,30 +13,30 @@ function documentTree(
 ): TemplateTree {
   switch (action.type) {
     case ActionTypes.EXPAND_ITEM: {
-      const path = pathToList(action.payload.path);
-      return state.updateIn(path, item => new PaletteGroup(item.name, true));
+      const { path } = action.payload;
+      const item = state.getItem(path);
+      return item && item.type === "group"
+        ? state.setItem(path, new PaletteGroup(item.name, true))
+        : state;
     }
     case ActionTypes.COLLAPSE_ITEM: {
-      const path = pathToList(action.payload.path);
-      return state.updateIn(path, item => new PaletteGroup(item.name, false));
+      const { path } = action.payload;
+      const item = state.getItem(path);
+      return item && item.type === "group"
+        ? state.setItem(path, new PaletteGroup(item.name, false))
+        : state;
     }
     case ActionTypes.TOGGLE_ITEM: {
-      const path = pathToList(action.payload.path);
-      return state.updateIn(
-        path,
-        item => new PaletteGroup(item.name, !item.expanded),
-      );
+      const { path } = action.payload;
+      const item = state.getItem(path);
+      return item && item.type === "group"
+        ? state.setItem(path, new PaletteGroup(item.name, !item.isExpanded))
+        : state;
     }
     default: {
       return state;
     }
   }
-}
-
-function pathToList(path: TemplatePath) {
-  return (List(path) as List<ValueObject | string>)
-    .interpose("children")
-    .unshift("children");
 }
 
 const reducer = combineReducers({

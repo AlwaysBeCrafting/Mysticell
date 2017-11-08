@@ -25,10 +25,16 @@ class CellView extends React.PureComponent<Props> {
         .map(val => val + 1)
         .join(" / "),
     };
+    const message = param.type === "error" ? param.message : "";
     return (
-      <div style={style} className={classnames("cellView", className)}>
-        {readonly && <div className="cellView-content">{param.value}</div>}
-        {!readonly && (
+      <div
+        style={style}
+        className={classnames("cellView", className)}
+        title={message}
+      >
+        {readonly ? (
+          <div className="cellView-content">{param.value}</div>
+        ) : (
           <input
             className="cellView-content mod-input"
             defaultValue={`${param.value}`}

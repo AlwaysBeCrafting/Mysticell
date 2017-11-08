@@ -16,7 +16,7 @@ import { TreeView } from "components/molecules";
 import { Action } from "data/AppState";
 import { CardSnapshot } from "data/Card";
 import { removeCard } from "data/CardTemplate";
-import { Palette, TemplatePath, toggleItem } from "data/Palette";
+import { Palette, PaletteNode, TemplatePath, toggleItem } from "data/Palette";
 
 import { DirItemView } from "./DirItemView";
 import { EndItemView } from "./EndItemView";
@@ -47,54 +47,49 @@ class PartialNavView extends React.PureComponent<Props> {
       <div className={classnames("navView", className)}>
         <TreeView
           className="navView-tree"
+          tree={this.props.palette.documentTree}
           renderItem={this.renderItem}
           getItemKey={this.getItemKey}
-          getChildren={this.getChildren}
+          shouldRenderChildren={this.shouldRenderChildren}
         />
       </div>,
     );
   }
 
-  private renderItem = (path: TemplatePath) => {
-    const item = path[path.length - 1];
+  private renderItem = (item: PaletteNode, path: TemplatePath) => {
     if (item.type === "group") {
       return (
         <DirItemView
           name={item.name}
           path={path}
-          expanded
+          expanded={item.isExpanded}
           onClick={this.toggleItemExpanded}
         />
       );
     } else {
+      const template = this.props.palette.getTemplate(item.template);
+      if (!template) {
+        return null;
+      }
       return (
         <EndItemView
           path={path}
-          template={this.props.palette.getTemplate(item.template)!}
+          template={template}
           selected={
             this.props.currentPath.join("/") ===
-            `${path.join("/")}/${this.props.palette.getTemplate(item.template)!
-              .name}`
+            `${path.join("/")}/${template && template.name}`
           }
         />
       );
     }
   };
 
-  private getItemKey = (path: TemplatePath) => {
-    // tslint:disable:no-console
-    console.log(this.props.palette.documentTree);
-    console.log(path);
-    return `${path[path.length - 1].hashCode()}`;
+  private getItemKey = (item: PaletteNode) => {
+    return `${item.hashCode()}`;
   };
 
-  private getChildren = (path: TemplatePath) => {
-    const subtree = this.props.palette.documentTree.getSubtree(path);
-    if (subtree) {
-      return subtree.children.keySeq().toArray();
-    } else {
-      return [];
-    }
+  private shouldRenderChildren = (item: PaletteNode): boolean => {
+    return !!item && item.type === "group" && item.isExpanded;
   };
 
   private toggleItemExpanded = (path: TemplatePath) => {

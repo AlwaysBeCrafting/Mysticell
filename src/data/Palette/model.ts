@@ -1,4 +1,4 @@
-import { Map, Record, Seq, ValueObject } from "immutable";
+import { List, Map, Record, Seq, ValueObject } from "immutable";
 
 import { Tree } from "common/types";
 import { hashAll } from "common/utils";
@@ -21,7 +21,7 @@ import { PaletteJs, TreeGroupJs, TreeJs } from "./js";
 
 class PaletteGroup implements ValueObject {
   readonly type = "group";
-  constructor(readonly name: string, readonly expanded: boolean = false) {}
+  constructor(readonly name: string, readonly isExpanded: boolean = true) {}
 
   equals(other: PaletteGroup): boolean {
     return other.type === this.type && other.name === this.name;
@@ -44,8 +44,9 @@ class PaletteItem implements ValueObject {
   }
 }
 
-type TemplateTree = Tree<PaletteGroup | PaletteItem>;
-type TemplatePath = Array<PaletteGroup | PaletteItem>;
+type PaletteNode = PaletteGroup | PaletteItem;
+type TemplateTree = Tree<string, PaletteNode>;
+type TemplatePath = List<string>;
 
 interface PaletteProps {
   documentTree: TemplateTree;
@@ -64,12 +65,11 @@ class Palette extends Record<PaletteProps>({
     });
   }
 
-  pathToId(path: string[]): string | undefined {
+  idFromPath(path: string[]): string | undefined {
     let tree = this.documentTree;
     for (const segment of path) {
-      const groupIndex = new PaletteGroup(segment);
-      if (tree.children.has(groupIndex)) {
-        tree = tree.children.get(groupIndex)!;
+      if (tree.children.has(segment)) {
+        tree = tree.children.get(segment)!;
         continue;
       }
       const item = tree.children.find(
@@ -125,12 +125,20 @@ function treeFromJs(js: TreeJs): TemplateTree {
       children: Seq.Indexed(jsGroup.children)
         .toKeyedSeq()
         .map(treeFromJs)
-        .mapKeys((_, v) => v.value)
+        .mapKeys(
+          (_, v) =>
+            v.value.type === "group" ? v.value.name : v.value.template,
+        )
         .toMap(),
     });
   }
   throw new Error(`Unexpected value ${js} when deserializing template tree`);
 }
 
-export { PaletteGroup, PaletteItem };
+function stringFromPath(path: TemplatePath): string {
+  return path.join("\n");
+}
+
+export { PaletteGroup, PaletteItem, PaletteNode };
 export { Palette, TemplatePath, TemplateTree };
+export { stringFromPath };

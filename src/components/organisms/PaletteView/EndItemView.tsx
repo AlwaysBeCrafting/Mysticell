@@ -45,7 +45,7 @@ class PartialEndItemView extends React.PureComponent<Props> {
       <div>
         <Link
           className={classnames("navView-item", { "is-selected": selected })}
-          to={`/${path.slice(1).join("/")}/${template.name}`}
+          to={`/${path.butLast().join("/")}/${template.name}`}
         >
           <Icon
             className={classnames("navView-item-icon", {

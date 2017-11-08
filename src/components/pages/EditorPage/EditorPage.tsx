@@ -62,7 +62,7 @@ class ProtoEditor extends React.PureComponent<Props> {
   ) => {
     const { palette } = this.props;
     const segments = routeProps.match.params.path.split("/");
-    const templateId = palette.pathToId(segments);
+    const templateId = palette.idFromPath(segments);
     const graphTemplate = palette.getGraph(templateId || "");
     if (graphTemplate) {
       return (

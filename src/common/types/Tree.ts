@@ -1,68 +1,82 @@
 import { List, Map, Record, ValueObject } from "immutable";
 
-type TreeValue = ValueObject | number | string | boolean;
+type TreeKey = ValueObject | number | string | boolean;
 
-interface TreeProps<T extends TreeValue> {
-  value: T;
-  children: Map<T, Tree<T>>;
+interface TreeProps<K extends TreeKey, V> {
+  value: V;
+  children: Map<K, Tree<K, V>>;
 }
-interface TreeMethods<T extends TreeValue> {
-  getSubtree(path: T[]): Tree<T> | undefined;
-  addItem(path: T[], children?: Map<T, Tree<T>>): this;
-  hasItem(path: T[]): boolean;
-  removeItem(path: T[]): this;
-  moveItem(oldPath: T[], newPath: T[]): this;
+interface TreeMethods<K extends TreeKey, V> {
+  getSubtree(path: List<K>): this | undefined;
+  setItem(path: List<K>, value: V, children?: Map<K, Tree<K, V>>): this;
+  getItem(path: List<K>): V | undefined;
+  hasItem(path: List<K>): boolean;
+  removeItem(path: List<K>): this;
+  moveItem(oldPath: List<K>, newPath: List<K>): this;
 }
-class UntypedTree<T extends TreeValue> extends Record<TreeProps<any>>({
+class UntypedTree<K extends TreeKey, V> extends Record<TreeProps<any, any>>({
   value: undefined!,
   children: Map(),
-}) implements TreeMethods<T> {
-  hasItem(path: T[] = []): boolean {
-    if (path.length === 0) {
+}) implements TreeMethods<K, V> {
+  hasItem(path: List<K> = List()): boolean {
+    if (path.isEmpty()) {
       return true;
     }
-    const child = this.children.get(path[0]);
-    return !!child && child.hasItem(path.slice(1));
+    const child = this.children.first();
+    return !!child && child.hasItem(path.delete(0));
   }
 
-  getSubtree(path: T[]): Tree<T> | undefined {
-    if (path.length === 0) {
+  getSubtree(path: List<K>): this | undefined {
+    if (path.isEmpty()) {
       return this;
     }
-    return this.getIn(this.pathToList(path));
+    return this.getIn(this.pathWithChildren(path));
   }
 
-  addItem(path: T[], children?: Map<T, Tree<T>>): this {
-    const value = path[path.length - 1];
+  setItem(path: List<K>, value: V, children?: Map<K, Tree<K, V>>): this {
+    if (path.isEmpty()) {
+      return this;
+    }
+    const childrenPath = this.pathWithChildren(path);
+    const oldTree = (this.getIn(childrenPath) as Tree<K, V>) || Tree();
     return this.setIn(
-      this.pathToList(path).push("children", value),
-      Tree({ value, children }),
+      childrenPath,
+      oldTree.set("value", value).set("children", children || oldTree.children),
     );
   }
 
-  removeItem(path: T[]): this {
-    return this.removeIn(this.pathToList(path));
+  getItem(path: List<K>): V | undefined {
+    const subtree = this.getSubtree(path);
+    return subtree && subtree.value;
   }
 
-  moveItem(oldPath: T[], newPath: T[]): this {
+  removeItem(path: List<K>): this {
+    return this.removeIn(this.pathWithChildren(path));
+  }
+
+  moveItem(oldPath: List<K>, newPath: List<K>): this {
     const oldSubtree = this.getSubtree(oldPath);
     if (!oldSubtree) {
       return this;
     }
-    return this.addItem(newPath, oldSubtree.children).removeItem(oldPath);
+    return this.removeItem(oldPath).setItem(
+      newPath,
+      oldSubtree.value,
+      oldSubtree.children,
+    );
   }
 
-  private pathToList(path: T[]): List<T | "children"> {
-    return List<T | "children">(path)
-      .interpose("children")
-      .unshift("children");
+  private pathWithChildren(path: List<K | "children">): List<K | "children"> {
+    return path.interpose("children").unshift("children");
   }
 }
-type Tree<T extends TreeValue> = TreeMethods<T> &
-  Readonly<TreeProps<T>> &
-  Record<TreeProps<T>>;
-function Tree<T extends TreeValue>(values?: Partial<TreeProps<T>>): Tree<T> {
+type Tree<K extends TreeKey, V> = TreeMethods<K, V> &
+  Readonly<TreeProps<K, V>> &
+  Record<TreeProps<K, V>>;
+function Tree<T extends TreeKey, V>(
+  values?: Partial<TreeProps<T, V>>,
+): Tree<T, V> {
   return new UntypedTree(values);
 }
 
-export { Tree };
+export { Tree, TreeKey };
