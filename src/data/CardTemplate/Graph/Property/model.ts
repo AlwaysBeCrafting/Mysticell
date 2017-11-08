@@ -1,13 +1,16 @@
 import { List, Map, Record } from "immutable";
 
-import { Graph, Position2d } from "common/types";
+import { Graph } from "common/types";
 
 import { Card } from "data/Card";
 import { CardTemplate } from "data/CardTemplate";
 import { Param } from "data/common";
-import { Palette } from "data/Palette";
 
-import { GraphCardTemplateMethods, GraphCardTemplateProps } from "../model";
+import {
+  GraphCardTemplateMethods,
+  GraphCardTemplateProps,
+  nodePosition,
+} from "../model";
 
 import { PropertyCardTemplateJs } from "./js";
 
@@ -38,27 +41,7 @@ class PropertyCardTemplate extends Record<PropertyCardTemplateProps>({
     });
   }
 
-  nodePosition(nodeId: string, palette: Palette): Position2d {
-    const node = this.graph.nodes.get(nodeId)!;
-    if (node.type === "card") {
-      const card = this.cards.get(node.card)!;
-      const template = palette.getTemplate(card.template);
-      if (node.side === "input") {
-        const outputCount = template ? template.outputNames.size : 0;
-        return new Position2d(
-          card.position.x,
-          card.position.y + outputCount + node.index + 1 + 0.5,
-        );
-      } else {
-        return new Position2d(
-          card.position.x + 4,
-          card.position.y + node.index + 1 + 0.5,
-        );
-      }
-    } else {
-      return new Position2d(this.gridWidth(), 0.5 + 2);
-    }
-  }
+  nodePosition = nodePosition;
 
   gridWidth(): number {
     return this.cards.map(card => card.position.x).max()! + 4 + 2;

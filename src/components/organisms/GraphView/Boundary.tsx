@@ -30,20 +30,21 @@ class Boundary extends React.PureComponent<Props> {
     return (
       <div className={`boundary mod-${side}`}>
         <div className={`boundary-heading mod-${side}`}>{side}</div>
-        {nodes.map((node, id) => (
-          <div className={`boundary-node mod-${side}`}>
-            <div className={`boundary-node-name mod-${side}`}>
-              {nodeNames.get(node.index)}
+        {nodes
+          .map((node, id) => (
+            <div className={`boundary-node mod-${side}`} key={id}>
+              <div className={`boundary-node-name mod-${side}`}>
+                {nodeNames.get(node.index)}
+              </div>
+              <Pin
+                className={`boundary-node-pin mod-${side}`}
+                id={id}
+                node={node}
+                onConnect={this.onPinConnect}
+              />
             </div>
-            <Pin
-              className={`boundary-node-pin mod-${side}`}
-              key={id}
-              id={id}
-              node={node}
-              onConnect={this.onPinConnect}
-            />
-          </div>
-        ))}
+          ))
+          .toIndexedSeq()}
       </div>
     );
   }

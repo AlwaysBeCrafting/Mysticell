@@ -13,6 +13,7 @@ import {
   isProperty,
   isTable,
   PrimitiveCardTemplate,
+  PRIMITIVES,
   PropertyCardTemplate,
   TableCardTemplate,
 } from "data/CardTemplate";
@@ -56,13 +57,12 @@ interface PaletteProps {
 class Palette extends Record<PaletteProps>({
   documentTree: Tree(),
   primitiveTree: Tree(),
-  templates: Map(),
+  templates: PRIMITIVES,
 }) {
   static fromJs(js: PaletteJs) {
     return new Palette({
       documentTree: treeFromJs(js.documentTree),
-      templates: Map(js.templates).map(CardTemplate.fromJs),
-    });
+    }).mergeIn(["templates"], Map(js.templates).map(CardTemplate.fromJs));
   }
 
   idFromPath(path: string[]): string | undefined {

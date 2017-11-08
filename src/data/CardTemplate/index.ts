@@ -20,7 +20,7 @@ export {
   CardNodeValue,
   NodeValue,
 } from "./Graph";
-export { PrimitiveCardTemplate, isPrimitive } from "./Primitive";
+export { PrimitiveCardTemplate, isPrimitive, PRIMITIVES } from "./Primitive";
 export { TableCardTemplate, isTable } from "./Table";
 export { CardTemplate } from "./model";
 

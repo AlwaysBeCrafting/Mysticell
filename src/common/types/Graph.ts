@@ -130,11 +130,11 @@ class UntypedGraph<N, E = N> extends Record<GraphProps<any>>({
   }
 
   connectNodes(source: NodeIndex, target: NodeIndex, value: E): this {
-    return this.setIn(["edges", List([source, target])], value);
+    return this.setIn(["edges", new EdgeIndex(source, target)], value);
   }
 
   disconnectNodes(source: NodeIndex, target: NodeIndex): Graph<N, E> {
-    return this.removeIn(["edges", List([source, target])]);
+    return this.removeIn(["edges", new EdgeIndex(source, target)]);
   }
 
   findSources(): Seq.Set<NodeIndex> {

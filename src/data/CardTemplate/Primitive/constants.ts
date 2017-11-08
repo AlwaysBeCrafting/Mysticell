@@ -1,7 +1,8 @@
-import { List, Map } from "immutable";
+import { List } from "immutable";
 
-import { CardTemplate, PrimitiveCardTemplate } from "data/CardTemplate";
 import { Param, PARAMS } from "data/common";
+
+import { PrimitiveCardTemplate } from "./model";
 
 const padEmpty = (params: List<Param>, length: number) =>
   params.setSize(length).map(p => p || PARAMS.empty());
@@ -45,53 +46,53 @@ const verifyAndReduce = (
   return List([PARAMS.number(result)]);
 };
 
-const PRIMITIVES = Map(
-  [
-    new PrimitiveCardTemplate({
-      id: "template.primitive.add",
-      name: "Add",
-      inputNames: List(["A", "B"]),
-      outputNames: List(["Sum"]),
-      evaluate: (params: List<Param>) =>
-        verifyAndReduce(padEmpty(params, 2), 0, (x, y) => x + y),
-    }),
+const PRIMITIVES = List.of(
+  new PrimitiveCardTemplate({
+    id: "template.primitive.add",
+    name: "Add",
+    inputNames: List(["A", "B"]),
+    outputNames: List(["Sum"]),
+    evaluate: (params: List<Param>) =>
+      verifyAndReduce(padEmpty(params, 2), 0, (x, y) => x + y),
+  }),
 
-    new PrimitiveCardTemplate({
-      id: "template.primitive.subtract",
-      name: "Subtract",
-      inputNames: List(["A", "B"]),
-      outputNames: List(["Difference"]),
-      evaluate: (params: List<Param>) =>
-        verifyAndReduce(padEmpty(params, 2), 0, (x, y) => x - y),
-    }),
+  new PrimitiveCardTemplate({
+    id: "template.primitive.subtract",
+    name: "Subtract",
+    inputNames: List(["A", "B"]),
+    outputNames: List(["Difference"]),
+    evaluate: (params: List<Param>) =>
+      verifyAndReduce(padEmpty(params, 2), 0, (x, y) => x - y),
+  }),
 
-    new PrimitiveCardTemplate({
-      id: "template.primitive.multiply",
-      name: "Multiply",
-      inputNames: List(["A", "B"]),
-      outputNames: List(["Product"]),
-      evaluate: (params: List<Param>) =>
-        verifyAndReduce(padEmpty(params, 2), 1, (x, y) => x * y),
-    }),
+  new PrimitiveCardTemplate({
+    id: "template.primitive.multiply",
+    name: "Multiply",
+    inputNames: List(["A", "B"]),
+    outputNames: List(["Product"]),
+    evaluate: (params: List<Param>) =>
+      verifyAndReduce(padEmpty(params, 2), 1, (x, y) => x * y),
+  }),
 
-    new PrimitiveCardTemplate({
-      id: "template.primitive.divide",
-      name: "Divide",
-      inputNames: List(["A", "B"]),
-      outputNames: List(["Quotient"]),
-      evaluate: (params: List<Param>) =>
-        verifyAndReduce(padEmpty(params, 2), 1, (x, y) => x / y),
-    }),
+  new PrimitiveCardTemplate({
+    id: "template.primitive.divide",
+    name: "Divide",
+    inputNames: List(["A", "B"]),
+    outputNames: List(["Quotient"]),
+    evaluate: (params: List<Param>) =>
+      verifyAndReduce(padEmpty(params, 2), 1, (x, y) => x / y),
+  }),
 
-    new PrimitiveCardTemplate({
-      id: "template.primitive.floor",
-      name: "Floor",
-      inputNames: List(["Num"]),
-      outputNames: List(["Floor"]),
-      evaluate: (params: List<Param>) =>
-        verifyAndReduce(padEmpty(params, 1), 0, Math.floor),
-    }),
-  ].map(template => [template.id, template] as [string, CardTemplate]),
-);
+  new PrimitiveCardTemplate({
+    id: "template.primitive.floor",
+    name: "Floor",
+    inputNames: List(["Num"]),
+    outputNames: List(["Floor"]),
+    evaluate: (params: List<Param>) =>
+      verifyAndReduce(padEmpty(params, 1), 0, Math.floor),
+  }),
+)
+  .toMap()
+  .mapKeys((_, template) => template.id);
 
 export { PRIMITIVES };

@@ -27,17 +27,19 @@ class PartialNodeLayer extends React.PureComponent<Props> {
 
     return (
       <div className={classNames("nodeLayer", className)}>
-        {template.cards.map((card: Card) => (
-          <CardView
-            key={card.id}
-            snapshot={card.snapshot(palette)}
-            nodes={template.graph.nodes.filter(
-              node => node.type === "card" && node.card === card.id,
-            )}
-            onInputChange={this.onCardInputChange}
-            onConnect={this.onConnect}
-          />
-        ))}
+        {template.cards
+          .map((card: Card) => (
+            <CardView
+              key={card.id}
+              snapshot={card.snapshot(palette)}
+              nodes={template.graph.nodes.filter(
+                node => node.type === "card" && node.card === card.id,
+              )}
+              onInputChange={this.onCardInputChange}
+              onConnect={this.onConnect}
+            />
+          ))
+          .toIndexedSeq()}
       </div>
     );
   }
