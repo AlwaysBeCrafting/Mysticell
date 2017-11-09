@@ -6,12 +6,7 @@ import { Card } from "data/Card";
 import { CardTemplate } from "data/CardTemplate";
 import { Param } from "data/common";
 
-import {
-  GraphCardTemplateMethods,
-  GraphCardTemplateProps,
-  gridWidth,
-  nodePosition,
-} from "../model";
+import { GraphCardTemplateProps } from "../model";
 
 import { PropertyCardTemplateJs } from "./js";
 
@@ -29,7 +24,7 @@ class PropertyCardTemplate extends Record<PropertyCardTemplateProps>({
   outputValues: List(),
   cards: Map(),
   graph: Graph(),
-}) implements GraphCardTemplateMethods {
+}) {
   static fromJs(js: PropertyCardTemplateJs) {
     return new PropertyCardTemplate({
       id: js.id,
@@ -41,9 +36,6 @@ class PropertyCardTemplate extends Record<PropertyCardTemplateProps>({
       graph: Graph(),
     });
   }
-
-  gridWidth = gridWidth;
-  nodePosition = nodePosition;
 }
 
 const isProperty = (

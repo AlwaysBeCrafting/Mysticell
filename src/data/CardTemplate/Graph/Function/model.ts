@@ -5,12 +5,7 @@ import { Graph } from "common/types";
 import { Card } from "data/Card";
 import { CardTemplate } from "data/CardTemplate";
 
-import {
-  GraphCardTemplateMethods,
-  GraphCardTemplateProps,
-  gridWidth,
-  nodePosition,
-} from "../model";
+import { GraphCardTemplateProps } from "../model";
 
 import { FunctionCardTemplateJs } from "./js";
 
@@ -21,7 +16,7 @@ class FunctionCardTemplate extends Record<GraphCardTemplateProps>({
   outputNames: List(),
   cards: Map(),
   graph: Graph(),
-}) implements GraphCardTemplateMethods {
+}) {
   static fromJs(js: FunctionCardTemplateJs) {
     return new FunctionCardTemplate({
       id: js.id,
@@ -32,9 +27,6 @@ class FunctionCardTemplate extends Record<GraphCardTemplateProps>({
       graph: Graph(),
     });
   }
-
-  gridWidth = gridWidth;
-  nodePosition = nodePosition;
 }
 
 const isFunction = (

@@ -11,6 +11,8 @@ export {
   NodeValue,
   BoundaryNodeValue,
   CardNodeValue,
+  gridWidth,
+  nodePosition,
 } from "./model";
 export {
   GraphCardTemplateJs,

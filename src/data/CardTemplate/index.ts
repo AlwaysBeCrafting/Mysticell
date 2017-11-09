@@ -19,6 +19,8 @@ export {
   BoundaryNodeValue,
   CardNodeValue,
   NodeValue,
+  gridWidth,
+  nodePosition,
 } from "./Graph";
 export { PrimitiveCardTemplate, isPrimitive, PRIMITIVES } from "./Primitive";
 export { TableCardTemplate, isTable } from "./Table";

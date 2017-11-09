@@ -19,6 +19,7 @@ import { Card, CardSnapshot } from "data/Card";
 import {
   addCard,
   GraphCardTemplate,
+  gridWidth,
   placeCard,
   setInputValueAsync,
 } from "data/CardTemplate";
@@ -89,7 +90,7 @@ class PartialGraphView extends React.PureComponent<Props> {
   }
 
   private renderGrid(template: GraphCardTemplate, palette: Palette) {
-    const gridStyle = { flexBasis: 40 * template.gridWidth() };
+    const gridStyle = { flexBasis: 40 * gridWidth(template) };
     return (
       <div
         className="graphView-graph-grid"

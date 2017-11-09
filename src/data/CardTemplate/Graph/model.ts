@@ -31,11 +31,6 @@ interface GraphCardTemplateProps extends CardTemplateProps {
   graph: CardGraph;
 }
 
-interface GraphCardTemplateMethods {
-  nodePosition(node: string, palette: Palette): Position2d;
-  gridWidth(): number;
-}
-
 type GraphCardTemplate = FunctionCardTemplate | PropertyCardTemplate;
 
 const isGraph = (
@@ -43,21 +38,21 @@ const isGraph = (
 ): template is GraphCardTemplate =>
   isFunction(template) || isProperty(template);
 
-function gridWidth(this: GraphCardTemplate): number {
-  return this.cards.map(card => card.position.x).max()! + 4 + 2;
+function gridWidth(template: GraphCardTemplate): number {
+  return template.cards.map(card => card.position.x).max()! + 4 + 2;
 }
 
 function nodePosition(
-  this: GraphCardTemplate,
+  hostTemplate: GraphCardTemplate,
   nodeId: string,
   palette: Palette,
 ): Position2d {
-  const node = this.graph.nodes.get(nodeId)!;
+  // tslint:disable:no-console
+  console.log(nodeId);
+  console.log(hostTemplate.id);
+  const node = hostTemplate.graph.nodes.get(nodeId)!;
   if (node.type === "card") {
-    const card = this.cards.get(node.card);
-    if (!card) {
-      return new Position2d();
-    }
+    const card = hostTemplate.cards.get(node.card)!;
     const template = palette.getTemplate(card.template);
     if (node.wireAnchor === "start") {
       return new Position2d(
@@ -75,7 +70,7 @@ function nodePosition(
     if (node.wireAnchor === "start") {
       return new Position2d(0, node.index + 0.5 + 2);
     } else {
-      return new Position2d(this.gridWidth(), node.index + 0.5 + 2);
+      return new Position2d(gridWidth(hostTemplate), node.index + 0.5 + 2);
     }
   }
 }
@@ -86,7 +81,6 @@ export {
   CardNodeValue,
   EdgeValue,
   GraphCardTemplateProps,
-  GraphCardTemplateMethods,
 };
 export { FunctionCardTemplate, PropertyCardTemplate, GraphCardTemplate };
 export { CardGraph, isGraph };
