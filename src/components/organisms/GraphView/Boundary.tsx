@@ -23,31 +23,33 @@ type Props = InputProps | OutputProps;
 class Boundary extends React.PureComponent<Props> {
   render() {
     const { input, template } = this.props;
-    const side = input ? "input" : "output";
+    const wireAnchor = input ? "start" : "end";
     const nodes = template.graph.nodes.filter(
-      node => node.type === "boundary" && node.side === side,
+      node => node.type === "boundary" && node.wireAnchor === wireAnchor,
     );
     const nodeNames = input ? template.inputNames : template.outputNames;
 
     return (
-      <div className={`boundary mod-${side}`}>
-        <div className={`boundary-header boundary-row mod-${side}`}>{side}</div>
+      <div className={`boundary mod-${wireAnchor}`}>
+        <div className={`boundary-header boundary-row mod-${wireAnchor}`}>
+          {wireAnchor === "start" ? "Input" : "Output"}
+        </div>
         {nodes
           .map((node, id) => (
-            <div className={`boundary-row mod-${side}`} key={id}>
-              <div className={`boundary-row-name mod-${side}`}>
+            <div className={`boundary-row mod-${wireAnchor}`} key={id}>
+              <div className={`boundary-row-name mod-${wireAnchor}`}>
                 {nodeNames.get(node.index)}
               </div>
               {isProperty(template) &&
-                (side === "input" ? (
-                  <input className={`boundary-row-value mod-${side}`} />
+                (wireAnchor === "start" ? (
+                  <input className={`boundary-row-value mod-${wireAnchor}`} />
                 ) : (
                   <div
-                    className={`boundary-row-value mod-${side} mod-readonly`}
+                    className={`boundary-row-value mod-${wireAnchor} mod-readonly`}
                   />
                 ))}
               <Pin
-                className={`boundary-row-pin mod-${side}`}
+                className={`boundary-row-pin mod-${wireAnchor}`}
                 id={id}
                 node={node}
                 onConnect={this.onPinConnect}

@@ -9,13 +9,13 @@ import { PropertyCardTemplateJs } from "./Property";
 
 interface BoundaryNodeJs {
   type: "boundary";
-  side: "input" | "output";
+  wireAnchor: "start" | "end";
   index: number;
 }
 
 interface CardNodeJs {
   type: "card";
-  side: "input" | "output";
+  wireAnchor: "start" | "end";
   index: number;
   card: string;
 }

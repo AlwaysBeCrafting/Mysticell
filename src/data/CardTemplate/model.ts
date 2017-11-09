@@ -40,7 +40,7 @@ namespace CardTemplate {
       }
       newGraph.nodes
         .toSeq()
-        .filter(node => node.type === "card" && node.side === "input")
+        .filter(node => node.type === "card" && node.wireAnchor === "end")
         .groupBy(node => node.type === "card" && node.card)
         .forEach((cardInputs, card) =>
           cardInputs.forEach((_, inputId) =>
@@ -49,7 +49,7 @@ namespace CardTemplate {
                 node =>
                   node.type === "card" &&
                   node.card === card &&
-                  node.side === "output",
+                  node.wireAnchor === "start",
               )
               .forEach((__, outputId) =>
                 newGraph.connectNodes(inputId, outputId, "internal"),

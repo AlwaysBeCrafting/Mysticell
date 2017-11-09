@@ -42,7 +42,7 @@ class SheetView extends React.PureComponent<Props> {
                 onChange={this.onCellInput}
                 readonly={
                   palette.getGraph(cell.property)!.graph.nodes.get(cell.node)!
-                    .side !== "input"
+                    .wireAnchor === "end"
                 }
               />
             ))
@@ -62,7 +62,7 @@ class SheetView extends React.PureComponent<Props> {
     if (!node) {
       return PARAMS.error("NODE", "Node doesn't exist");
     }
-    return node.side === "input"
+    return node.wireAnchor === "start"
       ? PARAMS.string(template.inputValues.get(node.index, ""))
       : template.outputValues.get(
           node.index,

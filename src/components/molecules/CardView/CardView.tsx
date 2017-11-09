@@ -66,7 +66,7 @@ class PartialCardView extends React.PureComponent<Props> {
         {snapshot.outputs.map((output, index) => {
           const id = `${snapshot.id}o${index}`;
           const node = nodes.findEntry(
-            n => n.side === "output" && n.index === index,
+            n => n.wireAnchor === "start" && n.index === index,
           );
           return (
             <div className="cardView-row mod-output" key={id}>
@@ -83,7 +83,7 @@ class PartialCardView extends React.PureComponent<Props> {
         {snapshot.inputs.map((input, index) => {
           const id = `${snapshot.id}i${index}`;
           const node = nodes.findEntry(
-            n => n.side === "input" && n.index === index,
+            n => n.wireAnchor === "end" && n.index === index,
           );
           return (
             <div className="cardView-row mod-input" key={id}>

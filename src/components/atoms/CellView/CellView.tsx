@@ -33,10 +33,10 @@ class CellView extends React.PureComponent<Props> {
         title={message}
       >
         {readonly ? (
-          <div className="cellView-content">{param.value}</div>
+          <div className="cellView-content mod-readonly">{param.value}</div>
         ) : (
           <input
-            className="cellView-content mod-input"
+            className="cellView-content"
             defaultValue={`${param.value}`}
             onChange={this.onChange}
           />

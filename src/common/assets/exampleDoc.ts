@@ -53,16 +53,31 @@ const exampleDoc: DocumentJs = {
         outputNames: ["Modifier"],
         graph: {
           nodes: {
-            "0": { type: "boundary", side: "input", index: 0 },
-            "1": { type: "card", card: "card.0", side: "input", index: 0 },
-            "2": { type: "card", card: "card.0", side: "input", index: 1 },
-            "3": { type: "card", card: "card.0", side: "output", index: 0 },
-            "4": { type: "card", card: "card.1", side: "input", index: 0 },
-            "5": { type: "card", card: "card.1", side: "input", index: 1 },
-            "6": { type: "card", card: "card.1", side: "output", index: 0 },
-            "7": { type: "card", card: "card.2", side: "input", index: 0 },
-            "8": { type: "card", card: "card.2", side: "output", index: 0 },
-            "9": { type: "boundary", side: "output", index: 0 },
+            "0": { type: "boundary", wireAnchor: "start", index: 0 },
+            "1": { type: "card", card: "card.0", wireAnchor: "end", index: 0 },
+            "2": { type: "card", card: "card.0", wireAnchor: "end", index: 1 },
+            "3": {
+              type: "card",
+              card: "card.0",
+              wireAnchor: "start",
+              index: 0,
+            },
+            "4": { type: "card", card: "card.1", wireAnchor: "end", index: 0 },
+            "5": { type: "card", card: "card.1", wireAnchor: "end", index: 1 },
+            "6": {
+              type: "card",
+              card: "card.1",
+              wireAnchor: "start",
+              index: 0,
+            },
+            "7": {
+              type: "card",
+              card: "card.2",
+              wireAnchor: "start",
+              index: 0,
+            },
+            "8": { type: "card", card: "card.2", wireAnchor: "end", index: 0 },
+            "9": { type: "boundary", wireAnchor: "end", index: 0 },
           },
           edges: [
             { source: "0", target: "1" },
@@ -100,11 +115,21 @@ const exampleDoc: DocumentJs = {
         inputValues: ["15"],
         graph: {
           nodes: {
-            "10": { type: "boundary", side: "input", index: 0 },
-            "11": { type: "card", card: "card.3", side: "input", index: 0 },
-            "12": { type: "card", card: "card.3", side: "output", index: 0 },
-            "13": { type: "boundary", side: "output", index: 0 },
-            "14": { type: "boundary", side: "output", index: 1 },
+            "10": { type: "boundary", wireAnchor: "start", index: 0 },
+            "11": {
+              type: "card",
+              card: "card.3",
+              wireAnchor: "end",
+              index: 0,
+            },
+            "12": {
+              type: "card",
+              card: "card.3",
+              wireAnchor: "start",
+              index: 0,
+            },
+            "13": { type: "boundary", wireAnchor: "end", index: 0 },
+            "14": { type: "boundary", wireAnchor: "end", index: 1 },
           },
           edges: [
             { source: "10", target: "13" },

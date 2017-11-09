@@ -10,7 +10,7 @@
   z-index: 100;
   line-height: $dimen-graph-cell-size;
 
-  &.mod-input {
+  &.mod-start {
     border-right: solid 1px $color-gridLine;
   }
 
@@ -31,7 +31,7 @@
     align-items: center;
     justify-content: flex-start;
 
-    &.mod-input {
+    &.mod-start {
       flex-direction: row-reverse;
     }
 
@@ -43,11 +43,11 @@
       text-overflow: ellipsis;
       @include font-body1;
 
-      &.mod-input {
+      &.mod-start {
         padding-left: 16px;
       }
 
-      &.mod-output {
+      &.mod-end {
         padding-right: 16px;
       }
     }
@@ -76,11 +76,11 @@
     &-pin {
       position: absolute;
 
-      &.mod-input {
+      &.mod-start {
         right: -$dimen-pin-size / 2;
       }
 
-      &.mod-output {
+      &.mod-end {
         left: -$dimen-pin-size / 2;
       }
     }

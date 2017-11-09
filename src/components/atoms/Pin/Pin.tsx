@@ -55,7 +55,7 @@ class PartialPin extends React.PureComponent<Props> {
       connectDropTarget,
       node,
     } = this.props;
-    const classMod = node && `mod-${node.side}`;
+    const classMod = node && `mod-${node.wireAnchor}`;
     return connectDragSource(
       connectDropTarget(
         <div className={classNames(className, "pin", classMod)} />,
@@ -73,7 +73,7 @@ const dragCollect: DragSourceCollector = connect => ({
 });
 const DragPin = DragSource(
   props =>
-    props.node && props.node.side === "output"
+    props.node && props.node.wireAnchor === "start"
       ? DndTypes.WIRE_END
       : DndTypes.WIRE_START,
   dragSpec,
@@ -103,8 +103,8 @@ const dropSpec: DropTargetSpec<OwnProps> = {
     }
     return (
       (props.node.type === node.type
-        ? props.node.side !== node.side
-        : props.node.side === node.side) &&
+        ? props.node.wireAnchor !== node.wireAnchor
+        : props.node.wireAnchor === node.wireAnchor) &&
       (props.node.type === "card" && node.type === "card"
         ? props.node.card !== node.card
         : true)
@@ -116,9 +116,9 @@ const dropCollect: DropTargetCollector = connect => ({
 });
 const Pin = DropTarget(
   props =>
-    props.node && props.node.side === "output"
-      ? DndTypes.WIRE_START
-      : DndTypes.WIRE_END,
+    props.node && props.node.wireAnchor === "start"
+      ? DndTypes.WIRE_END
+      : DndTypes.WIRE_START,
   dropSpec,
   dropCollect,
 )(DragPin);
