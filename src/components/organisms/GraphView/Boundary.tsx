@@ -1,8 +1,10 @@
 import React from "react";
 
-import { GraphCardTemplate } from "data/CardTemplate";
+import { GraphCardTemplate, isProperty } from "data/CardTemplate";
 
 import { Pin } from "components/atoms";
+
+import "./Boundary.scss";
 
 interface CommonProps {
   template: GraphCardTemplate;
@@ -29,15 +31,23 @@ class Boundary extends React.PureComponent<Props> {
 
     return (
       <div className={`boundary mod-${side}`}>
-        <div className={`boundary-heading mod-${side}`}>{side}</div>
+        <div className={`boundary-header boundary-row mod-${side}`}>{side}</div>
         {nodes
           .map((node, id) => (
-            <div className={`boundary-node mod-${side}`} key={id}>
-              <div className={`boundary-node-name mod-${side}`}>
+            <div className={`boundary-row mod-${side}`} key={id}>
+              <div className={`boundary-row-name mod-${side}`}>
                 {nodeNames.get(node.index)}
               </div>
+              {isProperty(template) &&
+                (side === "input" ? (
+                  <input className={`boundary-row-value mod-${side}`} />
+                ) : (
+                  <div
+                    className={`boundary-row-value mod-${side} mod-readonly`}
+                  />
+                ))}
               <Pin
-                className={`boundary-node-pin mod-${side}`}
+                className={`boundary-row-pin mod-${side}`}
                 id={id}
                 node={node}
                 onConnect={this.onPinConnect}

@@ -35,10 +35,10 @@ class ProtoEditor extends React.PureComponent<Props> {
   render() {
     return (
       <Router>
-        <main className="editor">
-          <div className="editor-document">
+        <main className="editorPage">
+          <div className="editorPage-document">
             <AppDragLayer />
-            <Route exact path="/:path*" render={this.renderNavView} />
+            <Route exact path="/:path*" render={this.renderPaletteView} />
             <Route exact path="/" render={this.renderSheetView} />
             <Route exact path="/:path+" render={this.renderGraphView} />
           </div>
@@ -47,11 +47,11 @@ class ProtoEditor extends React.PureComponent<Props> {
     );
   }
 
-  private renderNavView = (
+  private renderPaletteView = (
     routeProps: RouteComponentProps<{ path: string }>,
   ) => (
     <PaletteView
-      className="editor-document-nav"
+      className="editorPage-document-palette"
       palette={this.props.palette}
       currentPath={(routeProps.match.params.path || "").split("/")}
     />
@@ -67,14 +67,14 @@ class ProtoEditor extends React.PureComponent<Props> {
     if (graphTemplate) {
       return (
         <GraphView
-          className="editor-document-content"
+          className="editorPage-document-content"
           path={segments}
           template={graphTemplate}
         />
       );
     } else {
       return (
-        <div className="editor-document-error">
+        <div className="editorPage-document-error">
           No formula exists at /{routeProps.match.params.path}
         </div>
       );
@@ -82,7 +82,7 @@ class ProtoEditor extends React.PureComponent<Props> {
   };
 
   private renderSheetView = () => {
-    return <SheetWrapper className="editor-document-content" />;
+    return <SheetWrapper className="editorPage-document-content" />;
   };
 }
 

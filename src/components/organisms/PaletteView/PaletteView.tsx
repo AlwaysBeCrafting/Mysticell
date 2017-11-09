@@ -40,13 +40,13 @@ interface DropProps {
 
 type Props = StoreProps & DropProps;
 
-class PartialNavView extends React.PureComponent<Props> {
+class PartialPaletteView extends React.PureComponent<Props> {
   render() {
     const { connectDropTarget, className } = this.props;
     return connectDropTarget(
-      <div className={classnames("navView", className)}>
+      <div className={classnames("paletteView", className)}>
         <TreeView
-          className="navView-tree"
+          className="paletteView-tree"
           tree={this.props.palette.documentTree}
           renderItem={this.renderItem}
           getItemKey={this.getItemKey}
@@ -106,13 +106,13 @@ const dropSpec: DropTargetSpec<StoreProps> = {
 const dropCollect: DropTargetCollector = connect => ({
   connectDropTarget: connect.dropTarget(),
 });
-const DropNavView = DropTarget(DndTypes.CARD, dropSpec, dropCollect)(
-  PartialNavView,
+const DropPaletteView = DropTarget(DndTypes.CARD, dropSpec, dropCollect)(
+  PartialPaletteView,
 );
 
 const PaletteView = reduxConnect<{}, DispatchProps, OwnProps>(
   () => ({}),
   (dispatch: Dispatch<Action>) => ({ dispatch }),
-)(DropNavView);
+)(DropPaletteView);
 
 export { PaletteView };

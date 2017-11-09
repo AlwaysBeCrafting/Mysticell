@@ -9,8 +9,6 @@ $dimen-cellLineEnd: $dimen-cellSize;
 
 $dimen-panelWidth: $dimen-cellSize * 4;
 
-$color-gridLine: rgba($color-brand-primary, 0.2);
-
 .graphView {
   flex: 1 0 auto;
   position: relative;
@@ -55,32 +53,6 @@ $color-gridLine: rgba($color-brand-primary, 0.2);
     flex-flow: row nowrap;
     overflow-x: auto;
     align-items: stretch;
-
-    &-panel {
-      flex: 0 0 $dimen-panelWidth;
-      display: grid;
-      grid-template-columns: 1fr;
-      grid-auto-rows: 40px;
-      z-index: 100;
-      line-height: $dimen-graph-cell-size;
-
-      &-heading {
-        padding: 0 $dimen-keyline-padding / 2;
-        @include font-title;
-        color: $color-text-disabled;
-        text-transform: capitalize;
-        grid-row: 1 / span 2;
-        line-height: $dimen-graph-cell-size * 2;
-      }
-    }
-
-    &-inputPanel {
-      border-right: solid 1px $color-gridLine;
-
-      &-heading {
-        align-items: flex-end;
-      }
-    }
 
     &-grid {
       flex: 0 0 $dimen-cellSize * 6;

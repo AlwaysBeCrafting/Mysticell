@@ -3,72 +3,13 @@
 @import "~common/styles/fonts";
 
 $row-height: $dimen-graph-cell-size;
-$pin-size: 14px;
 
 .pin {
-  position: relative;
-  display: flex;
-  flex-flow: row nowrap;
-  align-items: center;
-  padding: 4px $dimen-keyline-padding / 2;
-  @include font-body1;
-
-  &.mod-source {
-    flex-direction: row-reverse;
-  }
-
-  &-dot {
-    position: absolute;
-    top: ($row-height - $pin-size) / 2;
-    width: $pin-size;
-    height: $pin-size;
-    border-radius: 50%;
-    border: solid thin $color-black-alpha-38;
-    background: $color-grey-400;
-    content: " ";
-
-    &.mod-source {
-      right: -$pin-size / 2;
-    }
-
-    &.mod-target {
-      left: -$pin-size / 2;
-    }
-  }
-
-  &-label {
-    flex: 0 1 auto;
-    color: $color-text-secondary;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-
-    &.mod-target {
-      padding-right: 16px;
-    }
-
-    &.mod-source {
-      padding-left: 16px;
-    }
-  }
-
-  &-value {
-    width: 0;
-    flex: 1 0 auto;
-    text-align: right;
-    line-height: 1;
-    background: none;
-    border: none;
-    border-bottom: solid 2px $color-black-alpha-12;
-    padding: 6px 0 4px;
-    color: $color-text-primary;
-
-    &:focus {
-      border-color: $color-brand-primary;
-    }
-
-    &.mod-readonly {
-      border-bottom: none;
-    }
-  }
+  position: absolute;
+  width: $dimen-pin-size;
+  height: $dimen-pin-size;
+  border-radius: 50%;
+  border: solid thin $color-black-alpha-38;
+  background: $color-grey-400;
+  content: " ";
 }

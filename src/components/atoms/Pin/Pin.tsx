@@ -58,7 +58,7 @@ class PartialPin extends React.PureComponent<Props> {
     const classMod = node && `mod-${node.side}`;
     return connectDragSource(
       connectDropTarget(
-        <div className={classNames(className, "pin-dot", classMod)} />,
+        <div className={classNames(className, "pin", classMod)} />,
       ),
     );
   }

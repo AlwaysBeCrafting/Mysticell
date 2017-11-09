@@ -44,16 +44,18 @@ class PartialEndItemView extends React.PureComponent<Props> {
     return connectDrag(
       <div>
         <Link
-          className={classnames("navView-item", { "is-selected": selected })}
+          className={classnames("paletteView-item", {
+            "is-selected": selected,
+          })}
           to={`/${path.butLast().join("/")}/${template.name}`}
         >
           <Icon
-            className={classnames("navView-item-icon", {
+            className={classnames("paletteView-item-icon", {
               "is-selected": selected,
             })}
             src={isProperty(template) ? propertyIcon : functionIcon}
           />
-          <div className="navView-item-title">{template.name}</div>
+          <div className="paletteView-item-title">{template.name}</div>
         </Link>
       </div>,
     );

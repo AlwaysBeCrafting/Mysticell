@@ -45,7 +45,7 @@ class PartialCardView extends React.PureComponent<Props> {
 
   render() {
     const { className, style, snapshot, connectDrag, isDragging } = this.props;
-    const { label, inputs, outputs, position } = snapshot;
+    const { label, name, inputs, outputs, position } = snapshot;
     const nodes = this.props.nodes || Map();
     const pinCount = inputs.length + outputs.length;
 
@@ -57,11 +57,11 @@ class PartialCardView extends React.PureComponent<Props> {
     };
     return connectDrag(
       <div
-        className={classNames("nodeView", className)}
+        className={classNames("cardView", className)}
         style={positionedStyle}
       >
-        <header className="nodeView-headerRow nodeView-row">
-          <span className="nodeView-headerRow-name">{label}</span>
+        <header className="cardView-header cardView-row">
+          <span className="cardView-header-name">{label || name}</span>
         </header>
         {snapshot.outputs.map((output, index) => {
           const id = `${snapshot.id}o${index}`;
@@ -69,9 +69,10 @@ class PartialCardView extends React.PureComponent<Props> {
             n => n.side === "output" && n.index === index,
           );
           return (
-            <div className="nodeView-row" key={id}>
-              <div className="nodeView-row-name">{output.name}</div>
+            <div className="cardView-row mod-output" key={id}>
+              <div className="cardView-row-name mod-output">{output.name}</div>
               <Pin
+                className="cardView-row-pin mod-output"
                 id={node && node[0]}
                 node={node && node[1]}
                 onConnect={this.props.onConnect}
@@ -85,15 +86,17 @@ class PartialCardView extends React.PureComponent<Props> {
             n => n.side === "input" && n.index === index,
           );
           return (
-            <div className="nodeView-row" key={id}>
-              <div className="nodeView-row-name">{input.name}</div>
+            <div className="cardView-row mod-input" key={id}>
+              <div className="cardView-row-name mod-input">{input.name}</div>
               <input
+                className="cardView-row-value"
                 defaultValue={input.value}
                 onChange={this.onInputChange}
                 data-index={index}
               />
               {input.hasPin && (
                 <Pin
+                  className="cardView-row-pin mod-input"
                   id={node && node[0]}
                   node={node && node[1]}
                   onConnect={this.props.onConnect}

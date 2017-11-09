@@ -15,14 +15,14 @@ class DirItemView extends React.PureComponent<Props> {
   render() {
     const { name, expanded } = this.props;
     return (
-      <div className="navView-item" onClick={this.onClick}>
+      <div className="paletteView-item" onClick={this.onClick}>
         <Icon
-          className={classnames("navView-item-icon", "mod-dropdown", {
+          className={classnames("paletteView-item-icon", "mod-dropdown", {
             "is-expanded": expanded,
           })}
           name="arrow_drop_down"
         />
-        <span className="navView-item-title">{name}</span>
+        <span className="paletteView-item-title">{name}</span>
       </div>
     );
   }

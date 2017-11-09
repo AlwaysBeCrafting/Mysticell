@@ -1,29 +1,26 @@
 @import "~common/styles/colors";
 @import "~common/styles/dimensions";
 @import "~common/styles/fonts";
-@import "~common/styles/mixins";
 
-$row-height: $dimen-graph-cell-size;
-
-.cardView {
-  @include elevation(2px);
-  @include font-body1;
-  background: #fff;
-  border-radius: 2px;
-  line-height: $row-height;
+.boundary {
+  flex: 0 0 $dimen-boundary-size;
   display: grid;
   grid-template-columns: 1fr;
   grid-auto-rows: 40px;
-  flex-flow: column nowrap;
+  z-index: 100;
+  line-height: $dimen-graph-cell-size;
+
+  &.mod-input {
+    border-right: solid 1px $color-gridLine;
+  }
 
   &-header {
-    display: flex;
-    flex-flow: row nowrap;
-
-    &-name {
-      flex: 1 0 auto;
-      @include font-body2;
-    }
+    padding: 0 $dimen-keyline-padding / 2;
+    @include font-title;
+    color: $color-text-disabled;
+    text-transform: capitalize;
+    grid-row: 1 / span 2;
+    line-height: $dimen-graph-cell-size * 2;
   }
 
   &-row {
@@ -32,9 +29,9 @@ $row-height: $dimen-graph-cell-size;
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
-    @include font-body1;
+    justify-content: flex-start;
 
-    &.mod-output {
+    &.mod-input {
       flex-direction: row-reverse;
     }
 
@@ -44,13 +41,14 @@ $row-height: $dimen-graph-cell-size;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      @include font-body1;
 
       &.mod-input {
-        padding-right: 16px;
+        padding-left: 16px;
       }
 
       &.mod-output {
-        padding-left: 16px;
+        padding-right: 16px;
       }
     }
 
@@ -64,6 +62,7 @@ $row-height: $dimen-graph-cell-size;
       border-bottom: solid 2px $color-black-alpha-12;
       padding: 6px 0 4px;
       color: $color-text-primary;
+      @include font-body1;
 
       &:focus {
         border-color: $color-brand-primary;
@@ -78,11 +77,11 @@ $row-height: $dimen-graph-cell-size;
       position: absolute;
 
       &.mod-input {
-        left: -$dimen-pin-size / 2;
+        right: -$dimen-pin-size / 2;
       }
 
       &.mod-output {
-        right: -$dimen-pin-size / 2;
+        left: -$dimen-pin-size / 2;
       }
     }
   }
