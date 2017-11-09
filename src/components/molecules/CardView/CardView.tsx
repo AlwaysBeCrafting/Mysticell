@@ -88,12 +88,14 @@ class PartialCardView extends React.PureComponent<Props> {
           return (
             <div className="cardView-row mod-input" key={id}>
               <div className="cardView-row-name mod-input">{input.name}</div>
-              <input
-                className="cardView-row-value"
-                defaultValue={input.value}
-                onChange={this.onInputChange}
-                data-index={index}
-              />
+              {input.isEditable && (
+                <input
+                  className="cardView-row-value"
+                  defaultValue={input.value}
+                  onChange={this.onInputChange}
+                  data-index={index}
+                />
+              )}
               {input.hasPin && (
                 <Pin
                   className="cardView-row-pin mod-input"

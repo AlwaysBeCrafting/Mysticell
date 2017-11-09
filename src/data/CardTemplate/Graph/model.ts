@@ -52,10 +52,7 @@ function nodePosition(
   nodeId: string,
   palette: Palette,
 ): Position2d {
-  const node = this.graph.nodes.get(nodeId);
-  if (!node) {
-    return new Position2d();
-  }
+  const node = this.graph.nodes.get(nodeId)!;
   if (node.type === "card") {
     const card = this.cards.get(node.card);
     if (!card) {

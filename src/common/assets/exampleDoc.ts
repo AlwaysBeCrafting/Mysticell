@@ -73,10 +73,15 @@ const exampleDoc: DocumentJs = {
             "7": {
               type: "card",
               card: "card.2",
+              wireAnchor: "end",
+              index: 0,
+            },
+            "8": {
+              type: "card",
+              card: "card.2",
               wireAnchor: "start",
               index: 0,
             },
-            "8": { type: "card", card: "card.2", wireAnchor: "end", index: 0 },
             "9": { type: "boundary", wireAnchor: "end", index: 0 },
           },
           edges: [

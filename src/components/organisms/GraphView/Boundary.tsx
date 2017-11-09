@@ -42,7 +42,10 @@ class Boundary extends React.PureComponent<Props> {
               </div>
               {isProperty(template) &&
                 (wireAnchor === "start" ? (
-                  <input className={`boundary-row-value mod-${wireAnchor}`} />
+                  <input
+                    className={`boundary-row-value mod-${wireAnchor}`}
+                    defaultValue={template.inputValues.get(node.index)}
+                  />
                 ) : (
                   <div
                     className={`boundary-row-value mod-${wireAnchor} mod-readonly`}
