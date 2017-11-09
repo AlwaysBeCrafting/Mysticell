@@ -9,6 +9,7 @@ import { Param } from "data/common";
 import {
   GraphCardTemplateMethods,
   GraphCardTemplateProps,
+  gridWidth,
   nodePosition,
 } from "../model";
 
@@ -41,11 +42,8 @@ class PropertyCardTemplate extends Record<PropertyCardTemplateProps>({
     });
   }
 
+  gridWidth = gridWidth;
   nodePosition = nodePosition;
-
-  gridWidth(): number {
-    return this.cards.map(card => card.position.x).max()! + 4 + 2;
-  }
 }
 
 const isProperty = (

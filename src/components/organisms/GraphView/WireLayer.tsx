@@ -3,6 +3,8 @@ import React from "react";
 
 import { Wire } from "components/atoms";
 
+import { Position2d } from "common/types";
+
 import { GraphCardTemplate } from "data/CardTemplate";
 import { Palette } from "data/Palette";
 
@@ -35,8 +37,8 @@ class WireLayer extends React.PureComponent<Props> {
     const targetPos = template.nodePosition(target, palette);
     return (
       <Wire
-        srcPos={sourcePos}
-        tgtPos={targetPos}
+        startPos={new Position2d(sourcePos.x * 40, sourcePos.y * 40)}
+        endPos={new Position2d(targetPos.x * 40, targetPos.y * 40)}
         key={`${edge.source}-${edge.target}`}
       />
     );

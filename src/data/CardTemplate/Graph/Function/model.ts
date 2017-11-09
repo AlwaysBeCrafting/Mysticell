@@ -8,6 +8,7 @@ import { CardTemplate } from "data/CardTemplate";
 import {
   GraphCardTemplateMethods,
   GraphCardTemplateProps,
+  gridWidth,
   nodePosition,
 } from "../model";
 
@@ -32,11 +33,8 @@ class FunctionCardTemplate extends Record<GraphCardTemplateProps>({
     });
   }
 
+  gridWidth = gridWidth;
   nodePosition = nodePosition;
-
-  gridWidth(): number {
-    return this.cards.map(card => card.position.x).max()! + 4 + 2;
-  }
 }
 
 const isFunction = (

@@ -22,11 +22,11 @@ class WireDragItem extends DragItem<Props> {
   render() {
     const start = this.props.start || this.props.currentOffset;
     const end = this.props.end || this.props.currentOffset;
-    const startPos = new Position2d(start.x / 40, start.y / 40 - 0.5);
-    const endPos = new Position2d(end.x / 40, end.y / 40 - 0.5);
+    const startPos = new Position2d(start.x, start.y);
+    const endPos = new Position2d(end.x, end.y);
     return (
       <svg className="wireDragItem">
-        <Wire srcPos={startPos} tgtPos={endPos} />
+        <Wire startPos={startPos} endPos={endPos} />
       </svg>
     );
   }

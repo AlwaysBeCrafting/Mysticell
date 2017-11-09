@@ -43,11 +43,16 @@ const isGraph = (
 ): template is GraphCardTemplate =>
   isFunction(template) || isProperty(template);
 
+function gridWidth(this: GraphCardTemplate): number {
+  return this.cards.map(card => card.position.x).max()! + 4 + 2;
+}
+
 function nodePosition(
   this: GraphCardTemplate,
   nodeId: string,
   palette: Palette,
 ): Position2d {
+  // return new Position2d();
   const node = this.graph.nodes.get(nodeId);
   if (!node) {
     return new Position2d();
@@ -71,7 +76,11 @@ function nodePosition(
       );
     }
   } else {
-    return new Position2d(this.gridWidth(), 0.5 + 2);
+    if (node.side === "input") {
+      return new Position2d(0, node.index + 0.5 + 2);
+    } else {
+      return new Position2d(this.gridWidth(), node.index + 0.5 + 2);
+    }
   }
 }
 
@@ -85,4 +94,4 @@ export {
 };
 export { FunctionCardTemplate, PropertyCardTemplate, GraphCardTemplate };
 export { CardGraph, isGraph };
-export { nodePosition };
+export { gridWidth, nodePosition };
