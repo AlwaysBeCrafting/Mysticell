@@ -27,9 +27,9 @@ interface GraphProps<N, E = N> {
 interface GraphMethods<N, E> {
   readonly order: number;
   readonly size: number;
-  directSuccessors(node: NodeIndex): Set<NodeIndex>;
-  directPredecessors(node: NodeIndex): Set<NodeIndex>;
-  neighborhood(node: NodeIndex): Set<NodeIndex>;
+  successors(node: NodeIndex): Set<NodeIndex>;
+  predecessors(node: NodeIndex): Set<NodeIndex>;
+  neighbors(node: NodeIndex): Set<NodeIndex>;
   degree(node: NodeIndex): number;
   inDegree(node: NodeIndex): number;
   outDegree(node: NodeIndex): number;
@@ -53,8 +53,8 @@ interface SerializedGraph {
 }
 
 class UntypedGraph<N, E = N> extends Record<GraphProps<any>>({
-  nodes: Map(),
-  edges: Map(),
+  nodes: Map<NodeIndex, N>(),
+  edges: Map<EdgeIndex, E>(),
 }) implements GraphMethods<N, E> {
   get order() {
     return this.nodes.size;
@@ -64,23 +64,23 @@ class UntypedGraph<N, E = N> extends Record<GraphProps<any>>({
     return this.edges.size;
   }
 
-  directSuccessors(node: NodeIndex): Set<NodeIndex> {
+  successors(node: NodeIndex): Set<NodeIndex> {
     return this.edges
       .keySeq()
       .filter(key => key.source === node)
-      .map(key => key.source)
-      .toSet();
-  }
-
-  directPredecessors(node: NodeIndex): Set<NodeIndex> {
-    return this.edges
-      .keySeq()
-      .filter(key => key.target === node)
       .map(key => key.target)
       .toSet();
   }
 
-  neighborhood(node: NodeIndex): Set<NodeIndex> {
+  predecessors(node: NodeIndex): Set<NodeIndex> {
+    return this.edges
+      .keySeq()
+      .filter(key => key.target === node)
+      .map(key => key.source)
+      .toSet();
+  }
+
+  neighbors(node: NodeIndex): Set<NodeIndex> {
     return this.edges
       .keySeq()
       .filter(key => key.source === node || key.target === node)
@@ -186,16 +186,16 @@ class UntypedGraph<N, E = N> extends Record<GraphProps<any>>({
 
   private _topoSort(): { hasCycles: boolean; list: List<NodeIndex> } {
     let list: List<NodeIndex> = List();
-    let sources = this.findSources().toSet();
+    let wavefront = this.findSources().toSet();
     let edges = this.edges;
-    while (!sources.isEmpty()) {
-      const node = sources.first()!;
-      sources = sources.remove(node);
+    while (!wavefront.isEmpty()) {
+      const node = wavefront.first()!;
+      wavefront = wavefront.remove(node);
       list = list.push(node);
       edges = edges.filter((_, edge) => edge.source !== node);
-      this.directSuccessors(node).forEach(succ => {
+      this.successors(node).forEach(succ => {
         if (!edges.some((_, edge) => edge.target === succ)) {
-          sources = sources.add(succ);
+          wavefront = wavefront.add(succ);
         }
       });
     }
