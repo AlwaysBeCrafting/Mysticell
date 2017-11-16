@@ -1,4 +1,5 @@
 import classNames from "classnames";
+import { List } from "immutable";
 import React from "react";
 import { connect } from "react-redux";
 import Redux from "redux";
@@ -6,10 +7,24 @@ import Redux from "redux";
 import { CardView } from "components/molecules";
 
 import { Card } from "data/Card";
-import { connectNodes, GraphCardTemplate } from "data/CardTemplate";
+import { CardGraph, connectNodes, GraphCardTemplate } from "data/CardTemplate";
 import { Palette } from "data/Palette";
 
 import "./NodeLayer.scss";
+
+function inputConnections(graph: CardGraph, card: Card): List<boolean> {
+  return graph.nodes
+    .entrySeq()
+    .filter(
+      ([_, node]) =>
+        node.type === "card" &&
+        node.card === card.id &&
+        node.wireAnchor === "end",
+    )
+    .sort(([_, nodeA], [__, nodeB]) => nodeA.index - nodeB.index)
+    .map(([id]) => !!graph.edges.some((_, edge) => edge.target === id))
+    .toList();
+}
 
 interface DispatchProps {
   dispatch: Redux.Dispatch<Redux.Action>;
@@ -24,14 +39,16 @@ type Props = DispatchProps & OwnProps;
 class PartialNodeLayer extends React.PureComponent<Props> {
   render() {
     const { palette, template, className } = this.props;
-
     return (
       <div className={classNames("nodeLayer", className)}>
         {template.cards
           .map((card: Card) => (
             <CardView
               key={card.id}
-              snapshot={card.snapshot(palette)}
+              snapshot={card.snapshot(
+                palette,
+                inputConnections(template.graph, card),
+              )}
               nodes={template.graph.nodes.filter(
                 node => node.type === "card" && node.card === card.id,
               )}

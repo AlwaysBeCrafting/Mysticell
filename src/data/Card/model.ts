@@ -39,8 +39,8 @@ class Card extends Record<CardProps>({
     });
   }
 
-  snapshot(palette: Palette): CardSnapshot {
-    return CardSnapshot.fromCard(this, palette);
+  snapshot(palette: Palette, inputConnections?: List<boolean>): CardSnapshot {
+    return CardSnapshot.fromCard(this, palette, inputConnections);
   }
 }
 
@@ -66,7 +66,11 @@ interface CardSnapshot {
 }
 
 namespace CardSnapshot {
-  export function fromCard(card: Card, palette: Palette): CardSnapshot {
+  export function fromCard(
+    card: Card,
+    palette: Palette,
+    inputConnections: List<boolean> = List(),
+  ): CardSnapshot {
     const template = palette.templates.get(card.template);
     if (!template) {
       throw new Error(
@@ -83,7 +87,7 @@ namespace CardSnapshot {
         .map((name, i) => ({
           name,
           value: card.values.get(i, ""),
-          isEditable: true,
+          isEditable: !inputConnections.get(i),
           hasPin: !templateIsProperty,
         }))
         .toArray(),
