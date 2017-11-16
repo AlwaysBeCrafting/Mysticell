@@ -13,6 +13,7 @@ export {
   CardNodeValue,
   gridWidth,
   nodePosition,
+  CardGraph,
 } from "./model";
 export {
   GraphCardTemplateJs,

@@ -21,6 +21,7 @@ export {
   NodeValue,
   gridWidth,
   nodePosition,
+  CardGraph,
 } from "./Graph";
 export { PrimitiveCardTemplate, isPrimitive, PRIMITIVES } from "./Primitive";
 export { TableCardTemplate, isTable } from "./Table";
