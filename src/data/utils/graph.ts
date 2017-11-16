@@ -17,7 +17,7 @@ const orderNodesByIndex = (graph: CardGraph) => (a: string, b: string) => {
   return (nodeA ? nodeA.index : 0) - (nodeB ? nodeB.index : 0);
 };
 
-function evaluateGraph(
+function resolveGraph(
   template: GraphCardTemplate,
   palette: Palette,
   params: List<Param> = List(),
@@ -128,7 +128,7 @@ function evaluateGraph(
           if (isGraph(cardTemplate)) {
             return nodeValues.merge<string, Param>(
               cardOutputNodes.zip(
-                evaluateGraph(
+                resolveGraph(
                   cardTemplate,
                   palette,
                   cardParams,
@@ -174,4 +174,4 @@ function evaluateGraph(
     .toList();
 }
 
-export { evaluateGraph };
+export { resolveGraph };

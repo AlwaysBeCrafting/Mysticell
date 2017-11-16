@@ -14,7 +14,7 @@ import { EdgeValue } from "data/CardTemplate/Graph/model";
 import { Param, PARAMS } from "data/common";
 import { Palette } from "data/Palette";
 
-import { evaluateGraph } from "../graph";
+import { resolveGraph } from "../graph";
 
 const basicProperty = new PropertyCardTemplate({
   id: "template.property.basic",
@@ -174,32 +174,32 @@ const testPalette = new Palette({
 
 describe("evaluateGraph", () => {
   it("sends values from input nodes to directly-connected output nodes", () => {
-    expect(evaluateGraph(basicProperty, testPalette)).toEqual(
+    expect(resolveGraph(basicProperty, testPalette)).toEqual(
       List.of(PARAMS.string("10")),
     );
   });
 
   it("resolves primitive function calls", () => {
     expect(
-      evaluateGraph(abilityModifier, testPalette, List.of(PARAMS.string("10"))),
+      resolveGraph(abilityModifier, testPalette, List.of(PARAMS.string("10"))),
     ).toEqual(List.of(PARAMS.number(0)));
   });
 
   it("resolves transcluded templates", () => {
-    expect(evaluateGraph(strength, testPalette)).toEqual(
+    expect(resolveGraph(strength, testPalette)).toEqual(
       List.of<Param>(PARAMS.string("15"), PARAMS.number(2)),
     );
   });
 
   it("returns an error when a node cycle is detected", () => {
-    const result = evaluateGraph(cycle, testPalette);
+    const result = resolveGraph(cycle, testPalette);
     expect(result.map(val => val.type)).toEqual(
       Repeat("error", result.size).toList(),
     );
   });
 
   it("returns an error when a graph references itself", () => {
-    const result = evaluateGraph(selfReference, testPalette);
+    const result = resolveGraph(selfReference, testPalette);
     expect(result.map(val => val.type)).toEqual(
       Repeat("error", result.size).toList(),
     );

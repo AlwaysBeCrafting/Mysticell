@@ -6,6 +6,7 @@ export {
   removeCard,
   placeCard,
   connectNodes,
+  setOutputValues,
   setInputValueAsync,
 } from "./Graph";
 

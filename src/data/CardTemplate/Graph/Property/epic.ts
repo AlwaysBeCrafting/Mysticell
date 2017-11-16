@@ -11,7 +11,10 @@ const changeInputValueEpic = (
   action$
     .ofType(ActionTypes.SET_INPUT_VALUE_ASYNC)
     .debounceTime(300)
-    .map(action => {
+    .map((action: Action) => {
+      if (action.type !== ActionTypes.SET_INPUT_VALUE_ASYNC) {
+        return { type: "none" };
+      }
       const { propertyId, node, value } = action.payload;
       return setInputValue(propertyId, node, value);
     });

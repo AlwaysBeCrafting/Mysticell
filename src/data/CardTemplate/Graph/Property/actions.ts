@@ -1,12 +1,15 @@
-import { TypedAction } from "data/common";
+import { Param, TypedAction } from "data/common";
+import { List } from "immutable";
 
 const enum ActionTypes {
   SET_INPUT_VALUE = "[Template.Property] Set input value",
+  SET_OUTPUT_VALUES = "[Template.Property] Set output values",
   //
   SET_INPUT_VALUE_ASYNC = "[Template.Property/Async] Set input value",
 }
 type Action =
   | SetInputValueAction
+  | SetOutputValuesAction
   //
   | SetInputValueAsyncAction;
 
@@ -20,6 +23,15 @@ const setInputValue = (
 ): Action => ({
   type: ActionTypes.SET_INPUT_VALUE,
   payload: { propertyId, node, value },
+});
+
+interface SetOutputValuesAction
+  extends TypedAction<ActionTypes.SET_OUTPUT_VALUES> {
+  readonly payload: { propertyId: string; values: List<Param> };
+}
+const setOutputValues = (propertyId: string, values: List<Param>): Action => ({
+  type: ActionTypes.SET_OUTPUT_VALUES,
+  payload: { propertyId, values },
 });
 
 interface SetInputValueAsyncAction
@@ -36,4 +48,4 @@ const setInputValueAsync = (
 });
 
 export { Action, ActionTypes };
-export { setInputValue, setInputValueAsync };
+export { setInputValue, setOutputValues, setInputValueAsync };

@@ -6,7 +6,7 @@ import { composeReducers } from "common/utils";
 import { CardTemplate } from "data/CardTemplate";
 
 import { Action, ActionTypes } from "./actions";
-import { isGraph, NodeValue } from "./model";
+import { NodeValue } from "./model";
 
 import { reducer as propertyReducer } from "./Property";
 
@@ -14,9 +14,6 @@ function commonReducer(
   state: Map<string, CardTemplate> = Map(),
   action: Action,
 ) {
-  if (!isGraph(state.get(action.payload.templateId))) {
-    return state;
-  }
   switch (action.type) {
     case ActionTypes.ADD_CARD: {
       const { templateId, card } = action.payload;
