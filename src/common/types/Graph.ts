@@ -42,7 +42,7 @@ interface GraphMethods<N, E> {
   disconnectNodes(source: NodeIndex, target: NodeIndex): Graph<N, E>;
   findSources(): Seq.Set<NodeIndex>;
   findSinks(): Seq.Set<NodeIndex>;
-  topoSort(): List<NodeIndex>;
+  topoSort(): List<NodeIndex> | undefined;
   hasCycles(): boolean;
   serialize(): string;
 }
@@ -151,16 +151,26 @@ class UntypedGraph<N, E = N> extends Record<GraphProps<any>>({
       .toSetSeq();
   }
 
-  topoSort(): List<NodeIndex> {
-    const result = this._topoSort();
-    if (result.hasCycles) {
-      throw new Error("Cannot topologically sort a graph that contains cycles");
+  topoSort(): List<NodeIndex> | undefined {
+    let list: List<NodeIndex> = List();
+    let wavefront = this.findSources().toSet();
+    let edges = this.edges;
+    while (!wavefront.isEmpty()) {
+      const node = wavefront.first()!;
+      wavefront = wavefront.remove(node);
+      list = list.push(node);
+      edges = edges.filter((_, edge) => edge.source !== node);
+      this.successors(node).forEach(succ => {
+        if (!edges.some((_, edge) => edge.target === succ)) {
+          wavefront = wavefront.add(succ);
+        }
+      });
     }
-    return result.list;
+    return list.size === this.nodes.size ? list : undefined;
   }
 
   hasCycles(): boolean {
-    return this._topoSort().hasCycles;
+    return !!this.topoSort();
   }
 
   serialize(
@@ -182,24 +192,6 @@ class UntypedGraph<N, E = N> extends Record<GraphProps<any>>({
       null,
       2,
     );
-  }
-
-  private _topoSort(): { hasCycles: boolean; list: List<NodeIndex> } {
-    let list: List<NodeIndex> = List();
-    let wavefront = this.findSources().toSet();
-    let edges = this.edges;
-    while (!wavefront.isEmpty()) {
-      const node = wavefront.first()!;
-      wavefront = wavefront.remove(node);
-      list = list.push(node);
-      edges = edges.filter((_, edge) => edge.source !== node);
-      this.successors(node).forEach(succ => {
-        if (!edges.some((_, edge) => edge.target === succ)) {
-          wavefront = wavefront.add(succ);
-        }
-      });
-    }
-    return { hasCycles: list.size !== this.nodes.size, list };
   }
 }
 
