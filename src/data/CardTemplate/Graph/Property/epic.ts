@@ -18,8 +18,8 @@ const setInputValueEpic = (
       if (action.type !== ActionTypes.SET_INPUT_VALUE_ASYNC) {
         return [];
       }
-      const { propertyId, node, value } = action.payload;
-      return [setInputValue(propertyId, node, value)];
+      const { propertyId, index, value } = action.payload;
+      return [setInputValue(propertyId, index, value)];
     });
 
 const setOutputValuesEpic = (

@@ -14,15 +14,15 @@ type Action =
   | SetInputValueAsyncAction;
 
 interface SetInputValueAction extends TypedAction<ActionTypes.SET_INPUT_VALUE> {
-  readonly payload: { propertyId: string; node: string; value: string };
+  readonly payload: { propertyId: string; index: number; value: string };
 }
 const setInputValue = (
   propertyId: string,
-  node: string,
+  index: number,
   value: string,
 ): Action => ({
   type: ActionTypes.SET_INPUT_VALUE,
-  payload: { propertyId, node, value },
+  payload: { propertyId, index, value },
 });
 
 interface SetOutputValuesAction
@@ -36,15 +36,15 @@ const setOutputValues = (propertyId: string, values: List<Param>): Action => ({
 
 interface SetInputValueAsyncAction
   extends TypedAction<ActionTypes.SET_INPUT_VALUE_ASYNC> {
-  readonly payload: { propertyId: string; node: string; value: string };
+  readonly payload: { propertyId: string; index: number; value: string };
 }
 const setInputValueAsync = (
   propertyId: string,
-  node: string,
+  index: number,
   value: string,
 ): Action => ({
   type: ActionTypes.SET_INPUT_VALUE_ASYNC,
-  payload: { propertyId, node, value },
+  payload: { propertyId, index, value },
 });
 
 export { Action, ActionTypes };

@@ -46,7 +46,11 @@ class PartialSheetWrapper extends React.PureComponent<Props> {
   }
 
   private onCellInput = (cell: Cell, newValue: string) => {
-    this.props.dispatch(setInputValueAsync(cell.property, cell.node, newValue));
+    const { palette } = this.props;
+    const { index } = palette.getGraph(cell.property)!.graph.nodes.get(
+      cell.node,
+    )!;
+    this.props.dispatch(setInputValueAsync(cell.property, index, newValue));
   };
 }
 

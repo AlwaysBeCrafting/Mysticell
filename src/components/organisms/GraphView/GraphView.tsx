@@ -35,7 +35,7 @@ interface StateProps {
   palette: Palette;
 }
 interface DispatchProps {
-  setInputValue: (prototypeId: string, node: string, newValue: string) => void;
+  setInputValue: (template: string, index: number, newValue: string) => void;
   placeCard: (card: string, position: Position2d) => void;
   addCard: (card: Card) => void;
 }
@@ -54,14 +54,7 @@ class PartialGraphView extends React.PureComponent<Props> {
   wrapper: HTMLDivElement | null;
 
   render() {
-    const {
-      className,
-      connectDrop,
-      path,
-      template,
-      palette,
-      setInputValue,
-    } = this.props;
+    const { className, connectDrop, path, template, palette } = this.props;
     return (
       <div className={classnames("graphView", className)}>
         <Toolbar className="graphView-toolbar">
@@ -76,7 +69,7 @@ class PartialGraphView extends React.PureComponent<Props> {
               <Boundary
                 input
                 template={template}
-                onValueChange={setInputValue}
+                onValueChange={this.props.setInputValue}
               />
             </ErrorBoundary>
             {this.renderGrid(template, palette)}
@@ -161,8 +154,8 @@ const GraphView = connectStore<StateProps, DispatchProps, OwnProps>(
     palette: state.document.palette,
   }),
   (dispatch, props) => ({
-    setInputValue: (property: string, node: string, newValue: string) => {
-      dispatch(setInputValueAsync(property, node, newValue));
+    setInputValue: (property: string, index: number, newValue: string) => {
+      dispatch(setInputValueAsync(property, index, newValue));
     },
     placeCard: (card: string, newPosition: Position2d) => {
       dispatch(placeCard(props.template.id, card, newPosition));

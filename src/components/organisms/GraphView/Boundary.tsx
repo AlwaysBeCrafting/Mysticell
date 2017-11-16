@@ -8,11 +8,11 @@ import "./Boundary.scss";
 
 interface CommonProps {
   template: GraphCardTemplate;
-  onValueChange?: (prototypeId: string, node: string, newValue: string) => void;
 }
 interface InputProps extends CommonProps {
   input: true;
   output?: undefined;
+  onValueChange: (template: string, index: number, newValue: string) => void;
 }
 interface OutputProps extends CommonProps {
   input?: undefined;
@@ -45,11 +45,14 @@ class Boundary extends React.PureComponent<Props> {
                   <input
                     className={`boundary-row-value mod-${wireAnchor}`}
                     defaultValue={template.inputValues.get(node.index)}
+                    onChange={this.onInputChange}
                   />
                 ) : (
                   <div
                     className={`boundary-row-value mod-${wireAnchor} mod-readonly`}
-                  />
+                  >
+                    {template.outputValues.get(node.index)!.value}
+                  </div>
                 ))}
               <Pin
                 className={`boundary-row-pin mod-${wireAnchor}`}
@@ -68,6 +71,18 @@ class Boundary extends React.PureComponent<Props> {
     // FINISHME
     // tslint:disable-next-line:no-console
     console.log(from, to);
+  };
+
+  private onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (this.props.input) {
+      const { onValueChange } = this.props;
+      if (onValueChange) {
+        const { template } = this.props;
+        const index = +event.target.getAttribute("data-index")!;
+        const value = event.target.value;
+        onValueChange(template.id, index, value);
+      }
+    }
   };
 }
 
