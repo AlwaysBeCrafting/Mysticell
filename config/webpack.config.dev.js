@@ -1,119 +1,114 @@
-const path = require('path');
-const autoprefixer = require('autoprefixer');
-const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require("path");
+const autoprefixer = require("autoprefixer");
+const webpack = require("webpack");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ForkTsCheckerPlugin = require("fork-ts-checker-webpack-plugin");
 const FriendlyErrorsPlugin = require("friendly-errors-webpack-plugin");
 
-const paths = require('./paths');
-const publicPath = '/';
-const publicUrl = '';
+const paths = require("./paths");
+const publicPath = "/";
+const publicUrl = "";
+
+const serverPort = 3001;
+const serverUrl = `http://localhost:${serverPort}`;
 
 module.exports = {
-	devtool: 'source-map',
-	entry: {
-		app: [
-			'react-hot-loader/patch',
-			'webpack-dev-server/client?http://localhost:3000',
-			'webpack/hot/dev-server',
-			paths.appIndex,
-		],
-	},
-	output: {
-		path: paths.appDist,
-		pathinfo: true,
-		filename: '[name].js',
-		chunkFilename: '[name].js',
-		publicPath,
-	},
-	resolve: {
-		extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
-		modules: [
-			path.resolve(__dirname, '../src'),
-			'node_modules',
-		],
-	},
-	
-	module: {
-		rules: [
-			{
-				test: /\.tsx?$/,
-				include: paths.appSrc,
-				use: [
-					'react-hot-loader/webpack',
-					{
-						loader: 'ts-loader',
-						options: {
-							transpileOnly: true,
-							configFile: "tsconfig.app.json"
-						},
-					},
-				],
-			},
-			{
-				test: /\.scss$/,
-				use: [
-					'style-loader',
-					{
-						loader: 'css-loader',
-						options: {
-							importLoaders: 1,
-							sourceMap: true,
-						},
-					},
-					{
-						loader: 'sass-loader',
-						options: {
-							sourceMap: true,
-						},
-					},
-				],
-			},
-			{
-				test: /\.(ico|jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2)(\?.*)?$/,
-				loader: 'file-loader',
-				options: {
-					name: 'static/media/[name].[hash:8].[ext]',
-				},
-			},
-			{
-				test: /\.(mp4|webm|wav|mp3|m4a|aac|oga)(\?.*)?$/,
-				loader: 'url-loader',
-				options: {
-					limit: 10000,
-					name: 'static/media/[name].[hash:8].[ext]',
-				},
-			},
-		],
-	},
+  devtool: "source-map",
+  entry: {
+    app: [
+      "react-hot-loader/patch",
+      `webpack-dev-server/client?${serverUrl}`,
+      "webpack/hot/dev-server",
+      paths.appIndex,
+    ],
+  },
+  output: {
+    path: paths.appDist,
+    pathinfo: true,
+    filename: "[name].js",
+    chunkFilename: "[name].js",
+    publicPath,
+  },
+  resolve: {
+    extensions: [".ts", ".tsx", ".js", ".jsx", ".json"],
+    modules: [path.resolve(__dirname, "../src"), "node_modules"],
+  },
 
-	devServer: {
-		hot: true,
-		inline: false,
-		quiet: true,
-		port: 3000,
-		historyApiFallback: true,
-		publicPath,
-	},
+  module: {
+    rules: [
+      {
+        test: /\.tsx?$/,
+        include: paths.appSrc,
+        use: [
+          "react-hot-loader/webpack",
+          {
+            loader: "ts-loader",
+            options: {
+              transpileOnly: true,
+              configFile: "tsconfig.app.json",
+            },
+          },
+        ],
+      },
+      {
+        test: /\.scss$/,
+        use: [
+          "style-loader",
+          {
+            loader: "css-loader",
+            options: {
+              importLoaders: 1,
+              sourceMap: true,
+            },
+          },
+          {
+            loader: "sass-loader",
+            options: {
+              sourceMap: true,
+            },
+          },
+        ],
+      },
+      {
+        test: /\.(ico|jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2)(\?.*)?$/,
+        loader: "file-loader",
+        options: {
+          name: "static/media/[name].[hash:8].[ext]",
+        },
+      },
+      {
+        test: /\.(mp4|webm|wav|mp3|m4a|aac|oga)(\?.*)?$/,
+        loader: "url-loader",
+        options: {
+          limit: 10000,
+          name: "static/media/[name].[hash:8].[ext]",
+        },
+      },
+    ],
+  },
 
-	plugins: [
-		new HtmlWebpackPlugin({
-			inject: true,
-			template: paths.appHtml,
-		}),
-		new webpack.DefinePlugin({'process.env.NODE_ENV': '"development"'}),
-		new webpack.HotModuleReplacementPlugin(),
-		new webpack.NoEmitOnErrorsPlugin(),
-		new webpack.NamedModulesPlugin(),
-		new ForkTsCheckerPlugin({
-			tsconfig: path.resolve(paths.appRoot, "tsconfig.app.json"),
-			tslint: true,
-			async: false,
-		}),
-		new FriendlyErrorsPlugin({
-			compilationSuccessInfo: {
-				messages: ['Dev server running at http://localhost:3000'],
-			},
-		}),
-	],
+  devServer: {
+    hot: true,
+    inline: false,
+    quiet: true,
+    port: serverPort,
+    historyApiFallback: true,
+    publicPath,
+  },
+
+  plugins: [
+    new HtmlWebpackPlugin({
+      inject: true,
+      template: paths.appHtml,
+    }),
+    new webpack.DefinePlugin({ "process.env.NODE_ENV": '"development"' }),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
+    new webpack.NamedModulesPlugin(),
+    new FriendlyErrorsPlugin({
+      compilationSuccessInfo: {
+        messages: [`Dev server running at ${serverUrl}`],
+      },
+    }),
+  ],
 };
