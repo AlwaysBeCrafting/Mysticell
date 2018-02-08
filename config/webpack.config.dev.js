@@ -1,18 +1,18 @@
 const path = require("path");
-const autoprefixer = require("autoprefixer");
 const webpack = require("webpack");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const ForkTsCheckerPlugin = require("fork-ts-checker-webpack-plugin");
+const merge = require("webpack-merge");
+const common = require("./webpack.config.common");
+
 const FriendlyErrorsPlugin = require("friendly-errors-webpack-plugin");
 
 const paths = require("./paths");
 const publicPath = "/";
-const publicUrl = "";
 
-const serverPort = 3001;
-const serverUrl = `http://localhost:${serverPort}`;
+const serverPort = process.env.DEV_SERVER_PORT;
+const serverHost = process.env.DEV_SERVER_HOST;
+const serverUrl = `http://${serverHost}:${serverPort}`;
 
-module.exports = {
+module.exports = merge(common, {
   devtool: "source-map",
   entry: {
     app: [
@@ -22,34 +22,16 @@ module.exports = {
       paths.appIndex,
     ],
   },
-  output: {
-    path: paths.appDist,
-    pathinfo: true,
-    filename: "[name].js",
-    chunkFilename: "[name].js",
+  devServer: {
+    hot: true,
+    inline: false,
+    quiet: true,
+    port: serverPort,
+    historyApiFallback: true,
     publicPath,
   },
-  resolve: {
-    extensions: [".ts", ".tsx", ".js", ".jsx", ".json"],
-    modules: [path.resolve(__dirname, "../src"), "node_modules"],
-  },
-
   module: {
     rules: [
-      {
-        test: /\.tsx?$/,
-        include: paths.appSrc,
-        use: [
-          "react-hot-loader/webpack",
-          {
-            loader: "ts-loader",
-            options: {
-              transpileOnly: true,
-              configFile: "tsconfig.app.json",
-            },
-          },
-        ],
-      },
       {
         test: /\.scss$/,
         use: [
@@ -69,39 +51,12 @@ module.exports = {
           },
         ],
       },
-      {
-        test: /\.(ico|jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2)(\?.*)?$/,
-        loader: "file-loader",
-        options: {
-          name: "static/media/[name].[hash:8].[ext]",
-        },
-      },
-      {
-        test: /\.(mp4|webm|wav|mp3|m4a|aac|oga)(\?.*)?$/,
-        loader: "url-loader",
-        options: {
-          limit: 10000,
-          name: "static/media/[name].[hash:8].[ext]",
-        },
-      },
     ],
   },
-
-  devServer: {
-    hot: true,
-    inline: false,
-    quiet: true,
-    port: serverPort,
-    historyApiFallback: true,
-    publicPath,
-  },
-
   plugins: [
-    new HtmlWebpackPlugin({
-      inject: true,
-      template: paths.appHtml,
+    new webpack.DefinePlugin({
+      "process.env.NODE_ENV": JSON.stringify("development"),
     }),
-    new webpack.DefinePlugin({ "process.env.NODE_ENV": '"development"' }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.NamedModulesPlugin(),
@@ -111,4 +66,4 @@ module.exports = {
       },
     }),
   ],
-};
+});
