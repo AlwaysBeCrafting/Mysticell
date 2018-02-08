@@ -3,7 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "cross-env NODE_ENV=development webpack-dev-server --watch --color --config ./config/webpack.config.dev.js",
+    "start": "node ./dist/server.js",
+    "build": "yarn build:client && yarn build:server",
+    "build:client": "webpack --config ./config/webpack.config.prod.js",
+    "build:server": "",
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --watch --color --config ./config/webpack.config.dev.js",
     "lint": "tslint --project .",
     "test": "jest"
   },
@@ -25,7 +29,6 @@
     "css-loader": "^0.28.5",
     "extract-text-webpack-plugin": "^3.0.1",
     "file-loader": "^1.1.5",
-    "fork-ts-checker-webpack-plugin": "^0.2.8",
     "friendly-errors-webpack-plugin": "^1.6.1",
     "html-webpack-plugin": "^2.30.1",
     "jest": "^21.1.0",
@@ -48,7 +51,8 @@
     "typescript": "^2.4.2",
     "url-loader": "^0.6.2",
     "webpack": "^3.7.1",
-    "webpack-dev-server": "^2.9.2"
+    "webpack-dev-server": "^2.9.2",
+    "webpack-merge": "^4.1.1"
   },
   "dependencies": {
     "@types/react-dnd-html5-backend": "^2.1.8",
