@@ -18,4 +18,5 @@ RUN du -h /
 
 EXPOSE 8080
 
-ENTRYPOINT ["yarn", "start"]
+ENTRYPOINT ["yarn"]
+CMD ["start"]
