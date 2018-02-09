@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "module": "es2015",
-    "target": "es2015",
+    "module": "esnext",
+    "target": "esnext",
     "jsx": "react",
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
