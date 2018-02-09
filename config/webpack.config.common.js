@@ -58,8 +58,8 @@ module.exports = {
   output: {
     path: paths.appDist,
     pathinfo: true,
-    filename: "[name].js",
-    chunkFilename: "[name].js",
+    filename: "static/[name].js",
+    chunkFilename: "static/[name].js",
     publicPath,
   },
 };
