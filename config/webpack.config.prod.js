@@ -1,10 +1,11 @@
-const appRootPath = require("app-root-path").path;
 const webpack = require("webpack");
 const merge = require("webpack-merge");
 const common = require("./webpack.config.common");
 
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
+
+const paths = require("./paths");
 
 module.exports = merge(common, {
   entry: {
@@ -22,7 +23,7 @@ module.exports = merge(common, {
     ],
   },
   plugins: [
-    new CleanWebpackPlugin(["dist"], { root: appRootPath }),
+    new CleanWebpackPlugin(["dist"], { root: paths.appRoot }),
     new webpack.DefinePlugin({
       "process.env.NODE_ENV": JSON.stringify("production"),
     }),
