@@ -1,6 +1,6 @@
 import { Map } from "immutable";
 import React from "react";
-import { connect } from "react-redux";
+import { connect, MapStateToProps } from "react-redux";
 import {
   BrowserRouter as Router,
   Route,
@@ -13,6 +13,7 @@ import {
   GraphView,
   PaletteView,
   SheetWrapper,
+  StatusBar,
 } from "components/organisms";
 
 import { Action, AppState } from "data/AppState";
@@ -36,12 +37,11 @@ class ProtoEditor extends React.PureComponent<Props> {
     return (
       <Router>
         <main className="editorPage">
-          <div className="editorPage-document">
-            <AppDragLayer />
-            <Route exact path="/:path*" render={this.renderPaletteView} />
-            <Route exact path="/" render={this.renderSheetView} />
-            <Route exact path="/:path+" render={this.renderGraphView} />
-          </div>
+          <AppDragLayer />
+          <Route exact path="/:path*" render={this.renderPaletteView} />
+          <Route exact path="/" render={this.renderSheetView} />
+          <Route exact path="/:path+" render={this.renderGraphView} />
+          <Route exact path="/:path*" render={this.renderStatusBar} />
         </main>
       </Router>
     );
@@ -51,7 +51,7 @@ class ProtoEditor extends React.PureComponent<Props> {
     routeProps: RouteComponentProps<{ path: string }>,
   ) => (
     <PaletteView
-      className="editorPage-document-palette"
+      className="editorPage-palette"
       palette={this.props.palette}
       currentPath={(routeProps.match.params.path || "").split("/")}
     />
@@ -67,14 +67,14 @@ class ProtoEditor extends React.PureComponent<Props> {
     if (graphTemplate) {
       return (
         <GraphView
-          className="editorPage-document-content"
+          className="editorPage-content"
           path={segments}
           template={graphTemplate}
         />
       );
     } else {
       return (
-        <div className="editorPage-document-error">
+        <div className="editorPage-error">
           No formula exists at /{routeProps.match.params.path}
         </div>
       );
@@ -82,11 +82,15 @@ class ProtoEditor extends React.PureComponent<Props> {
   };
 
   private renderSheetView = () => {
-    return <SheetWrapper className="editorPage-document-content" />;
+    return <SheetWrapper className="editorPage-content" />;
+  };
+
+  private renderStatusBar = () => {
+    return <StatusBar className="editorPage-status" />;
   };
 }
 
-const EditorPage = connect<StateProps, DispatchProps, {}>(
+const EditorPage = connect<StateProps, DispatchProps, {}, AppState>(
   (state: AppState) => ({
     title: state.document.title,
     sheets: state.document.sheets,

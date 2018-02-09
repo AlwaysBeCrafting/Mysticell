@@ -3,28 +3,23 @@
 @import "~common/styles/mixins";
 
 .editorPage {
-  flex: 1 0 auto;
+  flex: 1 0 100vh;
   background: $color-grey-200;
   color: $color-text-primary;
 
-  &-appbar {
-    flex: 0 0 $dimen-toolbar-size;
-    @include elevation(4px);
+  display: grid;
+  grid-template:
+    "palette content" 1fr
+    "status status" 26px / 320px auto;
 
-    background: $color-brand-primary;
-    z-index: 100;
+  &-palette {
+    grid-area: palette;
+  }
+  &-content {
+    grid-area: content;
   }
 
-  &-document {
-    flex: 1 0 auto;
-    flex-flow: row nowrap;
-
-    &-palette {
-      flex: 0 0 320px;
-    }
-
-    &-content {
-      flex: 1 0 0;
-    }
+  &-status {
+    grid-area: status;
   }
 }
