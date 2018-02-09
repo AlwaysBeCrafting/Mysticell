@@ -9,7 +9,16 @@ interface Props {
 
 const StatusBar = (props: Props) => (
   <footer className={classNames("statusBar", props.className)}>
-    Status bar
+    <span className="statusBar-notice">
+      Mysticell is a work in progress, and may change at any moment, right under
+      your nose.
+    </span>
+    <a
+      className="statusBar-link"
+      href="http://github.com/AlwaysBeCrafting/Mysticell"
+    >
+      See the code
+    </a>
   </footer>
 );
 
