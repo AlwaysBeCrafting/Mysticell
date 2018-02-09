@@ -7,6 +7,9 @@ const CleanWebpackPlugin = require("clean-webpack-plugin");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = merge(common, {
+  entry: {
+    app: ["@babel/polyfill", paths.appIndex],
+  },
   module: {
     rules: [
       {
