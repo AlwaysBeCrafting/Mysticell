@@ -8,7 +8,7 @@ const publicPath = "/";
 
 module.exports = {
   entry: {
-    app: paths.appIndex,
+    app: ["@babel/polyfill", paths.appIndex],
   },
   resolve: {
     extensions: [".ts", ".tsx", ".js", ".jsx", ".json"],
@@ -22,6 +22,7 @@ module.exports = {
         include: paths.appSrc,
         use: [
           "react-hot-loader/webpack",
+          "babel-loader",
           {
             loader: "ts-loader",
             options: {
