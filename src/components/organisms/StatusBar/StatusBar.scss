@@ -1,0 +1,8 @@
+@import "~common/styles/colors";
+
+.statusBar {
+  display: flex;
+  flex-flow: row nowrap;
+
+  background: $color-grey-300;
+}
