@@ -20,9 +20,9 @@ Sheets can also be any number of rows or columns, and can be displayed side-by-s
 
 This is the hierarchy of your document. It's where you'll find all the building blocks that go into the graphs you create. There are a few types:
 
-* ![Function icon](/readme-assets/icons/icon-function.svg?raw=true) **Functions** are formulas that take some input, do something to it, and give back some output as a result. They don't store any data, so you can use them in many places and get different results each time.
-* ![Property icon](/readme-assets/icons/icon-property.svg?raw=true) **Properties** are similar to functions, except that their input and output values are persistent. When you type a value into a property input, the outputs are re-calculated based on the formula inside. These inputs and outputs are the pieces you will attach to your sheets.
-* ![Table icon](/readme-assets/icons/icon-table.svg?raw=true) **Tables** aren't implemented yet, but they'll end up looking similar to the classic idea of a spreadsheet: a few headers describing each column, and lots of rows with data in them. Unlike spreadsheets, though, tables contain only static data; no formulas allowed. Instead, you plug a table into another formula and use its data there.
+* ![Function icon](/readme-assets/icons/icon-function.png?raw=true) **Functions** are formulas that take some input, do something to it, and give back some output as a result. They don't store any data, so you can use them in many places and get different results each time.
+* ![Property icon](/readme-assets/icons/icon-property.png?raw=true) **Properties** are similar to functions, except that their input and output values are persistent. When you type a value into a property input, the outputs are re-calculated based on the formula inside. These inputs and outputs are the pieces you will attach to your sheets.
+* ![Table icon](/readme-assets/icons/icon-table.png?raw=true) **Tables** aren't implemented yet, but they'll end up looking similar to the classic idea of a spreadsheet: a few headers describing each column, and lots of rows with data in them. Unlike spreadsheets, though, tables contain only static data; no formulas allowed. Instead, you plug a table into another formula and use its data there.
 
 ## The graph editor
 
