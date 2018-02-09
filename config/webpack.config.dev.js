@@ -16,6 +16,7 @@ module.exports = merge(common, {
   devtool: "source-map",
   entry: {
     app: [
+      "@babel/polyfill",
       "react-hot-loader/patch",
       `webpack-dev-server/client?${serverUrl}`,
       "webpack/hot/dev-server",
