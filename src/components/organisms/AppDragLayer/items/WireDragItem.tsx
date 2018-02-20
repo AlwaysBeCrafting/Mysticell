@@ -19,18 +19,14 @@ interface EndProps {
 type Props = StartProps | EndProps;
 
 class WireDragItem extends DragItem<Props> {
-  public render() {
-    const start = { ...(this.props.start || this.props.currentOffset) };
-    const end = { ...(this.props.end || this.props.currentOffset) };
-    start.y -= 20;
-    start.x /= 40;
-    start.y /= 40;
-    end.y -= 20;
-    end.x /= 40;
-    end.y /= 40;
+  render() {
+    const start = this.props.start || this.props.currentOffset;
+    const end = this.props.end || this.props.currentOffset;
+    const startPos = new Position2d(start.x, start.y);
+    const endPos = new Position2d(end.x, end.y);
     return (
       <svg className="wireDragItem">
-        <Wire srcPos={start} tgtPos={end} />
+        <Wire startPos={startPos} endPos={endPos} />
       </svg>
     );
   }

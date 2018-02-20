@@ -1,0 +1,89 @@
+@import "~common/styles/colors";
+@import "~common/styles/dimensions";
+@import "~common/styles/fonts";
+@import "~common/styles/mixins";
+
+$row-height: $dimen-graph-cell-size;
+
+.cardView {
+  @include elevation(2px);
+  @include font-body1;
+  background: #fff;
+  border-radius: 2px;
+  line-height: $row-height;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-auto-rows: 40px;
+  flex-flow: column nowrap;
+
+  &-header {
+    display: flex;
+    flex-flow: row nowrap;
+
+    &-name {
+      flex: 1 0 auto;
+      @include font-body2;
+    }
+  }
+
+  &-row {
+    position: relative;
+    padding: 0 $dimen-keyline-padding / 2;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    @include font-body1;
+
+    &.mod-output {
+      flex-direction: row-reverse;
+    }
+
+    &-name {
+      flex: 0 1 auto;
+      color: $color-text-secondary;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      &.mod-input {
+        padding-right: 16px;
+      }
+
+      &.mod-output {
+        padding-left: 16px;
+      }
+    }
+
+    &-value {
+      width: 0;
+      flex: 1 0 auto;
+      text-align: right;
+      line-height: 1;
+      background: none;
+      border: none;
+      border-bottom: solid 2px $color-black-alpha-12;
+      padding: 6px 0 4px;
+      color: $color-text-primary;
+
+      &:focus {
+        border-color: $color-brand-primary;
+      }
+
+      &.mod-readonly {
+        border-bottom: none;
+      }
+    }
+
+    &-pin {
+      position: absolute;
+
+      &.mod-input {
+        left: -$dimen-pin-size / 2;
+      }
+
+      &.mod-output {
+        right: -$dimen-pin-size / 2;
+      }
+    }
+  }
+}

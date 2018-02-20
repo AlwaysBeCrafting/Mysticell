@@ -1,11 +1,14 @@
 import { Reducer } from "redux";
 
-const composeReducers = <T>(...reducers: Array<Reducer<T>>): Reducer<T> => (
-  state: T,
-  action: any,
-) =>
-  reducers
-    .reverse()
-    .reduce((prior: T, r: Reducer<T>) => r(prior, action), state);
+function composeReducers<T>(...reducers: Array<Reducer<T>>): Reducer<T> {
+  const revReducers = reducers.reverse();
+  return (state: T, action: any) => {
+    let newState: T = state;
+    for (const reducer of revReducers) {
+      newState = reducer(newState, action);
+    }
+    return newState;
+  };
+}
 
 export { composeReducers };

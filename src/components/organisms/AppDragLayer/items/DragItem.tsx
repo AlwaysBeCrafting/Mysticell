@@ -7,7 +7,7 @@ interface Props {
 }
 
 class DragItem<P, S = {}> extends React.Component<Props & P, S> {
-  public shouldComponentUpdate(nextProps: Props) {
+  shouldComponentUpdate(nextProps: Props) {
     const { currentOffset: nextOffset } = nextProps;
     const { currentOffset } = this.props;
     return (

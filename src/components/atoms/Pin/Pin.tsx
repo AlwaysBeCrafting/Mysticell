@@ -13,43 +13,23 @@ import {
 } from "react-dnd";
 import { getEmptyImage } from "react-dnd-html5-backend";
 
-import { Param } from "data/common";
+import { NodeValue } from "data/CardTemplate";
 
 import { DndTypes } from "common/types";
 
 import "./Pin.scss";
 
 interface DragItem {
-  nodeId: string;
-  index: number;
+  id: string;
+  node: NodeValue;
 }
 
-interface CommonProps {
+interface OwnProps {
   className?: string;
-  nodeId: string;
-  index: number;
-  name: string;
-  takesInput?: boolean;
-  userValue?: string;
-  onChange?: (index: number, value: string) => void;
-  onConnect?: (
-    fromId: string,
-    fromIndex: number,
-    toId: string,
-    toIndex: number,
-  ) => void;
-  hasPin?: boolean;
-  param?: Param;
+  id?: string;
+  node?: NodeValue;
+  onConnect?: (from: string, to: string) => void;
 }
-interface SrcProps extends CommonProps {
-  source: true;
-  target?: undefined;
-}
-interface TgtProps extends CommonProps {
-  source?: undefined;
-  target: true;
-}
-type OwnProps = SrcProps | TgtProps;
 
 interface DragProps {
   connectDragPreview: ConnectDragPreview;
@@ -64,82 +44,38 @@ type DndProps = DragProps & DropProps;
 type Props = OwnProps & DndProps;
 
 class PartialPin extends React.PureComponent<Props> {
-  public componentDidMount() {
+  componentDidMount() {
     this.props.connectDragPreview(getEmptyImage());
   }
 
-  public render() {
+  render() {
     const {
       className,
       connectDragSource,
       connectDropTarget,
-      name,
-      source,
-      target,
-      hasPin,
+      node,
     } = this.props;
-    const classMod = {
-      "mod-source": source,
-      "mod-target": target,
-    };
-    return (
-      <div className={classNames("pin", className, classMod)} key={name}>
-        {(typeof hasPin === "undefined" || hasPin) &&
-          connectDragSource(
-            connectDropTarget(
-              <div className={classNames("pin-dot", classMod)} />,
-            ),
-          )}
-        <label className={classNames("pin-label", classMod)}>{name}</label>
-        {this.renderInputValue(classNames("pin-value", classMod))}
-        {this.renderReadOnlyValue(classNames("pin-value", classMod))}
-      </div>
+    const classMod = node && `mod-${node.wireAnchor}`;
+    return connectDragSource(
+      connectDropTarget(
+        <div className={classNames(className, "pin", classMod)} />,
+      ),
     );
   }
-
-  private renderInputValue(className: string) {
-    if (this.props.takesInput) {
-      return (
-        <input
-          className={className}
-          defaultValue={this.props.userValue}
-          onChange={this.onChange}
-        />
-      );
-    }
-    return null;
-  }
-
-  private renderReadOnlyValue(className: string) {
-    if (!this.props.takesInput && this.props.param) {
-      return (
-        <div className={classNames(className, "mod-readonly")}>
-          {this.props.param.value}
-        </div>
-      );
-    }
-    return null;
-  }
-
-  private onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (this.props.onChange) {
-      this.props.onChange(this.props.index, event.currentTarget.value);
-    }
-  };
 }
 
 const dragSpec: DragSourceSpec<OwnProps> = {
-  beginDrag: props => ({
-    nodeId: props.nodeId,
-    index: props.index,
-  }),
+  beginDrag: props => ({ id: props.id, node: props.node }),
 };
 const dragCollect: DragSourceCollector = connect => ({
   connectDragPreview: connect.dragPreview(),
   connectDragSource: connect.dragSource(),
 });
 const DragPin = DragSource(
-  props => (props.source ? DndTypes.WIRE_END : DndTypes.WIRE_START),
+  props =>
+    props.node && props.node.wireAnchor === "start"
+      ? DndTypes.WIRE_END
+      : DndTypes.WIRE_START,
   dragSpec,
   dragCollect,
 )(PartialPin);
@@ -147,27 +83,42 @@ const DragPin = DragSource(
 const dropSpec: DropTargetSpec<OwnProps> = {
   drop: (props, monitor) => {
     if (props.onConnect) {
-      const { nodeId, index } = monitor!.getItem() as DragItem;
+      const { id } = monitor!.getItem() as DragItem;
       switch (monitor!.getItemType() as DndTypes) {
         case DndTypes.WIRE_START: {
-          props.onConnect(props.nodeId, props.index, nodeId, index);
+          props.onConnect(props.id!, id);
           break;
         }
         case DndTypes.WIRE_END: {
-          props.onConnect(nodeId, index, props.nodeId, props.index);
+          props.onConnect(id, props.id!);
           break;
         }
       }
     }
   },
-  canDrop: (props, monitor) =>
-    props.nodeId !== (monitor!.getItem() as DragItem).nodeId,
+  canDrop: (props, monitor) => {
+    const { node } = monitor!.getItem() as DragItem;
+    if (!props.node) {
+      return false;
+    }
+    return (
+      (props.node.type === node.type
+        ? props.node.wireAnchor !== node.wireAnchor
+        : props.node.wireAnchor === node.wireAnchor) &&
+      (props.node.type === "card" && node.type === "card"
+        ? props.node.card !== node.card
+        : true)
+    );
+  },
 };
 const dropCollect: DropTargetCollector = connect => ({
   connectDropTarget: connect.dropTarget(),
 });
 const Pin = DropTarget(
-  props => (props.source ? DndTypes.WIRE_START : DndTypes.WIRE_END),
+  props =>
+    props.node && props.node.wireAnchor === "start"
+      ? DndTypes.WIRE_END
+      : DndTypes.WIRE_START,
   dropSpec,
   dropCollect,
 )(DragPin);

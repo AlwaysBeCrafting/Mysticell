@@ -1,8 +1,8 @@
 import { combineEpics } from "redux-observable";
 
+import { epic as cardTemplateEpic } from "data/CardTemplate";
 import { epic as documentEpic } from "data/Document";
-import { epic as nodePrototypeEpic } from "data/NodePrototype";
 
-const appStateEpic = combineEpics(documentEpic, nodePrototypeEpic);
+const appStateEpic = combineEpics(documentEpic, cardTemplateEpic);
 
 export { appStateEpic };

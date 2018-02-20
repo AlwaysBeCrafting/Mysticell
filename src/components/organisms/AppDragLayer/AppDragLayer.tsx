@@ -3,12 +3,12 @@ import { DragLayer, DragLayerCollector } from "react-dnd";
 
 import { DndTypes, Position2d } from "common/types";
 
-import { NodeInfo } from "data/common";
+import { CardSnapshot } from "data/Card";
 
 import "./AppDragLayer.scss";
 
-import { NodeDragItem } from "./items/NodeDragItem";
-import { NodePrototypeDragItem } from "./items/NodePrototypeDragItem";
+import { CardDragItem } from "./items/CardDragItem";
+import { CardTemplateDragItem } from "./items/CardTemplateDragItem";
 import { WireDragItem } from "./items/WireDragItem";
 
 interface OwnProps {}
@@ -17,23 +17,23 @@ interface CommonLayerProps {
   clientOffset: Position2d;
   sourceClientOffset: Position2d;
 }
-interface NodeLayerProps extends CommonLayerProps {
-  itemType: DndTypes.NODE;
-  item: NodeInfo;
+interface CardLayerProps extends CommonLayerProps {
+  itemType: DndTypes.CARD;
+  item: CardSnapshot;
 }
-interface NodePrototypeLayerProps extends CommonLayerProps {
-  itemType: DndTypes.NODE_PROTOTYPE;
-  item: NodeInfo;
+interface CardTemplateLayerProps extends CommonLayerProps {
+  itemType: DndTypes.CARD_TEMPLATE;
+  item: CardSnapshot;
 }
 interface WireLayerProps extends CommonLayerProps {
   itemType: DndTypes.WIRE_START | DndTypes.WIRE_END;
   item: { nodeId: string };
 }
-type LayerProps = NodeLayerProps | NodePrototypeLayerProps | WireLayerProps;
+type LayerProps = CardLayerProps | CardTemplateLayerProps | WireLayerProps;
 type Props = OwnProps & LayerProps;
 
 class PartialDragLayer extends React.PureComponent<Props> {
-  public render() {
+  render() {
     return <div className="appDragLayer">{this.renderDragItem()}</div>;
   }
 
@@ -44,17 +44,17 @@ class PartialDragLayer extends React.PureComponent<Props> {
       clientOffset,
     } = this.props;
     switch (this.props.itemType) {
-      case DndTypes.NODE: {
+      case DndTypes.CARD: {
         const { item } = this.props;
         return (
-          <NodeDragItem nodeInfo={item} currentOffset={sourceClientOffset} />
+          <CardDragItem snapshot={item} currentOffset={sourceClientOffset} />
         );
       }
-      case DndTypes.NODE_PROTOTYPE: {
+      case DndTypes.CARD_TEMPLATE: {
         const { item } = this.props;
         return (
-          <NodePrototypeDragItem
-            nodeInfo={item}
+          <CardTemplateDragItem
+            snapshot={item}
             currentOffset={sourceClientOffset}
           />
         );

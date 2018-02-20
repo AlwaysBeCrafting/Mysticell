@@ -1,6 +1,6 @@
-import { Map, Set } from "immutable";
+import { Map } from "immutable";
 import React from "react";
-import { connect, MapStateToProps } from "react-redux";
+import { connect } from "react-redux";
 import {
   BrowserRouter as Router,
   Route,
@@ -11,26 +11,21 @@ import { Dispatch } from "redux";
 import {
   AppDragLayer,
   GraphView,
-  NavView,
+  PaletteView,
   SheetWrapper,
   StatusBar,
 } from "components/organisms";
 
 import { Action, AppState } from "data/AppState";
-import { Nav, pathToNodePrototype } from "data/Nav";
-import { isGraph, NodePrototype } from "data/NodePrototype";
-import { PropertyCache } from "data/PropertyCache";
+import { Palette } from "data/Palette";
 import { Sheet } from "data/Sheet";
 
 import "./EditorPage.scss";
 
 interface StateProps {
   title: string;
-  nav: Nav;
-  nodePrototypes: Map<string, NodePrototype>;
   sheets: Map<string, Sheet>;
-  expandedNavItems: Set<string>;
-  propertyCache: PropertyCache;
+  palette: Palette;
 }
 interface DispatchProps {
   dispatch: Dispatch<Action>;
@@ -38,12 +33,12 @@ interface DispatchProps {
 type Props = StateProps & DispatchProps;
 
 class ProtoEditor extends React.PureComponent<Props> {
-  public render() {
+  render() {
     return (
       <Router>
-        <main className="editor">
+        <main className="editorPage">
           <AppDragLayer />
-          <Route exact path="/:path*" render={this.renderNavView} />
+          <Route exact path="/:path*" render={this.renderPaletteView} />
           <Route exact path="/" render={this.renderSheetView} />
           <Route exact path="/:path+" render={this.renderGraphView} />
           <Route exact path="/:path*" render={this.renderStatusBar} />
@@ -52,65 +47,55 @@ class ProtoEditor extends React.PureComponent<Props> {
     );
   }
 
-  private renderNavView = (
+  private renderPaletteView = (
     routeProps: RouteComponentProps<{ path: string }>,
   ) => (
-    <NavView
-      className="editor-nav"
-      nav={this.props.nav}
-      nodePrototypes={this.props.nodePrototypes}
-      expandedNavItems={this.props.expandedNavItems}
-      selectedNavItem={`root/${routeProps.match.params.path}`}
+    <PaletteView
+      className="editorPage-palette"
+      palette={this.props.palette}
+      currentPath={(routeProps.match.params.path || "").split("/")}
     />
   );
 
   private renderGraphView = (
     routeProps: RouteComponentProps<{ path: string }>,
   ) => {
+    const { palette } = this.props;
     const segments = routeProps.match.params.path.split("/");
-    const prototype = pathToNodePrototype(
-      this.props.nodePrototypes,
-      this.props.nav,
-      segments,
-    );
-    if (prototype && isGraph(prototype)) {
+    const templateId = palette.idFromPath(segments);
+    const graphTemplate = palette.getGraph(templateId || "");
+    if (graphTemplate) {
       return (
         <GraphView
-          className="editor-content"
+          className="editorPage-content"
           path={segments}
-          prototype={prototype}
+          template={graphTemplate}
         />
       );
     } else {
       return (
-        <div className="editor-error">
-          No formula exists at /{routeProps.match.params.path}.<br />
-          Prototype is {prototype}
+        <div className="editorPage-error">
+          No formula exists at /{routeProps.match.params.path}
         </div>
       );
     }
   };
 
   private renderSheetView = () => {
-    return <SheetWrapper className="editor-content" />;
+    return <SheetWrapper className="editorPage-content" />;
   };
 
   private renderStatusBar = () => {
-    return <StatusBar className="editor-status" />;
+    return <StatusBar className="editorPage-status" />;
   };
 }
 
-const mapStateToProps = (state: AppState) => ({
-  title: state.document.title,
-  nav: state.document.nav,
-  nodePrototypes: state.document.nodePrototypes,
-  sheets: state.document.sheets,
-  expandedNavItems: state.uiState.expandedNavItems,
-  propertyCache: state.propertyCache,
-});
-
 const EditorPage = connect<StateProps, DispatchProps, {}, AppState>(
-  mapStateToProps,
+  (state: AppState) => ({
+    title: state.document.title,
+    sheets: state.document.sheets,
+    palette: state.document.palette,
+  }),
   (dispatch: Dispatch<Action>) => ({ dispatch }),
 )(ProtoEditor);
 

@@ -1,25 +1,18 @@
-import { List, Map } from "immutable";
 import React from "react";
 
-import { isEdgeTarget } from "data/Graph";
-import { GraphNodePrototype, isProperty } from "data/NodePrototype";
+import { GraphCardTemplate, isProperty } from "data/CardTemplate";
 
 import { Pin } from "components/atoms";
 
-import { Param, PARAMS } from "data/common";
+import "./Boundary.scss";
 
 interface CommonProps {
-  prototype: GraphNodePrototype;
-  propertyCache: Map<string, List<Param>>;
-  onValueChange?: (
-    prototypeId: string,
-    index: number,
-    newValue: string,
-  ) => void;
+  template: GraphCardTemplate;
 }
 interface InputProps extends CommonProps {
   input: true;
   output?: undefined;
+  onValueChange: (template: string, index: number, newValue: string) => void;
 }
 interface OutputProps extends CommonProps {
   input?: undefined;
@@ -27,62 +20,68 @@ interface OutputProps extends CommonProps {
 }
 type Props = InputProps | OutputProps;
 
-const working = PARAMS.error("…", "Working…");
-
 class Boundary extends React.PureComponent<Props> {
-  public render() {
-    const { input, prototype, propertyCache } = this.props;
-    const pinNames = input ? prototype.inputNames : prototype.outputNames;
-    const type = input ? "input" : "output";
-    const params = propertyCache.get(prototype.id);
-    const defaultParam = isProperty(prototype) ? working : undefined;
+  render() {
+    const { input, template } = this.props;
+    const wireAnchor = input ? "start" : "end";
+    const nodes = template.graph.nodes.filter(
+      node => node.type === "boundary" && node.wireAnchor === wireAnchor,
+    );
+    const nodeNames = input ? template.inputNames : template.outputNames;
 
     return (
-      <div className={`graphView-graph-panel graphView-graph-${type}Panel`}>
-        <div
-          className={`graphView-graph-panel-heading graphView-graph-${type}Panel-heading`}
-        >
-          {type}
+      <div className={`boundary mod-${wireAnchor}`}>
+        <div className={`boundary-header boundary-row mod-${wireAnchor}`}>
+          {wireAnchor === "start" ? "Input" : "Output"}
         </div>
-        {pinNames.map((name, index) => {
-          if (type === "input") {
-            const userValue = isProperty(prototype)
-              ? prototype.inputValues.get(index)
-              : "";
-            return (
+        {nodes
+          .map((node, id) => (
+            <div className={`boundary-row mod-${wireAnchor}`} key={id}>
+              <div className={`boundary-row-name mod-${wireAnchor}`}>
+                {nodeNames.get(node.index)}
+              </div>
+              {isProperty(template) &&
+                (wireAnchor === "start" ? (
+                  <input
+                    className={`boundary-row-value mod-${wireAnchor}`}
+                    defaultValue={template.inputValues.get(node.index)}
+                    onChange={this.onInputChange}
+                  />
+                ) : (
+                  <div
+                    className={`boundary-row-value mod-${wireAnchor} mod-readonly`}
+                  >
+                    {template.outputValues.get(node.index)!.value}
+                  </div>
+                ))}
               <Pin
-                nodeId="input"
-                source
-                takesInput={isProperty(prototype)}
-                name={name}
-                userValue={userValue}
-                index={index}
-                key={name}
-                onChange={this.onPinValueChange}
+                className={`boundary-row-pin mod-${wireAnchor}`}
+                id={id}
+                node={node}
+                onConnect={this.onPinConnect}
               />
-            );
-          } else {
-            return (
-              <Pin
-                nodeId="output"
-                target
-                takesInput={!isEdgeTarget(prototype.graph, "output", index)}
-                name={name}
-                param={params ? params.get(index) : defaultParam}
-                index={index}
-                key={name}
-              />
-            );
-          }
-        })}
+            </div>
+          ))
+          .toIndexedSeq()}
       </div>
     );
   }
 
-  private onPinValueChange = (index: number, newValue: string) => {
-    const { onValueChange } = this.props;
-    if (onValueChange) {
-      onValueChange(this.props.prototype.id, index, newValue);
+  private onPinConnect = (from: string, to: string) => {
+    // FINISHME
+    // tslint:disable-next-line:no-console
+    console.log(from, to);
+  };
+
+  private onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (this.props.input) {
+      const { onValueChange } = this.props;
+      if (onValueChange) {
+        const { template } = this.props;
+        const index = +event.target.getAttribute("data-index")!;
+        const value = event.target.value;
+        onValueChange(template.id, index, value);
+      }
     }
   };
 }

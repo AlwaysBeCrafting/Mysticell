@@ -1,0 +1,50 @@
+@import "~common/styles/colors";
+@import "~common/styles/dimensions";
+
+.paletteView {
+  background: white;
+  border-right: solid thin $color-divider;
+
+  &-item {
+    height: $dimen-listItem-size;
+    display: flex;
+    flex-flow: row nowrap;
+    padding: 0 12px;
+    align-items: center;
+    color: inherit;
+    text-decoration: inherit;
+
+    &.is-selected {
+      font-weight: bold;
+    }
+
+    &:hover {
+      background: $color-black-alpha-12;
+    }
+
+    &-icon {
+      flex: 0 0 $dimen-icon-size;
+      font-size: $dimen-icon-size;
+      font-family: Material Icons;
+      opacity: 0.6;
+
+      &.is-selected {
+        opacity: 0.8;
+      }
+
+      &.mod-dropdown {
+        transform: rotate(-90deg);
+        transition: transform 120ms;
+      }
+
+      &.mod-dropdown.is-expanded {
+        transform: none;
+      }
+    }
+
+    &-title {
+      flex: 1 0 auto;
+      margin-left: 12px;
+    }
+  }
+}

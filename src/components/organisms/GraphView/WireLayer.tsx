@@ -1,59 +1,41 @@
 import classNames from "classnames";
-import { Map } from "immutable";
 import React from "react";
-
-import { sourcePinPosition, targetPinPosition } from "common/utils";
 
 import { Wire } from "components/atoms";
 
-import { PRIMITIVES } from "data/common";
-import { Edge, isBoundaryNode } from "data/Graph";
-import { GraphNodePrototype, NodePrototype } from "data/NodePrototype";
+import { Position2d } from "common/types";
+
+import { GraphCardTemplate, nodePosition } from "data/CardTemplate";
+import { Palette } from "data/Palette";
 
 interface Props {
-  prototype: GraphNodePrototype;
-  nodePrototypes: Map<string, NodePrototype>;
   className?: string;
+  template: GraphCardTemplate;
+  palette: Palette;
 }
 
 class WireLayer extends React.PureComponent<Props> {
-  public render() {
-    const { prototype, className } = this.props;
+  render() {
+    const { template, palette, className } = this.props;
     return (
       <svg className={classNames("wireLayer", className)}>
-        {prototype.graph
-          .toList()
-          .map(node => node.edges.map(this.renderWire(node.id)))}
+        {template.graph.edges
+          .filter(type => type === "external")
+          .map((_: "external", edge: { source: string; target: string }) => {
+            const { source, target } = edge;
+            const sourcePos = nodePosition(template, source, palette);
+            const targetPos = nodePosition(template, target, palette);
+            return (
+              <Wire
+                startPos={new Position2d(sourcePos.x * 40, sourcePos.y * 40)}
+                endPos={new Position2d(targetPos.x * 40, targetPos.y * 40)}
+                key={`${edge.source}-${edge.target}`}
+              />
+            );
+          })
+          .toIndexedSeq()}
       </svg>
     );
-  }
-
-  private renderWire(source: string) {
-    const { nodePrototypes, prototype } = this.props;
-    const { graph, layout } = prototype;
-    return (edge: Edge) => {
-      const srcPos = sourcePinPosition(layout, source, edge.index.src);
-      const tgtNode = graph.get(edge.target);
-      const offset =
-        tgtNode && !isBoundaryNode(tgtNode)
-          ? (PRIMITIVES[tgtNode.prototype] ||
-              nodePrototypes.get(tgtNode.prototype)
-            ).outputNames.size
-          : 0;
-      const dstPos = targetPinPosition(
-        layout,
-        offset,
-        edge.target,
-        edge.index.dst,
-      );
-      return (
-        <Wire
-          srcPos={srcPos}
-          tgtPos={dstPos}
-          key={`${source}@${edge.index.src}-${edge.target}@${edge.index.dst}`}
-        />
-      );
-    };
   }
 }
 

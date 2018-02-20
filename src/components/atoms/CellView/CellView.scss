@@ -7,7 +7,7 @@
   align-items: center;
 
   &-content {
-    background: $color-black-alpha-12;
+    background: none;
     align-self: stretch;
     flex: 1 0 0;
     display: flex;
@@ -16,10 +16,11 @@
     text-align: end;
     align-items: center;
     padding: 0 2px;
+    border-bottom: solid 2px $color-brand-primary;
 
-    &.mod-input {
-      background: none;
-      border-bottom: solid 2px $color-brand-primary;
+    &.mod-readonly {
+      background: $color-black-alpha-12;
+      border: none;
     }
   }
 }

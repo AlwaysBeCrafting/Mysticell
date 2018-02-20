@@ -1,0 +1,88 @@
+@import "~common/styles/colors";
+@import "~common/styles/dimensions";
+@import "~common/styles/fonts";
+
+.boundary {
+  flex: 0 0 $dimen-boundary-size;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-auto-rows: 40px;
+  z-index: 100;
+  line-height: $dimen-graph-cell-size;
+
+  &.mod-start {
+    border-right: solid 1px $color-gridLine;
+  }
+
+  &-header {
+    padding: 0 $dimen-keyline-padding / 2;
+    @include font-title;
+    color: $color-text-disabled;
+    text-transform: capitalize;
+    grid-row: 1 / span 2;
+    line-height: $dimen-graph-cell-size * 2;
+  }
+
+  &-row {
+    position: relative;
+    padding: 0 $dimen-keyline-padding / 2;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: flex-start;
+
+    &.mod-start {
+      flex-direction: row-reverse;
+    }
+
+    &-name {
+      flex: 0 1 auto;
+      color: $color-text-secondary;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      @include font-body1;
+
+      &.mod-start {
+        padding-left: 16px;
+      }
+
+      &.mod-end {
+        padding-right: 16px;
+      }
+    }
+
+    &-value {
+      width: 0;
+      flex: 1 0 auto;
+      text-align: right;
+      line-height: 1;
+      background: none;
+      border: none;
+      border-bottom: solid 2px $color-black-alpha-12;
+      padding: 6px 0 4px;
+      color: $color-text-primary;
+      @include font-body1;
+
+      &:focus {
+        border-color: $color-brand-primary;
+      }
+
+      &.mod-readonly {
+        border-bottom: none;
+      }
+    }
+
+    &-pin {
+      position: absolute;
+
+      &.mod-start {
+        right: -$dimen-pin-size / 2;
+      }
+
+      &.mod-end {
+        left: -$dimen-pin-size / 2;
+      }
+    }
+  }
+}

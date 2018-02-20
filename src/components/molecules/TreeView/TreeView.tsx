@@ -1,59 +1,81 @@
 import classnames from "classnames";
+import { List } from "immutable";
 import React from "react";
 
-import { isBranch, Tree } from "common/types";
+import { Tree, TreeKey } from "common/types";
 
 import "./TreeView.scss";
 
-interface ItemFunctions<B, L> {
-  getKey: (tree: Tree<B, L>) => string;
-  renderItem: (tree: Tree<B, L>, path: B[]) => JSX.Element;
-}
-
-interface Props<B, L> extends ItemFunctions<B, L> {
-  tree: Tree<B, L>;
+interface Props<K extends TreeKey, V> {
   className?: string;
+  tree: Tree<K, V>;
+  renderItem: (item: V, path: List<K>) => JSX.Element | null;
+  getItemKey: (item: V, path: List<K>) => string;
+  shouldRenderChildren?: (item: V, path: List<K>) => boolean;
 }
 
-interface ItemProps<B, L> extends ItemFunctions<B, L> {
-  tree: Tree<B, L>;
-  path: B[];
+class TreeView<K extends TreeKey, V> extends React.PureComponent<Props<K, V>> {
+  render() {
+    const { className, tree, getItemKey, shouldRenderChildren } = this.props;
+    const shouldRecurse =
+      !shouldRenderChildren || shouldRenderChildren(tree.value, List());
+    return (
+      <ul className={classnames("treeView", className)}>
+        {shouldRecurse &&
+          tree.children
+            .toSeq()
+            .map((child, key) => (
+              <Item
+                {...this.props}
+                key={getItemKey(child.value, List.of(key))}
+                path={List.of(key)}
+                tree={child}
+              />
+            ))
+            .toIndexedSeq()}
+      </ul>
+    );
+  }
 }
 
-const TreeView = <B, L = B>(props: Props<B, L>) => (
-  <ul className={classnames("treeView", props.className)}>
-    {isBranch(props.tree) &&
-      props.tree.children.map(tree => (
-        <Item
-          key={props.getKey(tree)}
-          tree={tree}
-          getKey={props.getKey}
-          renderItem={props.renderItem}
-          path={["root"]}
-        />
-      ))}
-  </ul>
-);
+interface ItemProps<K extends TreeKey, V> extends Props<K, V> {
+  path: List<K>;
+}
 
-class Item<B, L> extends React.PureComponent<ItemProps<B, L>> {
-  public render(): JSX.Element {
-    const { tree, path, getKey, renderItem } = this.props;
-    const childrenElem: boolean | JSX.Element = isBranch(tree) && (
+class Item<K extends TreeKey, V> extends React.PureComponent<ItemProps<K, V>> {
+  render(): JSX.Element {
+    const {
+      path,
+      tree,
+      renderItem,
+      getItemKey,
+      shouldRenderChildren,
+    } = this.props;
+    const shouldRecurse =
+      !shouldRenderChildren || shouldRenderChildren(tree.value, path);
+    const childrenElem = shouldRecurse && (
       <ul className="treeView-item-children">
-        {tree.children.map(child => (
-          <Item
-            key={getKey(child)}
-            tree={child}
-            getKey={getKey}
-            renderItem={renderItem}
-            path={[...path, tree.value]}
-          />
-        ))}
+        {tree.children
+          .toSeq()
+          .map((child, key) => {
+            const childPath = path.push(key);
+            return (
+              <Item
+                {...this.props}
+                key={getItemKey(child.value, childPath)}
+                path={childPath}
+                tree={child}
+              />
+            );
+          })
+          .toIndexedSeq()}
       </ul>
     );
     return (
       <li className="treeView-item">
-        <span className="treeView-item-body">{renderItem(tree, path)}</span>
+        <span className="treeView-item-body">
+          {renderItem(tree.value, path)}
+        </span>
         {childrenElem}
       </li>
     );

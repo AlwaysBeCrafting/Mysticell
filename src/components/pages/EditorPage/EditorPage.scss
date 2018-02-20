@@ -2,20 +2,19 @@
 @import "~common/styles/dimensions";
 @import "~common/styles/mixins";
 
-.editor {
+.editorPage {
   flex: 1 0 100vh;
   background: $color-grey-200;
   color: $color-text-primary;
 
   display: grid;
   grid-template:
-    "nav content" 1fr
+    "palette content" 1fr
     "status status" 26px / 320px auto;
 
-  &-nav {
-    grid-area: nav;
+  &-palette {
+    grid-area: palette;
   }
-
   &-content {
     grid-area: content;
   }
