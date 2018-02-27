@@ -1,5 +1,6 @@
 import classnames from "classnames";
 import React from "react";
+import { Icon } from "react-atoms";
 import {
   ConnectDragPreview,
   ConnectDragSource,
@@ -11,8 +12,6 @@ import { getEmptyImage } from "react-dnd-html5-backend";
 import { Link } from "react-router-dom";
 
 import { DndTypes } from "common/types";
-
-import { Icon } from "components/atoms";
 
 import { CardSnapshot } from "data/Card";
 import { CardTemplate, isProperty } from "data/CardTemplate";
@@ -72,8 +71,10 @@ const dragCollect: DragSourceCollector = (connect, monitor) => ({
   isDragging: monitor.isDragging(),
 });
 
-const EndItemView = DragSource(DndTypes.CARD_TEMPLATE, dragSpec, dragCollect)(
-  PartialEndItemView,
-);
+const EndItemView = DragSource<Props>(
+  DndTypes.CARD_TEMPLATE,
+  dragSpec,
+  dragCollect,
+)(PartialEndItemView);
 
 export { EndItemView };
