@@ -48,6 +48,7 @@ function resolveGraph(
   }
 
   const resolvedNodes = sortedNodes
+    .map(([k]) => k)
     // Apply node values
     .reduce((nodeValues: Map<string, Param>, nodeId) => {
       if (nodeValues.has(nodeId)) {
@@ -70,7 +71,7 @@ function resolveGraph(
       // If it is disconnected, it uses the value from its card, or remains
       // blank if there is none.
       if (node.wireAnchor === "end") {
-        const pre = template.graph.predecessors(nodeId);
+        const pre = template.graph.predecessors(nodeId).keySeq();
         if (pre.isEmpty()) {
           if (node.type === "boundary") {
             return nodeValues.set(nodeId, PARAMS.empty());
@@ -114,16 +115,13 @@ function resolveGraph(
             template.cards.get(node.card)!.template,
           );
 
-          const cardParams = template.graph
-            .predecessors(nodeId)
-            .toIndexedSeq()
-            .sort(byIndex)
-            .map(pre => nodeValues.get(pre)!)
-            .toList();
+          const pre = template.graph.predecessors(nodeId);
+
+          const cardParams = pre.sortBy((_, k) => k, byIndex).toList();
           const cardOutputNodes = template.graph
-            .successors(template.graph.predecessors(nodeId).first()!)
-            .toIndexedSeq()
-            .sort(byIndex);
+            .successors(pre.keySeq().first()!)
+            .sortBy((_, k) => k, byIndex)
+            .toIndexedSeq();
 
           if (isGraph(cardTemplate)) {
             return nodeValues.merge<string, Param>(

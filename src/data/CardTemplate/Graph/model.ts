@@ -1,6 +1,7 @@
+import { Graph } from "filament";
 import { Map } from "immutable";
 
-import { Graph, Position2d } from "common/types";
+import { Position2d } from "common/types";
 
 import { Card } from "data/Card";
 import { Palette } from "data/Palette";

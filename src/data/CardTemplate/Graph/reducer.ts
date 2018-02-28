@@ -1,6 +1,6 @@
+import { Graph } from "filament";
 import { Map } from "immutable";
 
-import { Graph } from "common/types";
 import { composeReducers } from "common/utils";
 
 import { CardTemplate } from "data/CardTemplate";
@@ -31,8 +31,7 @@ function commonReducer(
       const { templateId, sourceId, targetId } = action.payload;
       return state.updateIn(
         [templateId, "graph"],
-        (graph: Graph<NodeValue, {}>) =>
-          graph.connectNodes(sourceId, targetId, {}),
+        (graph: Graph<NodeValue, {}>) => graph.connect(sourceId, targetId, {}),
       );
     }
     default: {
