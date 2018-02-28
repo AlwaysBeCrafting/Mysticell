@@ -1,6 +1,5 @@
+import { Graph } from "filament";
 import { List, Map, Repeat } from "immutable";
-
-import { Graph } from "common/types";
 
 import { Card } from "data/Card";
 import {

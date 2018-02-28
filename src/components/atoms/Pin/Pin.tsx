@@ -71,7 +71,7 @@ const dragCollect: DragSourceCollector = connect => ({
   connectDragPreview: connect.dragPreview(),
   connectDragSource: connect.dragSource(),
 });
-const DragPin = DragSource(
+const DragPin = DragSource<Props>(
   props =>
     props.node && props.node.wireAnchor === "start"
       ? DndTypes.WIRE_END

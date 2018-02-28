@@ -1,6 +1,7 @@
 import React from "react";
+import { Icon } from "react-atoms";
 
-import { CellView, Icon, ToolButton } from "components/atoms";
+import { CellView, ToolButton } from "components/atoms";
 import { Toolbar } from "components/molecules";
 
 import { Cell } from "data/Cell";
@@ -27,7 +28,7 @@ class SheetView extends React.PureComponent<Props> {
           {sheet.title}
           <div style={{ flexGrow: 1 }} />
           <ToolButton link to="">
-            <Icon size={16} name="more_vert" />
+            <Icon name="more_vert" />
           </ToolButton>
         </Toolbar>
         <div className="sheetView-grid">

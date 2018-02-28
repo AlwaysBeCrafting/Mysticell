@@ -1,6 +1,5 @@
+import { Graph } from "filament";
 import { List, Map } from "immutable";
-
-import { Graph } from "common/types";
 
 import { Card } from "data/Card";
 
@@ -36,7 +35,7 @@ namespace CardTemplate {
     return Graph<NodeValue, EdgeValue>().withMutations(newGraph => {
       newGraph.set("nodes", Map(graph.nodes));
       for (const edge of graph.edges) {
-        newGraph.connectNodes(edge.source, edge.target, "external");
+        newGraph.connect(edge.source, edge.target, "external");
       }
       newGraph.nodes
         .toSeq()
@@ -52,7 +51,7 @@ namespace CardTemplate {
                   node.wireAnchor === "start",
               )
               .forEach((__, outputId) =>
-                newGraph.connectNodes(inputId, outputId, "internal"),
+                newGraph.connect(inputId, outputId, "internal"),
               ),
           ),
         );

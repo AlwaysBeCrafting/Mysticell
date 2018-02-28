@@ -1,5 +1,6 @@
 import classnames from "classnames";
 import React from "react";
+import { Icon } from "react-atoms";
 import {
   ConnectDropTarget,
   DropTarget,
@@ -11,7 +12,7 @@ import { connect as connectStore } from "react-redux";
 import { DndTypes, Position2d } from "common/types";
 import { elementRelativePosition } from "common/utils";
 
-import { Icon, ToolButton } from "components/atoms";
+import { ToolButton } from "components/atoms";
 import { ErrorBoundary, Toolbar } from "components/molecules";
 
 import { AppState } from "data/AppState";
@@ -51,7 +52,7 @@ interface DropProps {
 type Props = StoreProps & DropProps;
 
 class PartialGraphView extends React.PureComponent<Props> {
-  wrapper: HTMLDivElement | null;
+  wrapper: HTMLDivElement | null = null;
 
   render() {
     const { className, connectDrop, path, template, palette } = this.props;
@@ -143,13 +144,13 @@ const dropSpec: DropTargetSpec<StoreProps> = {
 const dropCollect: DropTargetCollector = connect => ({
   connectDrop: connect.dropTarget(),
 });
-const DropGraphView = DropTarget(
+const DropGraphView = DropTarget<Props>(
   [DndTypes.CARD, DndTypes.CARD_TEMPLATE],
   dropSpec,
   dropCollect,
 )(PartialGraphView);
 
-const GraphView = connectStore<StateProps, DispatchProps, OwnProps>(
+const GraphView = connectStore<StateProps, DispatchProps, OwnProps, AppState>(
   (state: AppState) => ({
     palette: state.document.palette,
   }),

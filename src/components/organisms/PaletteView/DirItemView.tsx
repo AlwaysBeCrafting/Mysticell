@@ -1,7 +1,7 @@
 import classnames from "classnames";
 import React from "react";
+import { Icon } from "react-atoms";
 
-import { Icon } from "components/atoms";
 import { TemplatePath } from "data/Palette";
 
 interface Props {
