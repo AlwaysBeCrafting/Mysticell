@@ -9,6 +9,7 @@
     "emitDecoratorMetadata": true,
 
     "strict": true,
+    "strictFunctionTypes": false,
     "allowUnreachableCode": false,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
