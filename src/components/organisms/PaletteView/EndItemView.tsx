@@ -71,7 +71,7 @@ const dragCollect: DragSourceCollector = (connect, monitor) => ({
   isDragging: monitor.isDragging(),
 });
 
-const EndItemView = DragSource<Props>(
+const EndItemView = DragSource<OwnProps>(
   DndTypes.CARD_TEMPLATE,
   dragSpec,
   dragCollect,

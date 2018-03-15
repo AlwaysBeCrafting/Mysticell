@@ -132,7 +132,7 @@ const dragCollect: DragSourceCollector = (connect, monitor) => ({
   connectPreview: connect.dragPreview(),
   isDragging: monitor.isDragging(),
 });
-const CardView = DragSource<Props>(DndTypes.CARD, dragSpec, dragCollect)(
+const CardView = DragSource<OwnProps>(DndTypes.CARD, dragSpec, dragCollect)(
   PartialCardView,
 );
 

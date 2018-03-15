@@ -144,7 +144,7 @@ const dropSpec: DropTargetSpec<StoreProps> = {
 const dropCollect: DropTargetCollector = connect => ({
   connectDrop: connect.dropTarget(),
 });
-const DropGraphView = DropTarget<Props>(
+const DropGraphView = DropTarget<StoreProps>(
   [DndTypes.CARD, DndTypes.CARD_TEMPLATE],
   dropSpec,
   dropCollect,
