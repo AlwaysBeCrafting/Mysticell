@@ -1,7 +1,8 @@
 import { List, Record } from "immutable";
 
-import { ParamFunction, ParamType } from "data/common";
+import { ParamFunction } from "data/common";
 import { NodeSourceProps } from "data/NodeSource";
+import { PinGroup } from "../PinGroup/model";
 
 interface PrimitiveProps extends NodeSourceProps {
   evaluate: ParamFunction;
@@ -10,9 +11,8 @@ interface PrimitiveProps extends NodeSourceProps {
 class Primitive extends Record<PrimitiveProps>({
   id: "primitive.default",
   name: "Default Primitive",
-  inputNames: List.of("Input"),
-  inputTypes: List.of("undefined") as List<ParamType>,
-  outputNames: List.of("Output"),
+  inputPins: List.of({ name: "Input", type: "undefined" }) as PinGroup,
+  outputPins: List.of({ name: "Output", type: "undefined" }) as PinGroup,
   evaluate: inputs => inputs,
 }) {}
 

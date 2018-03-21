@@ -1,6 +1,7 @@
 import { List } from "immutable";
 
 import { Param, ParamType } from "data/common";
+import { PinGroup } from "data/PinGroup";
 
 import { Primitive } from "./model";
 
@@ -41,16 +42,19 @@ const PRIMITIVES = List.of(
   new Primitive({
     id: "primitive.noop",
     name: "No-op",
-    inputNames: List(["In"]),
-    outputNames: List(["Out"]),
+    inputPins: List.of({ name: "In", type: "undefined" }) as PinGroup,
+    outputPins: List.of({ name: "Out", type: "undefined" }) as PinGroup,
     evaluate: (params: List<Param>) => params,
   }),
 
   new Primitive({
     id: "primitive.add",
     name: "Add",
-    inputNames: List(["A", "B"]),
-    outputNames: List(["Sum"]),
+    inputPins: List.of(
+      { name: "A", type: "number" },
+      { name: "B", type: "number" },
+    ) as PinGroup,
+    outputPins: List.of({ name: "Sum", type: "number" }) as PinGroup,
     evaluate: (params: List<Param>) =>
       verifyAndReduce(params, 0, (x, y) => x + y),
   }),
@@ -58,8 +62,11 @@ const PRIMITIVES = List.of(
   new Primitive({
     id: "primitive.subtract",
     name: "Subtract",
-    inputNames: List(["A", "B"]),
-    outputNames: List(["Difference"]),
+    inputPins: List.of(
+      { name: "A", type: "number" },
+      { name: "B", type: "number" },
+    ) as PinGroup,
+    outputPins: List.of({ name: "Difference", type: "number" }) as PinGroup,
     evaluate: (params: List<Param>) =>
       verifyAndReduce(params, 0, (x, y) => x - y),
   }),
@@ -67,8 +74,11 @@ const PRIMITIVES = List.of(
   new Primitive({
     id: "primitive.multiply",
     name: "Multiply",
-    inputNames: List(["A", "B"]),
-    outputNames: List(["Product"]),
+    inputPins: List.of(
+      { name: "A", type: "number" },
+      { name: "B", type: "number" },
+    ) as PinGroup,
+    outputPins: List.of({ name: "Product", type: "number" }) as PinGroup,
     evaluate: (params: List<Param>) =>
       verifyAndReduce(params, 1, (x, y) => x * y),
   }),
@@ -76,8 +86,11 @@ const PRIMITIVES = List.of(
   new Primitive({
     id: "primitive.divide",
     name: "Divide",
-    inputNames: List(["A", "B"]),
-    outputNames: List(["Quotient"]),
+    inputPins: List.of(
+      { name: "A", type: "number" },
+      { name: "B", type: "number" },
+    ) as PinGroup,
+    outputPins: List.of({ name: "Quotient", type: "number" }) as PinGroup,
     evaluate: (params: List<Param>) =>
       verifyAndReduce(params, 1, (x, y) => x / y),
   }),
@@ -85,8 +98,8 @@ const PRIMITIVES = List.of(
   new Primitive({
     id: "primitive.floor",
     name: "Floor",
-    inputNames: List(["Num"]),
-    outputNames: List(["Floor"]),
+    inputPins: List.of({ name: "Num", type: "number" }) as PinGroup,
+    outputPins: List.of({ name: "Floor", type: "number" }) as PinGroup,
     evaluate: (params: List<Param>) => verifyAndReduce(params, 0, Math.floor),
   }),
 )
