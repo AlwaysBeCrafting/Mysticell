@@ -1,9 +1,7 @@
-import { List, Map } from "immutable";
+import { List } from "immutable";
 import { combineReducers } from "redux-immutable";
 
 import { composeReducers } from "common/utils";
-
-import { reducer as palette } from "data/Palette";
 
 import { Action, ActionTypes } from "./actions";
 import { Document } from "./model";
@@ -14,7 +12,7 @@ const documentReducer = (
 ): Document => {
   switch (action.type) {
     case ActionTypes.LOAD_DOCUMENT: {
-      return Document.fromJs(action.payload.documentJson);
+      return state;
     }
 
     default:
@@ -26,9 +24,6 @@ const subReducers = combineReducers<Document>({
   title: title => title || "",
   version: version => version || 0,
   include: include => include || List(),
-
-  sheets: sheets => sheets || Map(),
-  palette,
 });
 const reducer = composeReducers(subReducers, documentReducer);
 

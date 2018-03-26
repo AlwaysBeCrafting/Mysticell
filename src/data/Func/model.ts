@@ -1,19 +1,17 @@
 import { List, Record } from "immutable";
 
-import { ParamType } from "data/common";
+import { NodeSource } from "data/common";
 import { Formula } from "data/Formula";
-import { NodeSourceProps } from "data/NodeSource";
 
-interface FuncProps extends NodeSourceProps {
+interface FuncProps extends NodeSource {
   formula: Formula;
 }
 
 class Func extends Record<FuncProps>({
   id: "func.default",
   name: "Default Function",
-  inputNames: List.of("Input"),
-  inputTypes: List.of("undefined") as List<ParamType>,
-  outputNames: List.of("Output"),
+  inputPins: List.of({ name: "Input", type: "undefined" as "undefined" }),
+  outputPins: List.of({ name: "Output", type: "undefined" as "undefined" }),
   formula: new Formula(),
 }) {}
 

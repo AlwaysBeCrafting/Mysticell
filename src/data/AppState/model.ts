@@ -1,13 +1,15 @@
 import { Record } from "immutable";
 
-import { Document } from "data/Document";
+import { EntityState } from "data/EntityState";
 
 interface AppStateProps {
-  document: Document;
+  entities: EntityState;
+  ui: {};
 }
 
 class AppState extends Record<AppStateProps>({
-  document: new Document(),
+  entities: new EntityState(),
+  ui: {},
 }) {}
 
 export { AppState };

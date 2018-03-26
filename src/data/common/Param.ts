@@ -1,49 +1,21 @@
 import { List } from "immutable";
 
-interface NumberParam {
-  type: "number";
-  value: number;
-}
+type ValueParam = boolean | number | string;
+type EmptyParam = undefined | Error;
+type Param = ValueParam | EmptyParam;
 
-interface StringParam {
-  type: "string";
-  value: string;
-}
-
-interface EmptyParam {
-  type: "empty";
-  value: undefined;
-}
-
-interface ErrorParam {
-  type: "error";
-  value: string;
-  message: string;
-}
-
-type Param = NumberParam | StringParam | EmptyParam | ErrorParam;
-
-const PARAMS = {
-  number: (value: number): NumberParam => ({
-    type: "number",
-    value,
-  }),
-  string: (value: string): StringParam => ({
-    type: "string",
-    value,
-  }),
-  empty: (): EmptyParam => ({
-    type: "empty",
-    value: undefined,
-  }),
-  error: (value: string, message: string): ErrorParam => ({
-    type: "error",
-    value,
-    message,
-  }),
-};
+type ValueParamType = "boolean" | "number" | "string";
+type EmptyParamType = "undefined" | "object";
+type ParamType = ValueParamType | EmptyParamType;
 
 type ParamFunction = (params: List<Param>) => List<Param>;
 
-export { Param, ErrorParam, PARAMS, ParamFunction };
-export { NumberParam };
+export {
+  ValueParam,
+  EmptyParam,
+  Param,
+  ValueParamType,
+  EmptyParamType,
+  ParamType,
+  ParamFunction,
+};

@@ -4,7 +4,7 @@ import { ValueParamType } from "data/common";
 
 interface Pin {
   name: string;
-  type: ValueParamType | undefined;
+  type: ValueParamType | "undefined";
 }
 
 type PinGroup = List<Pin>;

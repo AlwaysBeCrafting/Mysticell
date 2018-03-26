@@ -16,7 +16,12 @@ import { TreeView } from "components/molecules";
 import { Action } from "data/AppState";
 import { CardSnapshot } from "data/Card";
 import { removeCard } from "data/CardTemplate";
-import { Palette, PaletteNode, TemplatePath, toggleItem } from "data/Palette";
+import {
+  Palette,
+  SourceTreeNode,
+  TemplatePath,
+  toggleItem,
+} from "data/Palette";
 
 import { DirItemView } from "./DirItemView";
 import { EndItemView } from "./EndItemView";
@@ -56,7 +61,7 @@ class PartialPaletteView extends React.PureComponent<Props> {
     );
   }
 
-  private renderItem = (item: PaletteNode, path: TemplatePath) => {
+  private renderItem = (item: SourceTreeNode, path: TemplatePath) => {
     if (item.type === "group") {
       return (
         <DirItemView
@@ -67,7 +72,7 @@ class PartialPaletteView extends React.PureComponent<Props> {
         />
       );
     } else {
-      const template = this.props.palette.getTemplate(item.template);
+      const template = this.props.palette.getTemplate(item.sourceId);
       if (!template) {
         return null;
       }
@@ -84,11 +89,11 @@ class PartialPaletteView extends React.PureComponent<Props> {
     }
   };
 
-  private getItemKey = (item: PaletteNode) => {
+  private getItemKey = (item: SourceTreeNode) => {
     return `${item.hashCode()}`;
   };
 
-  private shouldRenderChildren = (item: PaletteNode): boolean => {
+  private shouldRenderChildren = (item: SourceTreeNode): boolean => {
     return !!item && item.type === "group" && item.isExpanded;
   };
 

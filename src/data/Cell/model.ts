@@ -2,10 +2,9 @@ import { Record } from "immutable";
 
 import { Rect } from "common/types";
 
-import { CellJs } from "./js";
+import { Entity } from "data/common";
 
-interface CellProps {
-  id: string;
+interface CellProps extends Entity {
   property: string;
   node: string;
   rect: Rect;
@@ -17,15 +16,6 @@ class Cell extends Record<CellProps>({
   node: "node.base",
   rect: new Rect(),
   format: {},
-}) {
-  static fromJs(js: CellJs): Cell {
-    return new Cell({
-      id: js.id,
-      property: js.property,
-      node: js.node,
-      rect: new Rect(js.rect.left, js.rect.top, js.rect.right, js.rect.bottom),
-    });
-  }
-}
+}) {}
 
 export { Cell };

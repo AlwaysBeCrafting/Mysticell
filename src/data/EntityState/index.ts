@@ -1,0 +1,1 @@
+export { EntityState } from "./model";

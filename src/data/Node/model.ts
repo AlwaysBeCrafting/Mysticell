@@ -2,8 +2,9 @@ import { List, Record } from "immutable";
 
 import { Position2d } from "common/types";
 
-interface NodeProps {
-  id: string;
+import { Entity } from "data/common";
+
+interface NodeProps extends Entity {
   source: string;
   label?: string;
   values: List<string>;

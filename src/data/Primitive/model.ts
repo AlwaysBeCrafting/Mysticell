@@ -1,10 +1,9 @@
 import { List, Record } from "immutable";
 
-import { ParamFunction } from "data/common";
-import { NodeSourceProps } from "data/NodeSource";
+import { NodeSource, ParamFunction } from "data/common";
 import { PinGroup } from "../PinGroup/model";
 
-interface PrimitiveProps extends NodeSourceProps {
+interface PrimitiveProps extends NodeSource {
   evaluate: ParamFunction;
 }
 

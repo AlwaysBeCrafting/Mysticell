@@ -7,7 +7,8 @@
     "build": "webpack --config ./config/webpack.config.prod.js",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --watch --color --config ./config/webpack.config.dev.js",
     "lint": "tslint --project .",
-    "test": "jest"
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0-beta.39",

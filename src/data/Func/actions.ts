@@ -37,10 +37,10 @@ interface SetNameAction extends TypedAction<ActionTypes.SET_NAME> {
     name: string;
   };
 }
-const setOutputName = (id: string, name: string): Action => ({
+const setName = (id: string, name: string): Action => ({
   type: ActionTypes.SET_NAME,
   payload: { id, name },
 });
 
 export { Action, ActionTypes };
-export { createFunc, deleteFunc, setOutputName };
+export { createFunc, deleteFunc, setName };
