@@ -5,19 +5,13 @@ import ReactDOM from "react-dom";
 import { AppContainer } from "react-hot-loader";
 import { Provider } from "react-redux";
 
-import { exampleDoc } from "common/assets/exampleDoc";
-
 import { EditorPage } from "components/pages";
-
-import { loadDocument } from "data/Document";
 
 import { configureStore } from "store";
 
 import "index.scss";
 
 const store = configureStore();
-store.dispatch(loadDocument(exampleDoc));
-
 const rootElem = document.querySelector(".root");
 
 const renderRoot = () => {
