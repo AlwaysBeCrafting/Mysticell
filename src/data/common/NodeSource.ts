@@ -1,4 +1,4 @@
-import { PinGroup } from "data/PinGroup";
+import { Pin, PinIndex } from "data/Pin";
 
 import { NamedEntity } from "./Entity";
 

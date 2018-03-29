@@ -2,15 +2,15 @@ import { List, Map } from "immutable";
 
 import { NamedEntity } from "data/common";
 import { Directory } from "data/Directory";
-import { Property } from "data/Property";
+import { Source } from "data/Source";
 
 import { idFromPath } from "../util";
 
 const entities: Map<string, NamedEntity> = Map({
   a: new Directory({ id: "a", name: "A" }),
-  b: new Property({ id: "b", name: "B" }),
+  b: new Source({ id: "b", name: "B" }),
   c: new Directory({ id: "c", name: "C" }),
-  d: new Property({ id: "d", name: "D" }),
+  d: new Source({ id: "d", name: "D" }),
 });
 
 const children: Map<string, List<string>> = Map({

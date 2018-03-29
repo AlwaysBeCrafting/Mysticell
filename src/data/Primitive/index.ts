@@ -1,2 +1,1 @@
-export { PRIMITIVES } from "./constants";
-export { Primitive } from "./model";
+export { PRIMITIVE_SOURCES, PRIMITIVE_FUNCTIONS } from "./constants";

@@ -9,4 +9,5 @@ export {
   ParamType,
   ParamFunction,
 } from "./Param";
+export { TerminalDescription, TerminalReference } from "./Terminal";
 export { TypedAction } from "./TypedAction";
