@@ -1,5 +1,5 @@
 export { AppDragLayer } from "./AppDragLayer";
-export { GraphView } from "./GraphView";
-export { PaletteView } from "./PaletteView";
-export { SheetWrapper } from "./SheetWrapper";
+export { FormulaView } from "./FormulaView";
+export { Palette } from "./Palette";
+export { Tabletop } from "./Tabletop";
 export { StatusBar } from "./StatusBar";

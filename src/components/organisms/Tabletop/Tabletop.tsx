@@ -44,9 +44,9 @@ const mapStateToProps = (state: AppState): StateProps => ({
   sheets: state.entities.sheets,
 });
 
-const SheetWrapper = connect<StateProps, {}, OwnProps>(
+const Tabletop = connect<StateProps, {}, OwnProps>(
   mapStateToProps,
   dispatch => ({ dispatch }),
 )(PartialTabletop);
 
-export { SheetWrapper };
+export { Tabletop };

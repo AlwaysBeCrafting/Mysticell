@@ -1,5 +1,4 @@
 export { Entity, NamedEntity, EntityTable, JoinManyToOne } from "./Entity";
-export { NodeSource } from "./NodeSource";
 export {
   ValueParam,
   EmptyParam,

@@ -1,1 +1,1 @@
-export { GraphView } from "./GraphView";
+export { FormulaView } from "./FormulaView";
