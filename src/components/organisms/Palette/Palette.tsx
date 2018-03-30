@@ -29,7 +29,7 @@ interface StateProps {
 
 type Props = OwnProps & StateProps;
 
-class PartialPaletteView extends React.PureComponent<Props> {
+class PartialPalette extends React.PureComponent<Props> {
   render() {
     const { className } = this.props;
     return (
@@ -92,8 +92,8 @@ const mapStateToProps = (state: AppState): StateProps => ({
   entityParents: state.entities.entityParents,
 });
 
-const PaletteView = reduxConnect<StateProps, {}, OwnProps>(mapStateToProps)(
-  PartialPaletteView,
+const Palette = reduxConnect<StateProps, {}, OwnProps>(mapStateToProps)(
+  PartialPalette,
 );
 
-export { PaletteView };
+export { Palette };
