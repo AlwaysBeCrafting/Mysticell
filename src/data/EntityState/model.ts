@@ -1,7 +1,7 @@
 import { List, Map, Record } from "immutable";
 
 import { Cell } from "data/Cell";
-import { Entity } from "data/common";
+import { EntityTable, JoinManyToOne } from "data/common";
 import { Directory } from "data/Directory";
 import { Document } from "data/Document";
 import { Node } from "data/Node";
@@ -9,8 +9,6 @@ import { Row } from "data/Row";
 import { Sheet } from "data/Sheet";
 import { Source } from "data/Source";
 import { Wire } from "data/Wire";
-
-type EntityTable<T extends Entity> = Map<string, T>;
 
 interface Entities {
   documents: EntityTable<Document>;
@@ -26,8 +24,6 @@ interface Entities {
 
   rows: EntityTable<Row>;
 }
-
-type JoinManyToOne = Map<string, string>;
 
 interface Relationships {
   sheetDocuments: JoinManyToOne;
@@ -71,8 +67,6 @@ class EntityState extends Record<Entities & Relationships & Data>({
 
   nodeSources: Map(),
   wireSources: Map(),
-
-  rowTables: Map(),
 
   // Data
   propertyValues: Map(),
