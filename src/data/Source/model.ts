@@ -18,4 +18,4 @@ class Source extends Record<SourceProps>({
   type: "primitive",
 }) {}
 
-export { Source };
+export { Source, SourceType };

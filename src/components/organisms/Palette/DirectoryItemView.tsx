@@ -2,20 +2,16 @@ import classnames from "classnames";
 import React from "react";
 import { Icon } from "react-atoms";
 
-import { TemplatePath } from "data/Palette";
-
 interface Props {
   expanded?: boolean;
   name: string;
-  path: TemplatePath;
-  onClick: (path: TemplatePath) => void;
 }
 
-class DirItemView extends React.PureComponent<Props> {
+class DirectoryItemView extends React.PureComponent<Props> {
   render() {
     const { name, expanded } = this.props;
     return (
-      <div className="paletteView-item" onClick={this.onClick}>
+      <div className="paletteView-item">
         <Icon
           className={classnames("paletteView-item-icon", "mod-dropdown", {
             "is-expanded": expanded,
@@ -26,10 +22,6 @@ class DirItemView extends React.PureComponent<Props> {
       </div>
     );
   }
-
-  private onClick = (_: React.MouseEvent<HTMLDivElement>) => {
-    this.props.onClick(this.props.path);
-  };
 }
 
-export { DirItemView };
+export { DirectoryItemView };

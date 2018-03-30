@@ -1,1 +1,1 @@
-export { Source } from "./model";
+export { Source, SourceType } from "./model";
