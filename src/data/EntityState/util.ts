@@ -1,32 +1,20 @@
-import { List, Map } from "immutable";
+import { Collection, Seq } from "immutable";
 
-import { NamedEntity } from "data/common";
+import { JoinManyToOne, NamedEntity } from "data/common";
 
-const idFromName = (
-  entities: Map<string, NamedEntity>,
-  childrenMap: Map<string, List<string>>,
-  name: string,
-  parentId: string,
-): string | undefined =>
-  childrenMap.get(parentId, List<string>()).find(child => {
-    const entity = entities.get(child);
-    return !!entity && entity.name === name;
-  });
-
-const idFromPath = (
-  sources: Map<string, NamedEntity>,
-  childrenMap: Map<string, List<string>>,
-  [pathHead, ...pathTail]: string[],
-  root: string = "",
-): string | undefined => {
-  return !pathHead
-    ? root || undefined
-    : idFromPath(
-        sources,
-        childrenMap,
-        pathTail,
-        idFromName(sources, childrenMap, pathHead, root),
+const bindIdFromPath = (
+  entities: Collection<string, NamedEntity>,
+  entityParents: JoinManyToOne,
+) => {
+  const idFromPath = (path: Iterable<string>): string | undefined =>
+    Seq(path).reduce((parent, segment) => {
+      const child = entities.find(
+        entity =>
+          entityParents.get(entity.id) === parent && entity.name === segment,
       );
+      return child && child.id;
+    }, undefined);
+  return idFromPath;
 };
 
-export { idFromPath };
+export { bindIdFromPath };
