@@ -1,2 +1,2 @@
 export { EntityState } from "./model";
-export { bindIdFromPath } from "./util";
+export { bindIdFromPath, bindPathFromId } from "./util";

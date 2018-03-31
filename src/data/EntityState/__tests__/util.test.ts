@@ -1,10 +1,10 @@
-import { Map } from "immutable";
+import { Map, Seq } from "immutable";
 
 import { EntityTable, JoinManyToOne } from "data/common";
 import { Directory } from "data/Directory";
 import { Source } from "data/Source";
 
-import { bindIdFromPath } from "../util";
+import { bindIdFromPath, bindPathFromId } from "../util";
 
 const directories: EntityTable<Directory> = Map({
   a: new Directory({ id: "a", name: "A" }),
@@ -43,5 +43,30 @@ describe("idFromPath() function", () => {
     expect(idFromPath(["C"])).toBeUndefined();
     expect(idFromPath(["A", "D"])).toBeUndefined();
     expect(idFromPath(["nowhere"])).toBeUndefined();
+  });
+});
+
+const pathFromId = bindPathFromId(
+  directories.toSeq().concat(sources),
+  entityParents,
+);
+
+const pathMatches = (from?: Iterable<string>, to?: Iterable<string>) =>
+  from && to && Seq(from).equals(Seq(to));
+
+describe("pathFromId() function", () => {
+  it("returns the full path of a valid entity ID", () => {
+    expect(pathMatches(pathFromId("a"), ["A"])).toBeTruthy();
+    expect(pathMatches(pathFromId("b"), ["A", "B"])).toBeTruthy();
+    expect(pathMatches(pathFromId("c"), ["A", "C"])).toBeTruthy();
+    expect(pathMatches(pathFromId("d"), ["A", "C", "D"])).toBeTruthy();
+  });
+
+  it("returns undefined for an invalid entity ID", () => {
+    expect(pathFromId("nowhere")).toBeUndefined();
+  });
+
+  it("returns an empty path for an undefined ID", () => {
+    expect(pathMatches(pathFromId("undefined"), [])).toBeTruthy();
   });
 });
