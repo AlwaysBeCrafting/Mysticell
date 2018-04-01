@@ -1,5 +1,5 @@
 import classnames from "classnames";
-import { Seq } from "immutable";
+import { Collection, Seq } from "immutable";
 import React from "react";
 import { Icon } from "react-atoms";
 import { connect as connectStore } from "react-redux";
@@ -8,6 +8,7 @@ import { ToolButton } from "components/atoms";
 import { ErrorBoundary, Toolbar } from "components/molecules";
 
 import { AppState } from "data/AppState";
+import { bindPathFromId } from "data/EntityState";
 import { Source } from "data/Source";
 
 import { Boundary } from "./Boundary";
@@ -20,17 +21,15 @@ interface StateProps {
   source: Source;
   nodeIds: Seq.Indexed<string>;
   wireIds: Seq.Indexed<string>;
+  pathFromId: (id: string) => Iterable<string> | undefined;
 }
-
-interface DispatchProps {}
 
 interface OwnProps {
   className?: string;
-  path: string[];
   sourceId: string;
 }
 
-type Props = StateProps & DispatchProps & OwnProps;
+type Props = StateProps & OwnProps;
 
 const noop = () => undefined;
 
@@ -38,14 +37,15 @@ class PartialFormulaView extends React.PureComponent<Props> {
   wrapper: HTMLDivElement | null = null;
 
   render() {
-    const { className, path, source } = this.props;
+    const { className, source, pathFromId } = this.props;
+    const path = Seq(pathFromId(source.id) || []);
     return (
       <div className={classnames("formulaView", className)}>
         <Toolbar className="formulaView-toolbar">
           <ToolButton link to="/">
             <Icon name="close" />
           </ToolButton>
-          {path.map((_, i) => renderPathSegment(path, i))}
+          {path.map(this.renderPathSegment(path))}
         </Toolbar>
         <div className="formulaView-graph">
           <ErrorBoundary>
@@ -78,18 +78,21 @@ class PartialFormulaView extends React.PureComponent<Props> {
       </div>
     );
   }
-}
 
-const renderPathSegment = (path: string[], index: number) => (
-  <span
-    key={`${index}:${path[index]}`}
-    className={classnames("formulaView-toolbar-path-segment", {
-      "mod-final": index === path.length - 1,
-    })}
-  >
-    {path[index]}
-  </span>
-);
+  private renderPathSegment = (path: Collection.Indexed<string>) => (
+    segment: string,
+    i: number,
+  ) => (
+    <span
+      key={i}
+      className={classnames("formulaView-toolbar-path-segment", {
+        "mod-final": i === path.count() - 1,
+      })}
+    >
+      {segment}
+    </span>
+  );
+}
 
 const mapStateToProps = (state: AppState, props: OwnProps): StateProps => ({
   source: state.entities.sources.get(props.sourceId, new Source()),
@@ -103,9 +106,13 @@ const mapStateToProps = (state: AppState, props: OwnProps): StateProps => ({
     .filter(sourceId => sourceId === props.sourceId)
     .map((_, wireId) => wireId)
     .toIndexedSeq(),
+  pathFromId: bindPathFromId(
+    state.entities.directories.toSeq().concat(state.entities.sources),
+    state.entities.entityParents,
+  ),
 });
 
-const FormulaView = connectStore<StateProps, DispatchProps, OwnProps, AppState>(
+const FormulaView = connectStore<StateProps, {}, OwnProps, AppState>(
   mapStateToProps,
 )(PartialFormulaView);
 

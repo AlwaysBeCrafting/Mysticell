@@ -18,7 +18,6 @@ const lexComp = (a: string, b: string) => a.localeCompare(b);
 
 interface OwnProps {
   className?: string;
-  currentPath: string[];
 }
 
 interface StateProps {
