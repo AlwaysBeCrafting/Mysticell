@@ -1,4 +1,7 @@
+import { ValueObject } from "immutable";
+
 import { Position2d } from "common/types";
+import { hashAll } from "common/utils";
 
 import { Node } from "data/Node";
 import { Source } from "data/Source";
@@ -10,10 +13,24 @@ interface TerminalDescription {
   type: ParamType;
 }
 
-interface TerminalReference {
-  id: string;
-  sign: "+" | "-";
-  index: number;
+class TerminalReference implements ValueObject {
+  constructor(
+    readonly id: string,
+    readonly sign: "+" | "-",
+    readonly index: number,
+  ) {}
+
+  hashCode() {
+    return hashAll(this.id, this.sign, this.index);
+  }
+
+  equals(other: any) {
+    return (
+      this.id === other.id &&
+      this.sign === other.sign &&
+      this.index === other.index
+    );
+  }
 }
 
 const terminalPosition = (

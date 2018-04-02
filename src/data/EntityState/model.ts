@@ -1,7 +1,7 @@
 import { List, Map, Record } from "immutable";
 
 import { Cell } from "data/Cell";
-import { EntityTable, JoinManyToOne } from "data/common";
+import { EntityTable, JoinManyToOne, TerminalReference } from "data/common";
 import { Directory } from "data/Directory";
 import { Document } from "data/Document";
 import { Node } from "data/Node";
@@ -39,7 +39,7 @@ interface Relationships {
 }
 
 interface Data {
-  propertyValues: Map<string, List<string>>;
+  propertyValues: Map<TerminalReference, string>;
 }
 
 class EntityState extends Record<Entities & Relationships & Data>({

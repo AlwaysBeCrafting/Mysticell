@@ -13,7 +13,7 @@ interface CellProps extends Entity {
 class Cell extends Record<CellProps>({
   id: "cell.default",
   property: "property.default",
-  terminal: { id: "property.default", sign: "+", index: 0 },
+  terminal: new TerminalReference("property.default", "+", 0),
   rect: new Rect(),
   format: {},
 }) {}
