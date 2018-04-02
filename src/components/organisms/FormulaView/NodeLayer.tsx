@@ -5,19 +5,8 @@ import { connect } from "react-redux";
 
 import { AppState } from "data/AppState";
 import { Node } from "data/Node";
-import { Wire } from "data/Wire";
 
 import "./NodeLayer.scss";
-
-const listConnectedInputs = (
-  wires: Seq.Indexed<Wire>,
-  node: Node,
-): Seq.Set<number> => {
-  return wires
-    .filter(wire => wire.end.id === node.id)
-    .map(wire => wire.end.index)
-    .toSetSeq();
-};
 
 interface StateProps {
   nodes: Seq.Indexed<Node>;

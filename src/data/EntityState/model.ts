@@ -1,4 +1,4 @@
-import { List, Map, Record } from "immutable";
+import { Map, Record } from "immutable";
 
 import { Cell } from "data/Cell";
 import { EntityTable, JoinManyToOne, TerminalReference } from "data/common";
