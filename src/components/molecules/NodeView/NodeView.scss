@@ -5,7 +5,7 @@
 
 $row-height: $dimen-graph-cell-size;
 
-.cardView {
+.nodeView {
   line-height: $row-height;
   display: grid;
   grid-template-columns: 1fr;
