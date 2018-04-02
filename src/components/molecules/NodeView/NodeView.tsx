@@ -65,11 +65,7 @@ class PartialNodeView extends React.PureComponent<Props> {
           return (
             <div className="nodeView-row mod-output" key={`${ref.hashCode}`}>
               <div className="nodeView-row-name mod-output">{term.name}</div>
-              <Pin
-                className="nodeView-row-pin mod-output"
-                id={node.id}
-                node={node}
-              />
+              <Pin className="nodeView-row-pin mod-output" type="undefined" />
             </div>
           );
         })}

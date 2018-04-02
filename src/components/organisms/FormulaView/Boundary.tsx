@@ -6,7 +6,6 @@ import { Pin } from "components/atoms";
 import { Source } from "data/Source";
 
 import "./Boundary.scss";
-import { TerminalDescription } from "data/common";
 
 interface CommonProps {
   source: Source;
@@ -41,9 +40,7 @@ class Boundary extends React.PureComponent<Props> {
               {this.renderValue(sign, values && values.get(index))}
               <Pin
                 className={`boundary-row-pin mod-${sign}`}
-                id={"id"}
-                node={"node"}
-                onConnect={this.onPinConnect}
+                type="undefined"
               />
             </div>
           ))
@@ -73,12 +70,6 @@ class Boundary extends React.PureComponent<Props> {
       );
     }
   }
-
-  private onPinConnect = (from: string, to: string) => {
-    // FINISHME
-    // tslint:disable-next-line:no-console
-    console.log(from, to);
-  };
 
   private onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (this.props.input) {
