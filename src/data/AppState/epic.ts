@@ -1,8 +1,8 @@
-import { combineEpics } from "redux-observable";
+import { Epic } from "redux-observable";
 
-import { epic as cardTemplateEpic } from "data/CardTemplate";
-import { epic as documentEpic } from "data/Document";
+import { Action } from "./actions";
+import { AppState } from "./model";
 
-const appStateEpic = combineEpics(documentEpic, cardTemplateEpic);
+const epic: Epic<Action, AppState> = $action => $action.filter(_ => false);
 
-export { appStateEpic };
+export { epic };

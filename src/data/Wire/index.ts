@@ -1,0 +1,1 @@
+export { Wire } from "./model";

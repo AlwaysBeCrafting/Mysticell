@@ -2,30 +2,20 @@ import { Record } from "immutable";
 
 import { Rect } from "common/types";
 
-import { CellJs } from "./js";
+import { Entity, TerminalReference } from "data/common";
 
-interface CellProps {
-  id: string;
+interface CellProps extends Entity {
   property: string;
-  node: string;
+  terminal: TerminalReference;
   rect: Rect;
   format: {};
 }
 class Cell extends Record<CellProps>({
-  id: "cell.base",
-  property: "template.property.base",
-  node: "node.base",
+  id: "cell.default",
+  property: "property.default",
+  terminal: new TerminalReference("property.default", "+", 0),
   rect: new Rect(),
   format: {},
-}) {
-  static fromJs(js: CellJs): Cell {
-    return new Cell({
-      id: js.id,
-      property: js.property,
-      node: js.node,
-      rect: new Rect(js.rect.left, js.rect.top, js.rect.right, js.rect.bottom),
-    });
-  }
-}
+}) {}
 
 export { Cell };

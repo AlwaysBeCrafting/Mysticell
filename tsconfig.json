@@ -21,7 +21,6 @@
     "preserveConstEnums": true,
     "sourceMap": true,
     "baseUrl": "./src",
-    "rootDirs": [".", "./src"],
     "plugins": [{ "name": "tslint-language-service" }],
     "lib": ["dom", "es2017"]
   },
