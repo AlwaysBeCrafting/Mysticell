@@ -1,45 +1,48 @@
 import classnames from "classnames";
 import React from "react";
+import { connect } from "react-redux";
 
-import { Rect } from "common/types";
-
+import { AppState } from "data/AppState";
 import { Cell } from "data/Cell";
 import { Param } from "data/common";
 
 import "./CellView.scss";
 
-interface Props {
+interface OwnProps {
   className?: string;
-  cell: Cell;
-  param: Param;
-  rect: Rect;
+  cellId: string;
   onChange?: (cell: Cell, newValue: string) => void;
-  readonly?: boolean;
 }
 
-class CellView extends React.PureComponent<Props> {
+interface StateProps {
+  cell: Cell;
+  value: Param;
+}
+
+type Props = OwnProps & StateProps;
+
+class PartialCellView extends React.PureComponent<Props> {
   render() {
-    const { className, param, rect, readonly } = this.props;
+    const { className, cell, value } = this.props;
+    const { top, left, bottom, right } = cell.rect;
     const style = {
-      gridArea: [rect.top, rect.left, rect.bottom, rect.right]
-        .map(val => val + 1)
-        .join(" / "),
+      gridArea: [top, left, bottom, right].map(val => val + 1).join(" / "),
     };
-    const message = param.type === "error" ? param.message : "";
+    const message = (typeof value === "object" && value.message) || "";
     return (
       <div
         style={style}
         className={classnames("cellView", className)}
         title={message}
       >
-        {readonly ? (
-          <div className="cellView-content mod-readonly">{param.value}</div>
-        ) : (
+        {cell.terminal.sign === "+" ? (
           <input
             className="cellView-content"
-            defaultValue={`${param.value}`}
+            defaultValue={`${value}`}
             onChange={this.onChange}
           />
+        ) : (
+          <div className="cellView-content mod-readonly">{value}</div>
         )}
       </div>
     );
@@ -51,5 +54,17 @@ class CellView extends React.PureComponent<Props> {
     }
   };
 }
+
+const mapStateToProps = (state: AppState, props: OwnProps): StateProps => {
+  const cell = state.entities.cells.get(props.cellId, new Cell());
+  return {
+    cell,
+    value: state.entities.propertyValues.get(cell.terminal, ""),
+  };
+};
+
+const CellView = connect<StateProps, {}, OwnProps, AppState>(mapStateToProps)(
+  PartialCellView,
+);
 
 export { CellView };
