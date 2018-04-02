@@ -1,4 +1,4 @@
-import { Collection, Range, Seq } from "immutable";
+import { Collection, Seq } from "immutable";
 
 import { JoinManyToOne, NamedEntity } from "data/common";
 import { Directory } from "data/Directory";
