@@ -1,6 +1,5 @@
 const enum DndTypes {
-  CARD = "NODE",
-  CARD_TEMPLATE = "NODE_PROTOTYPE",
+  NODE = "NODE",
   WIRE_START = "WIRE_START",
   WIRE_END = "WIRE_END",
 }
