@@ -13,12 +13,9 @@ interface TerminalDescription {
   type: ParamType;
 }
 
-class TerminalReference implements ValueObject {
-  constructor(
-    readonly id: string,
-    readonly sign: "+" | "-",
-    readonly index: number,
-  ) {}
+class TerminalReference<S extends "+" | "-" = "+" | "-">
+  implements ValueObject {
+  constructor(readonly id: string, readonly sign: S, readonly index: number) {}
 
   hashCode() {
     return hashAll(this.id, this.sign, this.index);
