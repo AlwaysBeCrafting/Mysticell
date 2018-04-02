@@ -5,7 +5,7 @@ import ReactDOM from "react-dom";
 import { AppContainer } from "react-hot-loader";
 import { Provider } from "react-redux";
 
-import { EditorPage } from "components/pages";
+import { DocumentPage } from "components/pages";
 
 import { configureStore } from "store";
 
@@ -18,7 +18,7 @@ const renderRoot = () => {
   const editor = (
     <Provider store={store}>
       <DragDropContextProvider backend={HTML5Backend}>
-        <EditorPage />
+        <DocumentPage documentId="document.default" />
       </DragDropContextProvider>
     </Provider>
   );

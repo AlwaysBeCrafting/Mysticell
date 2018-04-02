@@ -1,4 +1,3 @@
-import { Map } from "immutable";
 import React from "react";
 import { connect } from "react-redux";
 import {
@@ -6,7 +5,6 @@ import {
   Route,
   RouteComponentProps,
 } from "react-router-dom";
-import { Dispatch } from "redux";
 
 import {
   AppDragLayer,
