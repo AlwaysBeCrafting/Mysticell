@@ -21,7 +21,7 @@ const documentReducer = (
 };
 const subReducers = combineReducers<Document>({
   id: id => id || "",
-  title: title => title || "",
+  name: name => name || "",
   version: version => version || 0,
   include: include => include || List(),
 });

@@ -1,11 +1,12 @@
 import { combineReducers } from "redux-immutable";
 
-import { reducer as document } from "data/Document";
+import { reducer as entities } from "data/EntityState";
 
 import { AppState } from "./model";
 
 const reducer = combineReducers<AppState>({
-  document,
+  entities,
+  ui: ui => ui || {},
 });
 
 export { reducer };
