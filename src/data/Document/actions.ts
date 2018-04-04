@@ -1,17 +1,19 @@
 import { TypedAction } from "data/common";
 
-const enum ActionTypes {
-  LOAD_DOCUMENT = "[Document] Load",
-}
-type Action = LoadDocumentAction;
+import { Document } from "./model";
 
-interface LoadDocumentAction extends TypedAction<ActionTypes.LOAD_DOCUMENT> {
-  payload: { documentJson: any };
+const enum ActionTypes {
+  CREATE = "[Document] Create",
 }
-const loadDocument = (documentJson: any): Action => ({
-  type: ActionTypes.LOAD_DOCUMENT,
-  payload: { documentJson },
+type Action = CreateAction;
+
+interface CreateAction extends TypedAction<ActionTypes.CREATE> {
+  payload: { document: Document };
+}
+const createDocument = (document: Document): Action => ({
+  type: ActionTypes.CREATE,
+  payload: { document },
 });
 
 export { Action, ActionTypes };
-export { loadDocument };
+export { createDocument };

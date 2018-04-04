@@ -1,10 +1,5 @@
-import { Epic } from "redux-observable";
+import { epic as entityStateEpic } from "data/EntityState";
 
-import "common/rxjs";
-
-import { Action } from "./actions";
-import { AppState } from "./model";
-
-const epic: Epic<Action, AppState> = $action => $action.filter(_ => false);
+const epic = entityStateEpic;
 
 export { epic };
