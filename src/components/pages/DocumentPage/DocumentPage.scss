@@ -9,11 +9,11 @@
 
   display: grid;
   grid-template:
-    "palette content" 1fr
+    "sidebar content" 1fr
     "status status" 26px / 320px auto;
 
-  &-palette {
-    grid-area: palette;
+  &-sidebar {
+    grid-area: sidebar;
   }
   &-content {
     grid-area: content;

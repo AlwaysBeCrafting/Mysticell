@@ -9,7 +9,7 @@ import {
 import {
   AppDragLayer,
   FormulaView,
-  Palette,
+  Sidebar,
   StatusBar,
   Tabletop,
 } from "components/organisms";
@@ -36,34 +36,35 @@ interface StateProps {
 
 type Props = StateProps;
 
+type RouteProps = RouteComponentProps<{ documentId: string; path: string }>;
+
 class ProtoEditor extends React.PureComponent<Props> {
   render() {
     return (
       <Router>
         <main className="documentPage">
           <AppDragLayer />
-          <Route path="/:documentId" render={this.renderPalette} />
-          <Route exact path="/:documentId" render={this.renderSheetView} />
+          <Route path="/:documentId" render={this.renderSidebar} />
+          <Route exact path="/:documentId" render={this.renderTabletop} />
           <Route
             exact
             path="/:documentId/:path+"
             render={this.renderFormulaView}
           />
-          <Route
-            exact
-            path="/:documentId/:path*"
-            render={this.renderStatusBar}
-          />
+          <StatusBar className="documentPage-status" />
         </main>
       </Router>
     );
   }
 
-  private renderPalette = () => <Palette className="documentPage-palette" />;
+  private renderSidebar = (routeProps: RouteProps) => (
+    <Sidebar
+      className="documentPage-sidebar"
+      documentId={routeProps.match.params.documentId}
+    />
+  );
 
-  private renderFormulaView = (
-    routeProps: RouteComponentProps<{ documentId: string; path: string }>,
-  ) => {
+  private renderFormulaView = (routeProps: RouteProps) => {
     const { idFromPath } = this.props;
     const sourceId = idFromPath(routeProps.match.path);
     if (sourceId) {
@@ -79,12 +80,8 @@ class ProtoEditor extends React.PureComponent<Props> {
     }
   };
 
-  private renderSheetView = () => {
+  private renderTabletop = () => {
     return <Tabletop className="documentPage-content" />;
-  };
-
-  private renderStatusBar = () => {
-    return <StatusBar className="documentPage-status" />;
   };
 }
 

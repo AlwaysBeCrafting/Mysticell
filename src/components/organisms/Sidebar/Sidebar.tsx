@@ -7,20 +7,23 @@ import { TreeView } from "components/molecules";
 import { AppState } from "data/AppState";
 import { EntityTable, JoinManyToOne } from "data/common";
 import { Directory } from "data/Directory";
+import { Document } from "data/Document";
 import { Source } from "data/Source";
 
 import { DirectoryItemView } from "./DirectoryItemView";
 import { SourceItemView } from "./SourceItemView";
 
-import "./Palette.scss";
+import "./Sidebar.scss";
 
 const lexComp = (a: string, b: string) => a.localeCompare(b);
 
 interface OwnProps {
   className?: string;
+  documentId: string;
 }
 
 interface StateProps {
+  document: Document;
   directories: EntityTable<Directory>;
   sources: EntityTable<Source>;
   entityParents: JoinManyToOne;
@@ -28,13 +31,16 @@ interface StateProps {
 
 type Props = OwnProps & StateProps;
 
-class PartialPalette extends React.PureComponent<Props> {
+class PartialSidebar extends React.PureComponent<Props> {
   render() {
-    const { className } = this.props;
+    const { className, document } = this.props;
     return (
-      <div className={classnames("paletteView", className)}>
+      <div className={classnames("sidebar", className)}>
+        <header className="sidebar-header">
+          <div className="sidebar-header-name">{document.name}</div>
+        </header>
         <TreeView
-          className="paletteView-tree"
+          className="sidebar-tree"
           render={this.renderItem}
           getKey={this.getItemKey}
           getChildren={this.getItemChildren}
@@ -85,14 +91,15 @@ class PartialPalette extends React.PureComponent<Props> {
   };
 }
 
-const mapStateToProps = (state: AppState): StateProps => ({
+const mapStateToProps = (state: AppState, props: OwnProps): StateProps => ({
+  document: state.entities.documents.get(props.documentId, new Document()),
   directories: state.entities.directories,
   sources: state.entities.sources,
   entityParents: state.entities.entityParents,
 });
 
-const Palette = reduxConnect<StateProps, {}, OwnProps>(mapStateToProps)(
-  PartialPalette,
+const Sidebar = reduxConnect<StateProps, {}, OwnProps>(mapStateToProps)(
+  PartialSidebar,
 );
 
-export { Palette };
+export { Sidebar };
