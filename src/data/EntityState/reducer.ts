@@ -44,6 +44,14 @@ const relationshipsReducer = (
   action: Action,
 ): EntityState => {
   switch (action.type) {
+    case ActionTypes.SET_DIRECTORY_DOCUMENT: {
+      const { directoryId, documentId } = action.payload;
+      return state.setIn(["directoryDocuments", directoryId], documentId);
+    }
+    case ActionTypes.SET_SOURCE_DOCUMENT: {
+      const { sourceId, documentId } = action.payload;
+      return state.setIn(["sourceDocuments", sourceId], documentId);
+    }
     case ActionTypes.SET_NODE_SOURCE: {
       const { nodeId, sourceId } = action.payload;
       return state.setIn(["nodeSources", nodeId], sourceId);

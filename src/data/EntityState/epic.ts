@@ -17,7 +17,10 @@ import { createWire, Wire } from "data/Wire";
 import {
   ActionTypes,
   setCellSheet,
+  setDirectoryDocument,
+  setEntityParent,
   setNodeSource,
+  setSourceDocument,
   setWireSource,
 } from "./actions";
 import { EntityState } from "./model";
@@ -40,6 +43,7 @@ const epic: Epic<AnyAction, EntityState> = $action =>
         isExpanded: true,
       }),
     ),
+    setDirectoryDocument("directory.attributes", "document.example"),
 
     createSource(
       new Source({
@@ -50,6 +54,9 @@ const epic: Epic<AnyAction, EntityState> = $action =>
         type: "function",
       }),
     ),
+    setSourceDocument("function.attributeModifier", "document.example"),
+    setEntityParent("function.attributeModifier", "directory.attributes"),
+
     createSource(
       new Source({
         id: "property.strength",
@@ -62,6 +69,8 @@ const epic: Epic<AnyAction, EntityState> = $action =>
         type: "property",
       }),
     ),
+    setSourceDocument("property.strength", "document.example"),
+    setEntityParent("property.strength", "directory.attributes"),
 
     createNode(
       new Node({

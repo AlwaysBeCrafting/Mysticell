@@ -1,6 +1,9 @@
 import { TypedAction } from "data/common";
 
 const enum ActionTypes {
+  SET_DIRECTORY_DOCUMENT = "[EntityState] Set directory document",
+  SET_SOURCE_DOCUMENT = "[EntityState] Set source document",
+  SET_ENTITY_PARENT = "[EntityState] Set entity parent",
   SET_NODE_SOURCE = "[EntityState] Set node source",
   SET_WIRE_SOURCE = "[EntityState] Set wire source",
   SET_CELL_SHEET = "[EntityState] Set cell sheet",
@@ -9,10 +12,46 @@ const enum ActionTypes {
 }
 
 type Action =
+  | SetDirectoryDocumentAction
+  | SetSourceDocumentAction
+  | SetEntityParentAction
   | SetNodeSourceAction
   | SetWireSourceAction
   | SetCellSheetAction
   | LoadExampleDocumentAction;
+
+interface SetDirectoryDocumentAction
+  extends TypedAction<ActionTypes.SET_DIRECTORY_DOCUMENT> {
+  payload: { directoryId: string; documentId: string };
+}
+
+const setDirectoryDocument = (
+  directoryId: string,
+  documentId: string,
+): Action => ({
+  type: ActionTypes.SET_DIRECTORY_DOCUMENT,
+  payload: { directoryId, documentId },
+});
+
+interface SetSourceDocumentAction
+  extends TypedAction<ActionTypes.SET_SOURCE_DOCUMENT> {
+  payload: { sourceId: string; documentId: string };
+}
+
+const setSourceDocument = (sourceId: string, documentId: string): Action => ({
+  type: ActionTypes.SET_SOURCE_DOCUMENT,
+  payload: { sourceId, documentId },
+});
+
+interface SetEntityParentAction
+  extends TypedAction<ActionTypes.SET_ENTITY_PARENT> {
+  payload: { entityId: string; parentId: string };
+}
+
+const setEntityParent = (entityId: string, parentId: string): Action => ({
+  type: ActionTypes.SET_ENTITY_PARENT,
+  payload: { entityId, parentId },
+});
 
 interface SetNodeSourceAction extends TypedAction<ActionTypes.SET_NODE_SOURCE> {
   payload: { nodeId: string; sourceId: string };
@@ -49,4 +88,12 @@ const loadExampleDocument = (): Action => ({
 });
 
 export { ActionTypes, Action };
-export { setNodeSource, setWireSource, setCellSheet, loadExampleDocument };
+export {
+  setDirectoryDocument,
+  setSourceDocument,
+  setEntityParent,
+  setNodeSource,
+  setWireSource,
+  setCellSheet,
+  loadExampleDocument,
+};
