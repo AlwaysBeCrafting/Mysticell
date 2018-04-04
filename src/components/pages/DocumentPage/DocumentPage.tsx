@@ -42,10 +42,18 @@ class ProtoEditor extends React.PureComponent<Props> {
       <Router>
         <main className="documentPage">
           <AppDragLayer />
-          <Route exact path="/:path*" render={this.renderPalette} />
-          <Route exact path="/" render={this.renderSheetView} />
-          <Route exact path="/:path+" render={this.renderFormulaView} />
-          <Route exact path="/:path*" render={this.renderStatusBar} />
+          <Route path="/:documentId" render={this.renderPalette} />
+          <Route exact path="/:documentId" render={this.renderSheetView} />
+          <Route
+            exact
+            path="/:documentId/:path+"
+            render={this.renderFormulaView}
+          />
+          <Route
+            exact
+            path="/:documentId/:path*"
+            render={this.renderStatusBar}
+          />
         </main>
       </Router>
     );
@@ -54,7 +62,7 @@ class ProtoEditor extends React.PureComponent<Props> {
   private renderPalette = () => <Palette className="documentPage-palette" />;
 
   private renderFormulaView = (
-    routeProps: RouteComponentProps<{ path: string }>,
+    routeProps: RouteComponentProps<{ documentId: string; path: string }>,
   ) => {
     const { idFromPath } = this.props;
     const sourceId = idFromPath(routeProps.match.path);

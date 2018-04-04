@@ -28,7 +28,9 @@ module.exports = merge(common, {
     inline: false,
     quiet: true,
     port: serverPort,
-    historyApiFallback: true,
+    historyApiFallback: {
+      disableDotRule: true,
+    },
     publicPath,
   },
   module: {
