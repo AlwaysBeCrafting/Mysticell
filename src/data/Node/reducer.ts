@@ -25,6 +25,8 @@ const reducer: Reducer<Map<string, Node>> = (
       const { id, position } = action.payload;
       return state.setIn([id, "position"], position);
     }
+    default:
+      return state;
   }
 };
 

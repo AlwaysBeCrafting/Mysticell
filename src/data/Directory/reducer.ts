@@ -3,16 +3,16 @@ import { Map } from "immutable";
 import { EntityTable } from "data/common";
 
 import { Action, ActionTypes } from "./actions";
-import { Document } from "./model";
+import { Directory } from "./model";
 
 const reducer = (
-  state: EntityTable<Document> = Map(),
+  state: EntityTable<Directory> = Map(),
   action: Action,
-): EntityTable<Document> => {
+): EntityTable<Directory> => {
   switch (action.type) {
     case ActionTypes.CREATE: {
-      const { document } = action.payload;
-      return state.set(document.id, document);
+      const { directory } = action.payload;
+      return state.set(directory.id, directory);
     }
     default:
       return state;
