@@ -16,8 +16,8 @@ class TreeView<I> extends React.PureComponent<Props<I>> {
     const { className, getChildren, getKey } = this.props;
     return (
       <ul className={classnames("treeView", className)}>
-        {getChildren().map(item => (
-          <Item item={item} {...this.props} key={getKey(item)} />
+        {getChildren().map(child => (
+          <Item item={child} {...this.props} key={getKey(child)} />
         ))}
       </ul>
     );
@@ -35,7 +35,7 @@ class Item<I> extends React.PureComponent<ItemProps<I>> {
     const childrenElem = children.count() > 0 && (
       <ul className="treeView-item-children">
         {children.map(child => (
-          <Item item={child} {...this.props} key={getKey(child)} />
+          <Item {...this.props} item={child} key={getKey(child)} />
         ))}
       </ul>
     );
