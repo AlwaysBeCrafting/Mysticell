@@ -1,3 +1,4 @@
+import classnames from "classnames";
 import { Seq } from "immutable";
 import React from "react";
 
@@ -8,6 +9,7 @@ import { Source } from "data/Source";
 import "./Boundary.scss";
 
 interface CommonProps {
+  className?: string;
   source: Source;
   values?: Seq.Indexed<string>;
 }
@@ -24,12 +26,12 @@ type Props = InputProps | OutputProps;
 
 class Boundary extends React.PureComponent<Props> {
   render() {
-    const { input, values, source } = this.props;
+    const { className, input, values, source } = this.props;
     const sign = input ? "source" : "sink";
     const terminals = input ? source.inputs : source.outputs;
 
     return (
-      <div className={`boundary mod-${sign}`}>
+      <div className={classnames(className, `boundary mod-${sign}`)}>
         <div className={`boundary-header boundary-row mod-${sign}`}>
           {sign === "source" ? "Input" : "Output"}
         </div>

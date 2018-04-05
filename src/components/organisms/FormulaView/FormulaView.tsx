@@ -37,7 +37,7 @@ class PartialFormulaView extends React.PureComponent<Props> {
   wrapper: HTMLDivElement | null = null;
 
   render() {
-    const { className, source, pathFromId } = this.props;
+    const { className, source, sourceId, pathFromId } = this.props;
     const path = Seq.Indexed(pathFromId(source.id) || []);
     return (
       <div className={classnames("formulaView", className)}>
@@ -49,32 +49,34 @@ class PartialFormulaView extends React.PureComponent<Props> {
         </Toolbar>
         <div className="formulaView-graph">
           <ErrorBoundary>
-            <Boundary input source={source} onValueChange={noop} />
+            <Boundary
+              className="formulaView-graph-boundary mod-input"
+              input
+              source={source}
+              onValueChange={noop}
+            />
           </ErrorBoundary>
-          {this.renderGrid()}
           <ErrorBoundary>
-            <Boundary output source={source} />
+            <Boundary
+              className="formulaView-graph-boundary mod-output"
+              output
+              source={source}
+            />
           </ErrorBoundary>
+          <div
+            className="formulaView-graph-grid"
+            ref={elem => (this.wrapper = elem)}
+          >
+            <WireLayer
+              className="formulaView-graph-grid-wires"
+              sourceId={sourceId}
+            />
+            <NodeLayer
+              className="formulaView-graph-grid-nodes"
+              sourceId={sourceId}
+            />
+          </div>
         </div>
-      </div>
-    );
-  }
-
-  private renderGrid() {
-    const { sourceId } = this.props;
-    return (
-      <div
-        className="formulaView-graph-grid"
-        ref={elem => (this.wrapper = elem)}
-      >
-        <WireLayer
-          className="formulaView-graph-grid-wires"
-          sourceId={sourceId}
-        />
-        <NodeLayer
-          className="formulaView-graph-grid-nodes"
-          sourceId={sourceId}
-        />
       </div>
     );
   }

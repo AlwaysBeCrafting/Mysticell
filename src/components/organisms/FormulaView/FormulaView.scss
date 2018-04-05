@@ -10,14 +10,14 @@ $dimen-cellLineEnd: $dimen-cellSize;
 $dimen-panelWidth: $dimen-cellSize * 4;
 
 .formulaView {
-  flex: 1 0 auto;
-  position: relative;
-  display: flex;
-  flex-flow: column nowrap;
-  overflow-x: hidden;
+  display: grid;
+  grid-template:
+    "toolbar" $dimen-toolbar-size
+    "graph" 1fr /
+    100%;
 
   &-toolbar {
-    flex: 0 0 $dimen-toolbar-size;
+    grid-area: toolbar;
     background: $color-grey-100;
     border-bottom: solid 1px $color-divider;
     padding: 0 8px;
@@ -49,17 +49,32 @@ $dimen-panelWidth: $dimen-cellSize * 4;
   }
 
   &-graph {
-    flex: 1 0 auto;
-    display: flex;
-    flex-flow: row nowrap;
+    grid-area: graph;
+    display: grid;
+    grid-template:
+      "input content output" /
+      ($dimen-panelWidth minmax(auto, 1fr) $dimen-panelWidth);
+
     overflow-x: auto;
-    align-items: stretch;
+
+    &-boundary {
+      &.mod-input {
+        grid-area: input;
+      }
+
+      &.mod-output {
+        grid-area: output;
+      }
+    }
 
     &-grid {
-      flex: 0 0 $dimen-cellSize * 6;
-      display: flex;
-      flex-flow: column nowrap;
       position: relative;
+      grid-area: content;
+      display: grid;
+      grid-auto-columns: 40px;
+      grid-auto-rows: 40px;
+      padding-right: 80px;
+      
       background: repeating-linear-gradient(
           transparent,
           transparent $dimen-cellLineStart,
@@ -78,18 +93,6 @@ $dimen-panelWidth: $dimen-cellSize * 4;
         position: absolute;
         width: 100%;
         height: 100%;
-        left: 0;
-        top: 0;
-        right: 0;
-        bottom: 0;
-      }
-
-      &-nodes {
-        position: absolute;
-        left: 0;
-        top: 0;
-        right: 0;
-        bottom: 0;
       }
     }
   }

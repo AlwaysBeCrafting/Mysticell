@@ -1,4 +1,3 @@
-import classNames from "classnames";
 import { Seq } from "immutable";
 import React from "react";
 import { connect } from "react-redux";
@@ -21,14 +20,10 @@ type Props = StateProps & OwnProps;
 
 class PartialNodeLayer extends React.PureComponent<Props> {
   render() {
-    const { nodeIds, className } = this.props;
-    return (
-      <div className={classNames("nodeLayer", className)}>
-        {Seq.Indexed(nodeIds).map(nodeId => (
-          <NodeView key={nodeId} nodeId={nodeId} />
-        ))}
-      </div>
-    );
+    const { nodeIds } = this.props;
+    return Seq.Indexed(nodeIds).map(nodeId => (
+      <NodeView key={nodeId} nodeId={nodeId} />
+    ));
   }
 }
 
