@@ -20,6 +20,7 @@ $dimen-panelWidth: $dimen-cellSize * 4;
     flex: 0 0 $dimen-toolbar-size;
     background: $color-grey-100;
     border-bottom: solid 1px $color-divider;
+    padding: 0 8px;
 
     &-path-segment {
       color: $color-text-secondary;

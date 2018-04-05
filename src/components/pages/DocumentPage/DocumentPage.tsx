@@ -66,7 +66,8 @@ class ProtoEditor extends React.PureComponent<Props> {
 
   private renderFormulaView = (routeProps: RouteProps) => {
     const { idFromPath } = this.props;
-    const sourceId = idFromPath(routeProps.match.params.path);
+    const pathFragments = routeProps.match.params.path.split("/");
+    const sourceId = idFromPath(pathFragments);
     if (sourceId) {
       return (
         <FormulaView className="documentPage-content" sourceId={sourceId} />
