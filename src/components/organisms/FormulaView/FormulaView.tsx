@@ -1,5 +1,5 @@
 import classnames from "classnames";
-import { Collection, Seq } from "immutable";
+import { Seq } from "immutable";
 import React from "react";
 import { Icon } from "react-atoms";
 import { connect as connectStore } from "react-redux";
@@ -19,8 +19,8 @@ import "./FormulaView.scss";
 
 interface StateProps {
   source: Source;
-  nodeIds: Seq.Indexed<string>;
-  wireIds: Seq.Indexed<string>;
+  nodeIds: Iterable<string>;
+  wireIds: Iterable<string>;
   pathFromId: (id: string) => Iterable<string> | undefined;
 }
 
@@ -38,7 +38,7 @@ class PartialFormulaView extends React.PureComponent<Props> {
 
   render() {
     const { className, source, pathFromId } = this.props;
-    const path = Seq(pathFromId(source.id) || []);
+    const path = Seq.Indexed(pathFromId(source.id) || []);
     return (
       <div className={classnames("formulaView", className)}>
         <Toolbar className="formulaView-toolbar">
@@ -79,14 +79,14 @@ class PartialFormulaView extends React.PureComponent<Props> {
     );
   }
 
-  private renderPathSegment = (path: Collection.Indexed<string>) => (
+  private renderPathSegment = (path: Iterable<string>) => (
     segment: string,
     i: number,
   ) => (
     <span
       key={i}
       className={classnames("formulaView-toolbar-path-segment", {
-        "mod-final": i === path.count() - 1,
+        "mod-final": i === Seq.Indexed(path).count() - 1,
       })}
     >
       {segment}

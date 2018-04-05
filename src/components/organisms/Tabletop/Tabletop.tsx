@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { Collection } from "immutable";
+import { Seq } from "immutable";
 import React from "react";
 import { connect } from "react-redux";
 
@@ -15,7 +15,7 @@ interface OwnProps {
 }
 
 interface StateProps {
-  sheetIds: Collection.Indexed<string>;
+  sheetIds: Iterable<string>;
 }
 
 type Props = OwnProps & StateProps;
@@ -25,7 +25,7 @@ class PartialTabletop extends React.PureComponent<Props> {
     const { className, sheetIds } = this.props;
     return (
       <div className={classNames("tabletop", className)}>
-        {sheetIds
+        {Seq.Indexed(sheetIds)
           .map(sheetId => (
             <ErrorBoundary key={sheetId}>
               <SheetView sheetId={sheetId} />

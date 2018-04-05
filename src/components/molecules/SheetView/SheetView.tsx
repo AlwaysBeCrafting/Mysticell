@@ -38,7 +38,7 @@ class PartialSheetView extends React.PureComponent<Props> {
           </ToolButton>
         </Toolbar>
         <div className="sheetView-grid">
-          {Seq(cellIds)
+          {Seq.Indexed(cellIds)
             .map(cellId => (
               <CellView
                 key={cellId}

@@ -7,7 +7,7 @@ const bindIdFromPath = (
   entities: Collection<string, NamedEntity>,
   entityParents: JoinManyToOne,
 ) => (path: Iterable<string>): string | undefined =>
-  Seq(path).reduce((parent, segment) => {
+  Seq.Indexed(path).reduce((parent, segment) => {
     const child = entities.find(
       entity =>
         entityParents.get(entity.id) === parent && entity.name === segment,

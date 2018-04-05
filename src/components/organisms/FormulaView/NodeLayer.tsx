@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { Collection } from "immutable";
+import { Seq } from "immutable";
 import React from "react";
 import { connect } from "react-redux";
 
@@ -10,7 +10,7 @@ import { AppState } from "data/AppState";
 import "./NodeLayer.scss";
 
 interface StateProps {
-  nodeIds: Collection.Indexed<string>;
+  nodeIds: Iterable<string>;
 }
 
 interface OwnProps {
@@ -24,7 +24,9 @@ class PartialNodeLayer extends React.PureComponent<Props> {
     const { nodeIds, className } = this.props;
     return (
       <div className={classNames("nodeLayer", className)}>
-        {nodeIds.map(nodeId => <NodeView key={nodeId} nodeId={nodeId} />)}
+        {Seq.Indexed(nodeIds).map(nodeId => (
+          <NodeView key={nodeId} nodeId={nodeId} />
+        ))}
       </div>
     );
   }

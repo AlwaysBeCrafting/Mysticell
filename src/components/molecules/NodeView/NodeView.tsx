@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { Collection, Seq, Set } from "immutable";
+import { Seq } from "immutable";
 import React from "react";
 import { Card } from "react-atoms";
 import { connect } from "react-redux";
@@ -24,9 +24,7 @@ interface StateProps {
   node: Node;
   source: Source;
   isDragging: boolean;
-  connections:
-    | Collection.Indexed<TerminalReference>
-    | Collection.Set<TerminalReference>;
+  connections: Iterable<TerminalReference>;
 }
 
 type Props = OwnProps & StateProps;
@@ -37,7 +35,6 @@ class PartialNodeView extends React.PureComponent<Props> {
     const { label, position } = node;
     const { name, inputs, outputs } = source;
     const height = 1 + inputs.count() + outputs.count();
-
     const positionedStyle = {
       gridRow: `${position.y + 1} / span ${height}`,
       gridColumn: `${position.x + 1} / span 4`,
@@ -51,7 +48,7 @@ class PartialNodeView extends React.PureComponent<Props> {
         <header className="nodeView-header nodeView-row">
           <span className="nodeView-header-name">{label || name}</span>
         </header>
-        {Seq(outputs).map((term, index) => {
+        {Seq.Indexed(outputs).map((term, index) => {
           const ref = new TerminalReference(node.id, "-", index);
           return (
             <div className="nodeView-row mod-output" key={`${ref.hashCode}`}>
@@ -60,10 +57,10 @@ class PartialNodeView extends React.PureComponent<Props> {
             </div>
           );
         })}
-        {Seq(inputs).map((term, index) => {
+        {Seq.Indexed(inputs).map((term, index) => {
           const ref = new TerminalReference(node.id, "+", index);
           return (
-            <div className="nodeView-row mod-input" key={`${ref.hashCode}`}>
+            <div className="nodeView-row mod-input" key={`${ref.hashCode()}`}>
               <div className="nodeView-row-name mod-input">{term.name}</div>
               <Pin className="nodeView-row-pin mod-input" type="undefined" />
             </div>
@@ -83,7 +80,7 @@ const mapStateToProps = (state: AppState, props: OwnProps): StateProps => {
       .concat(PRIMITIVE_SOURCES)
       .get(node.source, new Source()),
     isDragging: false,
-    connections: Set(),
+    connections: [],
   };
 };
 
