@@ -50,7 +50,6 @@ class PartialSidebar extends React.PureComponent<Props> {
   }
 
   private renderItem = (item: Directory | Source) => {
-    const {} = this.props;
     if (item.id.startsWith("directory")) {
       return (
         <DirectoryItemView
@@ -73,21 +72,19 @@ class PartialSidebar extends React.PureComponent<Props> {
 
   private getItemKey = (item: Directory | Source) => item.id;
 
-  private getItemChildren = (item: Directory | Source) => {
+  private getItemChildren = (item?: Directory | Source) => {
     const { directories, sources, entityParents } = this.props;
-    const childIds = entityParents.filter(parentId => parentId === item.id);
 
-    const childDirectories = directories
+    const entities = directories.toSeq().concat(sources);
+
+    const childIds = item
+      ? entityParents.toSeq().filter(parentId => parentId === item.id)
+      : entities.filter(entity => !entityParents.has(entity.id));
+
+    return entities
       .toIndexedSeq()
-      .filter(directory => childIds.has(directory.id))
-      .sortBy(d => d.name, lexComp);
-
-    const childSources = sources
-      .toIndexedSeq()
-      .filter(source => childIds.has(source.id))
-      .sortBy(d => d.name, lexComp);
-
-    return childDirectories.concat(childSources);
+      .filter(child => childIds.has(child.id))
+      .sortBy(child => child.name, lexComp);
   };
 }
 

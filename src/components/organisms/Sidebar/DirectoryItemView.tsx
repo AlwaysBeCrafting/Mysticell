@@ -11,14 +11,14 @@ class DirectoryItemView extends React.PureComponent<Props> {
   render() {
     const { name, expanded } = this.props;
     return (
-      <div className="paletteView-item">
+      <div className="sidebar-item">
         <Icon
-          className={classnames("paletteView-item-icon", "mod-dropdown", {
+          className={classnames("sidebar-item-icon", "mod-dropdown", {
             "is-expanded": expanded,
           })}
           name="arrow_drop_down"
         />
-        <span className="paletteView-item-title">{name}</span>
+        <span className="sidebar-item-title">{name}</span>
       </div>
     );
   }

@@ -52,6 +52,10 @@ const relationshipsReducer = (
       const { sourceId, documentId } = action.payload;
       return state.setIn(["sourceDocuments", sourceId], documentId);
     }
+    case ActionTypes.SET_ENTITY_PARENT: {
+      const { entityId, parentId } = action.payload;
+      return state.setIn(["entityParents", entityId], parentId);
+    }
     case ActionTypes.SET_NODE_SOURCE: {
       const { nodeId, sourceId } = action.payload;
       return state.setIn(["nodeSources", nodeId], sourceId);

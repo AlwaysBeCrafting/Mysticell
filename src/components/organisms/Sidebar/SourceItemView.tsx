@@ -21,18 +21,18 @@ class SourceItemView extends React.PureComponent<Props> {
     return (
       <div>
         <Link
-          className={classnames("paletteView-item", {
+          className={classnames("sidebar-item", {
             "is-selected": selected,
           })}
           to={`/`}
         >
           <Icon
-            className={classnames("paletteView-item-icon", {
+            className={classnames("sidebar-item-icon", {
               "is-selected": selected,
             })}
             src={type === "property" ? propertyIcon : functionIcon}
           />
-          <div className="paletteView-item-title">{name}</div>
+          <div className="sidebar-item-title">{name}</div>
         </Link>
       </div>
     );
