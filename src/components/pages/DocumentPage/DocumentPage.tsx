@@ -66,7 +66,7 @@ class ProtoEditor extends React.PureComponent<Props> {
 
   private renderFormulaView = (routeProps: RouteProps) => {
     const { idFromPath } = this.props;
-    const sourceId = idFromPath(routeProps.match.path);
+    const sourceId = idFromPath(routeProps.match.params.path);
     if (sourceId) {
       return (
         <FormulaView className="documentPage-content" sourceId={sourceId} />
@@ -80,8 +80,13 @@ class ProtoEditor extends React.PureComponent<Props> {
     }
   };
 
-  private renderTabletop = () => {
-    return <Tabletop className="documentPage-content" />;
+  private renderTabletop = (routeProps: RouteProps) => {
+    return (
+      <Tabletop
+        className="documentPage-content"
+        documentId={routeProps.match.params.documentId}
+      />
+    );
   };
 }
 

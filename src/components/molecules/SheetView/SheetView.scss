@@ -1,3 +1,5 @@
+@import "~common/styles/dimensions";
+@import "~common/styles/fonts";
 @import "~common/styles/mixins";
 
 .sheetView {
@@ -8,8 +10,13 @@
   @include elevation(4px);
 
   &-header {
+    @include font-subheading();
     flex: 0 0 40px;
     background: none;
+
+    &-name {
+      padding-left: $dimen-keyline-padding;
+    }
   }
 
   &-grid {

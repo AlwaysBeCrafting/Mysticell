@@ -2,18 +2,18 @@
 @import "~common/styles/dimensions";
 @import "~common/styles/fonts";
 
-$dimen-toolbar-padding: $dimen-keyline-padding - (($dimen-toolbar-size -
-          $dimen-icon-size) / 2);
+$dimen-toolbar-padding: $dimen-keyline-padding -
+  (($dimen-toolbar-size - $dimen-icon-size) / 2);
 $dimen-title-margin: $dimen-keyline-padding - $dimen-toolbar-padding;
-$dimen-title-margin-afterNav: $dimen-keyline-content - ($dimen-toolbar-size +
-      $dimen-toolbar-padding);
+$dimen-title-margin-afterNav: $dimen-keyline-content -
+  ($dimen-toolbar-size + $dimen-toolbar-padding);
 
 .toolbar {
   display: flex;
   flex-flow: row nowrap;
   justify-content: flex-start;
   align-items: center;
-  padding: 0 $dimen-toolbar-padding;
+  padding: 0;
   @include font-button;
 
   &.mod-inverted {

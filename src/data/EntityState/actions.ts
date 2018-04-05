@@ -3,6 +3,7 @@ import { TypedAction } from "data/common";
 const enum ActionTypes {
   SET_DIRECTORY_DOCUMENT = "[EntityState] Set directory document",
   SET_SOURCE_DOCUMENT = "[EntityState] Set source document",
+  SET_SHEET_DOCUMENT = "[EntityState] Set sheet document",
   SET_ENTITY_PARENT = "[EntityState] Set entity parent",
   SET_NODE_SOURCE = "[EntityState] Set node source",
   SET_WIRE_SOURCE = "[EntityState] Set wire source",
@@ -14,6 +15,7 @@ const enum ActionTypes {
 type Action =
   | SetDirectoryDocumentAction
   | SetSourceDocumentAction
+  | SetSheetDocumentAction
   | SetEntityParentAction
   | SetNodeSourceAction
   | SetWireSourceAction
@@ -41,6 +43,16 @@ interface SetSourceDocumentAction
 const setSourceDocument = (sourceId: string, documentId: string): Action => ({
   type: ActionTypes.SET_SOURCE_DOCUMENT,
   payload: { sourceId, documentId },
+});
+
+interface SetSheetDocumentAction
+  extends TypedAction<ActionTypes.SET_SHEET_DOCUMENT> {
+  payload: { sheetId: string; documentId: string };
+}
+
+const setSheetDocument = (sheetId: string, documentId: string): Action => ({
+  type: ActionTypes.SET_SHEET_DOCUMENT,
+  payload: { sheetId, documentId },
 });
 
 interface SetEntityParentAction
@@ -91,6 +103,7 @@ export { ActionTypes, Action };
 export {
   setDirectoryDocument,
   setSourceDocument,
+  setSheetDocument,
   setEntityParent,
   setNodeSource,
   setWireSource,
