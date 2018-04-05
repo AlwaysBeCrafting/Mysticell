@@ -1,15 +1,16 @@
 import classNames from "classnames";
-import { Seq } from "immutable";
+import { Collection } from "immutable";
 import React from "react";
 import { connect } from "react-redux";
 
+import { NodeView } from "components/molecules";
+
 import { AppState } from "data/AppState";
-import { Node } from "data/Node";
 
 import "./NodeLayer.scss";
 
 interface StateProps {
-  nodes: Seq.Indexed<Node>;
+  nodeIds: Collection.Indexed<string>;
 }
 
 interface OwnProps {
@@ -18,25 +19,21 @@ interface OwnProps {
 }
 type Props = StateProps & OwnProps;
 
-// FIXME: This gets its own molecule
-const NodeView = () => <div className="dummyNode">Fix nodes!</div>;
-
 class PartialNodeLayer extends React.PureComponent<Props> {
   render() {
-    const { nodes, className } = this.props;
+    const { nodeIds, className } = this.props;
     return (
       <div className={classNames("nodeLayer", className)}>
-        {nodes.map((node: Node) => <NodeView key={node.id} />)}
+        {nodeIds.map(nodeId => <NodeView key={nodeId} nodeId={nodeId} />)}
       </div>
     );
   }
 }
 
 const mapStateToProps = (state: AppState, props: OwnProps): StateProps => ({
-  nodes: state.entities.nodeSources
+  nodeIds: state.entities.nodeSources
     .filter(sourceId => sourceId === props.sourceId)
-    .map((_, nodeId) => state.entities.nodes.get(nodeId, new Node()))
-    .toIndexedSeq(),
+    .keySeq(),
 });
 
 const NodeLayer = connect<StateProps, {}, OwnProps>(mapStateToProps)(

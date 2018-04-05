@@ -6,11 +6,12 @@ import { connect } from "react-redux";
 
 import { Pin } from "components/atoms";
 
-import { TerminalDescription, TerminalReference } from "data/common";
-import { Node } from "data/Node";
-
 import { AppState } from "data/AppState";
+import { TerminalReference } from "data/common";
+import { Node } from "data/Node";
+import { PRIMITIVE_SOURCES } from "data/Primitive";
 import { Source } from "data/Source";
+
 import "./NodeView.scss";
 
 interface OwnProps {
@@ -21,10 +22,7 @@ interface OwnProps {
 
 interface StateProps {
   node: Node;
-  name: string;
-  inputs: Iterable<TerminalDescription>;
-  outputs: Iterable<TerminalDescription>;
-  height: number;
+  source: Source;
   isDragging: boolean;
   connections:
     | Collection.Indexed<TerminalReference>
@@ -35,17 +33,10 @@ type Props = OwnProps & StateProps;
 
 class PartialNodeView extends React.PureComponent<Props> {
   render() {
-    const {
-      className,
-      style,
-      node,
-      name,
-      inputs,
-      outputs,
-      height,
-      isDragging,
-    } = this.props;
+    const { className, style, node, source, isDragging } = this.props;
     const { label, position } = node;
+    const { name, inputs, outputs } = source;
+    const height = 1 + inputs.count() + outputs.count();
 
     const positionedStyle = {
       gridRow: `${position.y + 1} / span ${height}`,
@@ -74,6 +65,7 @@ class PartialNodeView extends React.PureComponent<Props> {
           return (
             <div className="nodeView-row mod-input" key={`${ref.hashCode}`}>
               <div className="nodeView-row-name mod-input">{term.name}</div>
+              <Pin className="nodeView-row-pin mod-input" type="undefined" />
             </div>
           );
         })}
@@ -84,13 +76,12 @@ class PartialNodeView extends React.PureComponent<Props> {
 
 const mapStateToProps = (state: AppState, props: OwnProps): StateProps => {
   const node = state.entities.nodes.get(props.nodeId, new Node());
-  const source = state.entities.sources.get(node.source, new Source());
   return {
     node,
-    name: source.name,
-    inputs: source.inputs,
-    outputs: source.outputs,
-    height: 1 + source.inputs.count() + source.outputs.count(),
+    source: state.entities.sources
+      .toSeq()
+      .concat(PRIMITIVE_SOURCES)
+      .get(node.source, new Source()),
     isDragging: false,
     connections: Set(),
   };
