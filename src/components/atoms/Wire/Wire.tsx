@@ -11,7 +11,13 @@ interface Props {
   className?: string;
 }
 
-const Wire = ({ startPos, endPos, className, ...attrs }: Props) => {
+const Wire = (props: Props) => {
+  const { className } = props;
+  const startPos = props.startPos;
+  const endPos = new Position2d(
+    props.endPos.x === Infinity ? 1000 : props.endPos.x,
+    props.endPos.y,
+  );
   const offsetX = Math.max(Math.abs((endPos.x - startPos.x) / 2), 1);
   const controlX = [startPos.x + offsetX, endPos.x - offsetX];
   const center = [(startPos.x + endPos.x) / 2, (startPos.y + endPos.y) / 2];
@@ -19,21 +25,19 @@ const Wire = ({ startPos, endPos, className, ...attrs }: Props) => {
 
   const centerPoint =
     controlX[1] < controlX[0]
-      ? `  ${controlX[0]},${center[1] + centerOffset} ` +
-        `  ${center[0]},${center[1]} ` +
-        `C ${controlX[1]},${center[1] - centerOffset} `
+      ? `  ${controlX[0] * 40},${(center[1] + centerOffset) * 40} ` +
+        `  ${center[0] * 40},${center[1] * 40} ` +
+        `C ${controlX[1] * 40},${(center[1] - centerOffset) * 40} `
       : "";
 
   const pathString =
-    `M ${startPos.x},${startPos.y} ` +
-    `C ${controlX[0]},${startPos.y} ` +
+    `M ${startPos.x * 40},${startPos.y * 40} ` +
+    `C ${controlX[0] * 40},${startPos.y * 40} ` +
     centerPoint +
-    `  ${controlX[1]},${endPos.y} ` +
-    `  ${endPos.x},${endPos.y} `;
+    `  ${controlX[1] * 40},${endPos.y * 40} ` +
+    `  ${endPos.x * 40},${endPos.y * 40} `;
 
-  return (
-    <path {...attrs} className={classNames("wire", className)} d={pathString} />
-  );
+  return <path className={classNames("wire", className)} d={pathString} />;
 };
 
 export { Wire };

@@ -124,7 +124,7 @@ const epic: Epic<AnyAction, EntityState> = $action =>
         end: new TerminalReference("node.attributeModifier.subtract", "-", 0),
       }),
     ),
-    setWireSource("wire.attributeModifier.0", "source.attributeModifier"),
+    setWireSource("wire.attributeModifier.0", "function.attributeModifier"),
 
     createWire(
       new Wire({
@@ -133,7 +133,7 @@ const epic: Epic<AnyAction, EntityState> = $action =>
         end: new TerminalReference("node.attributeModifier.divide", "-", 0),
       }),
     ),
-    setWireSource("wire.attributeModifier.1", "source.attributeModifier"),
+    setWireSource("wire.attributeModifier.1", "function.attributeModifier"),
 
     createWire(
       new Wire({
@@ -142,7 +142,7 @@ const epic: Epic<AnyAction, EntityState> = $action =>
         end: new TerminalReference("node.attributeModifier.floor", "-", 0),
       }),
     ),
-    setWireSource("wire.attributeModifier.2", "source.attributeModifier"),
+    setWireSource("wire.attributeModifier.2", "function.attributeModifier"),
 
     createWire(
       new Wire({
