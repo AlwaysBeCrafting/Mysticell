@@ -4,7 +4,7 @@ import React from "react";
 import { Card } from "react-atoms";
 import { connect } from "react-redux";
 
-import { Pin } from "components/atoms";
+import { TerminalView } from "components/atoms";
 
 import { AppState } from "data/AppState";
 import { TerminalReference } from "data/common";
@@ -49,21 +49,25 @@ class PartialNodeView extends React.PureComponent<Props> {
           <span className="nodeView-header-name">{label || name}</span>
         </header>
         {Seq.Indexed(outputs).map((term, index) => {
-          const ref = new TerminalReference(node.id, "-", index);
+          const reference = new TerminalReference(node.id, "+", index);
           return (
-            <div className="nodeView-row mod-output" key={`${ref.hashCode}`}>
-              <div className="nodeView-row-name mod-output">{term.name}</div>
-              <Pin className="nodeView-row-pin mod-output" type="undefined" />
-            </div>
+            <TerminalView
+              key={reference.hashCode()}
+              className="nodeView-terminal"
+              reference={reference}
+              description={term}
+            />
           );
         })}
         {Seq.Indexed(inputs).map((term, index) => {
-          const ref = new TerminalReference(node.id, "+", index);
+          const reference = new TerminalReference(node.id, "-", index);
           return (
-            <div className="nodeView-row mod-input" key={`${ref.hashCode()}`}>
-              <div className="nodeView-row-name mod-input">{term.name}</div>
-              <Pin className="nodeView-row-pin mod-input" type="undefined" />
-            </div>
+            <TerminalView
+              key={reference.hashCode()}
+              className="nodeView-terminal"
+              reference={reference}
+              description={term}
+            />
           );
         })}
       </Card>
