@@ -4,6 +4,7 @@ const common = require("./webpack.config.common");
 
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 
 const paths = require("./paths");
 
@@ -28,6 +29,6 @@ module.exports = merge(common, {
       "process.env.NODE_ENV": JSON.stringify("production"),
     }),
     new ExtractTextPlugin("static/style.css"),
-    new webpack.optimize.UglifyJsPlugin(),
+    new UglifyJsPlugin(),
   ],
 });
