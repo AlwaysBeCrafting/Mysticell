@@ -1,9 +1,28 @@
 @import "~common/styles/colors";
 @import "~common/styles/dimensions";
+@import "~common/styles/fonts";
 
-.paletteView {
+.sidebar {
   background: white;
   border-right: solid thin $color-divider;
+
+  &-header {
+    display: grid;
+    align-content: flex-end;
+    grid-template:
+      ".     collapse" 1fr
+      "title menu    " auto / 1fr 48px;
+
+    background: $color-lightGreen-800;
+    color: $color-white-alpha-70;
+    flex: 0 0 180px;
+
+    &-name {
+      @include font-title();
+      grid-area: title;
+      padding: 16px $dimen-keyline-padding;
+    }
+  }
 
   &-item {
     height: $dimen-listItem-size;

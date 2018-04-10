@@ -7,20 +7,23 @@ import { TreeView } from "components/molecules";
 import { AppState } from "data/AppState";
 import { EntityTable, JoinManyToOne } from "data/common";
 import { Directory } from "data/Directory";
+import { Document } from "data/Document";
 import { Source } from "data/Source";
 
 import { DirectoryItemView } from "./DirectoryItemView";
 import { SourceItemView } from "./SourceItemView";
 
-import "./Palette.scss";
+import "./Sidebar.scss";
 
 const lexComp = (a: string, b: string) => a.localeCompare(b);
 
 interface OwnProps {
   className?: string;
+  documentId: string;
 }
 
 interface StateProps {
+  document: Document;
   directories: EntityTable<Directory>;
   sources: EntityTable<Source>;
   entityParents: JoinManyToOne;
@@ -28,13 +31,16 @@ interface StateProps {
 
 type Props = OwnProps & StateProps;
 
-class PartialPalette extends React.PureComponent<Props> {
+class PartialSidebar extends React.PureComponent<Props> {
   render() {
-    const { className } = this.props;
+    const { className, document } = this.props;
     return (
-      <div className={classnames("paletteView", className)}>
+      <div className={classnames("sidebar", className)}>
+        <header className="sidebar-header">
+          <div className="sidebar-header-name">{document.name}</div>
+        </header>
         <TreeView
-          className="paletteView-tree"
+          className="sidebar-tree"
           render={this.renderItem}
           getKey={this.getItemKey}
           getChildren={this.getItemChildren}
@@ -44,7 +50,6 @@ class PartialPalette extends React.PureComponent<Props> {
   }
 
   private renderItem = (item: Directory | Source) => {
-    const {} = this.props;
     if (item.id.startsWith("directory")) {
       return (
         <DirectoryItemView
@@ -67,32 +72,31 @@ class PartialPalette extends React.PureComponent<Props> {
 
   private getItemKey = (item: Directory | Source) => item.id;
 
-  private getItemChildren = (item: Directory | Source) => {
+  private getItemChildren = (item?: Directory | Source) => {
     const { directories, sources, entityParents } = this.props;
-    const childIds = entityParents.filter(parentId => parentId === item.id);
 
-    const childDirectories = directories
+    const entities = directories.toSeq().concat(sources);
+
+    const childIds = item
+      ? entityParents.toSeq().filter(parentId => parentId === item.id)
+      : entities.filter(entity => !entityParents.has(entity.id));
+
+    return entities
       .toIndexedSeq()
-      .filter(directory => childIds.has(directory.id))
-      .sortBy(d => d.name, lexComp);
-
-    const childSources = sources
-      .toIndexedSeq()
-      .filter(source => childIds.has(source.id))
-      .sortBy(d => d.name, lexComp);
-
-    return childDirectories.concat(childSources);
+      .filter(child => childIds.has(child.id))
+      .sortBy(child => child.name, lexComp);
   };
 }
 
-const mapStateToProps = (state: AppState): StateProps => ({
+const mapStateToProps = (state: AppState, props: OwnProps): StateProps => ({
+  document: state.entities.documents.get(props.documentId, new Document()),
   directories: state.entities.directories,
   sources: state.entities.sources,
   entityParents: state.entities.entityParents,
 });
 
-const Palette = reduxConnect<StateProps, {}, OwnProps>(mapStateToProps)(
-  PartialPalette,
+const Sidebar = reduxConnect<StateProps, {}, OwnProps>(mapStateToProps)(
+  PartialSidebar,
 );
 
-export { Palette };
+export { Sidebar };

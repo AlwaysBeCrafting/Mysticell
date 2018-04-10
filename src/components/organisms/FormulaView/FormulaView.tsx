@@ -1,5 +1,5 @@
 import classnames from "classnames";
-import { Collection, Seq } from "immutable";
+import { Seq } from "immutable";
 import React from "react";
 import { Icon } from "react-atoms";
 import { connect as connectStore } from "react-redux";
@@ -19,8 +19,8 @@ import "./FormulaView.scss";
 
 interface StateProps {
   source: Source;
-  nodeIds: Seq.Indexed<string>;
-  wireIds: Seq.Indexed<string>;
+  nodeIds: Iterable<string>;
+  wireIds: Iterable<string>;
   pathFromId: (id: string) => Iterable<string> | undefined;
 }
 
@@ -37,8 +37,8 @@ class PartialFormulaView extends React.PureComponent<Props> {
   wrapper: HTMLDivElement | null = null;
 
   render() {
-    const { className, source, pathFromId } = this.props;
-    const path = Seq(pathFromId(source.id) || []);
+    const { className, source, sourceId, pathFromId } = this.props;
+    const path = Seq.Indexed(pathFromId(source.id) || []);
     return (
       <div className={classnames("formulaView", className)}>
         <Toolbar className="formulaView-toolbar">
@@ -49,44 +49,46 @@ class PartialFormulaView extends React.PureComponent<Props> {
         </Toolbar>
         <div className="formulaView-graph">
           <ErrorBoundary>
-            <Boundary input source={source} onValueChange={noop} />
+            <Boundary
+              className="formulaView-graph-boundary mod-input"
+              input
+              source={source}
+              onValueChange={noop}
+            />
           </ErrorBoundary>
-          {this.renderGrid()}
           <ErrorBoundary>
-            <Boundary output source={source} />
+            <Boundary
+              className="formulaView-graph-boundary mod-output"
+              output
+              source={source}
+            />
           </ErrorBoundary>
+          <div
+            className="formulaView-graph-grid"
+            ref={elem => (this.wrapper = elem)}
+          >
+            <WireLayer
+              className="formulaView-graph-grid-wires"
+              sourceId={sourceId}
+            />
+            <NodeLayer
+              className="formulaView-graph-grid-nodes"
+              sourceId={sourceId}
+            />
+          </div>
         </div>
       </div>
     );
   }
 
-  private renderGrid() {
-    const { sourceId } = this.props;
-    return (
-      <div
-        className="formulaView-graph-grid"
-        ref={elem => (this.wrapper = elem)}
-      >
-        <WireLayer
-          className="formulaView-graph-grid-wires"
-          sourceId={sourceId}
-        />
-        <NodeLayer
-          className="formulaView-graph-grid-nodes"
-          sourceId={sourceId}
-        />
-      </div>
-    );
-  }
-
-  private renderPathSegment = (path: Collection.Indexed<string>) => (
+  private renderPathSegment = (path: Iterable<string>) => (
     segment: string,
     i: number,
   ) => (
     <span
       key={i}
       className={classnames("formulaView-toolbar-path-segment", {
-        "mod-final": i === path.count() - 1,
+        "mod-final": i === Seq.Indexed(path).count() - 1,
       })}
     >
       {segment}

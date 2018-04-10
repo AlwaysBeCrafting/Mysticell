@@ -9,7 +9,7 @@ import {
 import {
   AppDragLayer,
   FormulaView,
-  Palette,
+  Sidebar,
   StatusBar,
   Tabletop,
 } from "components/organisms";
@@ -36,28 +36,38 @@ interface StateProps {
 
 type Props = StateProps;
 
+type RouteProps = RouteComponentProps<{ documentId: string; path: string }>;
+
 class ProtoEditor extends React.PureComponent<Props> {
   render() {
     return (
       <Router>
         <main className="documentPage">
           <AppDragLayer />
-          <Route exact path="/:path*" render={this.renderPalette} />
-          <Route exact path="/" render={this.renderSheetView} />
-          <Route exact path="/:path+" render={this.renderFormulaView} />
-          <Route exact path="/:path*" render={this.renderStatusBar} />
+          <Route path="/:documentId" render={this.renderSidebar} />
+          <Route exact path="/:documentId" render={this.renderTabletop} />
+          <Route
+            exact
+            path="/:documentId/:path+"
+            render={this.renderFormulaView}
+          />
+          <StatusBar className="documentPage-status" />
         </main>
       </Router>
     );
   }
 
-  private renderPalette = () => <Palette className="documentPage-palette" />;
+  private renderSidebar = (routeProps: RouteProps) => (
+    <Sidebar
+      className="documentPage-sidebar"
+      documentId={routeProps.match.params.documentId}
+    />
+  );
 
-  private renderFormulaView = (
-    routeProps: RouteComponentProps<{ path: string }>,
-  ) => {
+  private renderFormulaView = (routeProps: RouteProps) => {
     const { idFromPath } = this.props;
-    const sourceId = idFromPath(routeProps.match.path);
+    const pathFragments = routeProps.match.params.path.split("/");
+    const sourceId = idFromPath(pathFragments);
     if (sourceId) {
       return (
         <FormulaView className="documentPage-content" sourceId={sourceId} />
@@ -71,12 +81,13 @@ class ProtoEditor extends React.PureComponent<Props> {
     }
   };
 
-  private renderSheetView = () => {
-    return <Tabletop className="documentPage-content" />;
-  };
-
-  private renderStatusBar = () => {
-    return <StatusBar className="documentPage-status" />;
+  private renderTabletop = (routeProps: RouteProps) => {
+    return (
+      <Tabletop
+        className="documentPage-content"
+        documentId={routeProps.match.params.documentId}
+      />
+    );
   };
 }
 

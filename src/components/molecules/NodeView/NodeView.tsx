@@ -1,16 +1,17 @@
 import classNames from "classnames";
-import { Collection, Seq, Set } from "immutable";
+import { Seq } from "immutable";
 import React from "react";
 import { Card } from "react-atoms";
 import { connect } from "react-redux";
 
-import { Pin } from "components/atoms";
-
-import { TerminalDescription, TerminalReference } from "data/common";
-import { Node } from "data/Node";
+import { TerminalView } from "components/atoms";
 
 import { AppState } from "data/AppState";
+import { TerminalReference } from "data/common";
+import { Node } from "data/Node";
+import { PRIMITIVE_SOURCES } from "data/Primitive";
 import { Source } from "data/Source";
+
 import "./NodeView.scss";
 
 interface OwnProps {
@@ -21,32 +22,19 @@ interface OwnProps {
 
 interface StateProps {
   node: Node;
-  name: string;
-  inputs: Iterable<TerminalDescription>;
-  outputs: Iterable<TerminalDescription>;
-  height: number;
+  source: Source;
   isDragging: boolean;
-  connections:
-    | Collection.Indexed<TerminalReference>
-    | Collection.Set<TerminalReference>;
+  connections: Iterable<TerminalReference>;
 }
 
 type Props = OwnProps & StateProps;
 
 class PartialNodeView extends React.PureComponent<Props> {
   render() {
-    const {
-      className,
-      style,
-      node,
-      name,
-      inputs,
-      outputs,
-      height,
-      isDragging,
-    } = this.props;
+    const { className, style, node, source, isDragging } = this.props;
     const { label, position } = node;
-
+    const { name, inputs, outputs } = source;
+    const height = 1 + inputs.count() + outputs.count();
     const positionedStyle = {
       gridRow: `${position.y + 1} / span ${height}`,
       gridColumn: `${position.x + 1} / span 4`,
@@ -60,21 +48,26 @@ class PartialNodeView extends React.PureComponent<Props> {
         <header className="nodeView-header nodeView-row">
           <span className="nodeView-header-name">{label || name}</span>
         </header>
-        {Seq(outputs).map((term, index) => {
-          const ref = new TerminalReference(node.id, "-", index);
+        {Seq.Indexed(outputs).map((term, index) => {
+          const reference = new TerminalReference(node.id, "+", index);
           return (
-            <div className="nodeView-row mod-output" key={`${ref.hashCode}`}>
-              <div className="nodeView-row-name mod-output">{term.name}</div>
-              <Pin className="nodeView-row-pin mod-output" type="undefined" />
-            </div>
+            <TerminalView
+              key={reference.hashCode()}
+              className="nodeView-terminal"
+              reference={reference}
+              description={term}
+            />
           );
         })}
-        {Seq(inputs).map((term, index) => {
-          const ref = new TerminalReference(node.id, "+", index);
+        {Seq.Indexed(inputs).map((term, index) => {
+          const reference = new TerminalReference(node.id, "-", index);
           return (
-            <div className="nodeView-row mod-input" key={`${ref.hashCode}`}>
-              <div className="nodeView-row-name mod-input">{term.name}</div>
-            </div>
+            <TerminalView
+              key={reference.hashCode()}
+              className="nodeView-terminal"
+              reference={reference}
+              description={term}
+            />
           );
         })}
       </Card>
@@ -84,15 +77,14 @@ class PartialNodeView extends React.PureComponent<Props> {
 
 const mapStateToProps = (state: AppState, props: OwnProps): StateProps => {
   const node = state.entities.nodes.get(props.nodeId, new Node());
-  const source = state.entities.sources.get(node.source, new Source());
   return {
     node,
-    name: source.name,
-    inputs: source.inputs,
-    outputs: source.outputs,
-    height: 1 + source.inputs.count() + source.outputs.count(),
+    source: state.entities.sources
+      .toSeq()
+      .concat(PRIMITIVE_SOURCES)
+      .get(node.source, new Source()),
     isDragging: false,
-    connections: Set(),
+    connections: [],
   };
 };
 

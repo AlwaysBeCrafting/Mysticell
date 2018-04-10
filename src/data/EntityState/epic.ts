@@ -20,6 +20,7 @@ import {
   setDirectoryDocument,
   setEntityParent,
   setNodeSource,
+  setSheetDocument,
   setSourceDocument,
   setWireSource,
 } from "./actions";
@@ -123,7 +124,7 @@ const epic: Epic<AnyAction, EntityState> = $action =>
         end: new TerminalReference("node.attributeModifier.subtract", "-", 0),
       }),
     ),
-    setWireSource("wire.attributeModifier.0", "source.attributeModifier"),
+    setWireSource("wire.attributeModifier.0", "function.attributeModifier"),
 
     createWire(
       new Wire({
@@ -132,7 +133,7 @@ const epic: Epic<AnyAction, EntityState> = $action =>
         end: new TerminalReference("node.attributeModifier.divide", "-", 0),
       }),
     ),
-    setWireSource("wire.attributeModifier.1", "source.attributeModifier"),
+    setWireSource("wire.attributeModifier.1", "function.attributeModifier"),
 
     createWire(
       new Wire({
@@ -141,7 +142,7 @@ const epic: Epic<AnyAction, EntityState> = $action =>
         end: new TerminalReference("node.attributeModifier.floor", "-", 0),
       }),
     ),
-    setWireSource("wire.attributeModifier.2", "source.attributeModifier"),
+    setWireSource("wire.attributeModifier.2", "function.attributeModifier"),
 
     createWire(
       new Wire({
@@ -183,9 +184,10 @@ const epic: Epic<AnyAction, EntityState> = $action =>
       new Sheet({
         id: "sheet.example",
         name: "Example Sheet",
-        size: new Size2d(8, 20),
+        size: new Size2d(14, 20),
       }),
     ),
+    setSheetDocument("sheet.example", "document.example"),
 
     createCell(
       new Cell({
@@ -200,7 +202,7 @@ const epic: Epic<AnyAction, EntityState> = $action =>
       new Cell({
         id: "cell.example.1",
         rect: new Rect(3, 1, 5, 2),
-        terminal: new TerminalReference("property.strength", "+", 0),
+        terminal: new TerminalReference("property.strength", "-", 0),
       }),
     ),
     setCellSheet("cell.example.1", "sheet.example"),
@@ -209,7 +211,7 @@ const epic: Epic<AnyAction, EntityState> = $action =>
       new Cell({
         id: "cell.example.2",
         rect: new Rect(3, 2, 5, 3),
-        terminal: new TerminalReference("property.strength", "+", 0),
+        terminal: new TerminalReference("property.strength", "-", 0),
       }),
     ),
     setCellSheet("cell.example.2", "sheet.example"),

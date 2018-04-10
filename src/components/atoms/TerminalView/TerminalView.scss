@@ -1,0 +1,72 @@
+@import "~common/styles/colors";
+@import "~common/styles/dimensions";
+@import "~common/styles/fonts";
+
+.terminalView {
+  position: relative;
+  padding: 0 $dimen-keyline-padding / 2;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: flex-start;
+
+  &.mod-plus {
+    flex-direction: row-reverse;
+  }
+
+  &-name {
+    flex: 0 1 auto;
+    color: $color-text-secondary;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    @include font-body1;
+
+    &.mod-plus {
+      padding-left: 16px;
+    }
+
+    &.mod-minus {
+      padding-right: 16px;
+    }
+  }
+
+  &-value {
+    width: 0;
+    flex: 1 0 auto;
+    text-align: right;
+    line-height: 1;
+    background: none;
+    border: none;
+    border-bottom: solid 2px $color-black-alpha-12;
+    padding: 6px 0 4px;
+    color: $color-text-primary;
+    @include font-body1;
+
+    &:focus {
+      border-color: $color-brand-primary;
+    }
+
+    &.mod-readonly {
+      border-bottom: none;
+    }
+  }
+
+  &-pin {
+    position: absolute;
+    width: $dimen-pin-size;
+    height: $dimen-pin-size;
+    border-radius: 50%;
+    border: solid thin $color-black-alpha-38;
+    background: $color-grey-400;
+    content: " ";
+
+    &.mod-plus {
+      right: -$dimen-pin-size / 2;
+    }
+
+    &.mod-minus {
+      left: -$dimen-pin-size / 2;
+    }
+  }
+}

@@ -1,13 +1,18 @@
+import c from "classnames";
 import { Seq } from "immutable";
 import React from "react";
 
-import { Pin } from "components/atoms";
+import { TerminalView } from "components/atoms";
 
+import { TerminalReference } from "data/common";
 import { Source } from "data/Source";
 
 import "./Boundary.scss";
 
+const signWord = (sign: "+" | "-") => (sign === "+" ? "plus" : "minus");
+
 interface CommonProps {
+  className?: string;
   source: Source;
   values?: Seq.Indexed<string>;
 }
@@ -24,64 +29,35 @@ type Props = InputProps | OutputProps;
 
 class Boundary extends React.PureComponent<Props> {
   render() {
-    const { input, values, source } = this.props;
-    const sign = input ? "source" : "sink";
+    const { className, input, source, values } = this.props;
+    const sign = input ? "+" : "-";
     const terminals = input ? source.inputs : source.outputs;
 
+    const signMod = `mod-${signWord(sign)}`;
+
     return (
-      <div className={`boundary mod-${sign}`}>
-        <div className={`boundary-header boundary-row mod-${sign}`}>
-          {sign === "source" ? "Input" : "Output"}
+      <div className={c(className, "boundary", signMod)}>
+        <div className={c("boundary-header boundary-row", signMod)}>
+          {sign === "+" ? "Input" : "Output"}
         </div>
         {terminals
-          .map((term, index) => (
-            <div className={`boundary-row mod-${sign}`} key={index}>
-              <div className={`boundary-row-name mod-${sign}`}>{term.name}</div>
-              {this.renderValue(sign, values && values.get(index))}
-              <Pin
-                className={`boundary-row-pin mod-${sign}`}
-                type="undefined"
+          .zip(values || terminals.map(_ => ""))
+          .map(([term, value], index) => {
+            const reference = new TerminalReference(source.id, sign, index);
+            return (
+              <TerminalView
+                key={reference.hashCode()}
+                className="boundary-terminal"
+                description={term}
+                reference={reference}
+                value={value}
               />
-            </div>
-          ))
+            );
+          })
           .toIndexedSeq()}
       </div>
     );
   }
-
-  private renderValue(sign: "source" | "sink", value?: string) {
-    if (value === undefined) {
-      return null;
-    }
-
-    if (sign === "source") {
-      return (
-        <input
-          className={`boundary-row-value mod-${sign}`}
-          defaultValue={value}
-          onChange={this.onInputChange}
-        />
-      );
-    } else {
-      return (
-        <div className={`boundary-row-value mod-${sign} mod-readonly`}>
-          {value}
-        </div>
-      );
-    }
-  }
-
-  private onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (this.props.input) {
-      const { onValueChange } = this.props;
-      if (onValueChange) {
-        const { source } = this.props;
-        const index = +event.target.getAttribute("data-index")!;
-        const value = event.target.value;
-        onValueChange(source.id, index, value);
-      }
-    }
-  };
 }
 
 export { Boundary };

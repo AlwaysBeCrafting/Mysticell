@@ -1,37 +1,34 @@
 import classNames from "classnames";
+import { Seq } from "immutable";
 import React from "react";
 import { connect } from "react-redux";
 
-import { ErrorBoundary } from "components/molecules";
+import { ErrorBoundary, SheetView } from "components/molecules";
 
 import { AppState } from "data/AppState";
-import { EntityTable } from "data/common";
-import { Sheet } from "data/Sheet";
 
 import "./Tabletop.scss";
 
 interface OwnProps {
   className?: string;
+  documentId: string;
 }
 
 interface StateProps {
-  sheets: EntityTable<Sheet>;
+  sheetIds: Iterable<string>;
 }
 
 type Props = OwnProps & StateProps;
 
-// FIXME This gets its own organism
-const SheetView = () => <div className="dummySheet" />;
-
 class PartialTabletop extends React.PureComponent<Props> {
   render() {
-    const { className, sheets } = this.props;
+    const { className, sheetIds } = this.props;
     return (
-      <div className={classNames("sheetWrapper", className)}>
-        {sheets
-          .map(sheet => (
-            <ErrorBoundary key={sheet.id}>
-              <SheetView />
+      <div className={classNames("tabletop", className)}>
+        {Seq.Indexed(sheetIds)
+          .map(sheetId => (
+            <ErrorBoundary key={sheetId}>
+              <SheetView sheetId={sheetId} />
             </ErrorBoundary>
           ))
           .toList()}
@@ -40,8 +37,10 @@ class PartialTabletop extends React.PureComponent<Props> {
   }
 }
 
-const mapStateToProps = (state: AppState): StateProps => ({
-  sheets: state.entities.sheets,
+const mapStateToProps = (state: AppState, props: OwnProps): StateProps => ({
+  sheetIds: state.entities.sheetDocuments
+    .filter(documentId => documentId === props.documentId)
+    .keySeq(),
 });
 
 const Tabletop = connect<StateProps, {}, OwnProps>(
