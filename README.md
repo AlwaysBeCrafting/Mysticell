@@ -1,6 +1,6 @@
 ![Node editor mockup](/readme-assets/mockups/node-editor-mockup.png?raw=true)
 
-_Mysticell is currently under heavy development, and many (most) of its features are incomplete. You can see some of the working parts at http://mysticell-demo.herokuapp.com_
+_Mysticell is currently under heavy development, and many (most) of its features are incomplete. You can see some of the working parts at http://mysticell-demo.herokuapp.com/document.example_
 
 _Mysticell is designed for modern web browsers, and makes extensive use of CSS grid and flexbox. Please make sure your browser is up-to-date._
 
