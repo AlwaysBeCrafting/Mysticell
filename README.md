@@ -14,7 +14,7 @@ While data tables are on the roadmap, that's not what Mysticell is designed for.
 
 Sheets are where you'll lay out and format your data. Unlike with spreadsheets, Mysticell doesn't use a cell's data as its "address". You can have as many copies of a property as you want, wherever you want, and they'll all show the correct numbers, even when you move them around or delete them.
 
-Sheets can also be any number of rows or columns, and can be displayed side-by-side, so making lots of small groups of data is easy. Maybe you'll want to put your skills, combat stats, and inventory each on separate "cards" and stack them up side-by-side.
+Sheets can also be any number of rows or columns, and can be displayed side-by-side, so making lots of small groups of data is easy. Maybe you'll want to put your skills, combat stats, and inventory each on separate "cards" and stack them up next to each other.
 
 ## The sidebar
 
@@ -24,7 +24,7 @@ This is the hierarchy of your document. It's where you'll find all the building 
 
 * ![Function icon](/readme-assets/icons/icon-function.png?raw=true) **Functions** are formulas that take some input, do something to it, and give back some output as a result. They don't store any data, so you can use them in many places and get different results each time.
 * ![Property icon](/readme-assets/icons/icon-property.png?raw=true) **Properties** are similar to functions, except that their input and output values are persistent. When you type a value into a property input, the outputs are re-calculated based on the formula inside. These inputs and outputs are the pieces you will attach to your sheets.
-* ![Table icon](/readme-assets/icons/icon-table.png?raw=true) **Tables** aren't implemented yet, but they'll end up looking similar to the classic idea of a spreadsheet: a few headers describing each column, and lots of rows with data in them. Unlike spreadsheets, though, tables contain only static data; no formulas allowed. Instead, you plug a table into another formula and use its data there.
+* ![Table icon](/readme-assets/icons/icon-table.png?raw=true) **Tables** aren't implemented yet, but they'll end up looking similar to the classic idea of a spreadsheet: a few headers describing each column, and lots of rows with data in them. Unlike in a spreadsheet, though, Mysticell's tables contain only static data; no formulas allowed. Instead, you plug a table into another formula and use its data there.
 
 ## The graph editor
 
