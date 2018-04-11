@@ -9,9 +9,14 @@
   grid-auto-rows: 40px;
   z-index: 100;
   line-height: $dimen-graph-cell-size;
+  border: 2px $color-divider;
 
   &.mod-plus {
-    border-right: solid 1px $color-gridLine;
+    border-right-style: solid;
+  }
+
+  &.mod-minus {
+    border-left-style: solid;
   }
 
   &-header {
@@ -24,6 +29,16 @@
 
     &.mod-plus {
       text-align: right;
+    }
+  }
+
+  &-terminal {
+    &.mod-plus {
+      margin-right: -1px;
+    }
+
+    &.mod-minus {
+      margin-left: -1px;
     }
   }
 }

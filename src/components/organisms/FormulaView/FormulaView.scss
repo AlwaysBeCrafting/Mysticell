@@ -49,11 +49,13 @@ $dimen-panelWidth: $dimen-cellSize * 4;
   }
 
   &-graph {
+    justify-self: center;
+    max-width: 100%;
     grid-area: graph;
     display: grid;
     grid-template:
       "input content output" /
-      ($dimen-panelWidth minmax(auto, 1fr) $dimen-panelWidth);
+      ($dimen-panelWidth auto $dimen-panelWidth);
 
     overflow-x: auto;
 
@@ -74,20 +76,6 @@ $dimen-panelWidth: $dimen-cellSize * 4;
       grid-auto-columns: 40px;
       grid-auto-rows: 40px;
       padding-right: 80px;
-      
-      background: repeating-linear-gradient(
-          transparent,
-          transparent $dimen-cellLineStart,
-          $color-gridLine $dimen-cellLineStart,
-          $color-gridLine $dimen-cellLineEnd
-        ),
-        repeating-linear-gradient(
-          90deg,
-          transparent,
-          transparent $dimen-cellLineStart,
-          $color-gridLine $dimen-cellLineStart,
-          $color-gridLine $dimen-cellLineEnd
-        );
 
       &-wires {
         position: absolute;
