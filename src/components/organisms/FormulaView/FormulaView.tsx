@@ -3,6 +3,7 @@ import { Seq } from "immutable";
 import React from "react";
 import { Icon } from "react-atoms";
 import { connect as connectStore } from "react-redux";
+import { RouteComponentProps, Route } from "react-router";
 
 import { ToolButton } from "components/atoms";
 import { ErrorBoundary, Toolbar } from "components/molecules";
@@ -17,11 +18,13 @@ import { WireLayer } from "./WireLayer";
 
 import "./FormulaView.scss";
 
+type RouteProps = RouteComponentProps<{ documentId: string; path: string }>;
+
 interface StateProps {
   source: Source;
   nodeIds: Iterable<string>;
   wireIds: Iterable<string>;
-  pathFromId: (id: string) => Iterable<string> | undefined;
+  path: Seq.Indexed<string>;
 }
 
 interface OwnProps {
@@ -37,14 +40,11 @@ class PartialFormulaView extends React.PureComponent<Props> {
   wrapper: HTMLDivElement | null = null;
 
   render() {
-    const { className, source, sourceId, pathFromId } = this.props;
-    const path = Seq.Indexed(pathFromId(source.id) || []);
+    const { className, source, sourceId, path } = this.props;
     return (
       <div className={classnames("formulaView", className)}>
         <Toolbar className="formulaView-toolbar">
-          <ToolButton link to="/">
-            <Icon name="close" />
-          </ToolButton>
+          <Route path="/:documentId" render={this.renderCloseButton} />
           {path.map(this.renderPathSegment(path))}
         </Toolbar>
         <div className="formulaView-graph">
@@ -81,6 +81,12 @@ class PartialFormulaView extends React.PureComponent<Props> {
     );
   }
 
+  private renderCloseButton = (routeProps: RouteProps) => (
+    <ToolButton link to={`/${routeProps.match.params.documentId}`}>
+      <Icon name="close" />
+    </ToolButton>
+  );
+
   private renderPathSegment = (path: Iterable<string>) => (
     segment: string,
     i: number,
@@ -108,9 +114,11 @@ const mapStateToProps = (state: AppState, props: OwnProps): StateProps => ({
     .filter(sourceId => sourceId === props.sourceId)
     .map((_, wireId) => wireId)
     .toIndexedSeq(),
-  pathFromId: bindPathFromId(
-    state.entities.directories.toSeq().concat(state.entities.sources),
-    state.entities.entityParents,
+  path: Seq.Indexed(
+    bindPathFromId(
+      state.entities.directories.toSeq().concat(state.entities.sources),
+      state.entities.entityParents,
+    )(props.sourceId) || [],
   ),
 });
 
