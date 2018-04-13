@@ -1,8 +1,7 @@
 import classnames from "classnames";
 import React from "react";
+import { TreeView } from "react-atoms";
 import { connect as reduxConnect } from "react-redux";
-
-import { TreeView } from "components/molecules";
 
 import { AppState } from "data/AppState";
 import { EntityTable, JoinManyToOne } from "data/common";
