@@ -1,15 +1,14 @@
-const path = require("path");
 const webpack = require("webpack");
 const merge = require("webpack-merge");
-const common = require("./webpack.config.common");
+const common = require("./webpack.common");
 
 const FriendlyErrorsPlugin = require("friendly-errors-webpack-plugin");
 
 const paths = require("./paths");
 const publicPath = "/";
 
-const serverPort = process.env.DEV_SERVER_PORT;
-const serverHost = process.env.DEV_SERVER_HOST;
+const serverPort = process.env.PORT;
+const serverHost = process.env.HOST;
 const serverUrl = `http://${serverHost}:${serverPort}`;
 
 module.exports = merge(common, {
