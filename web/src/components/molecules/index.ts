@@ -1,5 +1,4 @@
-export { ErrorBoundary } from "./ErrorBoundary";
-export { NodeView } from "./NodeView";
-export { SheetView } from "./SheetView";
-export { Toolbar } from "./Toolbar";
-export { TreeView } from "./TreeView";
+export { ErrorBoundary } from "./ErrorBoundary/ErrorBoundary";
+export { NodeView } from "./NodeView/NodeView";
+export { SheetView } from "./SheetView/SheetView";
+export { Toolbar } from "./Toolbar/Toolbar";
