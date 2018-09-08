@@ -1,5 +1,4 @@
 import React from "react";
-import { connect } from "react-redux";
 import {
   BrowserRouter as Router,
   Route,
@@ -8,37 +7,28 @@ import {
 
 import {
   AppDragLayer,
-  FormulaView,
-  Sidebar,
+  ConnectedFormulaView,
+  ConnectedSidebar,
   StatusBar,
-  Tabletop,
+  ConnectedTabletop,
 } from "components/organisms";
 
-import { AppState } from "data/AppState";
 import { EntityTable } from "data/common";
-import { Document } from "data/Document";
-import { bindIdFromPath } from "data/EntityState";
 import { Sheet } from "data/Sheet";
 import { Source } from "data/Source";
 
 import "./DocumentPage.scss";
 
-interface OwnProps {
-  documentId: string;
-}
-
-interface StateProps {
+interface Props {
   name: string;
   sheets: EntityTable<Sheet>;
   sources: EntityTable<Source>;
   idFromPath: (path: Iterable<string>) => string | undefined;
 }
 
-type Props = StateProps & OwnProps;
-
 type RouteProps = RouteComponentProps<{ documentId: string; path: string }>;
 
-class ProtoEditor extends React.PureComponent<Props> {
+class DocumentPage extends React.PureComponent<Props> {
   render() {
     return (
       <Router>
@@ -58,7 +48,7 @@ class ProtoEditor extends React.PureComponent<Props> {
   }
 
   private renderSidebar = (routeProps: RouteProps) => (
-    <Sidebar
+    <ConnectedSidebar
       className="documentPage-sidebar"
       documentId={routeProps.match.params.documentId}
     />
@@ -70,7 +60,10 @@ class ProtoEditor extends React.PureComponent<Props> {
     const sourceId = idFromPath(pathFragments);
     if (sourceId) {
       return (
-        <FormulaView className="documentPage-content" sourceId={sourceId} />
+        <ConnectedFormulaView
+          className="documentPage-content"
+          sourceId={sourceId}
+        />
       );
     } else {
       return (
@@ -83,7 +76,7 @@ class ProtoEditor extends React.PureComponent<Props> {
 
   private renderTabletop = (routeProps: RouteProps) => {
     return (
-      <Tabletop
+      <ConnectedTabletop
         className="documentPage-content"
         documentId={routeProps.match.params.documentId}
       />
@@ -91,19 +84,4 @@ class ProtoEditor extends React.PureComponent<Props> {
   };
 }
 
-const mapStateToProps = (state: AppState, props: OwnProps): StateProps => ({
-  name: state.entities.documents.get(props.documentId, new Document()).name,
-  sheets: state.entities.sheets,
-  sources: state.entities.sources,
-  /* TODO I think this will cause a lot of useless re-renders??? */
-  idFromPath: bindIdFromPath(
-    state.entities.directories.toSeq().concat(state.entities.sources),
-    state.entities.entityParents,
-  ),
-});
-
-const DocumentPage = connect<StateProps, {}, OwnProps>(mapStateToProps)(
-  ProtoEditor,
-);
-
-export { DocumentPage };
+export { DocumentPage, Props };

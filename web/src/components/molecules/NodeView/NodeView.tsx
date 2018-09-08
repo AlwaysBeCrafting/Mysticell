@@ -2,36 +2,26 @@ import classNames from "classnames";
 import { Seq } from "immutable";
 import React from "react";
 import { Card } from "react-atoms";
-import { connect } from "react-redux";
 
 import { TerminalView } from "components/atoms";
 
-import { AppState } from "data/AppState";
 import { TerminalReference } from "data/common";
 import { Node } from "data/Node";
-import { PRIMITIVE_SOURCES } from "data/Primitive";
 import { Source } from "data/Source";
 
 import "./NodeView.scss";
+import { CommonAttributes } from "common/types";
 
-interface OwnProps {
-  className?: string;
-  style?: React.CSSProperties;
-  nodeId: string;
-}
-
-interface StateProps {
+interface Props extends CommonAttributes {
   node: Node;
   source: Source;
   isDragging: boolean;
   connections: Iterable<TerminalReference>;
 }
 
-type Props = OwnProps & StateProps;
-
-class PartialNodeView extends React.PureComponent<Props> {
+class NodeView extends React.PureComponent<Props> {
   render() {
-    const { className, style, node, source, isDragging } = this.props;
+    const { className, node, source, isDragging } = this.props;
     const { label, position } = node;
     const { name, inputs, outputs } = source;
     const height = 1 + inputs.count() + outputs.count();
@@ -43,7 +33,7 @@ class PartialNodeView extends React.PureComponent<Props> {
     return (
       <Card
         className={classNames("nodeView", className)}
-        style={{ ...positionedStyle, ...style }}
+        style={{ ...positionedStyle }}
       >
         <header className="nodeView-header nodeView-row">
           <span className="nodeView-header-name">{label || name}</span>
@@ -75,21 +65,4 @@ class PartialNodeView extends React.PureComponent<Props> {
   }
 }
 
-const mapStateToProps = (state: AppState, props: OwnProps): StateProps => {
-  const node = state.entities.nodes.get(props.nodeId, new Node());
-  return {
-    node,
-    source: state.entities.sources
-      .toSeq()
-      .concat(PRIMITIVE_SOURCES)
-      .get(node.source, new Source()),
-    isDragging: false,
-    connections: [],
-  };
-};
-
-const NodeView = connect<StateProps, {}, OwnProps, AppState>(mapStateToProps)(
-  PartialNodeView,
-);
-
-export { NodeView };
+export { NodeView, Props };

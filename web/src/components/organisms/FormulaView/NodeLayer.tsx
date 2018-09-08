@@ -2,7 +2,7 @@ import { Seq } from "immutable";
 import React from "react";
 import { connect } from "react-redux";
 
-import { NodeView } from "components/molecules";
+import { ConnectedNodeView } from "components/molecules";
 
 import { AppState } from "data/AppState";
 
@@ -22,7 +22,7 @@ class PartialNodeLayer extends React.PureComponent<Props> {
   render() {
     const { nodeIds } = this.props;
     return Seq.Indexed(nodeIds).map(nodeId => (
-      <NodeView key={nodeId} nodeId={nodeId} />
+      <ConnectedNodeView key={nodeId} nodeId={nodeId} />
     ));
   }
 }

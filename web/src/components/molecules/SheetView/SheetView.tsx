@@ -1,28 +1,20 @@
 import { Seq } from "immutable";
 import React from "react";
 import { Icon } from "react-atoms";
-import { connect } from "react-redux";
 
-import { CellView, ToolButton } from "components/atoms";
+import { ConnectedCellView, ToolButton } from "components/atoms";
 import { Toolbar } from "components/molecules";
 
-import { AppState } from "data/AppState";
 import { Sheet } from "data/Sheet";
 
 import "./SheetView.scss";
 
-interface OwnProps {
-  sheetId: string;
-}
-
-interface StateProps {
+interface Props {
   sheet: Sheet;
   cellIds: Iterable<string>;
 }
 
-type Props = OwnProps & StateProps;
-
-class PartialSheetView extends React.PureComponent<Props> {
+class SheetView extends React.PureComponent<Props> {
   render() {
     const { sheet, cellIds } = this.props;
     const style = {
@@ -40,7 +32,7 @@ class PartialSheetView extends React.PureComponent<Props> {
         <div className="sheetView-grid">
           {Seq.Indexed(cellIds)
             .map(cellId => (
-              <CellView
+              <ConnectedCellView
                 key={cellId}
                 className="sheetView-grid-cell"
                 cellId={cellId}
@@ -53,15 +45,4 @@ class PartialSheetView extends React.PureComponent<Props> {
   }
 }
 
-const mapStateToProps = (state: AppState, props: OwnProps): StateProps => ({
-  cellIds: state.entities.cellSheets
-    .filter(sheetId => sheetId === props.sheetId)
-    .keySeq(),
-  sheet: state.entities.sheets.get(props.sheetId, new Sheet()),
-});
-
-const SheetView = connect<StateProps, {}, OwnProps>(mapStateToProps)(
-  PartialSheetView,
-);
-
-export { SheetView };
+export { SheetView, Props };
