@@ -1,4 +1,4 @@
-export { CellView } from "./CellView";
-export { TerminalView } from "./TerminalView";
-export { ToolButton } from "./ToolButton";
-export { Wire } from "./Wire";
+export { CellView } from "./CellView/CellView";
+export { TerminalView } from "./TerminalView/TerminalView";
+export { ToolButton } from "./ToolButton/ToolButton";
+export { Wire } from "./Wire/Wire";

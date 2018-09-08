@@ -34,7 +34,7 @@ interface StateProps {
   idFromPath: (path: Iterable<string>) => string | undefined;
 }
 
-type Props = StateProps;
+type Props = StateProps & OwnProps;
 
 type RouteProps = RouteComponentProps<{ documentId: string; path: string }>;
 

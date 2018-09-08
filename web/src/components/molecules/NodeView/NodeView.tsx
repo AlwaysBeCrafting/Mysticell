@@ -43,7 +43,7 @@ class PartialNodeView extends React.PureComponent<Props> {
     return (
       <Card
         className={classNames("nodeView", className)}
-        style={{ ...positionedStyle, style }}
+        style={{ ...positionedStyle, ...style }}
       >
         <header className="nodeView-header nodeView-row">
           <span className="nodeView-header-name">{label || name}</span>
