@@ -1,8 +1,9 @@
+import { Map } from "immutable";
 import { connect } from "react-redux";
 
 import { CommonAttributes } from "common/types";
 
-import { AppState } from "data/AppState";
+import { App } from "data/App";
 import { Document } from "data/Document";
 
 import { Sidebar, Props } from "./Sidebar";
@@ -20,11 +21,11 @@ interface ReduxProps {
 }
 type PublicProps = PassedProps & ReduxProps;
 
-const mapStateToProps = (state: AppState, props: PublicProps): StateProps => ({
-  document: state.entities.documents.get(props.documentId, new Document()),
-  directories: state.entities.directories,
-  sources: state.entities.sources,
-  entityParents: state.entities.entityParents,
+const mapStateToProps = (state: App, props: PublicProps): StateProps => ({
+  document: state.documents.get(props.documentId, new Document()),
+  directories: state.directories,
+  sources: state.sources,
+  entityParents: Map(),
 });
 
 const mergeProps = (

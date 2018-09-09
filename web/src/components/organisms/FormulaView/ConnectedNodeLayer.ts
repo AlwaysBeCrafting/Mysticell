@@ -5,32 +5,32 @@ import { CommonAttributes } from "common/types";
 
 import { App } from "data/App";
 
-import { Tabletop, Props } from "./Tabletop";
+import { NodeLayer, Props } from "./NodeLayer";
 
-type StateProps = Pick<Props, "sheetIds">;
+type StateProps = Pick<Props, "nodeIds">;
 type DispatchProps = {};
 type PassedProps = CommonAttributes;
 type MergedProps = StateProps & DispatchProps & PassedProps;
 
 interface ReduxProps {
-  documentId: string;
+  sourceId: string;
 }
 type PublicProps = PassedProps & ReduxProps;
 
 const mapStateToProps = (_: App, __: PublicProps): StateProps => ({
-  sheetIds: List(),
+  nodeIds: List(),
 });
 
 const mergeProps = (
-  { sheetIds }: StateProps,
+  { nodeIds }: StateProps,
   {  }: DispatchProps,
   { className }: PublicProps,
-): MergedProps => ({ sheetIds, className });
+): MergedProps => ({ nodeIds, className });
 
-const ConnectedTabletop = connect(
+const ConnectedNodeLayer = connect(
   mapStateToProps,
   {},
   mergeProps,
-)(Tabletop);
+)(NodeLayer);
 
-export { ConnectedTabletop };
+export { ConnectedNodeLayer };

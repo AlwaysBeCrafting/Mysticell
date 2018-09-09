@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 
 import { CommonAttributes } from "common/types";
 
-import { AppState } from "data/AppState";
+import { App } from "data/App";
 import { Cell } from "data/Cell";
 
 import { CellView, Props } from "./CellView";
@@ -17,9 +17,9 @@ interface ReduxProps {
 }
 type PublicProps = PassedProps & ReduxProps;
 
-const mapStateToProps = (state: AppState, props: PublicProps): StateProps => {
-  const cell = state.entities.cells.get(props.cellId, new Cell());
-  const value = state.entities.propertyValues.get(cell.terminal, "");
+const mapStateToProps = (state: App, props: PublicProps): StateProps => {
+  const cell = state.cells.get(props.cellId, new Cell());
+  const value = "";
   return { cell, value };
 };
 

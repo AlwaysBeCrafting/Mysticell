@@ -1,10 +1,9 @@
-import { Seq } from "immutable";
+import { List, Seq } from "immutable";
 import { connect } from "react-redux";
 
 import { CommonAttributes } from "common/types";
 
-import { AppState } from "data/AppState";
-import { bindPathFromId } from "data/EntityState";
+import { App } from "data/App";
 import { Source } from "data/Source";
 
 import { FormulaView, Props } from "./FormulaView";
@@ -19,24 +18,11 @@ interface ReduxProps {
 }
 type PublicProps = PassedProps & ReduxProps;
 
-const mapStateToProps = (state: AppState, props: PublicProps): StateProps => ({
-  source: state.entities.sources.get(props.sourceId, new Source()),
-  nodeIds: state.entities.nodeSources
-    .toSeq()
-    .filter(sourceId => sourceId === props.sourceId)
-    .map((_, nodeId) => nodeId)
-    .toIndexedSeq(),
-  wireIds: state.entities.wireSources
-    .toSeq()
-    .filter(sourceId => sourceId === props.sourceId)
-    .map((_, wireId) => wireId)
-    .toIndexedSeq(),
-  path: Seq.Indexed(
-    bindPathFromId(
-      state.entities.directories.toSeq().concat(state.entities.sources),
-      state.entities.entityParents,
-    )(props.sourceId) || [],
-  ),
+const mapStateToProps = (state: App, props: PublicProps): StateProps => ({
+  source: state.sources.get(props.sourceId, new Source()),
+  nodeIds: List(),
+  wireIds: List(),
+  path: Seq.Indexed(),
 });
 
 const mergeProps = (

@@ -1,8 +1,9 @@
+import { List } from "immutable";
 import { connect } from "react-redux";
 
 import { CommonAttributes } from "common/types";
 
-import { AppState } from "data/AppState";
+import { App } from "data/App";
 import { Sheet } from "data/Sheet";
 
 import { SheetView, Props } from "./SheetView";
@@ -17,11 +18,9 @@ interface ReduxProps {
 }
 type PublicProps = PassedProps & ReduxProps;
 
-const mapStateToProps = (state: AppState, props: PublicProps): StateProps => ({
-  cellIds: state.entities.cellSheets
-    .filter(sheetId => sheetId === props.sheetId)
-    .keySeq(),
-  sheet: state.entities.sheets.get(props.sheetId, new Sheet()),
+const mapStateToProps = (state: App, props: PublicProps): StateProps => ({
+  cellIds: List(),
+  sheet: state.sheets.get(props.sheetId, new Sheet()),
 });
 
 const mergeProps = (

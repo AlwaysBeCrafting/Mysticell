@@ -1,29 +1,20 @@
 import classNames from "classnames";
 import { Seq } from "immutable";
 import React from "react";
-import { connect } from "react-redux";
 
-import { Position2d } from "common/types";
+import { CommonAttributes, Position2d } from "common/types";
 
 import { Wire as WireView } from "components/atoms";
 
-import { AppState } from "data/AppState";
-import { terminalPosition, TerminalReference } from "data/common";
+import { TerminalReference } from "data/common";
 import { Wire } from "data/Wire";
 
-interface OwnProps {
-  className?: string;
-  sourceId: string;
-}
-
-interface StateProps {
+interface Props extends CommonAttributes {
   wires: Seq.Indexed<Wire>;
   getTerminalPosition: (terminal: TerminalReference) => Position2d;
 }
 
-type Props = OwnProps & StateProps;
-
-class PartialWireLayer extends React.PureComponent<Props> {
+class WireLayer extends React.PureComponent<Props> {
   render() {
     const { className, wires, getTerminalPosition } = this.props;
     return (
@@ -47,21 +38,4 @@ class PartialWireLayer extends React.PureComponent<Props> {
   }
 }
 
-const mapStateToProps = (state: AppState, props: OwnProps): StateProps => ({
-  wires: state.entities.wireSources
-    .toSeq()
-    .filter(sourceId => sourceId === props.sourceId)
-    .map((_, wireId) => state.entities.wires.get(wireId, new Wire()))
-    .toIndexedSeq(),
-  getTerminalPosition: terminalPosition(
-    state.entities.nodes,
-    state.entities.sources,
-    state.entities.nodeSources,
-  ),
-});
-
-const WireLayer = connect<StateProps, {}, OwnProps, AppState>(mapStateToProps)(
-  PartialWireLayer,
-);
-
-export { WireLayer };
+export { WireLayer, Props };

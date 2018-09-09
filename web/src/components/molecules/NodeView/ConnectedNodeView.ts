@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 
 import { CommonAttributes } from "common/types";
 
-import { AppState } from "data/AppState";
+import { App } from "data/App";
 import { Node } from "data/Node";
 import { PRIMITIVE_SOURCES } from "data/Primitive";
 import { Source } from "data/Source";
@@ -19,11 +19,11 @@ interface ReduxProps {
 }
 type PublicProps = PassedProps & ReduxProps;
 
-const mapStateToProps = (state: AppState, props: PublicProps): StateProps => {
-  const node = state.entities.nodes.get(props.nodeId, new Node());
+const mapStateToProps = (state: App, props: PublicProps): StateProps => {
+  const node = state.nodes.get(props.nodeId, new Node());
   return {
     node,
-    source: state.entities.sources
+    source: state.sources
       .toSeq()
       .concat(PRIMITIVE_SOURCES)
       .get(node.source, new Source()),

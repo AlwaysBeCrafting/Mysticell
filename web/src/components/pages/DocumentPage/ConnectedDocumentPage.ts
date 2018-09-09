@@ -2,9 +2,8 @@ import { connect } from "react-redux";
 
 import { CommonAttributes } from "common/types";
 
-import { AppState } from "data/AppState";
+import { App } from "data/App";
 import { Document } from "data/Document";
-import { bindIdFromPath } from "data/EntityState";
 
 import { DocumentPage, Props } from "./DocumentPage";
 
@@ -18,15 +17,12 @@ interface ReduxProps {
 }
 type PublicProps = PassedProps & ReduxProps;
 
-const mapStateToProps = (state: AppState, props: PublicProps): StateProps => ({
-  name: state.entities.documents.get(props.documentId, new Document()).name,
-  sheets: state.entities.sheets,
-  sources: state.entities.sources,
+const mapStateToProps = (state: App, props: PublicProps): StateProps => ({
+  name: state.documents.get(props.documentId, new Document()).name,
+  sheets: state.sheets,
+  sources: state.sources,
   /* TODO I think this will cause a lot of useless re-renders??? */
-  idFromPath: bindIdFromPath(
-    state.entities.directories.toSeq().concat(state.entities.sources),
-    state.entities.entityParents,
-  ),
+  idFromPath: () => "",
 });
 
 const mergeProps = (

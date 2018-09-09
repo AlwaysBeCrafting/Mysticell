@@ -1,14 +1,12 @@
 import classnames from "classnames";
-import { Seq } from "immutable";
 import React from "react";
 import { Icon } from "react-atoms";
 import { Route, RouteComponentProps } from "react-router";
 import { Link } from "react-router-dom";
 
-import { bindPathFromId } from "data/EntityState";
 import { SourceType } from "data/Source";
 
-import { AppState } from "data/AppState";
+import { App } from "data/App";
 import { connect } from "react-redux";
 import functionIcon from "./assets/icon-function.svg";
 import propertyIcon from "./assets/icon-property.svg";
@@ -59,13 +57,8 @@ class PartialSourceItemView extends React.PureComponent<Props> {
   };
 }
 
-const mapStateToProps = (state: AppState, props: OwnProps): StateProps => ({
-  path: Seq.Indexed(
-    bindPathFromId(
-      state.entities.directories.toSeq().concat(state.entities.sources),
-      state.entities.entityParents,
-    )(props.id) || [],
-  ).join("/"),
+const mapStateToProps = (_: App, __: OwnProps): StateProps => ({
+  path: "",
 });
 
 const SourceItemView = connect<StateProps, {}, OwnProps>(mapStateToProps)(

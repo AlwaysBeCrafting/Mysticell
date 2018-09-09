@@ -12,8 +12,8 @@ import { ErrorBoundary, Toolbar } from "components/molecules";
 import { Source } from "data/Source";
 
 import { Boundary } from "./Boundary";
-import { NodeLayer } from "./NodeLayer";
-import { WireLayer } from "./WireLayer";
+import { ConnectedNodeLayer } from "./ConnectedNodeLayer";
+import { ConnectedWireLayer } from "./ConnectedWireLayer";
 
 import "./FormulaView.scss";
 
@@ -59,11 +59,11 @@ class FormulaView extends React.PureComponent<Props> {
             className="formulaView-graph-grid"
             ref={elem => (this.wrapper = elem)}
           >
-            <WireLayer
+            <ConnectedWireLayer
               className="formulaView-graph-grid-wires"
               sourceId={source.id}
             />
-            <NodeLayer
+            <ConnectedNodeLayer
               className="formulaView-graph-grid-nodes"
               sourceId={source.id}
             />
