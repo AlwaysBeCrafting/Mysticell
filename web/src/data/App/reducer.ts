@@ -11,16 +11,12 @@ import { reducer as wires } from "data/Wire";
 import { App } from "./model";
 
 const reducer = combineReducers<App>({
-  documents,
-
-  sheets,
   cells,
-
   directories,
-  sources,
-
+  documents,
   nodes,
-
+  sheets,
+  sources,
   wires,
 });
 
