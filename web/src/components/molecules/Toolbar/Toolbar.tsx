@@ -8,7 +8,7 @@ interface Props {
   className?: string;
 }
 const Toolbar = (props: Props) => (
-  <menu type="toolbar" className={classNames("toolbar", props.className)}>
+  <menu type="Toolbar" className={classNames("Toolbar", props.className)}>
     {props.children}
   </menu>
 );

@@ -37,7 +37,7 @@ const Wire = (props: Props) => {
     `  ${controlX[1] * 40},${endPos.y * 40} ` +
     `  ${endPos.x * 40},${endPos.y * 40} `;
 
-  return <path className={classNames("wire", className)} d={pathString} />;
+  return <path className={classNames("Wire", className)} d={pathString} />;
 };
 
 export { Wire };

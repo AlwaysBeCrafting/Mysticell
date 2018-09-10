@@ -25,7 +25,7 @@ class WireDragItem extends DragItem<Props> {
     const startPos = new Position2d(start.x, start.y);
     const endPos = new Position2d(end.x, end.y);
     return (
-      <svg className="wireDragItem">
+      <svg className="WireDragItem">
         <Wire startPos={startPos} endPos={endPos} />
       </svg>
     );

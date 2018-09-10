@@ -21,20 +21,20 @@ class SheetView extends React.PureComponent<Props> {
       gridArea: `span ${sheet.size.height + 1} / span ${sheet.size.width}`,
     };
     return (
-      <div className="sheetView" style={style}>
-        <Toolbar className="sheetView-header">
-          <div className="sheetView-header-name">{sheet.name}</div>
+      <div className="SheetView" style={style}>
+        <Toolbar className="SheetView-header">
+          <div className="SheetView-header-name">{sheet.name}</div>
           <div style={{ flexGrow: 1 }} />
-          <ToolButton link to="">
+          <ToolButton to="">
             <Icon name="more_vert" />
           </ToolButton>
         </Toolbar>
-        <div className="sheetView-grid">
+        <div className="SheetView-grid">
           {Seq.Indexed(cellIds)
             .map(cellId => (
               <ConnectedCellView
                 key={cellId}
-                className="sheetView-grid-cell"
+                className="SheetView-grid-cell"
                 cellId={cellId}
               />
             ))

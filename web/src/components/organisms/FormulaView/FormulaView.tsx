@@ -34,15 +34,15 @@ class FormulaView extends React.PureComponent<Props> {
   render() {
     const { className, source, path } = this.props;
     return (
-      <div className={classnames("formulaView", className)}>
-        <Toolbar className="formulaView-toolbar">
+      <div className={classnames("FormulaView", className)}>
+        <Toolbar className="FormulaView-toolbar">
           <Route path="/:documentId" render={this.renderCloseButton} />
           {path.map(this.renderPathSegment(path))}
         </Toolbar>
-        <div className="formulaView-graph">
+        <div className="FormulaView-graph">
           <ErrorBoundary>
             <Boundary
-              className="formulaView-graph-boundary mod-input"
+              className="FormulaView-graph-boundary mod-input"
               input
               source={source}
               onValueChange={noop}
@@ -50,21 +50,21 @@ class FormulaView extends React.PureComponent<Props> {
           </ErrorBoundary>
           <ErrorBoundary>
             <Boundary
-              className="formulaView-graph-boundary mod-output"
+              className="FormulaView-graph-boundary mod-output"
               output
               source={source}
             />
           </ErrorBoundary>
           <div
-            className="formulaView-graph-grid"
+            className="FormulaView-graph-grid"
             ref={elem => (this.wrapper = elem)}
           >
             <ConnectedWireLayer
-              className="formulaView-graph-grid-wires"
+              className="FormulaView-graph-grid-wires"
               sourceId={source.id}
             />
             <ConnectedNodeLayer
-              className="formulaView-graph-grid-nodes"
+              className="FormulaView-graph-grid-nodes"
               sourceId={source.id}
             />
           </div>
@@ -74,7 +74,7 @@ class FormulaView extends React.PureComponent<Props> {
   }
 
   private renderCloseButton = (routeProps: RouteProps) => (
-    <ToolButton link to={`/${routeProps.match.params.documentId}`}>
+    <ToolButton to={`/${routeProps.match.params.documentId}`}>
       <Icon name="close" />
     </ToolButton>
   );
@@ -85,7 +85,7 @@ class FormulaView extends React.PureComponent<Props> {
   ) => (
     <span
       key={i}
-      className={classnames("formulaView-toolbar-path-segment", {
+      className={classnames("FormulaView-toolbar-path-segment", {
         "mod-final": i === Seq.Indexed(path).count() - 1,
       })}
     >

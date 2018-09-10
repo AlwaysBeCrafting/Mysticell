@@ -1,4 +1,4 @@
-import classnames from "classnames";
+import classNames from "classnames";
 import React from "react";
 
 import { CommonAttributes } from "common/types";
@@ -25,17 +25,17 @@ class CellView extends React.PureComponent<Props> {
     return (
       <div
         style={style}
-        className={classnames("cellView", className)}
+        className={classNames("CellView", className)}
         title={message}
       >
         {cell.terminal.sign === "+" ? (
           <input
-            className="cellView-content"
+            className="CellView-content"
             defaultValue={`${value}`}
             onChange={this.onChange}
           />
         ) : (
-          <div className="cellView-content mod-readonly">{value}</div>
+          <div className="CellView-content mod-readonly">{value}</div>
         )}
       </div>
     );

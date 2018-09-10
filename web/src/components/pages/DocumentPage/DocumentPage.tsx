@@ -5,6 +5,8 @@ import {
   RouteComponentProps,
 } from "react-router-dom";
 
+import { CommonAttributes } from "common/types";
+
 import {
   AppDragLayer,
   ConnectedFormulaView,
@@ -19,7 +21,7 @@ import { Source } from "data/Source";
 
 import "./DocumentPage.scss";
 
-interface Props {
+interface Props extends CommonAttributes {
   name: string;
   sheets: EntityTable<Sheet>;
   sources: EntityTable<Source>;
@@ -32,7 +34,7 @@ class DocumentPage extends React.PureComponent<Props> {
   render() {
     return (
       <Router>
-        <main className="documentPage">
+        <main className="DocumentPage">
           <AppDragLayer />
           <Route path="/:documentId" render={this.renderSidebar} />
           <Route exact path="/:documentId" render={this.renderTabletop} />
@@ -41,7 +43,7 @@ class DocumentPage extends React.PureComponent<Props> {
             path="/:documentId/:path+"
             render={this.renderFormulaView}
           />
-          <StatusBar className="documentPage-status" />
+          <StatusBar className="DocumentPage-status" />
         </main>
       </Router>
     );
@@ -49,7 +51,7 @@ class DocumentPage extends React.PureComponent<Props> {
 
   private renderSidebar = (routeProps: RouteProps) => (
     <ConnectedSidebar
-      className="documentPage-sidebar"
+      className="DocumentPage-sidebar"
       documentId={routeProps.match.params.documentId}
     />
   );
@@ -61,13 +63,13 @@ class DocumentPage extends React.PureComponent<Props> {
     if (sourceId) {
       return (
         <ConnectedFormulaView
-          className="documentPage-content"
+          className="DocumentPage-content"
           sourceId={sourceId}
         />
       );
     } else {
       return (
-        <div className="documentPage-error">
+        <div className="DocumentPage-error">
           No formula exists at /{routeProps.match.params.path}
         </div>
       );
@@ -77,7 +79,7 @@ class DocumentPage extends React.PureComponent<Props> {
   private renderTabletop = (routeProps: RouteProps) => {
     return (
       <ConnectedTabletop
-        className="documentPage-content"
+        className="DocumentPage-content"
         documentId={routeProps.match.params.documentId}
       />
     );

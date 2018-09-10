@@ -16,7 +16,7 @@ class Source
       name: "Output",
       type: "undefined" as ParamType,
     }),
-    type: "primitive",
+    type: "primitive" as SourceType,
   })
   implements Entity {}
 

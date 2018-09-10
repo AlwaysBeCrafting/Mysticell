@@ -12,7 +12,7 @@ interface Props {
 class NodeDragItem extends DragItem<Props> {
   render() {
     return (
-      <ConnectedNodeView className="nodeDragItem" nodeId={this.props.nodeId} />
+      <ConnectedNodeView className="NodeDragItem" nodeId={this.props.nodeId} />
     );
   }
 }

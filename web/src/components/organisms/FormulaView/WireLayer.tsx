@@ -18,7 +18,7 @@ class WireLayer extends React.PureComponent<Props> {
   render() {
     const { className, wires, getTerminalPosition } = this.props;
     return (
-      <svg className={classNames("wireLayer", className)}>
+      <svg className={classNames("WireLayer", className)}>
         {wires
           .map(wire => {
             const { start, end } = wire;

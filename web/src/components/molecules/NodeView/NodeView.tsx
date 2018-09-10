@@ -32,18 +32,18 @@ class NodeView extends React.PureComponent<Props> {
     };
     return (
       <Card
-        className={classNames("nodeView", className)}
-        style={{ ...positionedStyle }}
+        className={classNames("NodeView", className)}
+        style={positionedStyle}
       >
-        <header className="nodeView-header nodeView-row">
-          <span className="nodeView-header-name">{label || name}</span>
+        <header className="NodeView-header NodeView-row">
+          <span className="NodeView-header-name">{label || name}</span>
         </header>
         {Seq.Indexed(outputs).map((term, index) => {
           const reference = new TerminalReference(node.id, "+", index);
           return (
             <TerminalView
               key={reference.hashCode()}
-              className="nodeView-terminal"
+              className="NodeView-terminal"
               reference={reference}
               description={term}
             />
@@ -54,7 +54,7 @@ class NodeView extends React.PureComponent<Props> {
           return (
             <TerminalView
               key={reference.hashCode()}
-              className="nodeView-terminal"
+              className="NodeView-terminal"
               reference={reference}
               description={term}
             />

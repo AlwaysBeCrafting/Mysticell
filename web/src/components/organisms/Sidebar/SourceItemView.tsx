@@ -1,4 +1,4 @@
-import classnames from "classnames";
+import classNames from "classnames";
 import React from "react";
 import { Icon } from "react-atoms";
 import { Route, RouteComponentProps } from "react-router";
@@ -10,10 +10,11 @@ import { App } from "data/App";
 import { connect } from "react-redux";
 import functionIcon from "./assets/icon-function.svg";
 import propertyIcon from "./assets/icon-property.svg";
+import { CommonAttributes } from "common/types";
 
 type RouteProps = RouteComponentProps<{ documentId: string; path: string }>;
 
-interface OwnProps {
+interface OwnProps extends CommonAttributes {
   id: string;
   name: string;
   type: SourceType;
@@ -40,18 +41,18 @@ class PartialSourceItemView extends React.PureComponent<Props> {
     const { documentId } = routeProps.match.params;
     return (
       <Link
-        className={classnames("sidebar-item", {
+        className={classNames("Sidebar-item", {
           "is-selected": selected,
         })}
         to={`/${documentId}/${path}`}
       >
         <Icon
-          className={classnames("sidebar-item-icon", {
+          className={classNames("Sidebar-item-icon", {
             "is-selected": selected,
           })}
           src={type === "property" ? propertyIcon : functionIcon}
         />
-        <div className="sidebar-item-title">{name}</div>
+        <div className="Sidebar-item-title">{name}</div>
       </Link>
     );
   };
