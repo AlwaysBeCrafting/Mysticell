@@ -4,19 +4,14 @@ import { Rect } from "common/types";
 
 import { Entity, TerminalReference } from "data/common";
 
-interface CellProps extends Entity {
-  property: string;
-  terminal: TerminalReference;
-  rect: Rect;
-  format: {};
-}
-
-class Cell extends Record<CellProps>({
-  id: "cell.default",
-  property: "property.default",
-  terminal: new TerminalReference("property.default", "+", 0),
-  rect: new Rect(),
-  format: {},
-}) {}
+class Cell
+  extends Record({
+    id: "cell.default",
+    property: "property.default",
+    terminal: new TerminalReference("property.default", "+", 0),
+    rect: new Rect(),
+    format: {},
+  })
+  implements Entity {}
 
 export { Cell };

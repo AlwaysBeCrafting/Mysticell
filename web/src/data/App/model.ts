@@ -9,30 +9,17 @@ import { Sheet } from "data/Sheet";
 import { Source } from "data/Source";
 import { Wire } from "data/Wire";
 
-interface AppStateProps {
-  documents: EntityTable<Document>;
+class App extends Record({
+  documents: new EntityTable<Document>(),
 
-  sheets: EntityTable<Sheet>;
-  cells: EntityTable<Cell>;
+  sheets: new EntityTable<Sheet>(),
+  cells: new EntityTable<Cell>(),
 
-  directories: EntityTable<Directory>;
-  sources: EntityTable<Source>;
+  directories: new EntityTable<Directory>(),
+  sources: new EntityTable<Source>(),
 
-  nodes: EntityTable<Node>;
-  wires: EntityTable<Wire>;
-}
-
-class App extends Record<AppStateProps>({
-  documents: new EntityTable(),
-
-  sheets: new EntityTable(),
-  cells: new EntityTable(),
-
-  directories: new EntityTable(),
-  sources: new EntityTable(),
-
-  nodes: new EntityTable(),
-  wires: new EntityTable(),
+  nodes: new EntityTable<Node>(),
+  wires: new EntityTable<Wire>(),
 }) {}
 
 export { App };

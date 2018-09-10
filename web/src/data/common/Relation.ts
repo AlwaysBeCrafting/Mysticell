@@ -7,18 +7,10 @@ interface Relation {
   getRelated(from: string): string | Set<string>;
 }
 
-interface HasOneProps {
-  relations: Map<string, string>;
-}
-
-interface HasManyProps {
-  relations: Map<string, Set<string>>;
-}
-
 namespace Relation {
   export class HasOne
-    extends Record<HasOneProps>({
-      relations: Map(),
+    extends Record({
+      relations: Map<string, string>(),
     })
     implements Relation {
     relate(from: string, to: string): this {
@@ -40,7 +32,10 @@ namespace Relation {
     }
   }
 
-  export class HasMany extends Record<HasManyProps>({ relations: Map() })
+  export class HasMany
+    extends Record({
+      relations: Map<string, Set<string>>(),
+    })
     implements Relation {
     relate(from: string, to: string): this {
       return this.updateIn(
