@@ -20,11 +20,10 @@ interface ReduxProps {
 type PublicProps = PassedProps & ReduxProps;
 
 const mapStateToProps = (state: App, props: PublicProps): StateProps => {
-  const node = state.nodes.get(props.nodeId, new Node());
+  const node = state.nodes.getEntity(props.nodeId, new Node());
   return {
     node,
-    source: state.sources
-      .toSeq()
+    source: state.sources.entities
       .concat(PRIMITIVE_SOURCES)
       .get(node.source, new Source()),
     isDragging: false,

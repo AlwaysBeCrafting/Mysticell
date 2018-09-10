@@ -18,7 +18,7 @@ interface ReduxProps {
 type PublicProps = PassedProps & ReduxProps;
 
 const mapStateToProps = (state: App, props: PublicProps): StateProps => {
-  const cell = state.cells.get(props.cellId, new Cell());
+  const cell = state.cells.getEntity(props.cellId, new Cell());
   const value = "";
   return { cell, value };
 };

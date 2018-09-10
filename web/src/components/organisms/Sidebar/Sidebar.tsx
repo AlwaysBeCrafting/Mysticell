@@ -4,7 +4,7 @@ import { TreeView } from "react-atoms";
 
 import { CommonAttributes } from "common/types";
 
-import { EntityTable, JoinManyToOne } from "data/common";
+import { EntityTable } from "data/common";
 import { Directory } from "data/Directory";
 import { Document } from "data/Document";
 import { Source } from "data/Source";
@@ -14,13 +14,10 @@ import { SourceItemView } from "./SourceItemView";
 
 import "./Sidebar.scss";
 
-const lexComp = (a: string, b: string) => a.localeCompare(b);
-
 interface Props extends CommonAttributes {
   document: Document;
   directories: EntityTable<Directory>;
   sources: EntityTable<Source>;
-  entityParents: JoinManyToOne;
 }
 
 class Sidebar extends React.PureComponent<Props> {
@@ -64,20 +61,7 @@ class Sidebar extends React.PureComponent<Props> {
 
   private getItemKey = (item: Directory | Source) => item.id;
 
-  private getItemChildren = (item?: Directory | Source) => {
-    const { directories, sources, entityParents } = this.props;
-
-    const entities = directories.toSeq().concat(sources);
-
-    const childIds = item
-      ? entityParents.toSeq().filter(parentId => parentId === item.id)
-      : entities.filter(entity => !entityParents.has(entity.id));
-
-    return entities
-      .toIndexedSeq()
-      .filter(child => childIds.has(child.id))
-      .sortBy(child => child.name, lexComp);
-  };
+  private getItemChildren = (_?: Directory | Source) => [];
 }
 
 export { Sidebar, Props };

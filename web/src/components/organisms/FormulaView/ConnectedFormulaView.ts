@@ -19,7 +19,7 @@ interface ReduxProps {
 type PublicProps = PassedProps & ReduxProps;
 
 const mapStateToProps = (state: App, props: PublicProps): StateProps => ({
-  source: state.sources.get(props.sourceId, new Source()),
+  source: state.sources.getEntity(props.sourceId, new Source()),
   nodeIds: List(),
   wireIds: List(),
   path: Seq.Indexed(),

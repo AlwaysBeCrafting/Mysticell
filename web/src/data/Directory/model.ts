@@ -1,8 +1,9 @@
 import { Record } from "immutable";
 
-import { NamedEntity } from "data/common";
+import { Entity } from "data/common";
 
-interface DirectoryProps extends NamedEntity {
+interface DirectoryProps extends Entity {
+  name: string;
   isExpanded: boolean;
 }
 

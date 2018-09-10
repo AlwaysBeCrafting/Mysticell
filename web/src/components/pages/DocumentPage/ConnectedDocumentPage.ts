@@ -18,7 +18,7 @@ interface ReduxProps {
 type PublicProps = PassedProps & ReduxProps;
 
 const mapStateToProps = (state: App, props: PublicProps): StateProps => ({
-  name: state.documents.get(props.documentId, new Document()).name,
+  name: state.documents.getEntity(props.documentId, new Document()).name,
   sheets: state.sheets,
   sources: state.sources,
   /* TODO I think this will cause a lot of useless re-renders??? */

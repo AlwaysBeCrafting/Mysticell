@@ -1,4 +1,4 @@
-import { Map, Record } from "immutable";
+import { Record } from "immutable";
 
 import { Cell } from "data/Cell";
 import { EntityTable } from "data/common";
@@ -23,16 +23,16 @@ interface AppStateProps {
 }
 
 class App extends Record<AppStateProps>({
-  documents: Map(),
+  documents: new EntityTable(),
 
-  sheets: Map(),
-  cells: Map(),
+  sheets: new EntityTable(),
+  cells: new EntityTable(),
 
-  directories: Map(),
-  sources: Map(),
+  directories: new EntityTable(),
+  sources: new EntityTable(),
 
-  nodes: Map(),
-  wires: Map(),
+  nodes: new EntityTable(),
+  wires: new EntityTable(),
 }) {}
 
 export { App };

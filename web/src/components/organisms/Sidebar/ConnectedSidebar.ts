@@ -1,4 +1,3 @@
-import { Map } from "immutable";
 import { connect } from "react-redux";
 
 import { CommonAttributes } from "common/types";
@@ -8,10 +7,7 @@ import { Document } from "data/Document";
 
 import { Sidebar, Props } from "./Sidebar";
 
-type StateProps = Pick<
-  Props,
-  "document" | "directories" | "sources" | "entityParents"
->;
+type StateProps = Pick<Props, "document" | "directories" | "sources">;
 type DispatchProps = {};
 type PassedProps = CommonAttributes;
 type MergedProps = StateProps & DispatchProps & PassedProps;
@@ -22,21 +18,19 @@ interface ReduxProps {
 type PublicProps = PassedProps & ReduxProps;
 
 const mapStateToProps = (state: App, props: PublicProps): StateProps => ({
-  document: state.documents.get(props.documentId, new Document()),
+  document: state.documents.getEntity(props.documentId, new Document()),
   directories: state.directories,
   sources: state.sources,
-  entityParents: Map(),
 });
 
 const mergeProps = (
-  { document, directories, sources, entityParents }: StateProps,
+  { document, directories, sources }: StateProps,
   {  }: DispatchProps,
   { className }: PublicProps,
 ): MergedProps => ({
   document,
   directories,
   sources,
-  entityParents,
   className,
 });
 

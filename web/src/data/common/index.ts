@@ -1,4 +1,4 @@
-export { Entity, NamedEntity, EntityTable, JoinManyToOne } from "./Entity";
+export { Entity, EntityTable } from "./Entity";
 export {
   ValueParam,
   EmptyParam,
@@ -8,9 +8,5 @@ export {
   ParamType,
   ParamFunction,
 } from "./Param";
-export {
-  TerminalDescription,
-  TerminalReference,
-  terminalPosition,
-} from "./Terminal";
+export { TerminalDescription, TerminalReference } from "./Terminal";
 export { TypedAction } from "./TypedAction";

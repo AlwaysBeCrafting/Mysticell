@@ -10,6 +10,7 @@ interface CellProps extends Entity {
   rect: Rect;
   format: {};
 }
+
 class Cell extends Record<CellProps>({
   id: "cell.default",
   property: "property.default",

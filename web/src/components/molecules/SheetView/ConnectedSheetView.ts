@@ -20,7 +20,7 @@ type PublicProps = PassedProps & ReduxProps;
 
 const mapStateToProps = (state: App, props: PublicProps): StateProps => ({
   cellIds: List(),
-  sheet: state.sheets.get(props.sheetId, new Sheet()),
+  sheet: state.sheets.getEntity(props.sheetId, new Sheet()),
 });
 
 const mergeProps = (

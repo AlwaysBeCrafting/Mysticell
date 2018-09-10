@@ -1,8 +1,9 @@
 import { List, Record } from "immutable";
 
-import { NamedEntity } from "data/common";
+import { Entity } from "data/common";
 
-interface DocumentProps extends NamedEntity {
+interface DocumentProps extends Entity {
+  name: string;
   version: number;
   include: List<string>;
 }

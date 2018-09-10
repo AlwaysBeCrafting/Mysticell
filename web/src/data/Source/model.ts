@@ -1,10 +1,11 @@
 import { List, Record } from "immutable";
 
-import { NamedEntity, ParamType, TerminalDescription } from "data/common";
+import { Entity, ParamType, TerminalDescription } from "data/common";
 
 type SourceType = "function" | "property" | "table" | "primitive";
 
-interface SourceProps extends NamedEntity {
+interface SourceProps extends Entity {
+  name: string;
   inputs: List<TerminalDescription>;
   outputs: List<TerminalDescription>;
   type: SourceType;

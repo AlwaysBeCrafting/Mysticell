@@ -2,9 +2,10 @@ import { Record } from "immutable";
 
 import { Size2d } from "common/types";
 
-import { NamedEntity } from "data/common";
+import { Entity } from "data/common";
 
-interface SheetProps extends NamedEntity {
+interface SheetProps extends Entity {
+  name: string;
   size: Size2d;
 }
 
