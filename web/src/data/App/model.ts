@@ -37,6 +37,7 @@ class App extends Record({
   sheetDocuments: new Relation.HasOne(),
 
   sources: new EntityTable<Source>(),
+  sourceParents: new Relation.HasOne(),
   formulaNodes: new Relation.HasMany(),
   formulaWires: new Relation.HasMany(),
 
