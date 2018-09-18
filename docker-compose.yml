@@ -1,5 +1,16 @@
 version: "3"
 services:
+  api:
+    build: ./api
+    env_file: ./common.env
+    volumes:
+      - ./api:/src
+    depends_on:
+      - postgres
+    command: ["npm", "start"]
+  postgres:
+    image: postgres:10.5
+    env_file: ./common.env
   web:
     build: ./web
     ports:

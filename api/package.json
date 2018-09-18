@@ -1,0 +1,19 @@
+{
+  "name": "mysticell-api",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "ts-node -T node_modules/.bin/nodemon ./server.ts",
+    "build": "webpack --config ./config/webpack.prod.js",
+    "dev": "nodemon -w ./scripts -w ./config ./scripts/dev-server.js"
+  },
+  "dependencies": {
+    "@types/glue": "^5.0.3",
+    "@types/hapi": "^17.0.19",
+    "glue": "^5.0.0",
+    "hapi": "^17.5.4",
+    "nodemon": "^1.18.4",
+    "ts-node": "^7.0.1",
+    "typescript": "^3.0.3"
+  }
+}

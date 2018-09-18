@@ -1,5 +1,5 @@
 {
-  "name": "mysticell",
+  "name": "mysticell-web",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -78,8 +78,7 @@
     "webpack-merge": "^4.1.4"
   },
   "dependencies": {
-    "app-root-path": "^2.1.0",
-    "express": "^4.16.3"
+    "app-root-path": "^2.1.0"
   },
   "jest": {
     "transform": {
