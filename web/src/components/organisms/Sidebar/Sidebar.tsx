@@ -1,10 +1,10 @@
 import classnames from "classnames";
 import React from "react";
 import { TreeView } from "react-atoms";
-import { connect as reduxConnect } from "react-redux";
 
-import { AppState } from "data/AppState";
-import { EntityTable, JoinManyToOne } from "data/common";
+import { CommonAttributes } from "common/types";
+
+import { EntityTable } from "data/common";
 import { Directory } from "data/Directory";
 import { Document } from "data/Document";
 import { Source } from "data/Source";
@@ -14,23 +14,13 @@ import { SourceItemView } from "./SourceItemView";
 
 import "./Sidebar.scss";
 
-const lexComp = (a: string, b: string) => a.localeCompare(b);
-
-interface OwnProps {
-  className?: string;
-  documentId: string;
-}
-
-interface StateProps {
+interface Props extends CommonAttributes {
   document: Document;
   directories: EntityTable<Directory>;
   sources: EntityTable<Source>;
-  entityParents: JoinManyToOne;
 }
 
-type Props = OwnProps & StateProps;
-
-class PartialSidebar extends React.PureComponent<Props> {
+class Sidebar extends React.PureComponent<Props> {
   render() {
     const { className, document } = this.props;
     return (
@@ -71,31 +61,7 @@ class PartialSidebar extends React.PureComponent<Props> {
 
   private getItemKey = (item: Directory | Source) => item.id;
 
-  private getItemChildren = (item?: Directory | Source) => {
-    const { directories, sources, entityParents } = this.props;
-
-    const entities = directories.toSeq().concat(sources);
-
-    const childIds = item
-      ? entityParents.toSeq().filter(parentId => parentId === item.id)
-      : entities.filter(entity => !entityParents.has(entity.id));
-
-    return entities
-      .toIndexedSeq()
-      .filter(child => childIds.has(child.id))
-      .sortBy(child => child.name, lexComp);
-  };
+  private getItemChildren = (_?: Directory | Source) => [];
 }
 
-const mapStateToProps = (state: AppState, props: OwnProps): StateProps => ({
-  document: state.entities.documents.get(props.documentId, new Document()),
-  directories: state.entities.directories,
-  sources: state.entities.sources,
-  entityParents: state.entities.entityParents,
-});
-
-const Sidebar = reduxConnect<StateProps, {}, OwnProps>(mapStateToProps)(
-  PartialSidebar,
-);
-
-export { Sidebar };
+export { Sidebar, Props };

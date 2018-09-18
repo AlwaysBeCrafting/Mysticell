@@ -1,48 +1,40 @@
 import React from "react";
-import { connect } from "react-redux";
 import {
   BrowserRouter as Router,
   Route,
   RouteComponentProps,
 } from "react-router-dom";
 
+import { CommonAttributes } from "common/types";
+
 import {
   AppDragLayer,
-  FormulaView,
-  Sidebar,
+  ConnectedFormulaView,
+  ConnectedSidebar,
   StatusBar,
-  Tabletop,
+  ConnectedTabletop,
 } from "components/organisms";
 
-import { AppState } from "data/AppState";
 import { EntityTable } from "data/common";
-import { Document } from "data/Document";
-import { bindIdFromPath } from "data/EntityState";
 import { Sheet } from "data/Sheet";
 import { Source } from "data/Source";
 
 import "./DocumentPage.scss";
 
-interface OwnProps {
-  documentId: string;
-}
-
-interface StateProps {
+interface Props extends CommonAttributes {
   name: string;
   sheets: EntityTable<Sheet>;
   sources: EntityTable<Source>;
   idFromPath: (path: Iterable<string>) => string | undefined;
 }
 
-type Props = StateProps & OwnProps;
-
 type RouteProps = RouteComponentProps<{ documentId: string; path: string }>;
 
-class ProtoEditor extends React.PureComponent<Props> {
+class DocumentPage extends React.PureComponent<Props> {
   render() {
     return (
       <Router>
-        <main className="documentPage">
+        <main className="DocumentPage">
           <AppDragLayer />
           <Route path="/:documentId" render={this.renderSidebar} />
           <Route exact path="/:documentId" render={this.renderTabletop} />
@@ -51,15 +43,15 @@ class ProtoEditor extends React.PureComponent<Props> {
             path="/:documentId/:path+"
             render={this.renderFormulaView}
           />
-          <StatusBar className="documentPage-status" />
+          <StatusBar className="DocumentPage-status" />
         </main>
       </Router>
     );
   }
 
   private renderSidebar = (routeProps: RouteProps) => (
-    <Sidebar
-      className="documentPage-sidebar"
+    <ConnectedSidebar
+      className="DocumentPage-sidebar"
       documentId={routeProps.match.params.documentId}
     />
   );
@@ -70,11 +62,14 @@ class ProtoEditor extends React.PureComponent<Props> {
     const sourceId = idFromPath(pathFragments);
     if (sourceId) {
       return (
-        <FormulaView className="documentPage-content" sourceId={sourceId} />
+        <ConnectedFormulaView
+          className="DocumentPage-content"
+          sourceId={sourceId}
+        />
       );
     } else {
       return (
-        <div className="documentPage-error">
+        <div className="DocumentPage-error">
           No formula exists at /{routeProps.match.params.path}
         </div>
       );
@@ -83,27 +78,12 @@ class ProtoEditor extends React.PureComponent<Props> {
 
   private renderTabletop = (routeProps: RouteProps) => {
     return (
-      <Tabletop
-        className="documentPage-content"
+      <ConnectedTabletop
+        className="DocumentPage-content"
         documentId={routeProps.match.params.documentId}
       />
     );
   };
 }
 
-const mapStateToProps = (state: AppState, props: OwnProps): StateProps => ({
-  name: state.entities.documents.get(props.documentId, new Document()).name,
-  sheets: state.entities.sheets,
-  sources: state.entities.sources,
-  /* TODO I think this will cause a lot of useless re-renders??? */
-  idFromPath: bindIdFromPath(
-    state.entities.directories.toSeq().concat(state.entities.sources),
-    state.entities.entityParents,
-  ),
-});
-
-const DocumentPage = connect<StateProps, {}, OwnProps>(mapStateToProps)(
-  ProtoEditor,
-);
-
-export { DocumentPage };
+export { DocumentPage, Props };

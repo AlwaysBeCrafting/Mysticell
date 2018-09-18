@@ -1,4 +1,3 @@
-export { Dict } from "./Dict";
-export { DndTypes } from "./Dnd";
+export { CommonAttributes, ParentAttributes } from "./attributes";
 export { Position2d, Rect, Size2d } from "./dimensions";
-export { Predicate } from "./Predicate";
+export { DndTypes } from "./Dnd";

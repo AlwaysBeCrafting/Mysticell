@@ -1,26 +1,18 @@
 import classNames from "classnames";
 import { Seq } from "immutable";
 import React from "react";
-import { connect } from "react-redux";
 
-import { ErrorBoundary, SheetView } from "components/molecules";
+import { CommonAttributes } from "common/types";
 
-import { AppState } from "data/AppState";
+import { ErrorBoundary, ConnectedSheetView } from "components/molecules";
 
 import "./Tabletop.scss";
 
-interface OwnProps {
-  className?: string;
-  documentId: string;
-}
-
-interface StateProps {
+interface Props extends CommonAttributes {
   sheetIds: Iterable<string>;
 }
 
-type Props = OwnProps & StateProps;
-
-class PartialTabletop extends React.PureComponent<Props> {
+class Tabletop extends React.PureComponent<Props> {
   render() {
     const { className, sheetIds } = this.props;
     return (
@@ -28,7 +20,7 @@ class PartialTabletop extends React.PureComponent<Props> {
         {Seq.Indexed(sheetIds)
           .map(sheetId => (
             <ErrorBoundary key={sheetId}>
-              <SheetView sheetId={sheetId} />
+              <ConnectedSheetView sheetId={sheetId} />
             </ErrorBoundary>
           ))
           .toList()}
@@ -37,15 +29,4 @@ class PartialTabletop extends React.PureComponent<Props> {
   }
 }
 
-const mapStateToProps = (state: AppState, props: OwnProps): StateProps => ({
-  sheetIds: state.entities.sheetDocuments
-    .filter(documentId => documentId === props.documentId)
-    .keySeq(),
-});
-
-const Tabletop = connect<StateProps, {}, OwnProps>(
-  mapStateToProps,
-  dispatch => ({ dispatch }),
-)(PartialTabletop);
-
-export { Tabletop };
+export { Tabletop, Props };

@@ -1,27 +1,20 @@
-import classnames from "classnames";
+import classNames from "classnames";
 import React from "react";
-import { connect } from "react-redux";
 
-import { AppState } from "data/AppState";
+import { CommonAttributes } from "common/types";
+
 import { Cell } from "data/Cell";
 import { Param } from "data/common";
 
 import "./CellView.scss";
 
-interface OwnProps {
-  className?: string;
-  cellId: string;
+interface Props extends CommonAttributes {
+  cell: Cell;
+  value: Param;
   onChange?: (cell: Cell, newValue: string) => void;
 }
 
-interface StateProps {
-  cell: Cell;
-  value: Param;
-}
-
-type Props = OwnProps & StateProps;
-
-class PartialCellView extends React.PureComponent<Props> {
+class CellView extends React.PureComponent<Props> {
   render() {
     const { className, cell, value } = this.props;
     const { top, left, bottom, right } = cell.rect;
@@ -32,17 +25,17 @@ class PartialCellView extends React.PureComponent<Props> {
     return (
       <div
         style={style}
-        className={classnames("cellView", className)}
+        className={classNames("CellView", className)}
         title={message}
       >
         {cell.terminal.sign === "+" ? (
           <input
-            className="cellView-content"
+            className="CellView-content"
             defaultValue={`${value}`}
             onChange={this.onChange}
           />
         ) : (
-          <div className="cellView-content mod-readonly">{value}</div>
+          <div className="CellView-content mod-readonly">{value}</div>
         )}
       </div>
     );
@@ -55,16 +48,4 @@ class PartialCellView extends React.PureComponent<Props> {
   };
 }
 
-const mapStateToProps = (state: AppState, props: OwnProps): StateProps => {
-  const cell = state.entities.cells.get(props.cellId, new Cell());
-  return {
-    cell,
-    value: state.entities.propertyValues.get(cell.terminal, ""),
-  };
-};
-
-const CellView = connect<StateProps, {}, OwnProps, AppState>(mapStateToProps)(
-  PartialCellView,
-);
-
-export { CellView };
+export { CellView, Props };

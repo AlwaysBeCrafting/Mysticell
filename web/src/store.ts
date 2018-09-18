@@ -2,21 +2,19 @@ import { applyMiddleware, createStore } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { createEpicMiddleware } from "redux-observable";
 
-import { AppState, epic as appStateEpic, reducer } from "data/AppState";
-import { loadExampleDocument } from "data/EntityState";
+import { App, epic, reducer } from "data/App";
 
-const configureStore = (initialState: AppState = new AppState()) => {
-  const epicMiddleware = createEpicMiddleware(appStateEpic);
+const configureStore = (initialState: App = new App()) => {
+  const epicMiddleware = createEpicMiddleware(epic);
   const enhancers = composeWithDevTools(applyMiddleware(epicMiddleware));
   const store = initialState
-    ? createStore<AppState>(reducer, initialState, enhancers)
-    : createStore<AppState>(reducer, enhancers);
-  store.dispatch(loadExampleDocument());
+    ? createStore<App>(reducer, initialState, enhancers)
+    : createStore<App>(reducer, enhancers);
 
   if (process.env.NODE_ENV === "development" && module.hot) {
-    module.hot.accept("data/AppState", () => {
+    module.hot.accept("data/App", () => {
       store.replaceReducer(reducer);
-      epicMiddleware.replaceEpic(appStateEpic);
+      epicMiddleware.replaceEpic(epic);
     });
   }
 

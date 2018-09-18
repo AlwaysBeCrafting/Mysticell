@@ -1,6 +1,9 @@
 interface TypedAction<T> {
   readonly type: T;
-  payload?: {};
 }
 
-export { TypedAction };
+interface AsyncAction<T, P> extends TypedAction<T> {
+  readonly promise: Promise<P>;
+}
+
+export { TypedAction, AsyncAction };

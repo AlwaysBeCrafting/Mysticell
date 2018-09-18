@@ -1,15 +1,13 @@
 import { Record } from "immutable";
 
-import { NamedEntity } from "data/common";
+import { Entity } from "data/common";
 
-interface DirectoryProps extends NamedEntity {
-  isExpanded: boolean;
-}
-
-class Directory extends Record<DirectoryProps>({
-  id: "directory.root",
-  name: "",
-  isExpanded: false,
-}) {}
+class Directory
+  extends Record({
+    id: "directory.root",
+    name: "",
+    isExpanded: false,
+  })
+  implements Entity {}
 
 export { Directory };

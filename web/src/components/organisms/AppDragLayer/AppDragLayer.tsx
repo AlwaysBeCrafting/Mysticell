@@ -32,7 +32,7 @@ type Props = OwnProps & LayerProps;
 
 class PartialDragLayer extends React.PureComponent<Props> {
   render() {
-    return <div className="appDragLayer">{this.renderDragItem()}</div>;
+    return <div className="AppDragLayer">{this.renderDragItem()}</div>;
   }
 
   private renderDragItem() {

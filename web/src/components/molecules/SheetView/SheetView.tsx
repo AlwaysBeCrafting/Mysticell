@@ -1,48 +1,40 @@
 import { Seq } from "immutable";
 import React from "react";
 import { Icon } from "react-atoms";
-import { connect } from "react-redux";
 
-import { CellView, ToolButton } from "components/atoms";
+import { ConnectedCellView, ToolButton } from "components/atoms";
 import { Toolbar } from "components/molecules";
 
-import { AppState } from "data/AppState";
 import { Sheet } from "data/Sheet";
 
 import "./SheetView.scss";
 
-interface OwnProps {
-  sheetId: string;
-}
-
-interface StateProps {
+interface Props {
   sheet: Sheet;
   cellIds: Iterable<string>;
 }
 
-type Props = OwnProps & StateProps;
-
-class PartialSheetView extends React.PureComponent<Props> {
+class SheetView extends React.PureComponent<Props> {
   render() {
     const { sheet, cellIds } = this.props;
     const style = {
       gridArea: `span ${sheet.size.height + 1} / span ${sheet.size.width}`,
     };
     return (
-      <div className="sheetView" style={style}>
-        <Toolbar className="sheetView-header">
-          <div className="sheetView-header-name">{sheet.name}</div>
+      <div className="SheetView" style={style}>
+        <Toolbar className="SheetView-header">
+          <div className="SheetView-header-name">{sheet.name}</div>
           <div style={{ flexGrow: 1 }} />
-          <ToolButton link to="">
+          <ToolButton to="">
             <Icon name="more_vert" />
           </ToolButton>
         </Toolbar>
-        <div className="sheetView-grid">
+        <div className="SheetView-grid">
           {Seq.Indexed(cellIds)
             .map(cellId => (
-              <CellView
+              <ConnectedCellView
                 key={cellId}
-                className="sheetView-grid-cell"
+                className="SheetView-grid-cell"
                 cellId={cellId}
               />
             ))
@@ -53,15 +45,4 @@ class PartialSheetView extends React.PureComponent<Props> {
   }
 }
 
-const mapStateToProps = (state: AppState, props: OwnProps): StateProps => ({
-  cellIds: state.entities.cellSheets
-    .filter(sheetId => sheetId === props.sheetId)
-    .keySeq(),
-  sheet: state.entities.sheets.get(props.sheetId, new Sheet()),
-});
-
-const SheetView = connect<StateProps, {}, OwnProps>(mapStateToProps)(
-  PartialSheetView,
-);
-
-export { SheetView };
+export { SheetView, Props };

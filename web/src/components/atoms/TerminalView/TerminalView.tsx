@@ -1,5 +1,7 @@
-import c from "classnames";
+import classNames from "classnames";
 import React from "react";
+
+import { CommonAttributes } from "common/types";
 
 import { TerminalDescription, TerminalReference } from "data/common";
 
@@ -7,8 +9,7 @@ import "./TerminalView.scss";
 
 const signWord = (sign: "+" | "-") => (sign === "+" ? "plus" : "minus");
 
-interface Props {
-  className?: string;
+interface Props extends CommonAttributes {
   reference: TerminalReference;
   description: TerminalDescription;
   value?: string;
@@ -28,12 +29,12 @@ class TerminalView extends React.PureComponent<Props> {
     const signMod = `mod-${signWord(sign)}`;
 
     return (
-      <div className={c("terminalView", className, signMod)}>
-        <div className={c("terminalView-name", signMod)}>
+      <div className={classNames("TerminalView", className, signMod)}>
+        <div className={classNames("TerminalView-name", signMod)}>
           {description.name}
         </div>
         {this.renderValue(signMod)}
-        <div className={c("terminalView-pin", signMod)} />
+        <div className={classNames("TerminalView-pin", signMod)} />
       </div>
     );
   }
@@ -46,14 +47,14 @@ class TerminalView extends React.PureComponent<Props> {
     }
     if (sign === "+") {
       return (
-        <div className={c("terminalView-value mod-readonly", signMod)}>
+        <div className={classNames("TerminalView-value mod-readonly", signMod)}>
           {value}
         </div>
       );
     } else {
       return (
         <input
-          className={c("terminalView-value", signMod)}
+          className={classNames("TerminalView-value", signMod)}
           defaultValue={value}
           onChange={this.onInput}
         />

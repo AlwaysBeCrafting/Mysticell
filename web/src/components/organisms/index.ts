@@ -1,5 +1,12 @@
 export { AppDragLayer } from "./AppDragLayer/AppDragLayer";
+
 export { FormulaView } from "./FormulaView/FormulaView";
+export { ConnectedFormulaView } from "./FormulaView/ConnectedFormulaView";
+
 export { Sidebar } from "./Sidebar/Sidebar";
-export { Tabletop } from "./Tabletop/Tabletop";
+export { ConnectedSidebar } from "./Sidebar/ConnectedSidebar";
+
 export { StatusBar } from "./StatusBar/StatusBar";
+
+export { Tabletop } from "./Tabletop/Tabletop";
+export { ConnectedTabletop } from "./Tabletop/ConnectedTabletop";

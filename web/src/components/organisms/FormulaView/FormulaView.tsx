@@ -2,55 +2,47 @@ import classnames from "classnames";
 import { Seq } from "immutable";
 import React from "react";
 import { Icon } from "react-atoms";
-import { connect as connectStore } from "react-redux";
 import { RouteComponentProps, Route } from "react-router";
+
+import { CommonAttributes } from "common/types";
 
 import { ToolButton } from "components/atoms";
 import { ErrorBoundary, Toolbar } from "components/molecules";
 
-import { AppState } from "data/AppState";
-import { bindPathFromId } from "data/EntityState";
 import { Source } from "data/Source";
 
 import { Boundary } from "./Boundary";
-import { NodeLayer } from "./NodeLayer";
-import { WireLayer } from "./WireLayer";
+import { ConnectedNodeLayer } from "./ConnectedNodeLayer";
+import { ConnectedWireLayer } from "./ConnectedWireLayer";
 
 import "./FormulaView.scss";
 
 type RouteProps = RouteComponentProps<{ documentId: string; path: string }>;
 
-interface StateProps {
+interface Props extends CommonAttributes {
   source: Source;
   nodeIds: Iterable<string>;
   wireIds: Iterable<string>;
   path: Seq.Indexed<string>;
 }
 
-interface OwnProps {
-  className?: string;
-  sourceId: string;
-}
-
-type Props = StateProps & OwnProps;
-
 const noop = () => undefined;
 
-class PartialFormulaView extends React.PureComponent<Props> {
+class FormulaView extends React.PureComponent<Props> {
   wrapper: HTMLDivElement | null = null;
 
   render() {
-    const { className, source, sourceId, path } = this.props;
+    const { className, source, path } = this.props;
     return (
-      <div className={classnames("formulaView", className)}>
-        <Toolbar className="formulaView-toolbar">
+      <div className={classnames("FormulaView", className)}>
+        <Toolbar className="FormulaView-toolbar">
           <Route path="/:documentId" render={this.renderCloseButton} />
           {path.map(this.renderPathSegment(path))}
         </Toolbar>
-        <div className="formulaView-graph">
+        <div className="FormulaView-graph">
           <ErrorBoundary>
             <Boundary
-              className="formulaView-graph-boundary mod-input"
+              className="FormulaView-graph-boundary mod-input"
               input
               source={source}
               onValueChange={noop}
@@ -58,22 +50,22 @@ class PartialFormulaView extends React.PureComponent<Props> {
           </ErrorBoundary>
           <ErrorBoundary>
             <Boundary
-              className="formulaView-graph-boundary mod-output"
+              className="FormulaView-graph-boundary mod-output"
               output
               source={source}
             />
           </ErrorBoundary>
           <div
-            className="formulaView-graph-grid"
+            className="FormulaView-graph-grid"
             ref={elem => (this.wrapper = elem)}
           >
-            <WireLayer
-              className="formulaView-graph-grid-wires"
-              sourceId={sourceId}
+            <ConnectedWireLayer
+              className="FormulaView-graph-grid-wires"
+              sourceId={source.id}
             />
-            <NodeLayer
-              className="formulaView-graph-grid-nodes"
-              sourceId={sourceId}
+            <ConnectedNodeLayer
+              className="FormulaView-graph-grid-nodes"
+              sourceId={source.id}
             />
           </div>
         </div>
@@ -82,7 +74,7 @@ class PartialFormulaView extends React.PureComponent<Props> {
   }
 
   private renderCloseButton = (routeProps: RouteProps) => (
-    <ToolButton link to={`/${routeProps.match.params.documentId}`}>
+    <ToolButton to={`/${routeProps.match.params.documentId}`}>
       <Icon name="close" />
     </ToolButton>
   );
@@ -93,7 +85,7 @@ class PartialFormulaView extends React.PureComponent<Props> {
   ) => (
     <span
       key={i}
-      className={classnames("formulaView-toolbar-path-segment", {
+      className={classnames("FormulaView-toolbar-path-segment", {
         "mod-final": i === Seq.Indexed(path).count() - 1,
       })}
     >
@@ -102,28 +94,4 @@ class PartialFormulaView extends React.PureComponent<Props> {
   );
 }
 
-const mapStateToProps = (state: AppState, props: OwnProps): StateProps => ({
-  source: state.entities.sources.get(props.sourceId, new Source()),
-  nodeIds: state.entities.nodeSources
-    .toSeq()
-    .filter(sourceId => sourceId === props.sourceId)
-    .map((_, nodeId) => nodeId)
-    .toIndexedSeq(),
-  wireIds: state.entities.wireSources
-    .toSeq()
-    .filter(sourceId => sourceId === props.sourceId)
-    .map((_, wireId) => wireId)
-    .toIndexedSeq(),
-  path: Seq.Indexed(
-    bindPathFromId(
-      state.entities.directories.toSeq().concat(state.entities.sources),
-      state.entities.entityParents,
-    )(props.sourceId) || [],
-  ),
-});
-
-const FormulaView = connectStore<StateProps, {}, OwnProps, AppState>(
-  mapStateToProps,
-)(PartialFormulaView);
-
-export { FormulaView };
+export { FormulaView, Props };

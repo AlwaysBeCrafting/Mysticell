@@ -1,15 +1,42 @@
-import { Map } from "immutable";
+import { Map, Record, Seq } from "immutable";
+
+const makeEntityKeyPath = (id: string, subPath: Iterable<any>) =>
+  Seq(["entities", id]).concat(subPath);
 
 interface Entity {
   readonly id: string;
 }
 
-interface NamedEntity extends Entity {
-  readonly name: string;
+interface EntityTableProps<T extends Entity> {
+  entities: Map<string, T>;
 }
 
-type EntityTable<T extends Entity> = Map<string, T>;
+class EntityTable<T extends Entity> extends Record<EntityTableProps<any>>({
+  entities: Map(),
+}) {
+  getEntity(id: string, notSetValue?: T): T {
+    return this.getIn(["entities", id]) || notSetValue;
+  }
 
-type JoinManyToOne = Map<string, string>;
+  putEntity(entity: T): this {
+    return this.setIn(["entities", entity.id], entity);
+  }
 
-export { Entity, NamedEntity, EntityTable, JoinManyToOne };
+  setInEntity(id: string, keyPath: Iterable<any>, value: any): this {
+    return this.setIn(makeEntityKeyPath(id, keyPath), value);
+  }
+
+  hasEntity(id: string): boolean {
+    return this.hasIn(["entities", id]);
+  }
+
+  removeEntity(id: string): this {
+    return this.removeIn(["entities", id]);
+  }
+
+  removeInEntity(id: string, keyPath: Iterable<any>): this {
+    return this.removeIn(makeEntityKeyPath(id, keyPath));
+  }
+}
+
+export { Entity, EntityTable };

@@ -36,8 +36,8 @@ class Boundary extends React.PureComponent<Props> {
     const signMod = `mod-${signWord(sign)}`;
 
     return (
-      <div className={c(className, "boundary", signMod)}>
-        <div className={c("boundary-header boundary-row", signMod)}>
+      <div className={c(className, "Boundary", signMod)}>
+        <div className={c("Boundary-header Boundary-row", signMod)}>
           {sign === "+" ? "Input" : "Output"}
         </div>
         {terminals
@@ -47,7 +47,7 @@ class Boundary extends React.PureComponent<Props> {
             return (
               <TerminalView
                 key={reference.hashCode()}
-                className="boundary-terminal"
+                className="Boundary-terminal"
                 description={term}
                 reference={reference}
                 value={value}
