@@ -9,9 +9,6 @@
     "migrate-seed": "npm run migrate && npm run seed"
   },
   "dependencies": {
-    "@types/glue": "^5.0.3",
-    "@types/hapi": "^17.0.19",
-    "@types/knex": "^0.14.24",
     "glue": "^5.0.0",
     "hapi": "^17.5.4",
     "knex": "^0.15.2",
@@ -19,5 +16,10 @@
     "pg": "^7.4.3",
     "ts-node": "^7.0.1",
     "typescript": "^3.0.3"
+  },
+  "devDependencies": {
+    "@types/glue": "^5.0.3",
+    "@types/hapi": "^17.0.19",
+    "@types/knex": "^0.14.24"
   }
 }
