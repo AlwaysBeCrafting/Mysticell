@@ -8,9 +8,19 @@ services:
     depends_on:
       - postgres
     command: ["npm", "start"]
+  migrate-seed:
+    build: ./api
+    env_file: ./common.env
+    volumes:
+      - ./api:/src
+    depends_on:
+      - postgres
+    command: ["npm", "run", "migrate-seed"]
   postgres:
     image: postgres:10.5
     env_file: ./common.env
+    ports:
+      - "5432:5432"
   web:
     build: ./web
     ports:
