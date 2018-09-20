@@ -1,34 +1,33 @@
 version: "3"
 services:
   api:
-    build: ./api
-    env_file: ./common.env
-    volumes:
-      - ./api:/src
     depends_on:
       - postgres
+    build: ./api
+    volumes:
+      - ./api:/src
+    ports:
+      - "3001:3001"
+    env_file: ./common.env
     command: ["npm", "start"]
   migrate-seed:
-    build: ./api
-    env_file: ./common.env
-    volumes:
-      - ./api:/src
     depends_on:
       - postgres
+    build: ./api
+    volumes:
+      - ./api:/src
+    env_file: ./common.env
     command: ["npm", "run", "migrate-seed"]
   postgres:
     image: postgres:10.5
-    env_file: ./common.env
     ports:
       - "5432:5432"
+    env_file: ./common.env
   web:
     build: ./web
-    ports:
-      - "3000:3000"
     volumes:
       - ./web:/src
-    environment:
-      NODE_ENV: development
-      HOST: "0.0.0.0"
-      PORT: 3000
+    ports:
+      - "3000:3000"
+    env_file: ./common.env
     command: ["npm", "run", "dev"]
