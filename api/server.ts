@@ -1,12 +1,12 @@
-import { compose, Manifest } from "glue";
+import { Server } from "hapi";
 
-const manifest: Manifest = {
-  server: {}
-};
-
-const startServer = async () => {
+const init = async () => {
   try {
-    const server = await compose(manifest);
+    const server = new Server({
+      host: process.env.API_HOST,
+      port: process.env.API_PORT,
+    });
+
     await server.start();
     console.log(`API listening at ${server.info.uri}`);
   } catch (err) {
@@ -15,4 +15,4 @@ const startServer = async () => {
   }
 };
 
-startServer();
+init();
