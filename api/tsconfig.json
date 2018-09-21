@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es2018",
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+
+    "strict": true,
+    "strictFunctionTypes": false,
+    "allowUnreachableCode": false,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+
+    "sourceMap": true,
+    "baseUrl": "./src",
+    "plugins": [{ "name": "tslint-language-service" }],
+    "lib": ["es2017"]
+  },
+  "exclude": ["node_modules"]
+}

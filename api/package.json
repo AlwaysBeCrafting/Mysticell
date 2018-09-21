@@ -1,0 +1,24 @@
+{
+  "name": "mysticell-api",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "ts-node -T node_modules/.bin/nodemon ./server.ts",
+    "migrate": "ts-node -T node_modules/.bin/knex migrate:latest",
+    "seed": "ts-node -T node_modules/.bin/knex seed:run",
+    "migrate-seed": "npm run migrate && npm run seed"
+  },
+  "dependencies": {
+    "hapi": "^17.5.4",
+    "knex": "^0.15.2",
+    "nodemon": "^1.18.4",
+    "objection": "^1.2.6",
+    "pg": "^7.4.3",
+    "ts-node": "^7.0.1",
+    "typescript": "^3.0.3"
+  },
+  "devDependencies": {
+    "@types/hapi": "^17.0.19",
+    "@types/knex": "^0.14.24"
+  }
+}
