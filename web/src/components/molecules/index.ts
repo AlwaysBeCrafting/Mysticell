@@ -1,5 +1,3 @@
-export { ErrorBoundary } from "./ErrorBoundary/ErrorBoundary";
-
 export { NodeView } from "./NodeView/NodeView";
 export { ConnectedNodeView } from "./NodeView/ConnectedNodeView";
 

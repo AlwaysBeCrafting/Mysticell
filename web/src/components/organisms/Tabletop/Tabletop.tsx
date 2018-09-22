@@ -4,7 +4,7 @@ import React from "react";
 
 import { CommonAttributes } from "common/types";
 
-import { ErrorBoundary, ConnectedSheetView } from "components/molecules";
+import { ConnectedSheetView } from "components/molecules";
 
 import "./Tabletop.scss";
 
@@ -18,11 +18,7 @@ class Tabletop extends React.PureComponent<Props> {
     return (
       <div className={classNames("tabletop", className)}>
         {Seq.Indexed(sheetIds)
-          .map(sheetId => (
-            <ErrorBoundary key={sheetId}>
-              <ConnectedSheetView sheetId={sheetId} />
-            </ErrorBoundary>
-          ))
+          .map(sheetId => <ConnectedSheetView sheetId={sheetId} />)
           .toList()}
       </div>
     );

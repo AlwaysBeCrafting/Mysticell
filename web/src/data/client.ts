@@ -4,7 +4,7 @@ import { Epic } from "redux-observable";
 import { App } from "data/App";
 
 const enum ActionTypes {
-  CLIENT_RESPONSE = "CLIENT_RESPONSE",
+  RESPONSE = "[Client] Response",
 }
 
 interface ClientRequestAction extends Action, RequestInit {
@@ -13,7 +13,7 @@ interface ClientRequestAction extends Action, RequestInit {
 }
 
 interface ClientResponseAction extends Action {
-  type: ActionTypes.CLIENT_RESPONSE;
+  type: ActionTypes.RESPONSE;
   originalType: string;
   response: Response;
   json: {};
@@ -29,7 +29,7 @@ const clientEpic: Epic<Action, App> = action$ =>
       async (action: ClientRequestAction): Promise<ClientResponseAction> => {
         const response = await fetch(apiUrl(action.path), action);
         return {
-          type: ActionTypes.CLIENT_RESPONSE,
+          type: ActionTypes.RESPONSE,
           originalType: action.type,
           response,
           json: response.json(),

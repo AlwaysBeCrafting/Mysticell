@@ -7,7 +7,7 @@ import { RouteComponentProps, Route } from "react-router";
 import { CommonAttributes } from "common/types";
 
 import { ToolButton } from "components/atoms";
-import { ErrorBoundary, Toolbar } from "components/molecules";
+import { Toolbar } from "components/molecules";
 
 import { Source } from "data/Source";
 
@@ -40,21 +40,17 @@ class FormulaView extends React.PureComponent<Props> {
           {path.map(this.renderPathSegment(path))}
         </Toolbar>
         <div className="FormulaView-graph">
-          <ErrorBoundary>
-            <Boundary
-              className="FormulaView-graph-boundary mod-input"
-              input
-              source={source}
-              onValueChange={noop}
-            />
-          </ErrorBoundary>
-          <ErrorBoundary>
-            <Boundary
-              className="FormulaView-graph-boundary mod-output"
-              output
-              source={source}
-            />
-          </ErrorBoundary>
+          <Boundary
+            className="FormulaView-graph-boundary mod-input"
+            input
+            source={source}
+            onValueChange={noop}
+          />
+          <Boundary
+            className="FormulaView-graph-boundary mod-output"
+            output
+            source={source}
+          />
           <div
             className="FormulaView-graph-grid"
             ref={elem => (this.wrapper = elem)}
