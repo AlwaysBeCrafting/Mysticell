@@ -1,0 +1,41 @@
+import { Action } from "redux";
+import { Epic } from "redux-observable";
+
+import { App } from "data/App";
+
+const enum ActionTypes {
+  CLIENT_RESPONSE = "CLIENT_RESPONSE",
+}
+
+interface ClientRequestAction extends Action, RequestInit {
+  method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
+  path: string;
+}
+
+interface ClientResponseAction extends Action {
+  type: ActionTypes.CLIENT_RESPONSE;
+  originalType: string;
+  response: Response;
+  json: {};
+}
+
+const apiUrl = (path: string) =>
+  `http://${process.env.API_HOST}:${process.env.API_PORT}/${path}`;
+
+const clientEpic: Epic<Action, App> = action$ =>
+  action$
+    .filter((action: ClientRequestAction) => !!action.method && !!action.path)
+    .mergeMap(
+      async (action: ClientRequestAction): Promise<ClientResponseAction> => {
+        const response = await fetch(apiUrl(action.path), action);
+        return {
+          type: ActionTypes.CLIENT_RESPONSE,
+          originalType: action.type,
+          response,
+          json: response.json(),
+        };
+      },
+    );
+
+export { ClientRequestAction, ClientResponseAction };
+export { clientEpic };
