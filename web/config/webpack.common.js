@@ -50,6 +50,9 @@ module.exports = {
       template: paths.appHtml,
     }),
     new webpack.NamedModulesPlugin(),
+    new webpack.EnvironmentPlugin(
+      Object.keys(process.env).filter(key => key.startsWith("FRONTEND_")),
+    ),
   ],
   output: {
     path: paths.appDist,

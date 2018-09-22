@@ -7,8 +7,8 @@ const FriendlyErrorsPlugin = require("friendly-errors-webpack-plugin");
 const paths = require("./paths");
 const publicPath = "/";
 
-const serverPort = process.env.WEB_PORT;
-const serverHost = process.env.WEB_HOST;
+const serverPort = process.env.FRONTEND_WEB_PORT;
+const serverHost = process.env.FRONTEND_WEB_HOST;
 const serverUrl = `http://${serverHost}:${serverPort}`;
 
 module.exports = merge(common, {

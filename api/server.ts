@@ -10,6 +10,9 @@ const init = async () => {
   const server = new Server({
     host: process.env.API_HOST,
     port: process.env.API_PORT,
+    routes: {
+      cors: { origin: [`http*://${process.env.FRONTEND_WEB_HOST}:*` || ""] },
+    },
   });
 
   await server.register(documentRoutes);
