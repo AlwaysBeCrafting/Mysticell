@@ -7,7 +7,7 @@ import { Provider } from "react-redux";
 
 import { ConnectedDocumentPage } from "components/pages";
 
-import { configureStore } from "store";
+import { configureStore } from "data/store";
 
 import "index.scss";
 

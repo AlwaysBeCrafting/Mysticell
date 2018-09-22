@@ -1,11 +1,14 @@
 import { applyMiddleware, createStore } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
-import { createEpicMiddleware } from "redux-observable";
+import { createEpicMiddleware, combineEpics } from "redux-observable";
 
 import { App, epic, reducer } from "data/App";
+import { clientEpic } from "data/client";
+
+const rootEpic = combineEpics(epic, clientEpic);
 
 const configureStore = (initialState: App = new App()) => {
-  const epicMiddleware = createEpicMiddleware(epic);
+  const epicMiddleware = createEpicMiddleware(rootEpic);
   const enhancers = composeWithDevTools(applyMiddleware(epicMiddleware));
   const store = initialState
     ? createStore<App>(reducer, initialState, enhancers)
