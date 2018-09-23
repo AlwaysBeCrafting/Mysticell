@@ -1,7 +1,7 @@
-import { Epic } from "redux-observable";
+import { combineEpics } from "redux-observable";
 
-import { App, Action } from "data/App";
+import { epic as documentEpic } from "data/Document";
 
-const epic: Epic<Action, App> = $action => $action;
+const epic = combineEpics(documentEpic);
 
 export { epic };

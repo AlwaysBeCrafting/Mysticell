@@ -7,8 +7,8 @@ const FriendlyErrorsPlugin = require("friendly-errors-webpack-plugin");
 const paths = require("./paths");
 const publicPath = "/";
 
-const serverPort = process.env.PORT;
-const serverHost = process.env.HOST;
+const serverPort = process.env.FRONTEND_WEB_PORT;
+const serverHost = process.env.FRONTEND_WEB_HOST;
 const serverUrl = `http://${serverHost}:${serverPort}`;
 
 module.exports = merge(common, {
@@ -26,6 +26,7 @@ module.exports = merge(common, {
     hot: true,
     inline: false,
     quiet: true,
+    host: serverHost,
     port: serverPort,
     historyApiFallback: {
       disableDotRule: true,
