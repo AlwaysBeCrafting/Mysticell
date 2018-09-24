@@ -4,6 +4,7 @@ services:
     depends_on:
       - postgres
     build: ./api
+    user: ${UID}
     volumes:
       - ./api:/src
     ports:
@@ -14,6 +15,7 @@ services:
     depends_on:
       - postgres
     build: ./api
+    user: ${UID}
     volumes:
       - ./api:/src
     env_file: ./common.env
@@ -25,6 +27,7 @@ services:
     env_file: ./common.env
   web:
     build: ./web
+    user: ${UID}
     volumes:
       - ./web:/src
     ports:
