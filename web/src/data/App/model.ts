@@ -9,6 +9,9 @@ import { Sheet } from "data/Sheet";
 import { Source } from "data/Source";
 import { Wire } from "data/Wire";
 
+/**
+ * Contains normalized maps of core data types and their relationships
+ */
 class App extends Record({
   cells: new EntityTable<Cell>(),
   cellSheets: new Relation.HasOne(),

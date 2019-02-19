@@ -2,6 +2,10 @@ import { Record } from "immutable";
 
 import { Entity, TerminalReference } from "data/common";
 
+/**
+ * A connection between the Terminals of two Nodes, or
+ * During calculation, these define explicit edges in the graph
+ */
 class Wire
   extends Record({
     id: "wire.default",

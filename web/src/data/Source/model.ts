@@ -2,8 +2,11 @@ import { List, Record } from "immutable";
 
 import { Entity, ParamType, TerminalDescription } from "data/common";
 
-type SourceType = "function" | "property" | "table" | "primitive";
+type SourceType = "function" | "field" | "table" | "primitive";
 
+/**
+ * User-defined behavior for a Node
+ */
 class Source
   extends Record({
     id: "source.default",

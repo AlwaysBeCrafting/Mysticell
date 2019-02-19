@@ -4,6 +4,9 @@ import { Size2d } from "common/types";
 
 import { Entity } from "data/common";
 
+/**
+ * Sized grid to place Cells on
+ */
 class Sheet
   extends Record({
     id: "sheet.default",

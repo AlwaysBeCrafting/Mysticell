@@ -4,6 +4,9 @@ import { Rect } from "common/types";
 
 import { Entity, TerminalReference } from "data/common";
 
+/**
+ * A region of a sheet referencing a property terminal
+ */
 class Cell
   extends Record({
     id: "cell.default",
