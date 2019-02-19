@@ -9,7 +9,7 @@ import { SourceType } from "data/Source";
 import { App } from "data/App";
 import { connect } from "react-redux";
 import functionIcon from "./assets/icon-function.svg";
-import propertyIcon from "./assets/icon-property.svg";
+import fieldIcon from "./assets/icon-property.svg";
 import { CommonAttributes } from "common/types";
 
 type RouteProps = RouteComponentProps<{ documentId: string; path: string }>;
@@ -50,7 +50,7 @@ class PartialSourceItemView extends React.PureComponent<Props> {
           className={classNames("Sidebar-item-icon", {
             "is-selected": selected,
           })}
-          src={type === "property" ? propertyIcon : functionIcon}
+          src={type === "field" ? fieldIcon : functionIcon}
         />
         <div className="Sidebar-item-title">{name}</div>
       </Link>
