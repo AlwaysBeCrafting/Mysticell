@@ -4,26 +4,21 @@ import { hashAll } from "common/utils";
 
 import { ParamType } from ".";
 
-interface TerminalDescription {
+interface Terminal {
   name: string;
   type: ParamType;
 }
 
-class TerminalReference<S extends "+" | "-" = "+" | "-">
-  implements ValueObject {
-  constructor(readonly id: string, readonly sign: S, readonly index: number) {}
+class TerminalPointer implements ValueObject {
+  constructor(readonly node_id: string | null, readonly index: number) {}
 
   hashCode() {
-    return hashAll(this.id, this.sign, this.index);
+    return hashAll(this.node_id, this.index);
   }
 
   equals(other: any) {
-    return (
-      this.id === other.id &&
-      this.sign === other.sign &&
-      this.index === other.index
-    );
+    return this.node_id === other.id && this.index === other.index;
   }
 }
 
-export { TerminalDescription, TerminalReference };
+export { Terminal, TerminalPointer };

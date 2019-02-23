@@ -1,6 +1,6 @@
 import { List, Record } from "immutable";
 
-import { Entity, ParamType, TerminalDescription } from "data/common";
+import { Entity, ParamType, Terminal } from "data/common";
 
 type SourceType = "function" | "field" | "table" | "primitive";
 
@@ -11,11 +11,11 @@ class Source
   extends Record({
     id: "source.default",
     name: "Default source",
-    inputs: List.of<TerminalDescription>({
+    inputs: List.of<Terminal>({
       name: "Input",
       type: "undefined" as ParamType,
     }),
-    outputs: List.of<TerminalDescription>({
+    outputs: List.of<Terminal>({
       name: "Output",
       type: "undefined" as ParamType,
     }),
