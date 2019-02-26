@@ -4,7 +4,7 @@ import React from "react";
 
 import { TerminalView } from "components/atoms";
 
-import { TerminalReference } from "data/common";
+import { TerminalPointer } from "data/common";
 import { Source } from "data/Source";
 
 import "./Boundary.scss";
@@ -43,13 +43,13 @@ class Boundary extends React.PureComponent<Props> {
         {terminals
           .zip(values || terminals.map(_ => ""))
           .map(([term, value], index) => {
-            const reference = new TerminalReference(source.id, sign, index);
+            const pointer = new TerminalPointer(source.id, index);
             return (
               <TerminalView
-                key={reference.hashCode()}
+                key={pointer.hashCode()}
                 className="Boundary-terminal"
                 description={term}
-                reference={reference}
+                pointer={pointer}
                 value={value}
               />
             );

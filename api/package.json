@@ -9,11 +9,13 @@
     "migrate-seed": "npm run migrate && npm run seed"
   },
   "dependencies": {
+    "@types/shortid": "0.0.29",
     "hapi": "^17.5.4",
     "knex": "^0.15.2",
     "nodemon": "^1.18.4",
     "objection": "^1.2.6",
     "pg": "^7.4.3",
+    "shortid": "^2.2.14",
     "ts-node": "^7.0.1",
     "typescript": "^3.0.3"
   },

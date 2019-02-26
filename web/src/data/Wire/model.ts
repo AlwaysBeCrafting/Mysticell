@@ -1,16 +1,16 @@
 import { Record } from "immutable";
 
-import { Entity, TerminalReference } from "data/common";
+import { Entity, TerminalPointer } from "data/common";
 
 /**
- * A connection between the Terminals of two Nodes, or
+ * A connection between terminals
  * During calculation, these define explicit edges in the graph
  */
 class Wire
   extends Record({
     id: "wire.default",
-    start: new TerminalReference("property.default", "+", 0),
-    end: new TerminalReference("node.default", "-", 0),
+    tail: new TerminalPointer(null, 0),
+    head: new TerminalPointer(null, 0),
   })
   implements Entity {}
 

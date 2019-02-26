@@ -5,7 +5,7 @@ import { Card } from "react-atoms";
 
 import { TerminalView } from "components/atoms";
 
-import { TerminalReference } from "data/common";
+import { TerminalPointer } from "data/common";
 import { Node } from "data/Node";
 import { Source } from "data/Source";
 
@@ -16,7 +16,7 @@ interface Props extends CommonAttributes {
   node: Node;
   source: Source;
   isDragging: boolean;
-  connections: Iterable<TerminalReference>;
+  connections: Iterable<TerminalPointer>;
 }
 
 class NodeView extends React.PureComponent<Props> {
@@ -39,23 +39,23 @@ class NodeView extends React.PureComponent<Props> {
           <span className="NodeView-header-name">{label || name}</span>
         </header>
         {Seq.Indexed(outputs).map((term, index) => {
-          const reference = new TerminalReference(node.id, "+", index);
+          const pointer = new TerminalPointer(node.id, index);
           return (
             <TerminalView
-              key={reference.hashCode()}
+              key={pointer.hashCode()}
               className="NodeView-terminal"
-              reference={reference}
+              pointer={pointer}
               description={term}
             />
           );
         })}
         {Seq.Indexed(inputs).map((term, index) => {
-          const reference = new TerminalReference(node.id, "-", index);
+          const pointer = new TerminalPointer(node.id, index);
           return (
             <TerminalView
-              key={reference.hashCode()}
+              key={pointer.hashCode()}
               className="NodeView-terminal"
-              reference={reference}
+              pointer={pointer}
               description={term}
             />
           );

@@ -6,12 +6,12 @@ import { CommonAttributes, Position2d } from "common/types";
 
 import { Wire as WireView } from "components/atoms";
 
-import { TerminalReference } from "data/common";
+import { TerminalPointer } from "data/common";
 import { Wire } from "data/Wire";
 
 interface Props extends CommonAttributes {
   wires: Seq.Indexed<Wire>;
-  getTerminalPosition: (terminal: TerminalReference) => Position2d;
+  getTerminalPosition: (terminal: TerminalPointer) => Position2d;
 }
 
 class WireLayer extends React.PureComponent<Props> {
@@ -21,14 +21,12 @@ class WireLayer extends React.PureComponent<Props> {
       <svg className={classNames("WireLayer", className)}>
         {wires
           .map(wire => {
-            const { start, end } = wire;
-            const startPos = getTerminalPosition(start);
-            const endPos = getTerminalPosition(end);
+            const { id, tail, head } = wire;
             return (
               <WireView
-                startPos={new Position2d(startPos.x, startPos.y)}
-                endPos={new Position2d(endPos.x, endPos.y)}
-                key={`${start.id}/${start.index}-${end.id}/${end.index}`}
+                startPos={getTerminalPosition(tail)}
+                endPos={getTerminalPosition(head)}
+                key={id}
               />
             );
           })

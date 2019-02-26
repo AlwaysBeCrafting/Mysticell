@@ -3,30 +3,29 @@ import React from "react";
 
 import { CommonAttributes } from "common/types";
 
-import { TerminalDescription, TerminalReference } from "data/common";
+import { Terminal, TerminalPointer } from "data/common";
 
 import "./TerminalView.scss";
 
 const signWord = (sign: "+" | "-") => (sign === "+" ? "plus" : "minus");
 
 interface Props extends CommonAttributes {
-  reference: TerminalReference;
-  description: TerminalDescription;
+  pointer: TerminalPointer;
+  description: Terminal;
   value?: string;
-  onInput?: (newValue: string, reference: TerminalReference) => void;
+  onInput?: (newValue: string, reference: TerminalPointer) => void;
   onConnect?: (
-    otherReference: TerminalReference,
-    selfReference: TerminalReference,
+    otherReference: TerminalPointer,
+    selfReference: TerminalPointer,
   ) => void;
-  onDisconnect?: (selfReference: TerminalReference) => void;
+  onDisconnect?: (selfReference: TerminalPointer) => void;
 }
 
 class TerminalView extends React.PureComponent<Props> {
   render() {
-    const { className, reference, description } = this.props;
-    const { sign } = reference;
+    const { className, description } = this.props;
 
-    const signMod = `mod-${signWord(sign)}`;
+    const signMod = `mod-${signWord("+")}`;
 
     return (
       <div className={classNames("TerminalView", className, signMod)}>
@@ -40,8 +39,8 @@ class TerminalView extends React.PureComponent<Props> {
   }
 
   private renderValue(signMod: string) {
-    const { reference, value } = this.props;
-    const { sign } = reference;
+    const { value } = this.props;
+    const sign = "+";
     if (value === undefined) {
       return null;
     }
@@ -63,9 +62,9 @@ class TerminalView extends React.PureComponent<Props> {
   }
 
   private onInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { onInput, reference } = this.props;
+    const { onInput, pointer } = this.props;
     if (onInput) {
-      onInput(event.target.value, reference);
+      onInput(event.target.value, pointer);
     }
   };
 }
