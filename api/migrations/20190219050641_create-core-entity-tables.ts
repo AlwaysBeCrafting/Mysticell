@@ -13,12 +13,10 @@ exports.up = async function(knex: Knex): Promise<any> {
   await knex.schema.createTable("sources", table => {
     table.string("id", SHORTID_MAX_LENGTH).primary();
     table.string("document_id", SHORTID_MAX_LENGTH).references("documents.id");
-    table
-      .string("path", PATH_MAX_LENGTH)
-      .unique()
-      .notNullable();
+    table.string("path", PATH_MAX_LENGTH).notNullable();
     table.enum("type", ["function", "field", "primitive"]).notNullable();
     table.unique(["id", "type"]);
+    table.unique(["document_id", "path"]);
   });
 
   await knex.schema.createTable("field_values", table => {
@@ -92,7 +90,11 @@ exports.up = async function(knex: Knex): Promise<any> {
   await knex.schema.createTable("cells", table => {
     table.string("id", SHORTID_MAX_LENGTH).primary();
     table
-      .string("field_id")
+      .string("sheet_id", SHORTID_MAX_LENGTH)
+      .references("sheets.id")
+      .notNullable();
+    table
+      .string("field_id", SHORTID_MAX_LENGTH)
       .references("sources.id")
       .notNullable();
     table.enum("sign", ["+", "-"]);
