@@ -1,3 +1,5 @@
+import { knexSnakeCaseMappers } from "objection";
+
 export = {
   client: "postgresql",
   connection: {
@@ -14,4 +16,5 @@ export = {
   seeds: {
     directory: "./seeds",
   },
+  ...knexSnakeCaseMappers(),
 };
