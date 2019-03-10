@@ -1,6 +1,6 @@
 import { Plugin } from "hapi";
 
-import { getDocuments, getDocument } from "./controller";
+import { getNodes, getNode } from "./controller";
 
 const documentRoutes: Plugin<{}> = {
   name: "Route: /documents",
@@ -8,13 +8,13 @@ const documentRoutes: Plugin<{}> = {
     server.route([
       {
         method: "GET",
-        path: "/documents",
-        handler: getDocuments,
+        path: "/documents/{documentId}/sources/{sourceId}/nodes",
+        handler: getNodes,
       },
       {
         method: "GET",
-        path: "/documents/{id}",
-        handler: getDocument,
+        path: "/documents/{documentId}/sources/{sourceId}/nodes/{id}",
+        handler: getNode,
       },
     ]);
   },
