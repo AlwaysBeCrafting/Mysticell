@@ -1,7 +1,19 @@
-import { Document } from "./Document";
+import { notImplemented } from "boom";
 
-const listDocuments = async (limit: number = 10) => {
-  return Document.query().limit(limit);
+import { Document } from "./model";
+
+const create = async () => notImplemented();
+
+const read = async (id?: string) => {
+  if (id) {
+    return Document.query().where({ id });
+  } else {
+    return Document.query();
+  }
 };
 
-export { listDocuments };
+const update = async () => notImplemented();
+
+const destroy = async () => notImplemented();
+
+export { create, read, update, destroy };

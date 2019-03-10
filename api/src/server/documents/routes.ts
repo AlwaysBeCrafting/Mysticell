@@ -1,15 +1,15 @@
 import { Plugin } from "hapi";
 
-import { handleListDocuments } from "./handlers";
+import { getDocuments } from "./controller";
 
 const documentRoutes: Plugin<{}> = {
-  name: "Document Routes",
+  name: "Route: /documents",
   register: server => {
     server.route([
       {
         method: "GET",
         path: "/documents",
-        handler: handleListDocuments,
+        handler: getDocuments,
       },
     ]);
   },
