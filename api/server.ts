@@ -2,7 +2,7 @@ import { Server } from "hapi";
 import * as knex from "knex";
 import { Model } from "objection";
 
-import { documentRoutes } from "./src/data/Document/routes";
+import { documentRoutes } from "./src/server/documents/routes";
 
 Model.knex(knex(require("./knexfile")));
 
@@ -21,7 +21,7 @@ const init = async () => {
   console.log(`API listening at ${server.info.uri}`);
 
   process.on("unhandledRejection", err => {
-    console.log(err);
+    console.error(err);
     process.exit(1);
   });
 };

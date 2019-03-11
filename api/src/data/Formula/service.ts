@@ -1,15 +1,11 @@
 import { notImplemented } from "boom";
 
-import { Document } from "./model";
+import { Formula } from "./model";
 
 const create = async () => notImplemented();
 
-const read = async (id?: string) => {
-  if (id) {
-    return Document.query().where({ id });
-  } else {
-    return Document.query();
-  }
+const read = async (id: string) => {
+  return Formula.query().findById(id);
 };
 
 const update = async () => notImplemented();

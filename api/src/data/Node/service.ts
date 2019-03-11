@@ -1,14 +1,16 @@
 import { notImplemented } from "boom";
 
-import { Document } from "./model";
+import { Node } from "./model";
 
 const create = async () => notImplemented();
 
-const read = async (id?: string) => {
+const read = async (formulaId?: string, id?: string) => {
   if (id) {
-    return Document.query().where({ id });
+    return Node.query()
+      .where({ formulaId })
+      .findById(id);
   } else {
-    return Document.query();
+    return Node.query().where({ formulaId });
   }
 };
 
