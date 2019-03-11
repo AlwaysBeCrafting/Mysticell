@@ -2,8 +2,10 @@ import { Plugin } from "hapi";
 
 import { getSheets, getSheet } from "./controller";
 
-const documentRoutes: Plugin<{}> = {
-  name: "Route: /documents",
+import { cellRoutes } from "./cells/routes";
+
+const sheetRoutes: Plugin<{}> = {
+  name: "Route: /documents/*/sheets",
   register: server => {
     server.route([
       {
@@ -17,7 +19,8 @@ const documentRoutes: Plugin<{}> = {
         handler: getSheet,
       },
     ]);
+    server.register([cellRoutes]);
   },
 };
 
-export { documentRoutes };
+export { sheetRoutes };

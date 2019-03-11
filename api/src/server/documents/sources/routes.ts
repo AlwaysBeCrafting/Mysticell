@@ -1,9 +1,11 @@
 import { Plugin } from "hapi";
 
 import { getSources, getSource } from "./controller";
+import { nodeRoutes } from "./nodes/routes";
+import { wireRoutes } from "./wires/routes";
 
-const documentRoutes: Plugin<{}> = {
-  name: "Route: /documents",
+const sourceRoutes: Plugin<{}> = {
+  name: "Route: /documents/*/sources",
   register: server => {
     server.route([
       {
@@ -17,7 +19,8 @@ const documentRoutes: Plugin<{}> = {
         handler: getSource,
       },
     ]);
+    server.register([nodeRoutes, wireRoutes]);
   },
 };
 
-export { documentRoutes };
+export { sourceRoutes };

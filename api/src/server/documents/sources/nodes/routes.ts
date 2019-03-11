@@ -2,8 +2,8 @@ import { Plugin } from "hapi";
 
 import { getNodes, getNode } from "./controller";
 
-const documentRoutes: Plugin<{}> = {
-  name: "Route: /documents",
+const nodeRoutes: Plugin<{}> = {
+  name: "Route: /documents/*/sources/*/nodes",
   register: server => {
     server.route([
       {
@@ -20,4 +20,4 @@ const documentRoutes: Plugin<{}> = {
   },
 };
 
-export { documentRoutes };
+export { nodeRoutes };
