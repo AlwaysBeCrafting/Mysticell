@@ -1,14 +1,8 @@
 import React from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  RouteComponentProps,
-} from "react-router-dom";
 
 import { CommonAttributes } from "common/types";
 
 import {
-  AppDragLayer,
   ConnectedFormulaView,
   ConnectedSidebar,
   StatusBar,
@@ -26,39 +20,35 @@ interface Props extends CommonAttributes {
   sheets: EntityTable<Sheet>;
   sources: EntityTable<Source>;
   idFromPath: (path: Iterable<string>) => string | undefined;
+  documentId: string;
+  path: string;
 }
-
-type RouteProps = RouteComponentProps<{ documentId: string; path: string }>;
 
 class DocumentPage extends React.PureComponent<Props> {
   render() {
+    const { documentId, path } = this.props;
+    console.log(this.props);
     return (
-      <Router>
-        <main className="DocumentPage">
-          <AppDragLayer />
-          <Route path="/:documentId" render={this.renderSidebar} />
-          <Route exact path="/:documentId" render={this.renderTabletop} />
-          <Route
-            exact
-            path="/:documentId/:path+"
-            render={this.renderFormulaView}
+      <main className="DocumentPage">
+        <ConnectedSidebar
+          className="DocumentPage-sidebar"
+          documentId={documentId}
+        />
+        {!path && (
+          <ConnectedTabletop
+            className="DocumentPage-content"
+            documentId={documentId}
           />
-          <StatusBar className="DocumentPage-status" />
-        </main>
-      </Router>
+        )}
+        {path && this.renderFormulaView(path)}
+        <StatusBar className="DocumentPage-status" />
+      </main>
     );
   }
 
-  private renderSidebar = (routeProps: RouteProps) => (
-    <ConnectedSidebar
-      className="DocumentPage-sidebar"
-      documentId={routeProps.match.params.documentId}
-    />
-  );
-
-  private renderFormulaView = (routeProps: RouteProps) => {
+  private renderFormulaView = (path: string) => {
     const { idFromPath } = this.props;
-    const pathFragments = routeProps.match.params.path.split("/");
+    const pathFragments = path.split("/");
     const sourceId = idFromPath(pathFragments);
     if (sourceId) {
       return (
@@ -69,20 +59,9 @@ class DocumentPage extends React.PureComponent<Props> {
       );
     } else {
       return (
-        <div className="DocumentPage-error">
-          No formula exists at /{routeProps.match.params.path}
-        </div>
+        <div className="DocumentPage-error">No formula exists at /{path}</div>
       );
     }
-  };
-
-  private renderTabletop = (routeProps: RouteProps) => {
-    return (
-      <ConnectedTabletop
-        className="DocumentPage-content"
-        documentId={routeProps.match.params.documentId}
-      />
-    );
   };
 }
 
