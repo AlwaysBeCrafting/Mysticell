@@ -10,6 +10,8 @@ import { ConnectedDocumentPage } from "components/pages";
 
 import { App as AppModel } from "data/App";
 
+import "./App.scss";
+
 interface Props {
   store: Store<AppModel>;
 }

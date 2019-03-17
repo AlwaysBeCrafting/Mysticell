@@ -6,8 +6,6 @@ import { App } from "components/App";
 
 import { configureStore } from "data/store";
 
-import "index.scss";
-
 const store = configureStore();
 const development = process.env.NODE_ENV === "development";
 const rootElem = document.querySelector(".root");
