@@ -6,7 +6,11 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Store } from "redux";
 
 import { AppDragLayer } from "components/organisms";
-import { ConnectedDocumentPage } from "components/pages";
+import {
+  ConnectedDocumentPage,
+  HomePage,
+  NotFoundPage,
+} from "components/pages";
 
 import { App as AppModel } from "data/App";
 
@@ -23,7 +27,9 @@ const App = ({ store }: Props) => (
         <AppDragLayer />
         <Router>
           <Switch>
+            <Route exact path="/" component={HomePage} />
             <Route path="/d/:documentId" component={ConnectedDocumentPage} />
+            <Route component={NotFoundPage} />
           </Switch>
         </Router>
       </>
