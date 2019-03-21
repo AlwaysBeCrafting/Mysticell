@@ -28,7 +28,7 @@ class CellView extends React.PureComponent<Props> {
         className={classNames("CellView", className)}
         title={message}
       >
-        {cell.terminal.sign === "+" ? (
+        {cell.sign === "+" ? (
           <input
             className="CellView-content"
             defaultValue={`${value}`}
