@@ -10,7 +10,7 @@ type SourceType = "function" | "field" | "table" | "primitive";
 class Source
   extends Record({
     id: "source.default",
-    name: "Default source",
+    path: "/Default Source",
     inputs: List.of<Terminal>({
       name: "Input",
       type: "undefined" as ParamType,

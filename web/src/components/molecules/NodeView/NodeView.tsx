@@ -23,7 +23,7 @@ class NodeView extends React.PureComponent<Props> {
   render() {
     const { className, node, source, isDragging } = this.props;
     const { label, position } = node;
-    const { name, inputs, outputs } = source;
+    const { path, inputs, outputs } = source;
     const height = 1 + inputs.count() + outputs.count();
     const positionedStyle = {
       gridRow: `${position.y + 1} / span ${height}`,
@@ -36,7 +36,7 @@ class NodeView extends React.PureComponent<Props> {
         style={positionedStyle}
       >
         <header className="NodeView-header NodeView-row">
-          <span className="NodeView-header-name">{label || name}</span>
+          <span className="NodeView-header-name">{label || path}</span>
         </header>
         {Seq.Indexed(outputs).map((term, index) => {
           const pointer = new TerminalPointer(node.id, index);

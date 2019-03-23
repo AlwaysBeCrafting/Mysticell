@@ -4,6 +4,7 @@ import { Action as NodeAction } from "data/Node";
 import { Action as SheetAction } from "data/Sheet";
 import { Action as SourceAction } from "data/Source";
 import { Action as WireAction } from "data/Wire";
+import { ClientResponseAction } from "data/client";
 
 type Action =
   | CellAction
@@ -11,6 +12,8 @@ type Action =
   | NodeAction
   | SheetAction
   | SourceAction
-  | WireAction;
+  | WireAction
+  // Async actions
+  | ClientResponseAction;
 
 export { Action };

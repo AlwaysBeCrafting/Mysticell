@@ -39,14 +39,14 @@ const verifyAndReduce = (
 const PRIMITIVE_SOURCES = List.of(
   new Source({
     id: "primitive.noop",
-    name: "No-op",
+    path: "/No-op",
     inputs: List.of({ name: "In", type: "undefined" as ParamType }),
     outputs: List.of({ name: "Out", type: "undefined" as ParamType }),
   }),
 
   new Source({
     id: "primitive.add",
-    name: "Add",
+    path: "/Add",
     inputs: List.of(
       { name: "A", type: "number" as ParamType },
       { name: "B", type: "number" as ParamType },
@@ -56,7 +56,7 @@ const PRIMITIVE_SOURCES = List.of(
 
   new Source({
     id: "primitive.subtract",
-    name: "Subtract",
+    path: "/Subtract",
     inputs: List.of(
       { name: "A", type: "number" as ParamType },
       { name: "B", type: "number" as ParamType },
@@ -66,7 +66,7 @@ const PRIMITIVE_SOURCES = List.of(
 
   new Source({
     id: "primitive.multiply",
-    name: "Multiply",
+    path: "/Multiply",
     inputs: List.of(
       { name: "A", type: "number" as ParamType },
       { name: "B", type: "number" as ParamType },
@@ -76,7 +76,7 @@ const PRIMITIVE_SOURCES = List.of(
 
   new Source({
     id: "primitive.divide",
-    name: "Divide",
+    path: "/Divide",
     inputs: List.of(
       { name: "A", type: "number" as ParamType },
       { name: "B", type: "number" as ParamType },
@@ -86,7 +86,7 @@ const PRIMITIVE_SOURCES = List.of(
 
   new Source({
     id: "primitive.floor",
-    name: "Floor",
+    path: "/Floor",
     inputs: List.of({ name: "Num", type: "number" as ParamType }),
     outputs: List.of({ name: "Floor", type: "number" as ParamType }),
   }),

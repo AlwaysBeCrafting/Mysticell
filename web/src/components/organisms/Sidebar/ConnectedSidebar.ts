@@ -1,42 +1,49 @@
-import { connect } from "react-redux";
+import { connect, Dispatch } from "react-redux";
 
 import { CommonAttributes } from "common/types";
 
 import { App } from "data/App";
 import { Document } from "data/Document";
+import { listSources } from "data/Source";
 
 import { Sidebar, Props } from "./Sidebar";
 
-type StateProps = Pick<Props, "document" | "directories" | "sources">;
-type DispatchProps = {};
-type PassedProps = CommonAttributes;
-type MergedProps = StateProps & DispatchProps & PassedProps;
+type StateProps = Pick<Props, "document" | "sources">;
+type DispatchProps = Pick<Props, "listSources">;
+type InheritedProps = CommonAttributes;
+type MergedProps = StateProps & DispatchProps & InheritedProps;
 
 interface ReduxProps {
   documentId: string;
 }
-type PublicProps = PassedProps & ReduxProps;
+type OwnProps = InheritedProps & ReduxProps;
 
-const mapStateToProps = (state: App, props: PublicProps): StateProps => ({
-  document: state.documents.getEntity(props.documentId, new Document()),
-  directories: state.directories,
+const mapStateToProps = (state: App, ownProps: OwnProps): StateProps => ({
+  document: state.documents.getEntity(ownProps.documentId, new Document()),
   sources: state.sources,
 });
 
+const mapDispatchToProps = (
+  dispatch: Dispatch<App>,
+  ownProps: OwnProps,
+): DispatchProps => ({
+  listSources: () => dispatch(listSources(ownProps.documentId)),
+});
+
 const mergeProps = (
-  { document, directories, sources }: StateProps,
-  {  }: DispatchProps,
-  { className }: PublicProps,
+  { document, sources }: StateProps,
+  { listSources }: DispatchProps,
+  { className }: OwnProps,
 ): MergedProps => ({
   document,
-  directories,
   sources,
+  listSources,
   className,
 });
 
 const ConnectedSidebar = connect(
   mapStateToProps,
-  {},
+  mapDispatchToProps,
   mergeProps,
 )(Sidebar);
 
