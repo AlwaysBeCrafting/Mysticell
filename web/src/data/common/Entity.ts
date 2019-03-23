@@ -37,6 +37,10 @@ class EntityTable<T extends Entity> extends Record<EntityTableProps<any>>({
   removeInEntity(id: string, keyPath: Iterable<any>): this {
     return this.removeIn(makeEntityKeyPath(id, keyPath));
   }
+
+  toEntitySeq(): Seq.Keyed<string, T> {
+    return this.entities.toSeq();
+  }
 }
 
 export { Entity, EntityTable };

@@ -27,7 +27,7 @@ interface Props extends CommonAttributes {
 class DocumentPage extends React.PureComponent<Props> {
   render() {
     const { documentId, path } = this.props;
-    console.log(this.props);
+
     return (
       <main className="DocumentPage">
         <ConnectedSidebar
