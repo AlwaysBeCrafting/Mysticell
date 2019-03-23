@@ -12,15 +12,15 @@ const serverHost = process.env.FRONTEND_WEB_HOST;
 const serverUrl = `http://${serverHost}:${serverPort}`;
 
 module.exports = merge(common, {
+  mode: "development",
   devtool: "source-map",
+  resolve: {
+    alias: {
+      "react-dom": "@hot-loader/react-dom",
+    },
+  },
   entry: {
-    app: [
-      "@babel/polyfill",
-      "react-hot-loader/patch",
-      `webpack-dev-server/client?${serverUrl}`,
-      "webpack/hot/dev-server",
-      paths.appIndex,
-    ],
+    app: ["@babel/polyfill", paths.appIndex],
   },
   devServer: {
     hot: true,

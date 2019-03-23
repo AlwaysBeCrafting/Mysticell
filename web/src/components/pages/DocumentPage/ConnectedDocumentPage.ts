@@ -1,4 +1,5 @@
-import { connect, Dispatch } from "react-redux";
+import { connect } from "react-redux";
+import { Dispatch } from "redux";
 import { RouteComponentProps } from "react-router-dom";
 
 import { CommonAttributes } from "common/types";
@@ -34,7 +35,7 @@ const mapStateToProps = (state: App, props: PublicProps): StateProps => ({
 });
 
 const mapDispatchToProps = (
-  dispatch: Dispatch<App>,
+  dispatch: Dispatch,
   ownProps: PublicProps,
 ): DispatchProps => ({
   getDocument: () => dispatch(getDocument(ownProps.match.params.documentId)),

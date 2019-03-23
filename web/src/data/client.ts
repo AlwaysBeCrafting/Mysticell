@@ -1,7 +1,6 @@
 import { Action } from "redux";
 import { Epic } from "redux-observable";
-
-import { App } from "data/App";
+import { filter, mergeMap } from "rxjs/operators";
 
 const enum ActionTypes {
   RESPONSE = "[Client] Response",
@@ -37,10 +36,12 @@ const apiUrl = (path: string) =>
     process.env.FRONTEND_API_PORT
   }/${path}`;
 
-const clientEpic: Epic<Action, App> = action$ =>
-  action$
-    .filter((action: ClientRequestAction) => !!action.path && !!action.requestInit)
-    .mergeMap(
+const clientEpic: Epic<Action> = action$ =>
+  action$.pipe(
+    filter(
+      (action: ClientRequestAction) => !!action.path && !!action.requestInit,
+    ),
+    mergeMap(
       async (action: ClientRequestAction): Promise<ClientResponseAction> => {
         const response = await fetch(apiUrl(action.path), action.requestInit);
         return {
@@ -50,7 +51,8 @@ const clientEpic: Epic<Action, App> = action$ =>
           json: await response.json(),
         };
       },
-    );
+    ),
+  );
 
 export { ActionTypes, ClientRequestAction, ClientResponseAction };
 export { clientRequest, clientEpic };

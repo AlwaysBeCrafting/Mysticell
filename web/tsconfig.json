@@ -21,7 +21,7 @@
     "preserveConstEnums": true,
     "sourceMap": true,
     "baseUrl": "./src",
-    "plugins": [{ "name": "tslint-language-service" }],
+    "plugins": [{ "name": "typescript-tslint-plugin" }],
     "lib": ["dom", "es2017"]
   },
   "exclude": ["node_modules"]

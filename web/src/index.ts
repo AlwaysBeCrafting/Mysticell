@@ -1,6 +1,5 @@
 import { createElement } from "react";
 import { render } from "react-dom";
-import { AppContainer } from "react-hot-loader";
 
 import { App } from "components/App";
 
@@ -11,12 +10,7 @@ const development = process.env.NODE_ENV === "development";
 const rootElem = document.querySelector(".root");
 
 const renderRoot = () => {
-  const root = createElement(App, { store });
-  if (development) {
-    render(createElement(AppContainer, null, root), rootElem);
-  } else {
-    render(root, rootElem);
-  }
+  render(createElement(App, { store }), rootElem);
 };
 
 renderRoot();

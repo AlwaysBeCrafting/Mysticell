@@ -1,4 +1,5 @@
-import { connect, Dispatch } from "react-redux";
+import { connect } from "react-redux";
+import { Dispatch } from "redux";
 
 import { App } from "data/App";
 
@@ -10,7 +11,7 @@ type DispatchProps = Pick<Props, "listDocuments">;
 
 const mapStateToProps = ({ documents }: App): StateProps => ({ documents });
 
-const mapDispatchToProps = (dispatch: Dispatch<App>): DispatchProps => ({
+const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   listDocuments: () => dispatch(listDocuments()),
 });
 
