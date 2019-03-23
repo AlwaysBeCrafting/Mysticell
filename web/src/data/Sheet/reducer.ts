@@ -6,9 +6,9 @@ import { Sheet } from "./model";
 const reducer = (
   state: EntityTable<Sheet> = new EntityTable(),
   action: Action,
-) => {
+): EntityTable<Sheet> => {
   switch (action.type) {
-    case ActionTypes.CREATE: {
+    case ActionTypes.LOAD: {
       const { sheet } = action.payload;
       return state.putEntity(sheet);
     }

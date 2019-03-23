@@ -4,7 +4,6 @@ import { createEpicMiddleware, combineEpics } from "redux-observable";
 
 import { App, epic, reducer } from "data/App";
 import { clientEpic } from "data/client";
-import { indexDocuments } from "./Document/actions";
 
 const rootEpic = combineEpics(epic, clientEpic);
 
@@ -14,8 +13,6 @@ const configureStore = (initialState: App = new App()) => {
   const store = initialState
     ? createStore<App>(reducer, initialState, enhancers)
     : createStore<App>(reducer, enhancers);
-
-  store.dispatch(indexDocuments());
 
   if (process.env.NODE_ENV === "development" && module.hot) {
     module.hot.accept("data/App", () => {

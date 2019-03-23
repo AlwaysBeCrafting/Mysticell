@@ -8,7 +8,7 @@ const reducer = (
   action: Action,
 ): EntityTable<Source> => {
   switch (action.type) {
-    case ActionTypes.CREATE: {
+    case ActionTypes.LOAD: {
       const { source } = action.payload;
       return state.putEntity(source);
     }

@@ -7,25 +7,23 @@ import {
   ClientResponseAction,
 } from "data/client";
 
-import { ActionTypes, loadDocument } from "./actions";
-import { Document } from "./model";
+import { ActionTypes, loadSheet } from "./actions";
+import { Sheet } from "./model";
 import { Observable } from "common/rxjs";
 
 const listEpic = (action$: ActionsObservable<ClientResponseAction>) =>
   action$
     .ofType(ClientActionTypes.RESPONSE)
     .filter(action => action.originalType === ActionTypes.LIST)
-    .flatMap(action =>
-      Observable.of(...action.json).map(js => new Document(js)),
-    )
-    .map(loadDocument);
+    .flatMap(action => Observable.of(...action.json).map(js => new Sheet(js)))
+    .map(loadSheet);
 
 const getEpic = (action$: ActionsObservable<ClientResponseAction>) =>
   action$
     .ofType(ClientActionTypes.RESPONSE)
     .filter(action => action.originalType === ActionTypes.GET)
-    .map(action => new Document(action.json))
-    .map(loadDocument);
+    .map(action => new Sheet(action.json))
+    .map(loadSheet);
 
 const epic = combineEpics(listEpic, getEpic);
 

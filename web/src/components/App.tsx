@@ -8,7 +8,7 @@ import { Store } from "redux";
 import { AppDragLayer } from "components/organisms";
 import {
   ConnectedDocumentPage,
-  HomePage,
+  ConnectedHomePage,
   NotFoundPage,
 } from "components/pages";
 
@@ -27,7 +27,7 @@ const App = ({ store }: Props) => (
         <AppDragLayer />
         <Router>
           <Switch>
-            <Route exact path="/" component={HomePage} />
+            <Route exact path="/" component={ConnectedHomePage} />
             <Route path="/d/:documentId" component={ConnectedDocumentPage} />
             <Route component={NotFoundPage} />
           </Switch>
