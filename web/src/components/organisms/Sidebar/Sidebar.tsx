@@ -24,12 +24,12 @@ class Sidebar extends React.PureComponent<Props> {
   render() {
     const { className, document } = this.props;
     return (
-      <div className={classnames("sidebar", className)}>
-        <header className="sidebar-header">
-          <div className="sidebar-header-name">{document.name}</div>
+      <div className={classnames("Sidebar", className)}>
+        <header className="Sidebar-header">
+          <div className="Sidebar-header-name">{document.name}</div>
         </header>
         <TreeView
-          className="sidebar-tree"
+          className="Sidebar-tree"
           render={this.renderItem}
           getKey={this.getItemKey}
           getChildren={this.getItemChildren}
