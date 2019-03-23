@@ -1,10 +1,10 @@
-import { connect } from "react-redux";
+import { connect, Dispatch } from "react-redux";
 import { RouteComponentProps } from "react-router-dom";
 
 import { CommonAttributes } from "common/types";
 
 import { App } from "data/App";
-import { Document } from "data/Document";
+import { Document, getDocument } from "data/Document";
 
 import { DocumentPage, Props } from "./DocumentPage";
 
@@ -12,7 +12,7 @@ type StateProps = Pick<
   Props,
   "name" | "sheets" | "sources" | "idFromPath" | "documentId" | "path"
 >;
-type DispatchProps = {};
+type DispatchProps = Pick<Props, "getDocument">;
 type PassedProps = CommonAttributes;
 type MergedProps = StateProps & DispatchProps & PassedProps;
 
@@ -33,9 +33,16 @@ const mapStateToProps = (state: App, props: PublicProps): StateProps => ({
   path: props.match.params.path,
 });
 
+const mapDispatchToProps = (
+  dispatch: Dispatch<App>,
+  ownProps: PublicProps,
+): DispatchProps => ({
+  getDocument: () => dispatch(getDocument(ownProps.match.params.documentId)),
+});
+
 const mergeProps = (
   { name, sheets, sources, idFromPath, documentId, path }: StateProps,
-  {  }: DispatchProps,
+  { getDocument }: DispatchProps,
   { className }: PublicProps,
 ): MergedProps => ({
   name,
@@ -45,11 +52,12 @@ const mergeProps = (
   className,
   documentId,
   path,
+  getDocument,
 });
 
 const ConnectedDocumentPage = connect(
   mapStateToProps,
-  {},
+  mapDispatchToProps,
   mergeProps,
 )(DocumentPage);
 

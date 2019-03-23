@@ -22,9 +22,15 @@ interface Props extends CommonAttributes {
   idFromPath: (path: Iterable<string>) => string | undefined;
   documentId: string;
   path: string;
+  getDocument: () => void;
 }
 
 class DocumentPage extends React.PureComponent<Props> {
+  componentDidMount() {
+    const { getDocument } = this.props;
+    getDocument();
+  }
+
   render() {
     const { documentId, path } = this.props;
 
