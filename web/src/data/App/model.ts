@@ -2,7 +2,6 @@ import { Record } from "immutable";
 
 import { Cell } from "data/Cell";
 import { EntityTable, Relation } from "data/common";
-import { Directory } from "data/Directory";
 import { Document } from "data/Document";
 import { Node } from "data/Node";
 import { Sheet } from "data/Sheet";
@@ -16,11 +15,6 @@ class App extends Record({
   cells: new EntityTable<Cell>(),
   cellSheets: new Relation.HasOne(),
   cellDocuments: new Relation.HasOne(),
-
-  directories: new EntityTable<Directory>(),
-  directoryParents: new Relation.HasOne(),
-  directoryChildren: new Relation.HasMany(),
-  directoryDocuments: new Relation.HasOne(),
 
   documents: new EntityTable<Document>(),
   documentCells: new Relation.HasMany(),

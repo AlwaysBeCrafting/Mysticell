@@ -1,35 +1,42 @@
-import { List } from "immutable";
-import { connect } from "react-redux";
+import { connect, Dispatch } from "react-redux";
 
 import { CommonAttributes } from "common/types";
 
 import { App } from "data/App";
+import { listSheets } from "data/Sheet";
 
 import { Tabletop, Props } from "./Tabletop";
 
-type StateProps = Pick<Props, "sheetIds">;
-type DispatchProps = {};
-type PassedProps = CommonAttributes;
-type MergedProps = StateProps & DispatchProps & PassedProps;
+type StateProps = Pick<Props, "sheets">;
+type DispatchProps = Pick<Props, "listSheets">;
+type InheritedProps = CommonAttributes;
+type MergedProps = StateProps & DispatchProps & InheritedProps;
 
 interface ReduxProps {
   documentId: string;
 }
-type PublicProps = PassedProps & ReduxProps;
+type OwnProps = InheritedProps & ReduxProps;
 
-const mapStateToProps = (_: App, __: PublicProps): StateProps => ({
-  sheetIds: List(),
+const mapStateToProps = (state: App, __: OwnProps): StateProps => ({
+  sheets: state.sheets,
+});
+
+const mapDispatchToProps = (
+  dispatch: Dispatch<App>,
+  ownProps: OwnProps,
+): DispatchProps => ({
+  listSheets: () => dispatch(listSheets(ownProps.documentId)),
 });
 
 const mergeProps = (
-  { sheetIds }: StateProps,
-  {  }: DispatchProps,
-  { className }: PublicProps,
-): MergedProps => ({ sheetIds, className });
+  { sheets }: StateProps,
+  { listSheets }: DispatchProps,
+  { className }: OwnProps,
+): MergedProps => ({ sheets, listSheets, className });
 
 const ConnectedTabletop = connect(
   mapStateToProps,
-  {},
+  mapDispatchToProps,
   mergeProps,
 )(Tabletop);
 
