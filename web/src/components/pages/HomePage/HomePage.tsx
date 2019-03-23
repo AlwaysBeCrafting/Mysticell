@@ -1,10 +1,28 @@
-import React from "react";
+import React, { Component } from "react";
 
-const HomePage = () => (
-  <div>
-    <h1>Home page</h1>
-    <p>Coming soon</p>
-  </div>
-);
+import { CommonAttributes } from "common/types";
+import { EntityTable } from "data/common";
+import { Document } from "data/Document";
 
-export { HomePage };
+interface Props extends CommonAttributes {
+  documents: EntityTable<Document>;
+  listDocuments: () => void;
+}
+
+class HomePage extends Component<Props> {
+  componentDidMount() {
+    const { listDocuments } = this.props;
+    listDocuments();
+  }
+
+  render() {
+    return (
+      <div>
+        <h1>Home page</h1>
+        <p>Coming soon</p>
+      </div>
+    );
+  }
+}
+
+export { HomePage, Props };
