@@ -10,9 +10,12 @@ interface Props extends CommonAttributes {
   nodeIds: Iterable<string>;
 }
 
-const NodeLayer = ({ nodeIds }: Props) =>
-  Seq.Indexed(nodeIds).map(nodeId => (
-    <ConnectedNodeView key={nodeId} nodeId={nodeId} />
-  ));
+const NodeLayer = ({ nodeIds }: Props) => (
+  <>
+    {Seq.Indexed(nodeIds).map(nodeId => (
+      <ConnectedNodeView key={nodeId} nodeId={nodeId} />
+    ))}
+  </>
+);
 
 export { NodeLayer, Props };
