@@ -12,6 +12,7 @@ import {
   ConnectedHomePage,
   NotFoundPage,
 } from "components/pages";
+import { StoreProvider } from "components/Store";
 
 import { App as AppModel } from "data/App";
 
@@ -22,20 +23,22 @@ interface Props {
 }
 
 const App = hot(({ store }: Props) => (
-  <Provider store={store}>
-    <DragDropContextProvider backend={HTML5Backend}>
-      <>
-        <AppDragLayer />
-        <Router>
-          <Switch>
-            <Route exact path="/" component={ConnectedHomePage} />
-            <Route path="/d/:documentId" component={ConnectedDocumentPage} />
-            <Route component={NotFoundPage} />
-          </Switch>
-        </Router>
-      </>
-    </DragDropContextProvider>
-  </Provider>
+  <StoreProvider store={store}>
+    <Provider store={store}>
+      <DragDropContextProvider backend={HTML5Backend}>
+        <>
+          <AppDragLayer />
+          <Router>
+            <Switch>
+              <Route exact path="/" component={ConnectedHomePage} />
+              <Route path="/d/:documentId" component={ConnectedDocumentPage} />
+              <Route component={NotFoundPage} />
+            </Switch>
+          </Router>
+        </>
+      </DragDropContextProvider>
+    </Provider>
+  </StoreProvider>
 ));
 
 export { App };
