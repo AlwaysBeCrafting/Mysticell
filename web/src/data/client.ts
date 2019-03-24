@@ -1,4 +1,4 @@
-import { Action } from "redux";
+import { Action, AnyAction } from "redux";
 import { Epic } from "redux-observable";
 import { filter, mergeMap } from "rxjs/operators";
 
@@ -24,6 +24,9 @@ const clientRequest = (
   },
 });
 
+const isClientRequestAction = (a: AnyAction): a is ClientRequestAction =>
+  !!a.path && !!a.requestInit;
+
 interface ClientResponseAction extends Action {
   type: ActionTypes.RESPONSE;
   originalType: string;
@@ -36,13 +39,11 @@ const apiUrl = (path: string) =>
     process.env.FRONTEND_API_PORT
   }/${path}`;
 
-const clientEpic: Epic<Action> = action$ =>
+const clientEpic: Epic<AnyAction> = action$ =>
   action$.pipe(
-    filter(
-      (action: ClientRequestAction) => !!action.path && !!action.requestInit,
-    ),
+    filter(isClientRequestAction),
     mergeMap(
-      async (action: ClientRequestAction): Promise<ClientResponseAction> => {
+      async (action): Promise<ClientResponseAction> => {
         const response = await fetch(apiUrl(action.path), action.requestInit);
         return {
           type: ActionTypes.RESPONSE,

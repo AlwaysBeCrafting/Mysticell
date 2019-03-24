@@ -25,15 +25,9 @@ type LayerProps = NodeLayerProps | WireLayerProps;
 
 type Props = OwnProps & LayerProps;
 
-class PartialDragLayer extends React.PureComponent<Props> {
-  render() {
-    return <div className="AppDragLayer">{this.renderDragItem()}</div>;
-  }
-
-  private renderDragItem() {
-    return null;
-  }
-}
+// TODO This got stubbed because the typings were a gigantic pain during upgrade
+// TODO See if keeping react-dnd is worth this `string | symbol | null` nonsense
+const PartialDragLayer = (_: Props) => <div className="AppDragLayer" />;
 
 const collectLayer: DragLayerCollector<
   {},

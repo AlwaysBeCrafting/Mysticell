@@ -14,35 +14,33 @@ interface Props {
   cellIds: Iterable<string>;
 }
 
-class SheetView extends React.PureComponent<Props> {
-  render() {
-    const { sheet, cellIds } = this.props;
-    const style = {
-      gridArea: `span ${sheet.size.height + 1} / span ${sheet.size.width}`,
-    };
-    return (
-      <div className="SheetView" style={style}>
-        <Toolbar className="SheetView-header">
-          <div className="SheetView-header-name">{sheet.name}</div>
-          <div style={{ flexGrow: 1 }} />
-          <ToolButton to="">
-            <Icon name="more_vert" />
-          </ToolButton>
-        </Toolbar>
-        <div className="SheetView-grid">
-          {Seq.Indexed(cellIds)
-            .map(cellId => (
-              <ConnectedCellView
-                key={cellId}
-                className="SheetView-grid-cell"
-                cellId={cellId}
-              />
-            ))
-            .toList()}
-        </div>
+const SheetView = (props: Props) => {
+  const { sheet, cellIds } = props;
+  const style = {
+    gridArea: `span ${sheet.size.height + 1} / span ${sheet.size.width}`,
+  };
+  return (
+    <div className="SheetView" style={style}>
+      <Toolbar className="SheetView-header">
+        <div className="SheetView-header-name">{sheet.name}</div>
+        <div style={{ flexGrow: 1 }} />
+        <ToolButton to="">
+          <Icon name="more_vert" />
+        </ToolButton>
+      </Toolbar>
+      <div className="SheetView-grid">
+        {Seq.Indexed(cellIds)
+          .map(cellId => (
+            <ConnectedCellView
+              key={cellId}
+              className="SheetView-grid-cell"
+              cellId={cellId}
+            />
+          ))
+          .toList()}
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export { SheetView, Props };

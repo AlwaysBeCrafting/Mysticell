@@ -14,26 +14,24 @@ interface Props extends CommonAttributes {
   getTerminalPosition: (terminal: TerminalPointer) => Position2d;
 }
 
-class WireLayer extends React.PureComponent<Props> {
-  render() {
-    const { className, wires, getTerminalPosition } = this.props;
-    return (
-      <svg className={classNames("WireLayer", className)}>
-        {wires
-          .map(wire => {
-            const { id, tail, head } = wire;
-            return (
-              <WireView
-                startPos={getTerminalPosition(tail)}
-                endPos={getTerminalPosition(head)}
-                key={id}
-              />
-            );
-          })
-          .toIndexedSeq()}
-      </svg>
-    );
-  }
-}
+const WireLayer = (props: Props) => {
+  const { className, wires, getTerminalPosition } = props;
+  return (
+    <svg className={classNames("WireLayer", className)}>
+      {wires
+        .map(wire => {
+          const { id, tail, head } = wire;
+          return (
+            <WireView
+              startPos={getTerminalPosition(tail)}
+              endPos={getTerminalPosition(head)}
+              key={id}
+            />
+          );
+        })
+        .toIndexedSeq()}
+    </svg>
+  );
+};
 
 export { WireLayer, Props };

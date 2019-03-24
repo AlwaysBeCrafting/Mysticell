@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import React, { Component } from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import { CommonAttributes } from "common/types";
@@ -11,31 +11,26 @@ interface Props extends CommonAttributes {
   listDocuments: () => void;
 }
 
-class HomePage extends Component<Props> {
-  componentDidMount() {
-    const { listDocuments } = this.props;
-    listDocuments();
-  }
+const HomePage = (props: Props) => {
+  const { className, documents, listDocuments } = props;
 
-  render() {
-    const { className, documents } = this.props;
+  useEffect(listDocuments, []);
 
-    return (
-      <div className={classNames(className, "HomePage")}>
-        <h1 className="HomePage-heading">Home</h1>
-        <ul className="HomePage-documentList">
-          {documents
-            .toEntitySeq()
-            .map(document => (
-              <li className="HomePage-documentList-item" key={document.id}>
-                <Link to={`/d/${document.id}`}>{document.name}</Link>
-              </li>
-            ))
-            .toList()}
-        </ul>
-      </div>
-    );
-  }
-}
+  return (
+    <div className={classNames(className, "HomePage")}>
+      <h1 className="HomePage-heading">Home</h1>
+      <ul className="HomePage-documentList">
+        {documents
+          .toEntitySeq()
+          .map(document => (
+            <li className="HomePage-documentList-item" key={document.id}>
+              <Link to={`/d/${document.id}`}>{document.name}</Link>
+            </li>
+          ))
+          .toList()}
+      </ul>
+    </div>
+  );
+};
 
 export { HomePage, Props };

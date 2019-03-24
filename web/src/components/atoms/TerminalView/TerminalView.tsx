@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import React from "react";
+import React, { useCallback } from "react";
 
 import { CommonAttributes } from "common/types";
 
@@ -21,25 +21,21 @@ interface Props extends CommonAttributes {
   onDisconnect?: (selfReference: TerminalPointer) => void;
 }
 
-class TerminalView extends React.PureComponent<Props> {
-  render() {
-    const { className, description } = this.props;
+const TerminalView = (props: Props) => {
+  const { className, pointer, description, value } = props;
 
-    const signMod = `mod-${signWord("+")}`;
+  const signMod = `mod-${signWord("+")}`;
 
-    return (
-      <div className={classNames("TerminalView", className, signMod)}>
-        <div className={classNames("TerminalView-name", signMod)}>
-          {description.name}
-        </div>
-        {this.renderValue(signMod)}
-        <div className={classNames("TerminalView-pin", signMod)} />
-      </div>
-    );
-  }
+  const onInput = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      if (props.onInput) {
+        props.onInput(event.target.value, pointer);
+      }
+    },
+    [props.onInput, pointer],
+  );
 
-  private renderValue(signMod: string) {
-    const { value } = this.props;
+  const renderValue = () => {
     const sign = "+";
     if (value === undefined) {
       return null;
@@ -55,18 +51,21 @@ class TerminalView extends React.PureComponent<Props> {
         <input
           className={classNames("TerminalView-value", signMod)}
           defaultValue={value}
-          onChange={this.onInput}
+          onChange={onInput}
         />
       );
     }
-  }
-
-  private onInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { onInput, pointer } = this.props;
-    if (onInput) {
-      onInput(event.target.value, pointer);
-    }
   };
-}
+
+  return (
+    <div className={classNames("TerminalView", className, signMod)}>
+      <div className={classNames("TerminalView-name", signMod)}>
+        {description.name}
+      </div>
+      {renderValue()}
+      <div className={classNames("TerminalView-pin", signMod)} />
+    </div>
+  );
+};
 
 export { TerminalView };
