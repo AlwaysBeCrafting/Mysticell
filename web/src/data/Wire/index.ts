@@ -1,4 +1,5 @@
-export { Action } from "./actions";
-export { createWire } from "./actions";
-export { Wire } from "./model";
-export { reducer } from "./reducer";
+export * from "./actions";
+export * from "./hooks";
+export * from "./actions";
+export * from "./model";
+export * from "./reducer";
