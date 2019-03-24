@@ -1,4 +1,3 @@
-import { Reducer, ReducersMapObject } from "redux";
 import { combineReducers } from "redux-immutable";
 
 import { reducer as cells } from "data/Cell";
@@ -9,45 +8,40 @@ import { reducer as sheets } from "data/Sheet";
 import { reducer as sources } from "data/Source";
 import { reducer as wires } from "data/Wire";
 
-import { App } from "./model";
-import { Action } from "./actions";
+const emptyReducer = <T>(t: new () => T) => <S extends unknown>(
+  s: S | undefined,
+) => s || new t();
 
-const identity = <S>(defaultValue: S): Reducer<S> => (
-  s: S | undefined = defaultValue,
-) => s as S;
-
-const reducersMapObject: ReducersMapObject = {
+const reducer = combineReducers({
   cells,
-  cellSheets: identity(new Relation.HasOne()),
-  cellDocuments: identity(new Relation.HasOne()),
+  cellSheets: emptyReducer(Relation.HasOne),
+  cellDocuments: emptyReducer(Relation.HasOne),
 
   documents,
-  documentCells: identity(new Relation.HasMany()),
-  documentDirectories: identity(new Relation.HasMany()),
-  documentNodes: identity(new Relation.HasMany()),
-  documentSheets: identity(new Relation.HasMany()),
-  documentSources: identity(new Relation.HasMany()),
-  documentWires: identity(new Relation.HasMany()),
+  documentCells: emptyReducer(Relation.HasMany),
+  documentDirectories: emptyReducer(Relation.HasMany),
+  documentNodes: emptyReducer(Relation.HasMany),
+  documentSheets: emptyReducer(Relation.HasMany),
+  documentSources: emptyReducer(Relation.HasMany),
+  documentWires: emptyReducer(Relation.HasMany),
 
   nodes,
-  nodeDocuments: identity(new Relation.HasOne()),
-  nodeFormulas: identity(new Relation.HasOne()),
-  nodeSources: identity(new Relation.HasOne()),
+  nodeDocuments: emptyReducer(Relation.HasOne),
+  nodeFormulas: emptyReducer(Relation.HasOne),
+  nodeSources: emptyReducer(Relation.HasMany),
 
   sheets,
-  sheetCells: identity(new Relation.HasMany()),
-  sheetDocuments: identity(new Relation.HasOne()),
+  sheetCells: emptyReducer(Relation.HasMany),
+  sheetDocuments: emptyReducer(Relation.HasOne),
 
   sources,
-  sourceParents: identity(new Relation.HasOne()),
-  formulaNodes: identity(new Relation.HasMany()),
-  formulaWires: identity(new Relation.HasMany()),
+  sourceParents: emptyReducer(Relation.HasOne),
+  formulaNodes: emptyReducer(Relation.HasMany),
+  formulaWires: emptyReducer(Relation.HasMany),
 
   wires,
-  wireNodes: identity(new Relation.HasMany()),
-  wireFormulas: identity(new Relation.HasOne()),
-};
-
-const reducer = combineReducers<App, Action>(reducersMapObject);
+  wireNodes: emptyReducer(Relation.HasMany),
+  wireFormulas: emptyReducer(Relation.HasOne),
+});
 
 export { reducer };
