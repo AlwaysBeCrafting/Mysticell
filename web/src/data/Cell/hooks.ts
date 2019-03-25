@@ -1,8 +1,8 @@
-import { useStore } from "data/store";
-import { tuple } from "common/utils";
+import { tuple, useStore } from "common/utils";
+import { App } from "data/App";
 
 const useCellList = (sheetId: string) => {
-  const [state] = useStore();
+  const [state] = useStore<App>();
   return tuple(
     state.sheetCells
       .getRelated(sheetId)
@@ -12,7 +12,7 @@ const useCellList = (sheetId: string) => {
 };
 
 const useCell = (cellId: string) => {
-  const [state] = useStore();
+  const [state] = useStore<App>();
   return tuple(state.cells.getEntity(cellId), {});
 };
 

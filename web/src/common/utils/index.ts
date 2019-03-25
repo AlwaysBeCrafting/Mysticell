@@ -1,4 +1,5 @@
 export * from "./array";
+export * from "../hooks";
 export * from "./layout";
 export * from "./id";
 export * from "./reducer";

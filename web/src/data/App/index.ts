@@ -1,4 +1,4 @@
-export { Action } from "./actions";
-export { epic } from "./epic";
-export { App } from "./model";
-export { reducer } from "./reducer";
+export * from "./actions";
+export * from "./epic";
+export * from "./model";
+export * from "./reducer";

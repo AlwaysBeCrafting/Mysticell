@@ -9,8 +9,8 @@ import { Entity, TerminalPointer } from "data/common";
 class Wire
   extends Record({
     id: "wire.default",
-    tail: new TerminalPointer(null, 0),
-    head: new TerminalPointer(null, 0),
+    tail: new TerminalPointer("node.default", 0),
+    head: new TerminalPointer("node.default", 0),
   })
   implements Entity {}
 

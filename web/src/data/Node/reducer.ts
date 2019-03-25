@@ -2,7 +2,7 @@ import { Action, ActionTypes } from "./actions";
 import { Node } from "./model";
 import { EntityTable } from "../common";
 
-const reducer = (state: EntityTable<Node>, action: Action) => {
+const reducer = (state = new EntityTable<Node>(), action: Action) => {
   switch (action.type) {
     case ActionTypes.CREATE: {
       const { node } = action.payload;

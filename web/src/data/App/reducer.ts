@@ -12,7 +12,7 @@ const emptyReducer = <T>(t: new () => T) => <S extends unknown>(
   s: S | undefined,
 ) => s || new t();
 
-const reducer = combineReducers({
+const r = {
   cells,
   cellSheets: emptyReducer(Relation.HasOne),
   cellDocuments: emptyReducer(Relation.HasOne),
@@ -42,6 +42,8 @@ const reducer = combineReducers({
   wires,
   wireNodes: emptyReducer(Relation.HasMany),
   wireFormulas: emptyReducer(Relation.HasOne),
-});
+};
+
+const reducer = combineReducers(r);
 
 export { reducer };

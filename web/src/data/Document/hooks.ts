@@ -1,13 +1,13 @@
-import { useStore } from "data/store";
-import { tuple } from "common/utils";
+import { tuple, useStore } from "common/utils";
+import { App } from "data/App";
 
 const useDocumentList = () => {
-  const [state] = useStore();
+  const [state] = useStore<App>();
   return tuple(state.documents.toEntitySeq().toSet(), {});
 };
 
 const useDocument = (documentId: string) => {
-  const [state] = useStore();
+  const [state] = useStore<App>();
   return tuple(state.documents.getEntity(documentId), {});
 };
 

@@ -1,6 +1,6 @@
 import React from "react";
 
-import { ConnectedNodeView } from "components/molecules";
+import { NodeView } from "components/molecules";
 
 import "./NodeDragItem.scss";
 
@@ -9,7 +9,12 @@ interface Props {
 }
 
 const NodeDragItem = ({ nodeId }: Props) => (
-  <ConnectedNodeView className="NodeDragItem" nodeId={nodeId} />
+  <NodeView
+    className="NodeDragItem"
+    nodeId={nodeId}
+    isDragging={true}
+    connections={[]}
+  />
 );
 
 export { NodeDragItem };

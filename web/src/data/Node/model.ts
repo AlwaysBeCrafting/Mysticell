@@ -12,7 +12,7 @@ import { Entity } from "data/common";
 class Node
   extends Record({
     id: "node.default",
-    source: "primitive.noop",
+    sourceId: "primitive.noop",
     label: undefined as string | undefined,
     values: List.of(""),
     position: new Position2d(),

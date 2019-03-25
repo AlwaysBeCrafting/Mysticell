@@ -1,8 +1,8 @@
-import { useStore } from "data/store";
-import { tuple } from "common/utils";
+import { tuple, useStore } from "common/utils";
+import { App } from "data/App";
 
 const useNodeList = (formulaId: string) => {
-  const [state] = useStore();
+  const [state] = useStore<App>();
   return tuple(
     state.formulaNodes
       .getRelated(formulaId)
@@ -12,7 +12,7 @@ const useNodeList = (formulaId: string) => {
 };
 
 const useNode = (nodeId: string) => {
-  const [state] = useStore();
+  const [state] = useStore<App>();
   return tuple(state.nodes.getEntity(nodeId), {});
 };
 

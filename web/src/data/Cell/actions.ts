@@ -1,5 +1,6 @@
-import { Cell } from "data/Cell";
 import { TypedAction } from "data/common";
+
+import { Cell } from "./model";
 
 const enum ActionTypes {
   CREATE = "[Cell] Create",

@@ -2,8 +2,6 @@ import React from "react";
 
 import { Position2d } from "common/types";
 
-import { Wire } from "components/atoms";
-
 import "./WireDragItem.scss";
 
 interface StartProps {
@@ -22,9 +20,15 @@ const WireDragItem = (props: Props) => {
   const { start, end, currentOffset } = props;
   const startPos = start || currentOffset;
   const endPos = end || currentOffset;
+  // TODO Make an SVG component to share with WireView
   return (
     <svg className="WireDragItem">
-      <Wire startPos={startPos} endPos={endPos} />
+      <div>
+        {startPos.x},{startPos.y}
+      </div>
+      <div>
+        {endPos.x},{endPos.y}
+      </div>
     </svg>
   );
 };

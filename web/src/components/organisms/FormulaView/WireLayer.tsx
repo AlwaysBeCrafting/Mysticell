@@ -1,35 +1,24 @@
 import classNames from "classnames";
-import { Seq } from "immutable";
 import React from "react";
 
-import { CommonAttributes, Position2d } from "common/types";
-
-import { Wire as WireView } from "components/atoms";
-
-import { TerminalPointer } from "data/common";
-import { Wire } from "data/Wire";
+import { CommonAttributes } from "common/types";
+import { WireView } from "components/atoms";
+import { useWireList } from "data/Wire";
 
 interface Props extends CommonAttributes {
-  wires: Seq.Indexed<Wire>;
-  getTerminalPosition: (terminal: TerminalPointer) => Position2d;
+  formulaId: string;
 }
 
 const WireLayer = (props: Props) => {
-  const { className, wires, getTerminalPosition } = props;
+  const { className, formulaId } = props;
+
+  const [wires] = useWireList(formulaId);
+
   return (
     <svg className={classNames("WireLayer", className)}>
-      {wires
-        .map(wire => {
-          const { id, tail, head } = wire;
-          return (
-            <WireView
-              startPos={getTerminalPosition(tail)}
-              endPos={getTerminalPosition(head)}
-              key={id}
-            />
-          );
-        })
-        .toIndexedSeq()}
+      {wires.toIndexedSeq().map(wire => (
+        <WireView wireId={wire.id} key={wire.id} />
+      ))}
     </svg>
   );
 };

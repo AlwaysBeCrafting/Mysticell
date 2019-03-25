@@ -4,25 +4,28 @@ import React from "react";
 import { Card } from "react-atoms";
 
 import { TerminalView } from "components/atoms";
-
+import { CommonAttributes } from "common/types";
 import { TerminalPointer } from "data/common";
-import { Node } from "data/Node";
-import { Source } from "data/Source";
+import { useNode } from "data/Node";
+import { useSource } from "data/Source";
 
 import "./NodeView.scss";
-import { CommonAttributes } from "common/types";
 
 interface Props extends CommonAttributes {
-  node: Node;
-  source: Source;
+  nodeId: string;
   isDragging: boolean;
   connections: Iterable<TerminalPointer>;
 }
 
 const NodeView = (props: Props) => {
-  const { className, node, source, isDragging } = props;
+  const { className, nodeId, isDragging } = props;
+
+  const [node] = useNode(nodeId);
   const { label, position } = node;
+
+  const [source] = useSource(node.sourceId);
   const { path, inputs, outputs } = source;
+
   const height = 1 + inputs.count() + outputs.count();
   const positionedStyle = {
     gridRow: `${position.y + 1} / span ${height}`,
@@ -60,4 +63,4 @@ const NodeView = (props: Props) => {
   );
 };
 
-export { NodeView, Props };
+export { NodeView };

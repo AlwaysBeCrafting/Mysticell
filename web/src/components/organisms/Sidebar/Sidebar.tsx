@@ -1,32 +1,29 @@
 import classnames from "classnames";
-import React, { useEffect, useCallback } from "react";
+import React, { useCallback } from "react";
 import { TreeView } from "react-atoms";
 
 import { CommonAttributes } from "common/types";
-
-import { EntityTable } from "data/common";
-import { Document } from "data/Document";
-import { Source } from "data/Source";
+import { useDocument } from "data/Document";
+import { Source, useSourceList } from "data/Source";
 
 import { SourceItemView } from "./SourceItemView";
 
 import "./Sidebar.scss";
 
 interface Props extends CommonAttributes {
-  document: Document;
-  sources: EntityTable<Source>;
-  listSources: () => void;
+  documentId: string;
 }
 
 const Sidebar = (props: Props) => {
-  const { className, document, sources, listSources } = props;
+  const { className, documentId } = props;
 
-  useEffect(listSources, []);
+  const [document] = useDocument(documentId);
+  const [sources] = useSourceList(documentId);
 
   const getItemKey = useCallback((item: Source) => item.id, []);
 
   const getItemChildren = useCallback(
-    (item?: Source) => (item ? [] : sources.entities.toList()),
+    (item?: Source) => (item ? [] : sources),
     [sources],
   );
 
@@ -51,4 +48,4 @@ const Sidebar = (props: Props) => {
   );
 };
 
-export { Sidebar, Props };
+export { Sidebar };

@@ -1,21 +1,24 @@
-import { Seq } from "immutable";
 import React from "react";
 import { Icon } from "react-atoms";
 
-import { ConnectedCellView, ToolButton } from "components/atoms";
+import { CellView, ToolButton } from "components/atoms";
 import { Toolbar } from "components/molecules";
 
-import { Sheet } from "data/Sheet";
+import { useCellList } from "data/Cell";
+import { useSheet } from "data/Sheet";
 
 import "./SheetView.scss";
 
 interface Props {
-  sheet: Sheet;
-  cellIds: Iterable<string>;
+  sheetId: string;
 }
 
 const SheetView = (props: Props) => {
-  const { sheet, cellIds } = props;
+  const { sheetId } = props;
+
+  const [sheet] = useSheet(sheetId);
+  const [cells] = useCellList(sheetId);
+
   const style = {
     gridArea: `span ${sheet.size.height + 1} / span ${sheet.size.width}`,
   };
@@ -29,18 +32,16 @@ const SheetView = (props: Props) => {
         </ToolButton>
       </Toolbar>
       <div className="SheetView-grid">
-        {Seq.Indexed(cellIds)
-          .map(cellId => (
-            <ConnectedCellView
-              key={cellId}
-              className="SheetView-grid-cell"
-              cellId={cellId}
-            />
-          ))
-          .toList()}
+        {cells.toIndexedSeq().map(cell => (
+          <CellView
+            key={cell.id}
+            className="SheetView-grid-cell"
+            cellId={cell.id}
+          />
+        ))}
       </div>
     </div>
   );
 };
 
-export { SheetView, Props };
+export { SheetView };
