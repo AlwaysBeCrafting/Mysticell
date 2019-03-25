@@ -14,7 +14,7 @@ interface EntityTableProps<T extends Entity> {
 class EntityTable<T extends Entity> extends Record<EntityTableProps<any>>({
   entities: Map(),
 }) {
-  getEntity(id: string, notSetValue?: T): T {
+  getEntity(id: string, notSetValue?: T): typeof notSetValue {
     return this.getIn(["entities", id]) || notSetValue;
   }
 
