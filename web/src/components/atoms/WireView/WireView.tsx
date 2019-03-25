@@ -18,11 +18,14 @@ const WireView = (props: Props) => {
   const { className, wireId } = props;
 
   const [wire] = useWire(wireId);
+  if (!wire) return null;
 
   const [tailNode] = useNode(wire.tail.nodeId);
   const [headNode] = useNode(wire.head.nodeId);
+  if (!tailNode || !headNode) return null;
 
   const [headSource] = useSource(headNode.sourceId);
+  if (!headSource) return null;
 
   const tailPos = new Position2d(
     tailNode.position.x + 4,

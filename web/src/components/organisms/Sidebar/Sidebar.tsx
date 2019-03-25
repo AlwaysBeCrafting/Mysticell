@@ -18,6 +18,8 @@ const Sidebar = (props: Props) => {
   const { className, documentId } = props;
 
   const [document] = useDocument(documentId);
+  if (!document) return null;
+
   const [sources] = useSourceList(documentId);
 
   const getItemKey = useCallback((item: Source) => item.id, []);

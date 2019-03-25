@@ -21,9 +21,11 @@ const NodeView = (props: Props) => {
   const { className, nodeId, isDragging } = props;
 
   const [node] = useNode(nodeId);
+  if (!node) return null;
   const { label, position } = node;
 
   const [source] = useSource(node.sourceId);
+  if (!source) return null;
   const { path, inputs, outputs } = source;
 
   const height = 1 + inputs.count() + outputs.count();

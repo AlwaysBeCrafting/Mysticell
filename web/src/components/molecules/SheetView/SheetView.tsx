@@ -17,6 +17,8 @@ const SheetView = (props: Props) => {
   const { sheetId } = props;
 
   const [sheet] = useSheet(sheetId);
+  if (!sheet) return null;
+
   const [cells] = useCellList(sheetId);
 
   const style = {

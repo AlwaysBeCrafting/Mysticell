@@ -15,6 +15,8 @@ const CellView = (props: Props) => {
   const { className, cellId } = props;
 
   const [cell] = useCell(cellId);
+  if (!cell) return null;
+
   const { top, left, bottom, right } = cell.rect;
   const style = {
     gridArea: [top, left, bottom, right].map(val => val + 1).join(" / "),

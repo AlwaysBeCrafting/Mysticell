@@ -26,6 +26,7 @@ const FormulaView = (props: Props) => {
   const { className, documentId, path, formulaId } = props;
 
   const [source] = useSource(formulaId);
+  if (!source) return null;
 
   const grid = useRef(null);
 
