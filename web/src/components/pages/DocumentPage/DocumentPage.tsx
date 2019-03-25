@@ -1,4 +1,5 @@
 import React from "react";
+import useReactRouter from "use-react-router";
 
 import { CommonAttributes } from "common/types";
 import {
@@ -17,7 +18,10 @@ interface Props extends CommonAttributes {
 }
 
 const DocumentPage = (props: Props) => {
-  const { documentId, idFromPath, path } = props;
+  const { idFromPath, path } = props;
+
+  const { match } = useReactRouter<{ documentId: string }>();
+  const { documentId } = match.params;
 
   const renderFormulaView = (path: string) => {
     const pathFragments = path.split("/");

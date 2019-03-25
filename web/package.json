@@ -77,7 +77,8 @@
   "dependencies": {
     "@hot-loader/react-dom": "^16.8.4",
     "ajv": "^6.10.0",
-    "app-root-path": "^2.2.0"
+    "app-root-path": "^2.2.0",
+    "use-react-router": "^1.0.5"
   },
   "jest": {
     "transform": {
