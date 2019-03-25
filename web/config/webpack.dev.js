@@ -3,6 +3,7 @@ const merge = require("webpack-merge");
 const common = require("./webpack.common");
 
 const FriendlyErrorsPlugin = require("friendly-errors-webpack-plugin");
+const CircularDependencyPlugin = require("circular-dependency-plugin");
 
 const paths = require("./paths");
 const publicPath = "/";
@@ -68,5 +69,6 @@ module.exports = merge(common, {
         messages: [`Dev server running at ${serverUrl}`],
       },
     }),
+    new CircularDependencyPlugin(),
   ],
 });

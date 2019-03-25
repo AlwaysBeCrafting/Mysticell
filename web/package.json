@@ -27,6 +27,7 @@
     "@types/webpack-env": "^1.13.9",
     "autoprefixer": "^9.5.0",
     "babel-loader": "8.0.5",
+    "circular-dependency-plugin": "^5.0.2",
     "classnames": "^2.2.6",
     "clean-webpack-plugin": "^2.0.1",
     "cross-env": "^5.2.0",
