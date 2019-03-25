@@ -1,49 +1,41 @@
+import { List, Map } from "immutable";
+import { ReducersMapObject } from "redux";
 import { combineReducers } from "redux-immutable";
 
 import { reducer as cells } from "data/Cell";
-import { Relation } from "data/common";
 import { reducer as documents } from "data/Document";
 import { reducer as nodes } from "data/Node";
 import { reducer as sheets } from "data/Sheet";
 import { reducer as sources } from "data/Source";
 import { reducer as wires } from "data/Wire";
 
-const emptyReducer = <T>(t: new () => T) => <S extends unknown>(
-  s: S | undefined,
-) => s || new t();
+import { App } from "./model";
 
-const r = {
+type Index = Map<string, List<string>>;
+
+const emptyIndex = (i: Index | undefined): Index => i || Map();
+
+const rmo: ReducersMapObject = {
   cells,
-  cellSheets: emptyReducer(Relation.HasOne),
-  cellDocuments: emptyReducer(Relation.HasOne),
 
   documents,
-  documentCells: emptyReducer(Relation.HasMany),
-  documentDirectories: emptyReducer(Relation.HasMany),
-  documentNodes: emptyReducer(Relation.HasMany),
-  documentSheets: emptyReducer(Relation.HasMany),
-  documentSources: emptyReducer(Relation.HasMany),
-  documentWires: emptyReducer(Relation.HasMany),
+  documentSheets: emptyIndex,
+  documentSources: emptyIndex,
 
   nodes,
-  nodeDocuments: emptyReducer(Relation.HasOne),
-  nodeFormulas: emptyReducer(Relation.HasOne),
-  nodeSources: emptyReducer(Relation.HasMany),
+  nodeSources: emptyIndex,
 
   sheets,
-  sheetCells: emptyReducer(Relation.HasMany),
-  sheetDocuments: emptyReducer(Relation.HasOne),
+  sheetCells: emptyIndex,
 
   sources,
-  sourceParents: emptyReducer(Relation.HasOne),
-  formulaNodes: emptyReducer(Relation.HasMany),
-  formulaWires: emptyReducer(Relation.HasMany),
+  formulaNodes: emptyIndex,
+  formulaWires: emptyIndex,
 
   wires,
-  wireNodes: emptyReducer(Relation.HasMany),
-  wireFormulas: emptyReducer(Relation.HasOne),
+  wireNodes: emptyIndex,
 };
 
-const reducer = combineReducers(r);
+const reducer = combineReducers(rmo, () => new App() as any);
 
 export { reducer };

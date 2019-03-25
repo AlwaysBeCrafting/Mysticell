@@ -14,7 +14,7 @@ const NodeLayer = ({ formulaId }: Props) => {
   const [nodes] = useNodeList(formulaId);
   return (
     <>
-      {nodes.map(node => (
+      {nodes.toIndexedSeq().map(node => (
         <NodeView
           key={node.id}
           nodeId={node.id}

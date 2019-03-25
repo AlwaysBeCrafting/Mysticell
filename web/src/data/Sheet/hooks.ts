@@ -1,14 +1,11 @@
+import { List } from "immutable";
+
 import { tuple, useStore } from "common/utils";
 import { App } from "data/App";
 
 const useSheetList = (documentId: string) => {
   const [state] = useStore<App>();
-  return tuple(
-    state.documentSheets
-      .getRelated(documentId)
-      .map(sheetId => state.sheets.getEntity(sheetId)),
-    {},
-  );
+  return tuple(state.documentSheets.get(documentId, List()), {});
 };
 
 const useSheet = (sheetId: string) => {
