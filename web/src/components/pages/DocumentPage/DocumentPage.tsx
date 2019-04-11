@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { CommonAttributes } from "common/types";
 
@@ -25,41 +25,19 @@ interface Props extends CommonAttributes {
   getDocument: () => void;
 }
 
-class DocumentPage extends React.PureComponent<Props> {
-  componentDidMount() {
-    const { getDocument } = this.props;
-    getDocument();
-  }
+const DocumentPage = (props: Props) => {
+  const { documentId, idFromPath, path, getDocument } = props;
 
-  render() {
-    const { documentId, path } = this.props;
+  useEffect(getDocument, []);
 
-    return (
-      <main className="DocumentPage">
-        <ConnectedSidebar
-          className="DocumentPage-sidebar"
-          documentId={documentId}
-        />
-        {!path && (
-          <ConnectedTabletop
-            className="DocumentPage-content"
-            documentId={documentId}
-          />
-        )}
-        {path && this.renderFormulaView(path)}
-        <StatusBar className="DocumentPage-status" />
-      </main>
-    );
-  }
-
-  private renderFormulaView = (path: string) => {
-    const { idFromPath } = this.props;
+  const renderFormulaView = (path: string) => {
     const pathFragments = path.split("/");
     const sourceId = idFromPath(pathFragments);
     if (sourceId) {
       return (
         <ConnectedFormulaView
           className="DocumentPage-content"
+          documentId={documentId}
           sourceId={sourceId}
         />
       );
@@ -69,6 +47,24 @@ class DocumentPage extends React.PureComponent<Props> {
       );
     }
   };
-}
+
+  return (
+    <main className="DocumentPage">
+      <ConnectedSidebar
+        className="DocumentPage-sidebar"
+        documentId={documentId}
+      />
+      {path ? (
+        renderFormulaView(path)
+      ) : (
+        <ConnectedTabletop
+          className="DocumentPage-content"
+          documentId={documentId}
+        />
+      )}
+      <StatusBar className="DocumentPage-status" />
+    </main>
+  );
+};
 
 export { DocumentPage, Props };

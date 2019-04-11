@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import React from "react";
+import React, { useEffect } from "react";
 
 import { CommonAttributes } from "common/types";
 
@@ -15,25 +15,19 @@ interface Props extends CommonAttributes {
   listSheets: () => void;
 }
 
-class Tabletop extends React.PureComponent<Props> {
-  componentDidMount() {
-    const { listSheets } = this.props;
-    listSheets();
-  }
+const Tabletop = (props: Props) => {
+  const { className, sheets, listSheets } = props;
 
-  render() {
-    const { className, sheets } = this.props;
-    return (
-      <div className={classNames("tabletop", className)}>
-        {sheets
-          .toEntitySeq()
-          .map(sheet => (
-            <ConnectedSheetView sheetId={sheet.id} key={sheet.id} />
-          ))
-          .toList()}
-      </div>
-    );
-  }
-}
+  useEffect(listSheets, []);
+
+  return (
+    <div className={classNames("tabletop", className)}>
+      {sheets
+        .toEntitySeq()
+        .map(sheet => <ConnectedSheetView sheetId={sheet.id} key={sheet.id} />)
+        .toList()}
+    </div>
+  );
+};
 
 export { Tabletop, Props };

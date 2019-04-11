@@ -1,6 +1,7 @@
 import React from "react";
 import { DragDropContextProvider } from "react-dnd";
 import HTML5Backend from "react-dnd-html5-backend";
+import { hot } from "react-hot-loader/root";
 import { Provider } from "react-redux";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Store } from "redux";
@@ -20,7 +21,7 @@ interface Props {
   store: Store<AppModel>;
 }
 
-const App = ({ store }: Props) => (
+const App = hot(({ store }: Props) => (
   <Provider store={store}>
     <DragDropContextProvider backend={HTML5Backend}>
       <>
@@ -35,6 +36,6 @@ const App = ({ store }: Props) => (
       </>
     </DragDropContextProvider>
   </Provider>
-);
+));
 
 export { App };

@@ -1,7 +1,6 @@
-import { Action } from "redux";
+import { Action, AnyAction } from "redux";
 import { Epic } from "redux-observable";
-
-import { App } from "data/App";
+import { filter, mergeMap } from "rxjs/operators";
 
 const enum ActionTypes {
   RESPONSE = "[Client] Response",
@@ -25,6 +24,9 @@ const clientRequest = (
   },
 });
 
+const isClientRequestAction = (a: AnyAction): a is ClientRequestAction =>
+  !!a.path && !!a.requestInit;
+
 interface ClientResponseAction extends Action {
   type: ActionTypes.RESPONSE;
   originalType: string;
@@ -37,11 +39,11 @@ const apiUrl = (path: string) =>
     process.env.FRONTEND_API_PORT
   }/${path}`;
 
-const clientEpic: Epic<Action, App> = action$ =>
-  action$
-    .filter((action: ClientRequestAction) => !!action.path && !!action.requestInit)
-    .mergeMap(
-      async (action: ClientRequestAction): Promise<ClientResponseAction> => {
+const clientEpic: Epic<AnyAction> = action$ =>
+  action$.pipe(
+    filter(isClientRequestAction),
+    mergeMap(
+      async (action): Promise<ClientResponseAction> => {
         const response = await fetch(apiUrl(action.path), action.requestInit);
         return {
           type: ActionTypes.RESPONSE,
@@ -50,7 +52,8 @@ const clientEpic: Epic<Action, App> = action$ =>
           json: await response.json(),
         };
       },
-    );
+    ),
+  );
 
 export { ActionTypes, ClientRequestAction, ClientResponseAction };
 export { clientRequest, clientEpic };

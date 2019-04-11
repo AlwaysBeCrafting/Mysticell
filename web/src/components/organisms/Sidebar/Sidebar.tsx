@@ -1,5 +1,5 @@
 import classnames from "classnames";
-import React from "react";
+import React, { useEffect, useCallback } from "react";
 import { TreeView } from "react-atoms";
 
 import { CommonAttributes } from "common/types";
@@ -18,45 +18,37 @@ interface Props extends CommonAttributes {
   listSources: () => void;
 }
 
-class Sidebar extends React.PureComponent<Props> {
-  componentDidMount() {
-    const { listSources } = this.props;
-    listSources();
-  }
+const Sidebar = (props: Props) => {
+  const { className, document, sources, listSources } = props;
 
-  render() {
-    const { className, document } = this.props;
-    return (
-      <div className={classnames("Sidebar", className)}>
-        <header className="Sidebar-header">
-          <div className="Sidebar-header-name">{document.name}</div>
-        </header>
-        <TreeView
-          className="Sidebar-tree"
-          render={this.renderItem}
-          getKey={this.getItemKey}
-          getChildren={this.getItemChildren}
-        />
-      </div>
-    );
-  }
+  useEffect(listSources, []);
 
-  private renderItem = (item: Source) => {
-    // TODO Show as selected when the current route points to its path
-    return (
-      <SourceItemView
-        id={item.id}
-        name={item.path}
-        type={(item as Source).type}
-        selected={false}
+  const getItemKey = useCallback((item: Source) => item.id, []);
+
+  const getItemChildren = useCallback(
+    (item?: Source) => (item ? [] : sources.entities.toList()),
+    [sources],
+  );
+
+  // TODO Show item as selected when the current route points to its path
+  const renderItem = useCallback(
+    (item: Source) => <SourceItemView documentId={document.id} source={item} />,
+    [],
+  );
+
+  return (
+    <div className={classnames("Sidebar", className)}>
+      <header className="Sidebar-header">
+        <div className="Sidebar-header-name">{document.name}</div>
+      </header>
+      <TreeView
+        className="Sidebar-tree"
+        render={renderItem}
+        getKey={getItemKey}
+        getChildren={getItemChildren}
       />
-    );
-  };
-
-  private getItemKey = (item: Source) => item.id;
-
-  private getItemChildren = (item?: Source) =>
-    item ? [] : this.props.sources.entities.toList();
-}
+    </div>
+  );
+};
 
 export { Sidebar, Props };

@@ -27,37 +27,35 @@ interface OutputProps extends CommonProps {
 }
 type Props = InputProps | OutputProps;
 
-class Boundary extends React.PureComponent<Props> {
-  render() {
-    const { className, input, source, values } = this.props;
-    const sign = input ? "+" : "-";
-    const terminals = input ? source.inputs : source.outputs;
+const Boundary = (props: Props) => {
+  const { className, input, source, values } = props;
+  const sign = input ? "+" : "-";
+  const terminals = input ? source.inputs : source.outputs;
 
-    const signMod = `mod-${signWord(sign)}`;
+  const signMod = `mod-${signWord(sign)}`;
 
-    return (
-      <div className={c(className, "Boundary", signMod)}>
-        <div className={c("Boundary-header Boundary-row", signMod)}>
-          {sign === "+" ? "Input" : "Output"}
-        </div>
-        {terminals
-          .zip(values || terminals.map(_ => ""))
-          .map(([term, value], index) => {
-            const pointer = new TerminalPointer(source.id, index);
-            return (
-              <TerminalView
-                key={pointer.hashCode()}
-                className="Boundary-terminal"
-                description={term}
-                pointer={pointer}
-                value={value}
-              />
-            );
-          })
-          .toIndexedSeq()}
+  return (
+    <div className={c(className, "Boundary", signMod)}>
+      <div className={c("Boundary-header Boundary-row", signMod)}>
+        {sign === "+" ? "Input" : "Output"}
       </div>
-    );
-  }
-}
+      {terminals
+        .zip(values || terminals.map(_ => ""))
+        .map(([term, value], index) => {
+          const pointer = new TerminalPointer(source.id, index);
+          return (
+            <TerminalView
+              key={pointer.hashCode()}
+              className="Boundary-terminal"
+              description={term}
+              pointer={pointer}
+              value={value}
+            />
+          );
+        })
+        .toIndexedSeq()}
+    </div>
+  );
+};
 
 export { Boundary };

@@ -1,4 +1,5 @@
-import { connect, Dispatch } from "react-redux";
+import { Dispatch } from "redux";
+import { connect } from "react-redux";
 
 import { CommonAttributes } from "common/types";
 
@@ -24,7 +25,7 @@ const mapStateToProps = (state: App, ownProps: OwnProps): StateProps => ({
 });
 
 const mapDispatchToProps = (
-  dispatch: Dispatch<App>,
+  dispatch: Dispatch,
   ownProps: OwnProps,
 ): DispatchProps => ({
   listSources: () => dispatch(listSources(ownProps.documentId)),

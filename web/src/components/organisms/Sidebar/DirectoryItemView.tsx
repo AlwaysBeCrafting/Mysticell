@@ -7,21 +7,19 @@ interface Props {
   name: string;
 }
 
-class DirectoryItemView extends React.PureComponent<Props> {
-  render() {
-    const { name, expanded } = this.props;
-    return (
-      <div className="Sidebar-item">
-        <Icon
-          className={classnames("Sidebar-item-icon", "mod-dropdown", {
-            "is-expanded": expanded,
-          })}
-          name="arrow_drop_down"
-        />
-        <span className="Sidebar-item-title">{name}</span>
-      </div>
-    );
-  }
-}
+const DirectoryItemView = (props: Props) => {
+  const { name, expanded } = props;
+  return (
+    <div className="Sidebar-item">
+      <Icon
+        className={classnames("Sidebar-item-icon", "mod-dropdown", {
+          "is-expanded": expanded,
+        })}
+        name="arrow_drop_down"
+      />
+      <span className="Sidebar-item-title">{name}</span>
+    </div>
+  );
+};
 
 export { DirectoryItemView };

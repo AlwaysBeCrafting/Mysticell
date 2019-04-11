@@ -17,7 +17,6 @@ module.exports = {
         test: /\.tsx?$/,
         include: paths.appSrc,
         use: [
-          "react-hot-loader/webpack",
           "babel-loader",
           {
             loader: "ts-loader",
