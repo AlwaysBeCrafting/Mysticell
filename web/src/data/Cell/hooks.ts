@@ -1,8 +1,8 @@
 import { List } from "immutable";
 import { useSelector } from "react-redux";
 
-import { App } from "data/App";
-import { Cell } from "data/Cell";
+import { App } from "~/data/App";
+import { Cell } from "~/data/Cell";
 
 const useCellList = (sheetId: string) => {
   const cells = useSelector(

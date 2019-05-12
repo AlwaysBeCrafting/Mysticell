@@ -1,12 +1,12 @@
 import { List, Map, Record } from "immutable";
 
-import { Cell } from "data/Cell";
-import { EntityTable } from "data/common";
-import { Document } from "data/Document";
-import { Node } from "data/Node";
-import { Sheet } from "data/Sheet";
-import { Source } from "data/Source";
-import { Wire } from "data/Wire";
+import { Cell } from "~/data/Cell";
+import { EntityTable } from "~/data/common";
+import { Document } from "~/data/Document";
+import { Node } from "~/data/Node";
+import { Sheet } from "~/data/Sheet";
+import { Source } from "~/data/Source";
+import { Wire } from "~/data/Wire";
 
 const Index = Map<string, List<string>>();
 

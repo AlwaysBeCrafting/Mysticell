@@ -1,4 +1,4 @@
-import { TypedAction } from "data/common";
+import { TypedAction } from "~/data/common";
 
 import { Wire } from "./model";
 

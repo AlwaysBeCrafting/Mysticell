@@ -2,8 +2,8 @@ import { applyMiddleware, createStore } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { createEpicMiddleware, combineEpics } from "redux-observable";
 
-import { epic, reducer } from "data/App";
-import { clientEpic } from "data/client";
+import { epic, reducer } from "~/data/App";
+import { clientEpic } from "~/data/client";
 
 const rootEpic = combineEpics(epic, clientEpic);
 

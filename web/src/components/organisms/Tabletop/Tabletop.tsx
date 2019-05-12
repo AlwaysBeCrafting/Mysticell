@@ -1,9 +1,9 @@
 import classNames from "classnames";
 import React from "react";
 
-import { CommonAttributes } from "common/types";
-import { SheetView } from "components/molecules";
-import { useSheetList } from "data/Sheet";
+import { CommonAttributes } from "~/common/types";
+import { SheetView } from "~/components/molecules";
+import { useSheetList } from "~/data/Sheet";
 
 import "./Tabletop.scss";
 

@@ -1,8 +1,8 @@
 import { List, Record } from "immutable";
 
-import { Position2d } from "common/types";
+import { Position2d } from "~/common/types";
 
-import { Entity } from "data/common";
+import { Entity } from "~/data/common";
 
 /**
  * Element of a formula that can be connected to its inputs/outputs or other nodes.

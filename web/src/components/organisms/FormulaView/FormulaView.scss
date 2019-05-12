@@ -1,6 +1,6 @@
-@import "~common/styles/colors";
-@import "~common/styles/dimensions";
-@import "~common/styles/fonts";
+@import "~/common/styles/colors";
+@import "~/common/styles/dimensions";
+@import "~/common/styles/fonts";
 
 $dimen-cellSize: $dimen-graph-cell-size;
 
@@ -53,9 +53,9 @@ $dimen-panelWidth: $dimen-cellSize * 4;
     max-width: 100%;
     grid-area: graph;
     display: grid;
-    grid-template:
-      "input content output" /
-      ($dimen-panelWidth auto $dimen-panelWidth);
+    grid-template: "input content output" / (
+        $dimen-panelWidth auto $dimen-panelWidth
+      );
 
     overflow-x: auto;
 

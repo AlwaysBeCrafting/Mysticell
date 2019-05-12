@@ -1,5 +1,5 @@
-import { TypedAction } from "data/common";
-import { clientRequest } from "data/client";
+import { TypedAction } from "~/data/common";
+import { clientRequest } from "~/data/client";
 
 import { Source } from "./model";
 

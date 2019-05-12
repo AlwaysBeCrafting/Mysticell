@@ -1,7 +1,7 @@
 import { List, Map } from "immutable";
 
-import { Param, ParamType } from "data/common";
-import { Source } from "data/Source";
+import { Param, ParamType } from "~/data/common";
+import { Source } from "~/data/Source";
 
 const asNumber = (identity = 0) => (param: Param) =>
   typeof param === "number" ? param : identity;

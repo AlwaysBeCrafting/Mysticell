@@ -1,4 +1,4 @@
-import { EntityTable } from "data/common";
+import { EntityTable } from "~/data/common";
 
 import { Action, ActionTypes } from "./actions";
 import { Source } from "./model";

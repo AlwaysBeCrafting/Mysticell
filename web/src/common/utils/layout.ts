@@ -1,4 +1,4 @@
-import { Position2d } from "common/types";
+import { Position2d } from "~/common/types";
 
 const elementRelativePosition = (
   element: HTMLElement,

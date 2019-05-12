@@ -1,6 +1,6 @@
 import { List, Record } from "immutable";
 
-import { Entity, ParamType, Terminal } from "data/common";
+import { Entity, ParamType, Terminal } from "~/data/common";
 
 type SourceType = "function" | "field" | "table" | "primitive";
 

@@ -1,11 +1,11 @@
 import classNames from "classnames";
 import React from "react";
 
-import { Position2d } from "common/types";
+import { Position2d } from "~/common/types";
 
-import { useNode } from "data/Node";
-import { useSource } from "data/Source";
-import { useWire } from "data/Wire";
+import { useNode } from "~/data/Node";
+import { useSource } from "~/data/Source";
+import { useWire } from "~/data/Wire";
 
 import "./WireView.scss";
 

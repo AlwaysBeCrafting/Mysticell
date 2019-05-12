@@ -1,9 +1,9 @@
 import classNames from "classnames";
 import React, { useCallback } from "react";
 
-import { CommonAttributes } from "common/types";
+import { CommonAttributes } from "~/common/types";
 
-import { Terminal, TerminalPointer } from "data/common";
+import { Terminal, TerminalPointer } from "~/data/common";
 
 import "./TerminalView.scss";
 

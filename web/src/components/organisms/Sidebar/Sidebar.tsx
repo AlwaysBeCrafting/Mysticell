@@ -2,9 +2,9 @@ import classnames from "classnames";
 import React, { useCallback } from "react";
 import { TreeView } from "react-atoms";
 
-import { CommonAttributes } from "common/types";
-import { useDocument } from "data/Document";
-import { useSourceList } from "data/Source";
+import { CommonAttributes } from "~/common/types";
+import { useDocument } from "~/data/Document";
+import { useSourceList } from "~/data/Source";
 
 import { SourceItemView } from "./SourceItemView";
 

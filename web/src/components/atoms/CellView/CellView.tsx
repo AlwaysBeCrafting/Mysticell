@@ -1,8 +1,8 @@
 import classNames from "classnames";
 import React, { useCallback } from "react";
 
-import { CommonAttributes } from "common/types";
-import { Cell, useCell } from "data/Cell";
+import { CommonAttributes } from "~/common/types";
+import { Cell, useCell } from "~/data/Cell";
 
 import "./CellView.scss";
 

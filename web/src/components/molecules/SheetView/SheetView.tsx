@@ -1,11 +1,11 @@
 import React from "react";
 import { Icon } from "react-atoms";
 
-import { CellView, ToolButton } from "components/atoms";
-import { Toolbar } from "components/molecules";
+import { CellView, ToolButton } from "~/components/atoms";
+import { Toolbar } from "~/components/molecules";
 
-import { useCellList } from "data/Cell";
-import { useSheet } from "data/Sheet";
+import { useCellList } from "~/data/Cell";
+import { useSheet } from "~/data/Sheet";
 
 import "./SheetView.scss";
 

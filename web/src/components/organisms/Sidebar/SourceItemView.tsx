@@ -3,11 +3,11 @@ import React from "react";
 import { Icon } from "react-atoms";
 import { Link } from "react-router-dom";
 
-import { useSource } from "data/Source";
+import { useSource } from "~/data/Source";
 
 import functionIcon from "./assets/icon-function.svg";
 import fieldIcon from "./assets/icon-property.svg";
-import { CommonAttributes } from "common/types";
+import { CommonAttributes } from "~/common/types";
 
 interface Props extends CommonAttributes {
   documentId: string;

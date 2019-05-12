@@ -3,10 +3,10 @@ import { Seq } from "immutable";
 import React, { useRef } from "react";
 import { Icon } from "react-atoms";
 
-import { CommonAttributes } from "common/types";
-import { ToolButton } from "components/atoms";
-import { Toolbar } from "components/molecules";
-import { useSource } from "data/Source";
+import { CommonAttributes } from "~/common/types";
+import { ToolButton } from "~/components/atoms";
+import { Toolbar } from "~/components/molecules";
+import { useSource } from "~/data/Source";
 
 import { Boundary } from "./Boundary";
 import { WireLayer } from "./WireLayer";

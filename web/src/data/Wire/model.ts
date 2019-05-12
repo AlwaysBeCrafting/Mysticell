@@ -1,6 +1,6 @@
 import { Record } from "immutable";
 
-import { Entity, TerminalPointer } from "data/common";
+import { Entity, TerminalPointer } from "~/data/common";
 
 /**
  * A connection between terminals

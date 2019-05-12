@@ -1,10 +1,10 @@
 import React from "react";
 
-import { NodeView } from "components/molecules";
+import { NodeView } from "~/components/molecules";
 
 import "./NodeLayer.scss";
-import { CommonAttributes } from "common/types";
-import { useNodeList } from "data/Node";
+import { CommonAttributes } from "~/common/types";
+import { useNodeList } from "~/data/Node";
 
 interface Props extends CommonAttributes {
   formulaId: string;

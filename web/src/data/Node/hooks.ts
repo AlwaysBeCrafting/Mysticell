@@ -1,8 +1,8 @@
 import { List } from "immutable";
 import { useSelector } from "react-redux";
 
-import { App } from "data/App";
-import { Node } from "data/Node";
+import { App } from "~/data/App";
+import { Node } from "~/data/Node";
 
 const useNodeList = (formulaId: string) => {
   const nodes = useSelector(

@@ -3,11 +3,11 @@ import { Seq } from "immutable";
 import React from "react";
 import { Card } from "react-atoms";
 
-import { TerminalView } from "components/atoms";
-import { CommonAttributes } from "common/types";
-import { TerminalPointer } from "data/common";
-import { useNode } from "data/Node";
-import { useSource } from "data/Source";
+import { TerminalView } from "~/components/atoms";
+import { CommonAttributes } from "~/common/types";
+import { TerminalPointer } from "~/data/common";
+import { useNode } from "~/data/Node";
+import { useSource } from "~/data/Source";
 
 import "./NodeView.scss";
 

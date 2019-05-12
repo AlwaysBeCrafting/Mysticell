@@ -1,14 +1,14 @@
 import React, { useEffect } from "react";
 import useReactRouter from "use-react-router";
 
-import { CommonAttributes } from "common/types";
+import { CommonAttributes } from "~/common/types";
 import {
   FormulaView,
   Sidebar,
   StatusBar,
   Tabletop,
-} from "components/organisms";
-import { useDocument } from "data/Document";
+} from "~/components/organisms";
+import { useDocument } from "~/data/Document";
 
 import "./DocumentPage.scss";
 

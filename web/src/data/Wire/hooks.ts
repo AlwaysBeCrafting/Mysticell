@@ -1,8 +1,8 @@
 import { List } from "immutable";
 import { useSelector } from "react-redux";
 
-import { App } from "data/App";
-import { Wire } from "data/Wire";
+import { App } from "~/data/App";
+import { Wire } from "~/data/Wire";
 
 const useWireList = (formulaId: string) => {
   const wires = useSelector(

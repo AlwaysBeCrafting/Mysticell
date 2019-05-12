@@ -1,6 +1,6 @@
-import { clientRequest } from "data/client";
-import { TypedAction } from "data/common";
-import { Sheet } from "data/Sheet";
+import { clientRequest } from "~/data/client";
+import { TypedAction } from "~/data/common";
+import { Sheet } from "~/data/Sheet";
 
 const enum ActionTypes {
   LOAD = "[Sheet] Load",

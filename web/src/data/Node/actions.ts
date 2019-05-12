@@ -1,7 +1,7 @@
-import { Position2d } from "common/types";
+import { Position2d } from "~/common/types";
 
-import { TypedAction } from "data/common";
-import { Node } from "data/Node";
+import { TypedAction } from "~/data/common";
+import { Node } from "~/data/Node";
 
 const enum ActionTypes {
   CREATE = "[Node] Create",

@@ -1,9 +1,9 @@
 import classNames from "classnames";
 import React from "react";
 
-import { CommonAttributes } from "common/types";
-import { WireView } from "components/atoms";
-import { useWireList } from "data/Wire";
+import { CommonAttributes } from "~/common/types";
+import { WireView } from "~/components/atoms";
+import { useWireList } from "~/data/Wire";
 
 interface Props extends CommonAttributes {
   formulaId: string;

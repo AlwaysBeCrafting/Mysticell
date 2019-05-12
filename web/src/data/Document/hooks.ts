@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 
-import { App } from "data/App";
+import { App } from "~/data/App";
 
 import { Document } from "./model";
 import { listDocuments, getDocument } from "./actions";

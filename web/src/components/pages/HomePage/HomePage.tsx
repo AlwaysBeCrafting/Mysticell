@@ -2,8 +2,8 @@ import classNames from "classnames";
 import React from "react";
 import { Link } from "react-router-dom";
 
-import { CommonAttributes } from "common/types";
-import { useDocumentList } from "data/Document";
+import { CommonAttributes } from "~/common/types";
+import { useDocumentList } from "~/data/Document";
 
 interface Props extends CommonAttributes {
   listDocuments: () => void;

@@ -1,8 +1,8 @@
 import { Record } from "immutable";
 
-import { Rect } from "common/types";
+import { Rect } from "~/common/types";
 
-import { Entity } from "data/common";
+import { Entity } from "~/data/common";
 
 /**
  * A region of a sheet referencing a property terminal

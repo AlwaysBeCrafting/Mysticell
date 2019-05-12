@@ -1,7 +1,7 @@
 import { List } from "immutable";
 import { useSelector } from "react-redux";
 
-import { App } from "data/App";
+import { App } from "~/data/App";
 import { Source } from "./model";
 
 const useSourceList = (documentId: string) => {
