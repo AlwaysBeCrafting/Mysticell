@@ -1,16 +1,25 @@
 import { List } from "immutable";
+import { useSelector } from "react-redux";
 
-import { tuple, useStore } from "common/utils";
 import { App } from "data/App";
+import { Sheet } from "data/Sheet";
 
 const useSheetList = (documentId: string) => {
-  const [state] = useStore<App>();
-  return tuple(state.documentSheets.get(documentId, List()), {});
+  const sheets = useSelector(
+    (state: App) => state.documentSheets.get(documentId, List<string>()),
+    [documentId],
+  );
+  const actions = {};
+  return [sheets, actions] as const;
 };
 
 const useSheet = (sheetId: string) => {
-  const [state] = useStore<App>();
-  return tuple(state.sheets.getEntity(sheetId), {});
+  const sheet = useSelector(
+    (state: App) => state.sheets.getEntity(sheetId, new Sheet()),
+    [sheetId],
+  );
+  const actions = {};
+  return [sheet, actions] as const;
 };
 
 export { useSheetList, useSheet };

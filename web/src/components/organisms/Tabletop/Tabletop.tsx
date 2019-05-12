@@ -18,8 +18,8 @@ const Tabletop = (props: Props) => {
 
   return (
     <div className={classNames("tabletop", className)}>
-      {sheets.toIndexedSeq().map(sheet => (
-        <SheetView sheetId={sheet.id} key={sheet.id} />
+      {sheets.toIndexedSeq().map(sheetId => (
+        <SheetView sheetId={sheetId} key={sheetId} />
       ))}
     </div>
   );

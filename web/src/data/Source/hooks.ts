@@ -1,16 +1,25 @@
 import { List } from "immutable";
+import { useSelector } from "react-redux";
 
-import { tuple, useStore } from "common/utils";
 import { App } from "data/App";
+import { Source } from "./model";
 
 const useSourceList = (documentId: string) => {
-  const [state] = useStore<App>();
-  return tuple(state.documentSources.get(documentId, List()), {});
+  const sources = useSelector(
+    (state: App) => state.documentSources.get(documentId, List<string>()),
+    [documentId],
+  );
+  const actions = {};
+  return [sources, actions] as const;
 };
 
 const useSource = (sourceId: string) => {
-  const [state] = useStore<App>();
-  return tuple(state.sources.getEntity(sourceId), {});
+  const source = useSelector(
+    (state: App) => state.sources.getEntity(sourceId, new Source()),
+    [sourceId],
+  );
+  const actions = {};
+  return [source, actions] as const;
 };
 
 export { useSourceList, useSource };

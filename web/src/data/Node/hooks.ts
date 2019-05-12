@@ -1,16 +1,25 @@
 import { List } from "immutable";
+import { useSelector } from "react-redux";
 
-import { tuple, useStore } from "common/utils";
 import { App } from "data/App";
+import { Node } from "data/Node";
 
 const useNodeList = (formulaId: string) => {
-  const [state] = useStore<App>();
-  return tuple(state.formulaNodes.get(formulaId, List()), {});
+  const nodes = useSelector(
+    (state: App) => state.formulaNodes.get(formulaId, List<string>()),
+    [formulaId],
+  );
+  const actions = {};
+  return [nodes, actions] as const;
 };
 
 const useNode = (nodeId: string) => {
-  const [state] = useStore<App>();
-  return tuple(state.nodes.getEntity(nodeId), {});
+  const node = useSelector(
+    (state: App) => state.nodes.getEntity(nodeId, new Node()),
+    [nodeId],
+  );
+  const actions = {};
+  return [node, actions] as const;
 };
 
 export { useNodeList, useNode };

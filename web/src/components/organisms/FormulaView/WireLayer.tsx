@@ -16,8 +16,8 @@ const WireLayer = (props: Props) => {
 
   return (
     <svg className={classNames("WireLayer", className)}>
-      {wires.toIndexedSeq().map(wire => (
-        <WireView wireId={wire.id} key={wire.id} />
+      {wires.toIndexedSeq().map(wireId => (
+        <WireView wireId={wireId} key={wireId} />
       ))}
     </svg>
   );

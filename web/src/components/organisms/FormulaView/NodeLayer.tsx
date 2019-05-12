@@ -14,10 +14,10 @@ const NodeLayer = ({ formulaId }: Props) => {
   const [nodes] = useNodeList(formulaId);
   return (
     <>
-      {nodes.toIndexedSeq().map(node => (
+      {nodes.toIndexedSeq().map(nodeId => (
         <NodeView
-          key={node.id}
-          nodeId={node.id}
+          key={nodeId}
+          nodeId={nodeId}
           isDragging={false}
           connections={[]}
         />

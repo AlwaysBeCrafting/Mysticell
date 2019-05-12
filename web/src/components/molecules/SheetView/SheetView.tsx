@@ -34,11 +34,11 @@ const SheetView = (props: Props) => {
         </ToolButton>
       </Toolbar>
       <div className="SheetView-grid">
-        {cells.toIndexedSeq().map(cell => (
+        {cells.toIndexedSeq().map(cellId => (
           <CellView
-            key={cell.id}
+            key={cellId}
             className="SheetView-grid-cell"
-            cellId={cell.id}
+            cellId={cellId}
           />
         ))}
       </div>

@@ -4,7 +4,7 @@ import { TreeView } from "react-atoms";
 
 import { CommonAttributes } from "common/types";
 import { useDocument } from "data/Document";
-import { Source, useSourceList } from "data/Source";
+import { useSourceList } from "data/Source";
 
 import { SourceItemView } from "./SourceItemView";
 
@@ -22,16 +22,18 @@ const Sidebar = (props: Props) => {
 
   const [sources] = useSourceList(documentId);
 
-  const getItemKey = useCallback((item: Source) => item.id, []);
+  const getItemKey = useCallback((item: string) => item, []);
 
   const getItemChildren = useCallback(
-    (item?: Source) => (item ? [] : sources),
+    (item?: string) => (item ? [] : sources),
     [sources],
   );
 
   // TODO Show item as selected when the current route points to its path
   const renderItem = useCallback(
-    (item: Source) => <SourceItemView documentId={document.id} source={item} />,
+    (item: string) => (
+      <SourceItemView documentId={document.id} sourceId={item} />
+    ),
     [],
   );
 

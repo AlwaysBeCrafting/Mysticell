@@ -1,16 +1,25 @@
 import { List } from "immutable";
+import { useSelector } from "react-redux";
 
-import { tuple, useStore } from "common/utils";
 import { App } from "data/App";
+import { Cell } from "data/Cell";
 
 const useCellList = (sheetId: string) => {
-  const [state] = useStore<App>();
-  return tuple(state.sheetCells.get(sheetId, List()), {});
+  const cells = useSelector(
+    (state: App) => state.sheetCells.get(sheetId, List<string>()),
+    [sheetId],
+  );
+  const actions = {};
+  return [cells, actions] as const;
 };
 
 const useCell = (cellId: string) => {
-  const [state] = useStore<App>();
-  return tuple(state.cells.getEntity(cellId), {});
+  const cell = useSelector(
+    (state: App) => state.cells.getEntity(cellId, new Cell()),
+    [cellId],
+  );
+  const actions = {};
+  return [cell, actions] as const;
 };
 
 export { useCellList, useCell };
