@@ -25,6 +25,13 @@ services:
     ports:
       - "5432:5432"
     env_file: ./common.env
+  adminer:
+    image: adminer:4.7
+    ports:
+      - "5000:8080"
+    env_file: ./common.env
+    volumes:
+      - ./util/adminer.css:/var/www/html/designs/arcs-material/adminer.css
   web:
     build: ./web
     user: ${UID}
