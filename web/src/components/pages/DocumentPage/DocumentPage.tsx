@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import useReactRouter from "use-react-router";
 
 import { CommonAttributes } from "common/types";
@@ -8,6 +8,7 @@ import {
   StatusBar,
   Tabletop,
 } from "components/organisms";
+import { useDocument } from "data/Document";
 
 import "./DocumentPage.scss";
 
@@ -22,6 +23,11 @@ const DocumentPage = (props: Props) => {
 
   const { match } = useReactRouter<{ documentId: string }>();
   const { documentId } = match.params;
+
+  const [, { fetch }] = useDocument(documentId);
+  useEffect(() => {
+    fetch();
+  }, []);
 
   const renderFormulaView = (path: string) => {
     const pathFragments = path.split("/");
