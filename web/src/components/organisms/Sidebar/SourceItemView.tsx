@@ -1,8 +1,8 @@
 import classNames from "classnames";
 import React from "react";
-import { Icon } from "react-atoms";
 import { Link } from "react-router-dom";
 
+import { Icon } from "~/components/atoms";
 import { useSource } from "~/data/Source";
 
 import functionIcon from "./assets/icon-function.svg";
