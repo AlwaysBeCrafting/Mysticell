@@ -72,5 +72,8 @@
     "modulePaths": [
       "<rootDir>/src/"
     ]
-  }
+  },
+  "browserslist": [
+    "last 2 Chrome versions"
+  ]
 }

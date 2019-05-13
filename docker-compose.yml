@@ -8,7 +8,7 @@ services:
     volumes:
       - ./api:/src
     ports:
-      - "3001:3001"
+      - "4000:4000"
     env_file: ./common.env
     command: ["npm", "start"]
   migrate-seed:
@@ -39,5 +39,6 @@ services:
       - ./web:/src
     ports:
       - "3000:3000"
+      - "3001:3001"
     env_file: ./common.env
     command: ["npm", "run", "dev"]

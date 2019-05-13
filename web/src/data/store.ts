@@ -16,7 +16,7 @@ const configureStore = () => {
   epicMiddleware.run(rootEpic);
 
   if (process.env.NODE_ENV === "development" && module.hot) {
-    module.hot.accept("data/App", () => {
+    module.hot.accept("~/data/App", () => {
       store.replaceReducer(reducer);
     });
   }
