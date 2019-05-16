@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import React from "react";
 
-import { CommonAttributes, ParentAttributes } from "common/types";
+import { CommonAttributes, ParentAttributes } from "~/common/types";
 
 import "./Toolbar.scss";
 

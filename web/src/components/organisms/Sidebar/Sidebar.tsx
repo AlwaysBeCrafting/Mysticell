@@ -1,38 +1,39 @@
 import classnames from "classnames";
-import React, { useEffect, useCallback } from "react";
-import { TreeView } from "react-atoms";
+import React, { useCallback } from "react";
 
-import { CommonAttributes } from "common/types";
-
-import { EntityTable } from "data/common";
-import { Document } from "data/Document";
-import { Source } from "data/Source";
+import { CommonAttributes } from "~/common/types";
+import { TreeView } from "~/components/atoms";
+import { useDocument } from "~/data/Document";
+import { useSourceList } from "~/data/Source";
 
 import { SourceItemView } from "./SourceItemView";
 
 import "./Sidebar.scss";
 
 interface Props extends CommonAttributes {
-  document: Document;
-  sources: EntityTable<Source>;
-  listSources: () => void;
+  documentId: string;
 }
 
 const Sidebar = (props: Props) => {
-  const { className, document, sources, listSources } = props;
+  const { className, documentId } = props;
 
-  useEffect(listSources, []);
+  const [document] = useDocument(documentId);
+  if (!document) return null;
 
-  const getItemKey = useCallback((item: Source) => item.id, []);
+  const [sources] = useSourceList(documentId);
+
+  const getItemKey = useCallback((item: string) => item, []);
 
   const getItemChildren = useCallback(
-    (item?: Source) => (item ? [] : sources.entities.toList()),
+    (item?: string) => (item ? [] : sources),
     [sources],
   );
 
   // TODO Show item as selected when the current route points to its path
   const renderItem = useCallback(
-    (item: Source) => <SourceItemView documentId={document.id} source={item} />,
+    (item: string) => (
+      <SourceItemView documentId={document.id} sourceId={item} />
+    ),
     [],
   );
 
@@ -51,4 +52,4 @@ const Sidebar = (props: Props) => {
   );
 };
 
-export { Sidebar, Props };
+export { Sidebar };

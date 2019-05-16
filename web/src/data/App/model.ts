@@ -1,46 +1,37 @@
-import { Record } from "immutable";
+import { List, Map, Record } from "immutable";
 
-import { Cell } from "data/Cell";
-import { EntityTable, Relation } from "data/common";
-import { Document } from "data/Document";
-import { Node } from "data/Node";
-import { Sheet } from "data/Sheet";
-import { Source } from "data/Source";
-import { Wire } from "data/Wire";
+import { Cell } from "~/data/Cell";
+import { EntityTable } from "~/data/common";
+import { Document } from "~/data/Document";
+import { Node } from "~/data/Node";
+import { Sheet } from "~/data/Sheet";
+import { Source } from "~/data/Source";
+import { Wire } from "~/data/Wire";
+
+const Index = Map<string, List<string>>();
 
 /**
  * Contains normalized maps of core data types and their relationships
  */
 class App extends Record({
   cells: new EntityTable<Cell>(),
-  cellSheets: new Relation.HasOne(),
-  cellDocuments: new Relation.HasOne(),
 
   documents: new EntityTable<Document>(),
-  documentCells: new Relation.HasMany(),
-  documentDirectories: new Relation.HasMany(),
-  documentNodes: new Relation.HasMany(),
-  documentSheets: new Relation.HasMany(),
-  documentSources: new Relation.HasMany(),
-  documentWires: new Relation.HasMany(),
+  documentSheets: Index,
+  documentSources: Index,
 
   nodes: new EntityTable<Node>(),
-  nodeDocuments: new Relation.HasOne(),
-  nodeFormulas: new Relation.HasOne(),
-  nodeSources: new Relation.HasOne(),
+  nodeSources: Index,
 
   sheets: new EntityTable<Sheet>(),
-  sheetCells: new Relation.HasMany(),
-  sheetDocuments: new Relation.HasOne(),
+  sheetCells: Index,
 
   sources: new EntityTable<Source>(),
-  sourceParents: new Relation.HasOne(),
-  formulaNodes: new Relation.HasMany(),
-  formulaWires: new Relation.HasMany(),
+  formulaNodes: Index,
+  formulaWires: Index,
 
   wires: new EntityTable<Wire>(),
-  wireNodes: new Relation.HasMany(),
-  wireFormulas: new Relation.HasOne(),
+  wireNodes: Index,
 }) {}
 
 export { App };

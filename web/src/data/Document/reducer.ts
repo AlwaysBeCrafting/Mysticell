@@ -1,12 +1,9 @@
-import { EntityTable } from "data/common";
+import { EntityTable } from "~/data/common";
 
 import { Action, ActionTypes } from "./actions";
 import { Document } from "./model";
 
-const reducer = (
-  state: EntityTable<Document> = new EntityTable(),
-  action: Action,
-): EntityTable<Document> => {
+const reducer = (state = new EntityTable<Document>(), action: Action) => {
   switch (action.type) {
     case ActionTypes.LOAD: {
       const { document } = action.payload;

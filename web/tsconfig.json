@@ -20,7 +20,10 @@
     "removeComments": true,
     "preserveConstEnums": true,
     "sourceMap": true,
-    "baseUrl": "./src",
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["./src/*"]
+    },
     "plugins": [{ "name": "typescript-tslint-plugin" }],
     "lib": ["dom", "es2017"]
   },

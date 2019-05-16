@@ -1,22 +1,23 @@
 import classNames from "classnames";
 import React from "react";
-import { Icon } from "react-atoms";
 import { Link } from "react-router-dom";
 
-import { Source } from "data/Source";
+import { Icon } from "~/components/atoms";
+import { useSource } from "~/data/Source";
 
 import functionIcon from "./assets/icon-function.svg";
 import fieldIcon from "./assets/icon-property.svg";
-import { CommonAttributes } from "common/types";
+import { CommonAttributes } from "~/common/types";
 
 interface Props extends CommonAttributes {
   documentId: string;
-  source: Source;
+  sourceId: string;
   selected?: boolean;
 }
 
 const SourceItemView = (props: Props) => {
-  const { documentId, source, selected } = props;
+  const { documentId, sourceId, selected } = props;
+  const [source] = useSource(sourceId);
   return (
     <Link
       className={classNames("Sidebar-item", {

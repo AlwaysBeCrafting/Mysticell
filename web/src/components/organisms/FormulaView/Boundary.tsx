@@ -2,10 +2,10 @@ import c from "classnames";
 import { Seq } from "immutable";
 import React from "react";
 
-import { TerminalView } from "components/atoms";
+import { TerminalView } from "~/components/atoms";
 
-import { TerminalPointer } from "data/common";
-import { Source } from "data/Source";
+import { TerminalPointer } from "~/data/common";
+import { Source } from "~/data/Source";
 
 import "./Boundary.scss";
 

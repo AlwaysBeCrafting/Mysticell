@@ -1,8 +1,8 @@
 import { List, Record } from "immutable";
 
-import { Position2d } from "common/types";
+import { Position2d } from "~/common/types";
 
-import { Entity } from "data/common";
+import { Entity } from "~/data/common";
 
 /**
  * Element of a formula that can be connected to its inputs/outputs or other nodes.
@@ -12,7 +12,7 @@ import { Entity } from "data/common";
 class Node
   extends Record({
     id: "node.default",
-    source: "primitive.noop",
+    sourceId: "primitive.noop",
     label: undefined as string | undefined,
     values: List.of(""),
     position: new Position2d(),

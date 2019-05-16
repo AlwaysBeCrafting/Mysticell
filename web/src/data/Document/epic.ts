@@ -5,7 +5,7 @@ import { filter, flatMap, map } from "rxjs/operators";
 import {
   ActionTypes as ClientActionTypes,
   ClientResponseAction,
-} from "data/client";
+} from "~/data/client";
 
 import { ActionTypes, loadDocument } from "./actions";
 import { Document } from "./model";

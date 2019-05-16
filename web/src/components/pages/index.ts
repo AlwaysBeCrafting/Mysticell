@@ -1,4 +1,3 @@
 export { DocumentPage } from "./DocumentPage/DocumentPage";
-export { ConnectedDocumentPage } from "./DocumentPage/ConnectedDocumentPage";
+export { HomePage } from "./HomePage/HomePage";
 export { NotFoundPage } from "./NotFoundPage/NotFoundPage";
-export { ConnectedHomePage } from "./HomePage/ConnectedHomePage";

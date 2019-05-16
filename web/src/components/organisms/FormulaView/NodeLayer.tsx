@@ -1,18 +1,29 @@
-import { Seq } from "immutable";
 import React from "react";
 
-import { ConnectedNodeView } from "components/molecules";
+import { NodeView } from "~/components/molecules";
 
 import "./NodeLayer.scss";
-import { CommonAttributes } from "common/types";
+import { CommonAttributes } from "~/common/types";
+import { useNodeList } from "~/data/Node";
 
 interface Props extends CommonAttributes {
-  nodeIds: Iterable<string>;
+  formulaId: string;
 }
 
-const NodeLayer = ({ nodeIds }: Props) =>
-  Seq.Indexed(nodeIds).map(nodeId => (
-    <ConnectedNodeView key={nodeId} nodeId={nodeId} />
-  ));
+const NodeLayer = ({ formulaId }: Props) => {
+  const [nodes] = useNodeList(formulaId);
+  return (
+    <>
+      {nodes.toIndexedSeq().map(nodeId => (
+        <NodeView
+          key={nodeId}
+          nodeId={nodeId}
+          isDragging={false}
+          connections={[]}
+        />
+      ))}
+    </>
+  );
+};
 
 export { NodeLayer, Props };

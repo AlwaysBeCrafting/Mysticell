@@ -1,12 +1,9 @@
-import { Cell } from "data/Cell";
-import { EntityTable } from "data/common";
+import { EntityTable } from "~/data/common";
 
 import { Action, ActionTypes } from "./actions";
+import { Cell } from "./model";
 
-const reducer = (
-  state: EntityTable<Cell> = new EntityTable(),
-  action: Action,
-): EntityTable<Cell> => {
+const reducer = (state = new EntityTable<Cell>(), action: Action) => {
   switch (action.type) {
     case ActionTypes.CREATE: {
       const { cell } = action.payload;

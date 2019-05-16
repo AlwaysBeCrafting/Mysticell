@@ -1,33 +1,28 @@
 import classNames from "classnames";
-import React, { useEffect } from "react";
+import React from "react";
 
-import { CommonAttributes } from "common/types";
-
-import { ConnectedSheetView } from "components/molecules";
-
-import { EntityTable } from "data/common";
-import { Sheet } from "data/Sheet";
+import { CommonAttributes } from "~/common/types";
+import { SheetView } from "~/components/molecules";
+import { useSheetList } from "~/data/Sheet";
 
 import "./Tabletop.scss";
 
 interface Props extends CommonAttributes {
-  sheets: EntityTable<Sheet>;
-  listSheets: () => void;
+  documentId: string;
 }
 
 const Tabletop = (props: Props) => {
-  const { className, sheets, listSheets } = props;
+  const { className, documentId } = props;
 
-  useEffect(listSheets, []);
+  const [sheets] = useSheetList(documentId);
 
   return (
     <div className={classNames("tabletop", className)}>
-      {sheets
-        .toEntitySeq()
-        .map(sheet => <ConnectedSheetView sheetId={sheet.id} key={sheet.id} />)
-        .toList()}
+      {sheets.toIndexedSeq().map(sheetId => (
+        <SheetView sheetId={sheetId} key={sheetId} />
+      ))}
     </div>
   );
 };
 
-export { Tabletop, Props };
+export { Tabletop };

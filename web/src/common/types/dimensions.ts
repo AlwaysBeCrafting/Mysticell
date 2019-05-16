@@ -1,6 +1,6 @@
 import { ValueObject } from "immutable";
 
-import { hashAll } from "common/utils";
+import { hashAll } from "~/common/utils";
 
 class Rect implements ValueObject {
   constructor(

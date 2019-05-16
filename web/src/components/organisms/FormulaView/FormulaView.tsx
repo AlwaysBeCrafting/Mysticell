@@ -1,33 +1,31 @@
 import classnames from "classnames";
 import { Seq } from "immutable";
 import React, { useRef } from "react";
-import { Icon } from "react-atoms";
 
-import { CommonAttributes } from "common/types";
-
-import { ToolButton } from "components/atoms";
-import { Toolbar } from "components/molecules";
-
-import { Source } from "data/Source";
+import { CommonAttributes } from "~/common/types";
+import { Icon, ToolButton } from "~/components/atoms";
+import { Toolbar } from "~/components/molecules";
+import { useSource } from "~/data/Source";
 
 import { Boundary } from "./Boundary";
-import { ConnectedNodeLayer } from "./ConnectedNodeLayer";
-import { ConnectedWireLayer } from "./ConnectedWireLayer";
+import { WireLayer } from "./WireLayer";
+import { NodeLayer } from "./NodeLayer";
 
 import "./FormulaView.scss";
 
 interface Props extends CommonAttributes {
   documentId: string;
-  path: Seq.Indexed<string>;
-  source: Source;
-  nodeIds: Iterable<string>;
-  wireIds: Iterable<string>;
+  path: string;
+  formulaId: string;
 }
 
 const noop = () => undefined;
 
 const FormulaView = (props: Props) => {
-  const { className, documentId, path, source } = props;
+  const { className, documentId, path, formulaId } = props;
+
+  const [source] = useSource(formulaId);
+  if (!source) return null;
 
   const grid = useRef(null);
 
@@ -37,7 +35,7 @@ const FormulaView = (props: Props) => {
         <ToolButton to={`/d/${documentId}`}>
           <Icon name="close" />
         </ToolButton>
-        {path.map((segment: string, i: number) => (
+        {path.split("/").map((segment, i) => (
           <span
             key={i}
             className={classnames("FormulaView-toolbar-path-segment", {
@@ -61,13 +59,13 @@ const FormulaView = (props: Props) => {
           source={source}
         />
         <div className="FormulaView-graph-grid" ref={grid}>
-          <ConnectedWireLayer
+          <WireLayer
             className="FormulaView-graph-grid-wires"
-            sourceId={source.id}
+            formulaId={formulaId}
           />
-          <ConnectedNodeLayer
+          <NodeLayer
             className="FormulaView-graph-grid-nodes"
-            sourceId={source.id}
+            formulaId={formulaId}
           />
         </div>
       </div>

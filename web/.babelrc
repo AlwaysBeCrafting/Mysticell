@@ -1,4 +1,0 @@
-{
-  "presets": [["@babel/preset-env", { "shippedProposals": true }]],
-  "plugins": ["react-hot-loader/babel"]
-}

@@ -1,6 +1,6 @@
 import { ValueObject } from "immutable";
 
-import { hashAll } from "common/utils";
+import { hashAll } from "~/common/utils";
 
 import { ParamType } from ".";
 
@@ -10,14 +10,14 @@ interface Terminal {
 }
 
 class TerminalPointer implements ValueObject {
-  constructor(readonly node_id: string | null, readonly index: number) {}
+  constructor(readonly nodeId: string, readonly index: number) {}
 
   hashCode() {
-    return hashAll(this.node_id, this.index);
+    return hashAll(this.nodeId, this.index);
   }
 
   equals(other: any) {
-    return this.node_id === other.id && this.index === other.index;
+    return this.nodeId === other.id && this.index === other.index;
   }
 }
 

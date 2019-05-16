@@ -8,6 +8,5 @@ export {
   ParamType,
   ParamFunction,
 } from "./Param";
-export { Relation } from "./Relation";
 export { Terminal, TerminalPointer } from "./Terminal";
 export { TypedAction } from "./TypedAction";

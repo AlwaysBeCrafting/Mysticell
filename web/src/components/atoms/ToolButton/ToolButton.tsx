@@ -3,7 +3,7 @@ import React, { HTMLProps } from "react";
 import { Link } from "react-router-dom";
 
 import "./ToolButton.scss";
-import { CommonAttributes, ParentAttributes } from "common/types";
+import { CommonAttributes, ParentAttributes } from "~/common/types";
 
 interface CommonProps extends CommonAttributes, ParentAttributes {
   enabled?: boolean;

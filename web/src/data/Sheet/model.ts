@@ -1,8 +1,8 @@
 import { Record } from "immutable";
 
-import { Size2d } from "common/types";
+import { Size2d } from "~/common/types";
 
-import { Entity } from "data/common";
+import { Entity } from "~/data/common";
 
 /**
  * Sized grid to place Cells on
