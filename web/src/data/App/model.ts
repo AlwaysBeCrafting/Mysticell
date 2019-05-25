@@ -8,7 +8,7 @@ import { Sheet } from "~/data/Sheet";
 import { Source } from "~/data/Source";
 import { Wire } from "~/data/Wire";
 
-const Index = Map<string, List<string>>();
+const EmptyIndex = Map<string, List<string>>();
 
 /**
  * Contains normalized maps of core data types and their relationships
@@ -17,21 +17,21 @@ class App extends Record({
   cells: new EntityTable<Cell>(),
 
   documents: new EntityTable<Document>(),
-  documentSheets: Index,
-  documentSources: Index,
+  documentSheets: EmptyIndex,
+  documentSources: EmptyIndex,
 
   nodes: new EntityTable<Node>(),
-  nodeSources: Index,
+  nodeSources: EmptyIndex,
 
   sheets: new EntityTable<Sheet>(),
-  sheetCells: Index,
+  sheetCells: EmptyIndex,
 
   sources: new EntityTable<Source>(),
-  formulaNodes: Index,
-  formulaWires: Index,
+  formulaNodes: EmptyIndex,
+  formulaWires: EmptyIndex,
 
   wires: new EntityTable<Wire>(),
-  wireNodes: Index,
+  wireNodes: EmptyIndex,
 }) {}
 
 export { App };

@@ -18,6 +18,9 @@ interface Props extends CommonAttributes {
 const SourceItemView = (props: Props) => {
   const { documentId, sourceId, selected } = props;
   const [source] = useSource(sourceId);
+  const path = source.path.split("/");
+  const name = path[path.length - 1];
+
   return (
     <Link
       className={classNames("Sidebar-item", {

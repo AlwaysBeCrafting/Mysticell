@@ -7,7 +7,7 @@ import {
   ClientResponseAction,
 } from "~/data/client";
 
-import { ActionTypes, loadDocument } from "./actions";
+import { ActionTypes } from "./actions";
 import { Document } from "./model";
 
 const listEpic = (action$: ActionsObservable<ClientResponseAction>) =>
@@ -15,7 +15,7 @@ const listEpic = (action$: ActionsObservable<ClientResponseAction>) =>
     ofType(ClientActionTypes.RESPONSE),
     filter(action => action.originalType === ActionTypes.LIST),
     flatMap(action => of(...action.json).pipe(map(js => new Document(js)))),
-    map(loadDocument),
+    map(document => ({ type: ActionTypes.INSERT, payload: { document } })),
   );
 
 const getEpic = (action$: ActionsObservable<ClientResponseAction>) =>
@@ -23,7 +23,7 @@ const getEpic = (action$: ActionsObservable<ClientResponseAction>) =>
     ofType(ClientActionTypes.RESPONSE),
     filter(action => action.originalType === ActionTypes.GET),
     map(action => new Document(action.json)),
-    map(loadDocument),
+    map(document => ({ type: ActionTypes.INSERT, payload: { document } })),
   );
 
 const epic = combineEpics(listEpic, getEpic);

@@ -5,7 +5,7 @@ import { Source } from "./model";
 
 const reducer = (state = new EntityTable<Source>(), action: Action) => {
   switch (action.type) {
-    case ActionTypes.LOAD: {
+    case ActionTypes.INSERT: {
       const { source } = action.payload;
       return state.putEntity(source);
     }

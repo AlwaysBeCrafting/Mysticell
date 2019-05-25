@@ -1,9 +1,10 @@
 import { useSelector, useDispatch } from "react-redux";
 
 import { App } from "~/data/App";
+import { clientRequest } from "~/data/client";
 
 import { Document } from "./model";
-import { listDocuments, getDocument } from "./actions";
+import { ActionTypes, Action } from "./actions";
 
 const useDocumentList = () => {
   const documents = useSelector((state: App) =>
@@ -11,7 +12,11 @@ const useDocumentList = () => {
   );
   const dispatch = useDispatch();
   const actions = {
-    fetch: () => dispatch(listDocuments()),
+    insert: (document: Document): Action => ({
+      type: ActionTypes.INSERT,
+      payload: { document },
+    }),
+    fetch: () => dispatch(clientRequest(ActionTypes.LIST, "GET", "documents")),
   };
   return [documents, actions] as const;
 };
@@ -22,7 +27,10 @@ const useDocument = (documentId: string) => {
   );
   const dispatch = useDispatch();
   const actions = {
-    fetch: () => dispatch(getDocument(documentId)),
+    fetch: () =>
+      dispatch(
+        clientRequest(ActionTypes.GET, "GET", `documents/${documentId}`),
+      ),
   };
   return [document, actions] as const;
 };

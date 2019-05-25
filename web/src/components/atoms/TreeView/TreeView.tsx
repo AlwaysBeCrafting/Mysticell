@@ -29,7 +29,7 @@ const ItemView = <I extends any>({
   getChildren,
   getKey,
 }: Props<I> & { item: I }) => {
-  const children = Seq(getChildren());
+  const children = Seq(getChildren(item));
   return (
     <li key={getKey(item)}>
       {render(item)}

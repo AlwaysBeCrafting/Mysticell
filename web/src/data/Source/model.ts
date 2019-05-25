@@ -10,6 +10,7 @@ type SourceType = "function" | "field" | "table" | "primitive";
 class Source
   extends Record({
     id: "source.default",
+    documentId: "document.default",
     path: "/Default Source",
     inputs: List.of<Terminal>({
       name: "Input",

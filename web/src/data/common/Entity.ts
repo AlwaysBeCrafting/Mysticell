@@ -1,4 +1,4 @@
-import { Map, Record, Seq } from "immutable";
+import { Map, Record, Set, Seq } from "immutable";
 
 const makeEntityKeyPath = (id: string, subPath: Iterable<any>) =>
   Seq(["entities", id]).concat(subPath);
@@ -45,4 +45,6 @@ class EntityTable<T extends Entity> extends Record<EntityTableProps<any>>({
   }
 }
 
-export { Entity, EntityTable };
+type Index = Map<string, Set<string>>;
+
+export { Entity, EntityTable, Index };
