@@ -25,7 +25,6 @@
     "@types/shortid": "^0.0.29",
     "autoprefixer": "^9.5.1",
     "classnames": "^2.2.6",
-    "filament": "github:Alexander-Prime/filament#semver:0.2.1",
     "immutable": "4.0.0-rc.9",
     "jest": "^24.8.0",
     "node-sass": "^4.12.0",
@@ -43,9 +42,8 @@
     "redux-observable": "^1.1.0",
     "rimraf": "^2.6.3",
     "rxjs": "^6.5.2",
-    "sass-loader": "^7.1.0",
+    "sass": "^1.20.1",
     "shortid": "^2.2.14",
-    "style-loader": "^0.23.1",
     "stylelint": "^9.10.1",
     "stylelint-config-recommended": "^2.2.0",
     "ts-jest": "^24.0.2",
@@ -75,5 +73,6 @@
   },
   "browserslist": [
     "last 2 Chrome versions"
-  ]
+  ],
+  "dependencies": {}
 }
