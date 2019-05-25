@@ -1,18 +1,19 @@
 import classNames from "classnames";
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import { CommonAttributes } from "~/common/types";
 import { useDocumentList } from "~/data/Document";
 
-interface Props extends CommonAttributes {
-  listDocuments: () => void;
-}
+interface Props extends CommonAttributes {}
 
 const HomePage = (props: Props) => {
   const { className } = props;
 
-  const [documents] = useDocumentList();
+  const [documents, { fetch }] = useDocumentList();
+  useEffect(() => {
+    fetch();
+  }, []);
 
   return (
     <div className={classNames(className, "HomePage")}>
