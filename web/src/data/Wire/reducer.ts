@@ -5,7 +5,7 @@ import { Wire } from "./model";
 
 const reducer = (state = new EntityTable<Wire>(), action: Action) => {
   switch (action.type) {
-    case ActionTypes.CREATE: {
+    case ActionTypes.INSERT: {
       const { wire } = action.payload;
       return state.putEntity(wire);
     }

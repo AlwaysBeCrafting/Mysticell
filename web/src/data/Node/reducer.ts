@@ -4,7 +4,7 @@ import { EntityTable } from "../common";
 
 const reducer = (state = new EntityTable<Node>(), action: Action) => {
   switch (action.type) {
-    case ActionTypes.CREATE: {
+    case ActionTypes.INSERT: {
       const { node } = action.payload;
       return state.putEntity(node);
     }

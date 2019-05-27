@@ -1,15 +1,24 @@
 import { List } from "immutable";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import { App } from "~/data/App";
 import { Wire } from "~/data/Wire";
+
+import { ActionTypes } from "./actions";
 
 const useWireList = (formulaId: string) => {
   const wires = useSelector(
     (state: App) => state.formulaWires.get(formulaId, List<string>()),
     [formulaId],
   );
-  const actions = {};
+  const dispatch = useDispatch();
+  const actions = {
+    insert: (wire: Wire) =>
+      dispatch({
+        type: ActionTypes.INSERT,
+        payload: { wire },
+      }),
+  };
   return [wires, actions] as const;
 };
 

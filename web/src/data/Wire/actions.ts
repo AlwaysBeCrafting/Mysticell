@@ -3,19 +3,13 @@ import { TypedAction } from "~/data/common";
 import { Wire } from "./model";
 
 const enum ActionTypes {
-  CREATE = "[Wire] Create",
+  INSERT = "[Wire] Insert",
 }
 
-type Action = CreateAction;
-
-interface CreateAction extends TypedAction<ActionTypes.CREATE> {
+interface InsertAction extends TypedAction<ActionTypes.INSERT> {
   payload: { wire: Wire };
 }
 
-const createWire = (wire: Wire): Action => ({
-  type: ActionTypes.CREATE,
-  payload: { wire },
-});
+type Action = InsertAction;
 
 export { ActionTypes, Action };
-export { createWire };

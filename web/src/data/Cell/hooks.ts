@@ -1,15 +1,24 @@
 import { List } from "immutable";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import { App } from "~/data/App";
 import { Cell } from "~/data/Cell";
+
+import { ActionTypes } from "./actions";
 
 const useCellList = (sheetId: string) => {
   const cells = useSelector(
     (state: App) => state.sheetCells.get(sheetId, List<string>()),
     [sheetId],
   );
-  const actions = {};
+  const dispatch = useDispatch();
+  const actions = {
+    insert: (cell: Cell) =>
+      dispatch({
+        type: ActionTypes.INSERT,
+        payload: { cell },
+      }),
+  };
   return [cells, actions] as const;
 };
 
