@@ -32,7 +32,7 @@ const Sidebar = (props: Props) => {
   // TODO Show item as selected when the current route points to its path
   const renderItem = useCallback(
     (item: string) => (
-      <SourceItemView documentId={document.id} sourceId={item} />
+      <SourceItemView documentId={documentId} sourceId={item} />
     ),
     [],
   );

@@ -6,6 +6,10 @@
   background: white;
   border-right: solid thin $color-divider;
 
+  &-tree {
+    padding: 8px 0;
+  }
+
   &-header {
     display: grid;
     align-content: flex-end;

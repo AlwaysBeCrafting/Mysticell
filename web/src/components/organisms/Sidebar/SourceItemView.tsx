@@ -26,7 +26,7 @@ const SourceItemView = (props: Props) => {
       className={classNames("Sidebar-item", {
         "is-selected": selected,
       })}
-      to={`/${documentId}${source.path}`}
+      to={`/d/${documentId}${source.path}`}
     >
       <Icon
         className={classNames("Sidebar-item-icon", {
