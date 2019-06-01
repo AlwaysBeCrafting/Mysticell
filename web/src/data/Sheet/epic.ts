@@ -5,7 +5,9 @@ import { filter, flatMap, map } from "rxjs/operators";
 import {
   ActionTypes as ClientActionTypes,
   ClientResponseAction,
+  clientRequest,
 } from "~/data/client";
+import { ActionTypes as DocumentActionTypes } from "~/data/Document";
 
 import { ActionTypes } from "./actions";
 import { Sheet } from "./model";
@@ -34,6 +36,19 @@ const getEpic = (action$: ActionsObservable<ClientResponseAction>) =>
     })),
   );
 
-const epic = combineEpics(listEpic, getEpic);
+const getDocumentEpic = (action$: ActionsObservable<ClientResponseAction>) =>
+  action$.pipe(
+    ofType(ClientActionTypes.RESPONSE),
+    filter(action => action.originalType === DocumentActionTypes.GET),
+    map(action =>
+      clientRequest(
+        ActionTypes.LIST,
+        "GET",
+        `documents/${action.json.id}/sheets`,
+      ),
+    ),
+  );
+
+const epic = combineEpics(listEpic, getEpic, getDocumentEpic);
 
 export { epic };

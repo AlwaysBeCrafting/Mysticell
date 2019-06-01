@@ -6,6 +6,10 @@ import {
   Action as SourceAction,
   ActionTypes as SourceActionTypes,
 } from "~/data/Source";
+import {
+  Action as SheetAction,
+  ActionTypes as SheetActionTypes,
+} from "~/data/Sheet";
 
 import { Action, ActionTypes } from "./actions";
 import { Document } from "./model";
@@ -30,6 +34,20 @@ const reducers: ReducersMapObject = {
       case SourceActionTypes.INSERT: {
         const { id, documentId } = action.payload.source;
         return state.update(documentId, Set(), sources => sources.add(id));
+      }
+      default:
+        return state;
+    }
+  },
+
+  documentSheets: (
+    state: Map<string, Set<string>> = Map(),
+    action: SheetAction,
+  ) => {
+    switch (action.type) {
+      case SheetActionTypes.INSERT: {
+        const { id, documentId } = action.payload.sheet;
+        return state.update(documentId, Set(), sheets => sheets.add(id));
       }
       default:
         return state;

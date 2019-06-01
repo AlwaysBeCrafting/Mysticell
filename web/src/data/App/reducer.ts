@@ -6,7 +6,7 @@ import { reducer as cells } from "~/data/Cell";
 import { Index } from "~/data/common";
 import { reducers as documentReducers } from "~/data/Document";
 import { reducer as nodes } from "~/data/Node";
-import { reducer as sheets } from "~/data/Sheet";
+import { reducers as sheetReducers } from "~/data/Sheet";
 import { reducer as sources } from "~/data/Source";
 import { reducer as wires } from "~/data/Wire";
 
@@ -23,8 +23,7 @@ const rmo: ReducersMapObject = {
   nodes,
   nodeSources: emptyIndex,
 
-  sheets,
-  sheetCells: emptyIndex,
+  ...sheetReducers,
 
   sources,
   formulaNodes: emptyIndex,

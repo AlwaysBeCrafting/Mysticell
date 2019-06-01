@@ -14,6 +14,8 @@ interface Props extends CommonAttributes {
   documentId: string;
 }
 
+const getItemKey = (item: string) => item;
+
 const Sidebar = (props: Props) => {
   const { className, documentId } = props;
 
@@ -21,8 +23,6 @@ const Sidebar = (props: Props) => {
   if (!document) return null;
 
   const [sources] = useSourceList(documentId);
-
-  const getItemKey = useCallback((item: string) => item, []);
 
   const getItemChildren = useCallback(
     (item?: string) => (item ? [] : sources),

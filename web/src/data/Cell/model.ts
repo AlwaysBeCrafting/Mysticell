@@ -10,8 +10,9 @@ import { Entity } from "~/data/common";
 class Cell
   extends Record({
     id: "cell.default",
+    sheetId: "sheet.default",
     property: "property.default",
-    field_id: "field.default",
+    fieldId: "field.default",
     sign: "+" as "+" | "-",
     index: 0,
     rect: new Rect(),

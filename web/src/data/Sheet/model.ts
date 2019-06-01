@@ -10,6 +10,7 @@ import { Entity } from "~/data/common";
 class Sheet
   extends Record({
     id: "sheet.default",
+    documentId: "document.default",
     name: "Default Sheet",
     size: new Size2d(),
   })
